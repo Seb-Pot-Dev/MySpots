@@ -3,3 +3,7 @@
     /* list-style: none; */
     /* color: black; */
 }
+#map{
+    width: 800px;
+    height: 800px;
+}
