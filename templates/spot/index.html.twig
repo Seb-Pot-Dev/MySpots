@@ -11,6 +11,14 @@
 <div class="example-wrapper">
     <h1>LA MAP</h1>
 
+<!-- FORMULAIRE SPOT -->
+
+<h2>Ajotuer un spot</h2>
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Create</button>
+{{ form_end(form) }}
+
 <!-- AFFICHAGE DE LA MAP -->
 <div id="map"></div>
 
@@ -29,6 +37,7 @@
     <!-- SCRIPT JS PERSO -->
     <script>
 
+        // défini la manière dont la carte est centré et le zoom
         let map = L.map('map').setView([48.583328, 7.75], 14);
 
             // Ajouter une couche de tuiles OpenStreetMap à la carte, avec un maximum de zoom de 19 et une attribution
@@ -77,7 +86,7 @@
                     fillColor: 'transparent',
                     weight: 2
                 }).addTo(map);
-                
+
     </script>
 {% endblock %}
 

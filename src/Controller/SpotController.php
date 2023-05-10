@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Spot;
+use App\Form\SpotType;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class SpotController extends AbstractController
 {
     #[Route('/spot', name: 'app_spot')]
-    public function index(ManagerRegistry $doctrine, Spot $spot = null): Response
+    public function index(ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
 
         $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name'=>'ASC']);
@@ -29,10 +31,36 @@ class SpotController extends AbstractController
                 ]
             ];
         }
+
         //encode le tableau $tab en format JSON
         /*Le deuxième argument JSON_HEX_APOS de la fonction json_encode() permet de remplacer les single quotes
         par des entités HTML hexadécimales, pour éviter des problèmes de syntaxe dans le code JavaScript.*/
         $tabCoords = json_encode($tab, JSON_HEX_APOS);
+
+        
+            //Formulaire pour ajouter un spot
+
+            /* *
+            * LES PROBLEMES : LORS DE LAJOUT DUN SPOT, REMPLACE LE DERNIER AJOUT
+            *
+            */
+
+                //Construire un formulaire qui se repose sur le $builder présent dans SpotType
+                $form = $this->createForm(SpotType::class, $spot);
+                //Qd il y a une action dans le for, analyse ce que récupère la requete
+                $form->handleRequest($request);
+
+                    //Si le formulaire est soumis et passe les filtres
+                    if ($form->isSubmitted() && $form->isValid()) {
+                        //récupère les données du formulaire et les injecte "hydrate" via les setter de l'objet 
+                        $spot = $form->getData();
+                        //on récupère le manager de doctrine pour accéder aux méthodes suivantes
+                        $entityManager = $doctrine->getManager();
+                        //On prépare notre requete
+                        $entityManager->persist($spot);
+                        //on execute notre recete pour insérer l'entrée en BDD
+                        $entityManager->flush();
+                    }
 
         //retourne la réponse http affichée par le navigateur.
         // 'spots' est le tableau des spots encodé en JSON.
@@ -40,7 +68,9 @@ class SpotController extends AbstractController
         return $this->render('spot/index.html.twig', [
             'controller_name' => 'SpotController',
             'spots' => $tabCoords,
-            'spotsList' => $spots
+            'spotsList' => $spots,
+            'form' => $form->createView()
+
         ]);
     }
     #[Route('/spot/{id}', name: 'show_spot')]
@@ -51,7 +81,7 @@ class SpotController extends AbstractController
 
             return $this->render('spot/show.html.twig', [
                 'controller_name' => 'SpotController',
-                'spot' => $spot
+                'spot' => $spot,
             ]);
         }
     }
