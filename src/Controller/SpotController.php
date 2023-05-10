@@ -16,6 +16,9 @@ class SpotController extends AbstractController
 
         $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name'=>'ASC']);
 
+        //Créer un tableau $tab
+        //Construit un tableau associatif contenant le nom du spot comme clé.
+        //Chaque clé est associée a un tableau contenant sa latitude, sa longitude et sa description comme valeur
         $tab = [];
         foreach($spots as $spot){
             $tab[] = [
@@ -26,9 +29,14 @@ class SpotController extends AbstractController
                 ]
             ];
         }
-
+        //encode le tableau $tab en format JSON
+        /*Le deuxième argument JSON_HEX_APOS de la fonction json_encode() permet de remplacer les single quotes
+        par des entités HTML hexadécimales, pour éviter des problèmes de syntaxe dans le code JavaScript.*/
         $tabCoords = json_encode($tab, JSON_HEX_APOS);
 
+        //retourne la réponse http affichée par le navigateur.
+        // 'spots' est le tableau des spots encodé en JSON.
+        // 'spotsList' est le tableau contenant toutes les spots et toutes les infos des spots, pour la liste des spots
         return $this->render('spot/index.html.twig', [
             'controller_name' => 'SpotController',
             'spots' => $tabCoords,
