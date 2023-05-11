@@ -39,28 +39,23 @@ class SpotController extends AbstractController
 
         
             //Formulaire pour ajouter un spot
+        
+        //créé un formulaire qui se repose sur le builder (qui se repose lui mm sur les propriétés de la classe)
+        $form = $this->createForm(SpotType::class, $spot);
+        //lorsqu'une requete est soumise, récupère les données
+        $form->handleRequest($request);
 
-            /* *
-            * LES PROBLEMES : LORS DE LAJOUT DUN SPOT, REMPLACE LE DERNIER AJOUT
-            *
-            */
+        if($form->isSubmitted() && $form->isValid()){
 
-                //Construire un formulaire qui se repose sur le $builder présent dans SpotType
-                $form = $this->createForm(SpotType::class, $spot);
-                //Qd il y a une action dans le for, analyse ce que récupère la requete
-                $form->handleRequest($request);
+            $spot = $form->getData();
+            //on accède aux méthodes du manager de doctrine
+            $entityManager = $doctrine->getManager();
+            //prepare
+            $entityManager->persist($spot);
+            //execute
+            $entityManager->flush();
+        }
 
-                    //Si le formulaire est soumis et passe les filtres
-                    if ($form->isSubmitted() && $form->isValid()) {
-                        //récupère les données du formulaire et les injecte "hydrate" via les setter de l'objet 
-                        $spot = $form->getData();
-                        //on récupère le manager de doctrine pour accéder aux méthodes suivantes
-                        $entityManager = $doctrine->getManager();
-                        //On prépare notre requete
-                        $entityManager->persist($spot);
-                        //on execute notre recete pour insérer l'entrée en BDD
-                        $entityManager->flush();
-                    }
 
         //retourne la réponse http affichée par le navigateur.
         // 'spots' est le tableau des spots encodé en JSON.
@@ -69,8 +64,7 @@ class SpotController extends AbstractController
             'controller_name' => 'SpotController',
             'spots' => $tabCoords,
             'spotsList' => $spots,
-            'form' => $form->createView()
-
+            'formAddSpot' => $form->createView()
         ]);
     }
     #[Route('/spot/{id}', name: 'show_spot')]

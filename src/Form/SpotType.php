@@ -6,6 +6,7 @@ use App\Entity\Spot;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SpotType extends AbstractType
 {
@@ -14,7 +15,7 @@ class SpotType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            // ->add('adress')
+            ->add('adress')
             // ->add('cp')
             // ->add('city')
             ->add('lat')
@@ -22,6 +23,7 @@ class SpotType extends AbstractType
             // ->add('favoritedByUsers')
             // ->add('modules')
             // ->add('author')
+            ->add('submit', SubmitType::class)
         ;
     }
 
