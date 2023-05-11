@@ -43,6 +43,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // Pour définir la date/heure actuelle comme date d'inscription
+            $now = new \DateTime();
+            $user->setRegistrationDate($now);
+
             $entityManager->persist($user);
             $entityManager->flush();
 

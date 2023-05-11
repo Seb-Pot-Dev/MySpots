@@ -48,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Spot::class)]
     private Collection $addedSpots;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=>"CURRENT_TIMESTAMP"])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable:true, options:["default"=>"CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $registrationDate;
 
     public function __construct()
