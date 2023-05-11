@@ -22,12 +22,12 @@ class SpotController extends AbstractController
         //Construit un tableau associatif contenant le nom du spot comme clé.
         //Chaque clé est associée a un tableau contenant sa latitude, sa longitude et sa description comme valeur
         $tab = [];
-        foreach($spots as $spot){
+        foreach($spots as $aspot){
             $tab[] = [
-                $spot->getName() => [
-                    $spot->getLat(), 
-                    $spot->getLng(),
-                    $spot->getDescription()
+                $aspot->getName() => [
+                    $aspot->getLat(), 
+                    $aspot->getLng(),
+                    $aspot->getDescription()
                 ]
             ];
         }
@@ -47,13 +47,15 @@ class SpotController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $spot = $form->getData();
+            $newspot = $form->getData();
             //on accède aux méthodes du manager de doctrine
             $entityManager = $doctrine->getManager();
             //prepare
-            $entityManager->persist($spot);
+            $entityManager->persist($newspot);
             //execute
             $entityManager->flush();
+            //refresh la page
+            header("Refresh:0");
         }
 
 

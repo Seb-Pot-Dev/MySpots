@@ -7,3 +7,26 @@
     width: 800px;
     height: 800px;
 }
+
+.form-add-spot{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(235, 244, 247);
+}
+form #spot{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}
+form #spot div label{
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+}
+form #spot div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 40%;
+}

@@ -15,7 +15,7 @@ class SpotType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('adress')
+            // ->add('adress')
             // ->add('cp')
             // ->add('city')
             ->add('lat')

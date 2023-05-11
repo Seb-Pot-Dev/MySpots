@@ -12,9 +12,10 @@
     <h1>LA MAP</h1>
 
 <!-- FORMULAIRE SPOT -->
+<div class="form-add-spot">
 <h2>Ajouter un spot</h2>
 {{ form(formAddSpot) }}
-
+</div>
 <!-- AFFICHAGE DE LA MAP -->
 <div id="map"></div>
 
@@ -83,6 +84,19 @@
                     weight: 2
                 }).addTo(map);
 
+
+//Créer un popup lorsque l'on clique sur un endroit non marked de la map et indique les coordonnées
+    //stockage de la fonction popup() de Leaflet dans la variable popup
+    var popup = L.popup();
+
+function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map);
+}
+
+map.on('click', onMapClick);
     </script>
 {% endblock %}
 
