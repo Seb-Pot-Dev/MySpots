@@ -49,7 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $addedSpots;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=>"CURRENT_TIMESTAMP"])]
-    private ?\DateTimeInterface $registrationDate = null;
+    private ?\DateTimeInterface $registrationDate;
 
     public function __construct()
     {

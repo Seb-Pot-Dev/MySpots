@@ -20,14 +20,28 @@
         
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <!-- NAV BAR -->
+        <nav>
+                <a href="{{ path('app_spot') }}">LA MAP</a>
+            {% if app.user %}
+                <a href="">Mon profil</a>
+                {% if is_granted("ROLE_ADMIN") %}
+                <a href="">Administration</a>
+                {% endif %}
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            {% else %}
+                <a href="{{ path('app_login') }}">Se connecter</a>
+            {% endif %}
+        </nav>
 
-       
+        {% block body %}
+        <!-- INJECTION -->
+        {% endblock %}
 
-             <!-- LEAFLET JS -->
-            <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-            crossorigin=""></script>
+<!-- LEAFLET JS -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+crossorigin=""></script>
         {% block javascripts %}
 
 
