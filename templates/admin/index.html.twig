@@ -16,11 +16,12 @@
 <ul>
 {% for spot in spots %}
 <li>
-<a href="{{  path('show_spot', {'id': spot.id}) }}">
-{{spot.name}}
-{{spot.creationDate | date('d/m/Y h:m:s')}}
-</a>
-<a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}">Suppr</a>
+    <a href="{{  path('show_spot', {'id': spot.id}) }}">
+        {{spot.name}}
+        {{spot.creationDate | date('d/m/Y h:m:s')}}
+    </a>
+
+    <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}">Suppr</a>
 
     <!-- vérifier si le spot est validé ou non / en twig, pas de get/set -->
     {% if not spot.isValidated %}
@@ -28,6 +29,8 @@
     {% else %}
         <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}">Unvalidate</a>
     {% endif %}
+
+    
 
 </li>
 

@@ -78,6 +78,18 @@ class AdminController extends AbstractController
             }
         return $this->redirectToRoute('app_admin');
     }
+    #[Route('/admin/modify/{id}', name: 'modifySpot_admin')]
+    public function modifySpot(Security $security, EntityManagerInterface $entityManager, Spot $spot)
+    {
+        //RESTE A GERER LES CONDITIONS ADMINS
+        // $user=$security->getUser();
+
+        //Selectionne le spot a modifier en pointant l'id
+        $myspot = $entityManager->getRepository(Spot::class)->findOneBy(['id'=>$spot]);
+
+            
+        return $this->redirectToRoute('app_admin');
+    }
 
 }
 
