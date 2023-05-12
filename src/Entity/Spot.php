@@ -52,6 +52,9 @@ class Spot
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=>"CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $creationDate;
 
+    #[ORM\Column]
+    private ?bool $isValidated = null;
+
     public function __construct()
     {
         $this->favoritedByUsers = new ArrayCollection();
@@ -249,6 +252,18 @@ class Spot
     public function setCreationDate(\DateTimeInterface $creationDate): self
     {
         $this->creationDate = $creationDate;
+
+        return $this;
+    }
+    // ici je modifie isIsValidated en getIsValidated
+    public function getIsValidated(): ?bool
+    {
+        return $this->isValidated;
+    }
+
+    public function setIsValidated(bool $isValidated): self
+    {
+        $this->isValidated = $isValidated;
 
         return $this;
     }

@@ -27,7 +27,8 @@ class SpotController extends AbstractController
                 $aspot->getName() => [
                     $aspot->getLat(), 
                     $aspot->getLng(),
-                    $aspot->getDescription()
+                    $aspot->getDescription(),
+                    $aspot->getIsValidated()
                 ]
             ];
         }

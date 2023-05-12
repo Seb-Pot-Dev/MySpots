@@ -26,8 +26,8 @@ class AdminController extends AbstractController
     #[Route('/admin/delete/{id}', name: 'deleteSpot_admin')]
     public function deleteSpot(Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
-
-        $user=$security->getUser();
+        //RESTE A GERER LES CONDITIONS ADMINS
+        // $user=$security->getUser();
 
             if ($spot){
                 $entityManager->remove($spot);
@@ -48,6 +48,36 @@ class AdminController extends AbstractController
                     return $this->redirectToRoute('app_spot');
                 }
                 return $this->redirectToRoute('app_admin');
-        }
+    }
+    #[Route('/admin/validate/{id}', name: 'validateSpot_admin')]
+    public function validateSpot(Security $security, EntityManagerInterface $entityManager, Spot $spot)
+    {
+        //RESTE A GERER LES CONDITIONS ADMINS
+        // $user=$security->getUser();
+
+        //Selectionne le spot a modifier en pointant l'id
+        $myspot = $entityManager->getRepository(Spot::class)->findOneBy(['id'=>$spot]);
+
+            // Si le isValidated == FALSE -> le passe en TRUE
+            if ($myspot->getIsValidated() == false) {
+                // Modifier la propriété de l'entité
+                $myspot->setIsValidated(true);
+                //prepare
+                $entityManager->persist($myspot);
+                // Persist les modifications dans la base de données
+                $entityManager->flush();
+            }
+            // autrement si isValidated == TRUE -> le passe en FALSE
+            else{
+                // Modifier la propriété de l'entité
+                $myspot->setIsValidated(false);
+                //prepare
+                $entityManager->persist($myspot);
+                // Persist les modifications dans la base de données
+                $entityManager->flush();
+            }
+        return $this->redirectToRoute('app_admin');
+    }
+
 }
 

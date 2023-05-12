@@ -21,6 +21,14 @@
 {{spot.creationDate | date('d/m/Y h:m:s')}}
 </a>
 <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}">Suppr</a>
+
+    <!-- vérifier si le spot est validé ou non / en twig, pas de get/set -->
+    {% if not spot.isValidated %}
+        <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}">Validate</a>
+    {% else %}
+        <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}">Unvalidate</a>
+    {% endif %}
+
 </li>
 
 {% endfor %}

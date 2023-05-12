@@ -23,7 +23,9 @@
 
     <ul>
         {% for spot in spotsList %}
-        <li><a href="{{ path('show_spot', {'id': spot.id}) }}">{{spot.name}}</a></li>
+            {% if spot.isValidated %}
+                <li><a href="{{ path('show_spot', {'id': spot.id}) }}">{{spot.name}}</a></li>
+            {% endif %}
         {% endfor %}
     </ul>
 </div>
@@ -45,17 +47,20 @@
             
             // Convertir un tableau TWIG en tableau JS
             const markersSpots = '{{ spots | raw }}';
-            const tab = JSON.parse(markersSpots);
+            const jsonTabForMarkersSpots = JSON.parse(markersSpots);
 
             // Parcourir le tableau et créer des marqueurs pour chaque élément
-            tab.forEach(obj => {
+            jsonTabForMarkersSpots.forEach(obj => {
                 Object.entries(obj).forEach(([name, infos]) => { 
                     const lat = infos[0]
                     const lng = infos[1]
                     const desc = infos[2]
+                    const isValidate = infos[3]
 
+                if (infos[3]){
                     const marker = L.marker([lat, lng]).addTo(map);
                     marker.bindPopup(`<b>${name}</b><br>${desc}`);
+                }
                 })
             })
 
