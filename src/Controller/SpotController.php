@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Spot;
+use App\Entity\Module;
 use App\Form\SpotType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,9 +46,13 @@ class SpotController extends AbstractController
         
 //-------------Formulaire pour ajouter/modifier un spot--------------------------
         
-        
-        //créé un formulaire qui se repose sur le builder (qui se repose lui mm sur les propriétés de la classe)
-        $form = $this->createForm(SpotType::class, $spot);
+        //récupérer la liste de tout les modules
+        $modules = $doctrine->getRepository(Module::class)->findAll();    
+
+        //créé un formulaire qui se repose sur le builder (qui se repose lui mm sur les propriétés de la classe) et assigner la liste de tout les modules
+        $form = $this->createForm(SpotType::class, $spot, [
+            'modules' => $modules
+        ]);
         //lorsqu'une requete est soumise, récupère les données
         $form->handleRequest($request);
 

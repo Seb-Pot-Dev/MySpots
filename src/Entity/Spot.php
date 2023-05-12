@@ -52,7 +52,7 @@ class Spot
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=>"CURRENT_TIMESTAMP"])]
     private ?\DateTimeInterface $creationDate;
 
-    #[ORM\Column(options:["default"=>false])]
+    #[ORM\Column(options:["default"])]
     private ?bool $isValidated = null;
 
     public function __construct()
