@@ -6,18 +6,21 @@ use App\Entity\Spot;
 use App\Form\SpotType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SpotController extends AbstractController
 {
+
+    #[Route("/spot/{id}/edit", name:"edit_spot")]
     #[Route('/spot', name: 'app_spot')]
-    public function index(ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
+    public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
-
+        //récupère tout les spots de la BDD.
         $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name'=>'ASC']);
-
+        
         /*Créer un tableau $tab
         /Construit un tableau associatif contenant le nom du spot comme clé.
         /Chaque clé est associée a un tableau contenant sa latitude, sa longitude, 
@@ -40,21 +43,42 @@ class SpotController extends AbstractController
         $tabCoords = json_encode($tab, JSON_HEX_APOS);
 
         
-            //Formulaire pour ajouter un spot
+//-------------Formulaire pour ajouter/modifier un spot--------------------------
+        
         
         //créé un formulaire qui se repose sur le builder (qui se repose lui mm sur les propriétés de la classe)
         $form = $this->createForm(SpotType::class, $spot);
         //lorsqu'une requete est soumise, récupère les données
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid()){
+        $newspot = $form->getData();
+        
+        $isNew=null;
+        //si mon spot n'existe pas, créé un nouveau spot.
+        if(!$spot){
+            $spot = new Spot();
+            //initialisation d'une variable $isNew qui permet plus tard de vérifier si le spot viens d'être créé
+            $isNew = true;
+        }
 
+        if($form->isSubmitted() && $form->isValid()){
             $newspot = $form->getData();
             //on accède aux méthodes du manager de doctrine
             $entityManager = $doctrine->getManager();
-            // Pour définir la date/heure actuelle comme date d'inscription
-            $now = new \DateTime();
-            $newspot->setCreationDate($now);
+            
+                //Si le spot vient d'être créé, setIsValidated, CreationDate et Author
+                if($isNew){
+                    //Pour définir isValidated comme étant false
+                    $newspot->setIsValidated(false);
+        
+                    // Pour définir la date/heure actuelle comme date d'inscription
+                    $now = new \DateTime();
+                    $newspot->setCreationDate($now);
+        
+                    //Pour définir l'author du spot comme étant le user qui soumet le formulaire
+                    $user=$security->getUser();
+                    $newspot->setAuthor($user);
+                }
 
             //prepare
             $entityManager->persist($newspot);
@@ -72,7 +96,8 @@ class SpotController extends AbstractController
             'controller_name' => 'SpotController',
             'spots' => $tabCoords,
             'spotsList' => $spots,
-            'formAddSpot' => $form->createView()
+            'formAddSpot' => $form->createView(),
+            'edit' => $spot->getId()
         ]);
     }
     #[Route('/spot/{id}', name: 'show_spot')]

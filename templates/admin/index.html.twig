@@ -9,8 +9,9 @@
 </style>
 
 <div class="example-wrapper">
+    {% if app.user %}
     <h1>Hello {{ app.user.pseudo }}! ✅</h1>
-
+    {% endif %}
 <h3>La liste des spots récéments ajoutés:</h3>
 
 <ul>
@@ -18,7 +19,7 @@
 <li>
     <a href="{{  path('show_spot', {'id': spot.id}) }}">
         {{spot.name}}
-        {{spot.creationDate | date('d/m/Y h:m:s')}}
+        {{spot.creationDate | date('d/m/Y H:i:s')}}
     </a>
 
     <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}">Suppr</a>
@@ -29,8 +30,8 @@
     {% else %}
         <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}">Unvalidate</a>
     {% endif %}
+    <a href="{{ path('edit_spot', {'id':spot.id}) }}">Edit</a>
 
-    
 
 </li>
 
