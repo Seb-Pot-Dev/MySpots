@@ -15,9 +15,7 @@ class SpotType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $modules = $options['modules'];
 
-        
         $builder
             ->add('name')
             ->add('description')
@@ -26,6 +24,7 @@ class SpotType extends AbstractType
             // ->add('city')
             ->add('lat')
             ->add('lng')
+            //affiché des checkboxs non obligatoire avec plusieurs choix 
             ->add('modules', EntityType::class,[
                 'class'=> Module::class,
                 'choice_label'=>'name',
