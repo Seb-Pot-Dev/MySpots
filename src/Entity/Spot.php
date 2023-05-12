@@ -49,6 +49,9 @@ class Spot
     #[ORM\ManyToOne(inversedBy: 'addedSpots')]
     private ?User $author = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=>"CURRENT_TIMESTAMP"])]
+    private ?\DateTimeInterface $creationDate;
+
     public function __construct()
     {
         $this->favoritedByUsers = new ArrayCollection();
@@ -234,6 +237,18 @@ class Spot
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): self
+    {
+        $this->creationDate = $creationDate;
 
         return $this;
     }

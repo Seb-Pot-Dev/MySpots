@@ -26,11 +26,12 @@
             {% if app.user %}
                 <a href="">Mon profil</a>
                 {% if is_granted("ROLE_ADMIN") %}
-                <a href="">Administration</a>
+                <a href="{{ path('app_admin') }}">Administration</a>
                 {% endif %}
                 <a href="{{ path('app_logout') }}">Se déconnecter</a>
             {% else %}
                 <a href="{{ path('app_login') }}">Se connecter</a>
+                <a href="{{ path('app_register') }}">S'inscrire</a>
             {% endif %}
         </nav>
 

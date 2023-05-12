@@ -50,12 +50,16 @@ class SpotController extends AbstractController
             $newspot = $form->getData();
             //on accède aux méthodes du manager de doctrine
             $entityManager = $doctrine->getManager();
+            // Pour définir la date/heure actuelle comme date d'inscription
+            $now = new \DateTime();
+            $newspot->setCreationDate($now);
+
             //prepare
             $entityManager->persist($newspot);
             //execute
             $entityManager->flush();
             //refresh la page
-            header("Refresh:0");
+            return $this->redirectToRoute('app_spot');
         }
 
 
