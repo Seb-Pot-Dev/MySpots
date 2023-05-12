@@ -1,0 +1,49 @@
+SOIT modifier sur la liste des spots
+- créé un formulaire
+
+	*Dans la vue :
+	-afficher le formulaire si je clique sur modifier
+		
+		*Le formulaire remplace les infos
+		-mettre les infos du spot en value du formulaire
+		-soumettre le formulaire->envoie au controlleur
+
+	*Dans le ctrlr:
+	-pointer l'entité
+	-récupérer les infos du formulaire
+	-préparer la requete 
+	-soumettre la requete
+
+
+SOIT modifier sur une page ADMIN show_spot
+- créé un formulaire
+
+	*Dans la vue :
+	-afficher le formulaire si je clique sur modifier
+	-render une view de la page admin_show_spot conçu pour l'admin
+
+	*Dans le ctrlr:
+	-pointer l'entité
+	-récupérer les infos du formulaire
+	-préparer la requete 
+	-soumettre la requete
+
+SOIT modifier sur la page show_spot avec des fonctions d'admin
+
+- créé un formulaire
+	*Dans la vue :
+	-redirectTo show_spot
+	-des formulaire remplaces les textes
+	-boutons supprimé sur les photos
+	-checkbox des modules selectionnable/deselectionnable
+
+	*Dans le ctrlr:
+	-pointer l'entité
+	-récupérer les infos du formulaire
+	-préparer la requete 
+	-soumettre la requete
+
+
+SI spot existe PAS
+-> new spot + setIsValidated + setCreationDate + setAuthor
+SI spot existe
