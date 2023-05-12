@@ -38,14 +38,14 @@ class AdminController extends AbstractController
                 'success',
                 'Spot supprimé avec succès!'
             );
-                return $this->redirectToRoute('app_spot');
+                return $this->redirectToRoute('app_admin');
             }
             else{
                 $this->addFlash(
                     'error',
                     'Erreur: le spot n\'a pas été supprimée'
                 );
-                    return $this->redirectToRoute('app_spot');
+                    return $this->redirectToRoute('app_admin');
                 }
                 return $this->redirectToRoute('app_admin');
     }
