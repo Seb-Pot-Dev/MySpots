@@ -71,7 +71,7 @@ class SpotController extends AbstractController
             //on accède aux méthodes du manager de doctrine
             $entityManager = $doctrine->getManager();
             
-                //Si le spot vient d'être créé, setIsValidated, CreationDate et Author
+                //Si le spot vient d'être créé, alors ->setIsValidated()+CreationDate()+Author()
                 if($isNew){
                     //Pour définir isValidated comme étant false
                     $newspot->setIsValidated(false);
