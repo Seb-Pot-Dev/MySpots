@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Spot;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,7 @@ class AdminController extends AbstractController
             'spots' => $spots
         ]);
     }
+    //*******************************************************CRUD SPOT*********************************************************** */
     #[Route('/admin/delete/{id}', name: 'deleteSpot_admin')]
     public function deleteSpot(Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
@@ -81,6 +83,38 @@ class AdminController extends AbstractController
             
         return $this->redirectToRoute('app_admin');
     }
+    
+
+    //*************************************CRUD UTILISATEUR******************************************* */
+    #[Route('/admin/listUsers', name: 'listUsers_admin')]
+    public function listUsers(Security $security, ManagerRegistry $doctrine, Request $request)
+    {
+        $users = $doctrine->getRepository(User::class)->findBy([], ['registrationDate'=>'DESC']);
+
+        return $this->render('admin/listUsers.html.twig', [
+            'controller_name' => 'AdminController',
+            'users' => $users
+        ]);
+    }
+    #[Route('/admin/banUser/{id}', name: 'banUser_admin')]
+    public function banUser(Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, User $user = null, Request $request): Response
+    {
+        //RESTE A GERER LES CONDITIONS ADMINS
+        // $user=$security->getUser();
+
+            if ($user){
+                $user->setIsBanned(1);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('listUsers_admin');
+            }
+            else{
+                    return $this->redirectToRoute('listUsers_admin');
+                }
+                return $this->redirectToRoute('listUsers_admin');
+    }
+
+
 
 }
 
