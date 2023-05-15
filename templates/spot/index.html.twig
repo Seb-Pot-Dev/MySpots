@@ -24,7 +24,8 @@
     <ul>
         {% for spot in spotsList %}
             {% if spot.isValidated %}
-                <li><a href="{{ path('show_spot', {'id': spot.id}) }}">{{spot.name}}</a>    <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
+                <li><a href="{{ path('show_spot', {'id': spot.id}) }}">{{spot.name}}</a>
+                <a href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}"><i class="fa-regular fa-heart" alt='nb-likes'></i></a>{{ spot.favoritedByUsers | length }}    <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
     <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
 </li>
             {% endif %}

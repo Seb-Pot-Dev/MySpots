@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Spot;
+use App\Entity\User;
 use App\Entity\Module;
 use App\Form\SpotType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,6 +12,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class SpotController extends AbstractController
 {
@@ -105,6 +107,7 @@ class SpotController extends AbstractController
             'edit' => $spot->getId()
         ]);
     }
+
     #[Route('/spot/{id}', name: 'show_spot')]
     public function show(Spot $spot = null): Response
     //On appel l'objet Spot dont l'id est passé en parametre par la route
@@ -116,5 +119,38 @@ class SpotController extends AbstractController
                 'spot' => $spot,
             ]);
         }
+    }
+    //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
+    #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]
+    #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
+    #[ParamConverter("user", options:["mapping"=>["idUser"=>"id"]])]
+    public function likeSpot(Security $security, ManagerRegistry $doctrine, Spot $spot, User $user = null)
+    {   
+        $entityManager=$doctrine->getManager();
+
+        //si l'utilisateur a déjà liké le spot
+        if($user->getFavoriteSpots()->contains($spot)){
+
+            //on supprime le user de la collection FavoritedByUser du spot
+            $spot->removeFavoritedByUser($user);
+    
+            $entityManager->persist($spot);
+            $entityManager->flush();
+        }
+        //sinon si l'utilisateur n'a pas encore liké
+        else{
+
+            //on ajoute le user a la collection FavoritedByUser du spot
+            $spot->addFavoritedByUser($user);
+    
+            $entityManager->persist($spot);
+            $entityManager->flush();
+        }
+
+
+    
+        return $this->redirectToRoute('app_spot');
+        
+    
     }
 }
