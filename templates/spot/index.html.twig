@@ -24,10 +24,18 @@
     <ul>
         {% for spot in spotsList %}
             {% if spot.isValidated %}
-                <li><a href="{{ path('show_spot', {'id': spot.id}) }}">{{spot.name}}</a>
-                <a href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}"><i class="fa-regular fa-heart" alt='nb-likes'></i></a>{{ spot.favoritedByUsers | length }}    <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
-    <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
-</li>
+                <li>
+                    <!-- nom du spot -->
+                    <a href="{{ path('show_spot', {'id': spot.id}) }}">{{spot.name}}</a> -
+                    <!-- nb likes du spot -->
+                    <a href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}"><i class="fa-regular fa-heart" alt='nb-likes'></i></a>{{ spot.favoritedByUsers | length }}    
+                    <!-- nb comments spot -->
+                    <i class="fa-regular fa-message"></i>{{ spot.comments | length }}
+                    <!-- supprimer le spot -->
+                    <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
+                    <!-- modifier le spot -->
+                    <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
+                </li>
             {% endif %}
         {% endfor %}
     </ul>
