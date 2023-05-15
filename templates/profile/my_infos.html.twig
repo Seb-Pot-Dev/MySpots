@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfileController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+{% if app.user %}
+    <h1>Hello {{ user.pseudo }}! ✅</h1>
+
+<h2>Mes infos</h2>
+<p>Pseudo : {{ user.pseudo }}</p>
+<p>Mail : {{ user.email }}</p>
+<p>Role :{% if is_granted("ROLE_ADMIN") %} admin {% else %}normal {% endif %}</p>
+
+
+    
+{% endif %}
+{% endblock %}
