@@ -6,6 +6,8 @@ use App\Entity\Spot;
 use App\Entity\User;
 use App\Entity\Module;
 use App\Form\SpotType;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -58,8 +60,10 @@ class SpotController extends AbstractController
         //lorsqu'une requete est soumise, récupère les données
         $form->handleRequest($request);
 
+        //assigne les donnée du formulaire soumis à une variable 
         $newspot = $form->getData();
         
+        //défini isNew comme null
         $isNew=null;
         //si mon spot n'existe pas, créé un nouveau spot.
         if(!$spot){
@@ -109,17 +113,64 @@ class SpotController extends AbstractController
     }
 
     #[Route('/spot/{id}', name: 'show_spot')]
-    public function show(Spot $spot = null): Response
+    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request): Response
     //On appel l'objet Spot dont l'id est passé en parametre par la route
-    {        
+    {       
+ 
+        //si le spot existe
         if ($spot){
+
+            //créé un formulaire pour ajouter/modifier les commentaires
+            $form = $this->createForm(CommentType::class, $comment);
+
+            //intercepte la requete du formulaire soumis
+            $form->handleRequest($request);
+
+            //assigne les donnée du formulaire soumis à une variable 
+            $newComment = $form->getData();
+
+                //défini isNew comme null (pour CREER)
+                $isNew = null;
+                //si mon comment n'existe pas, créé un nouveau commentaire.
+                if(!$comment){
+                    $comment = new Comment();
+                    $isNew = true;
+                }
+            
+            //Si le formulaire est soumis ET valide
+            if($form->isSubmitted() && $form->isValid()){
+            
+                //défini quel spot est concerné par le commentaire
+                $newComment->setSpotConcerned($spot);
+
+                //on accède aux méthodes du manager de doctrine
+                $entityManager = $doctrine->getManager();
+
+                //Si c'est un nouveau commentaire, assigne la date et l'autheur
+                if($isNew){
+                    // Pour définir la date/heure actuelle comme date du commentaire
+                    $now = new \DateTime();
+                    $newComment->setDate($now);
+    
+                    //Pour définir l'author du comm comme étant le user qui soumet le formulaire
+                    $user=$security->getUser();
+                    $newComment->setAuthor($user);
+                }
+
+            //prepare la requette
+            $entityManager->persist($newComment);
+            //execute pour ajouter le comm en BDD
+            $entityManager->flush();
+            }
 
             return $this->render('spot/show.html.twig', [
                 'controller_name' => 'SpotController',
                 'spot' => $spot,
+                'formCommentSpot' => $form->createView()
             ]);
         }
     }
+
     //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
     #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]
     #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
