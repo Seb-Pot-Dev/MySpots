@@ -27,7 +27,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         <nav>
                 <a href="{{ path('app_spot') }}">LA MAP</a>
             {% if app.user %}
-                <a href="">Mon profil</a>
+                <a href="{{ path('my_profile') }}">Mon profil</a>
                 {% if is_granted("ROLE_ADMIN") %}
                 <a href="{{ path('app_admin') }}">Administration</a>
                 {% endif %}
