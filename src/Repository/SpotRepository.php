@@ -53,7 +53,18 @@ class SpotRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+public function findByModules(array $moduleIds): array
+{
+    $qb = $this->createQueryBuilder('s');
 
+    if (!empty($moduleIds)) {
+        $qb->join('s.modules', 'm')
+            ->andWhere('m.id IN (:moduleIds)')
+            ->setParameter('moduleIds', $moduleIds);
+    }
+
+    return $qb->getQuery()->getResult();
+}
 //    public function findOneBySomeField($value): ?Spot
 //    {
 //        return $this->createQueryBuilder('s')

@@ -20,9 +20,12 @@ class SpotController extends AbstractController
 {
 
     #[Route("/spot/{id}/edit", name:"edit_spot")]
-    #[Route('/spot', name: 'app_spot')]
+    #[Route('/spot', name: 'app_spot', methods: ['GET'])] //TEST ici ajout de methods:get 
     public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
+        //on accède aux méthodes du manager de doctrine
+        $entityManager = $doctrine->getManager();
+
         //récupère tout les spots de la BDD.
         $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name'=>'ASC']);
         
@@ -74,8 +77,7 @@ class SpotController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $newspot = $form->getData();
-            //on accède aux méthodes du manager de doctrine
-            $entityManager = $doctrine->getManager();
+            
             
                 //Si le spot vient d'être créé, alors ->setIsValidated()+CreationDate()+Author()
                 if($isNew){
@@ -99,6 +101,20 @@ class SpotController extends AbstractController
             return $this->redirectToRoute('app_spot');
         }
 
+//TEST
+
+        $moduleIds = $request->query->get('modulesFilter', []);
+
+        // Vérifier si des modules ont été sélectionnés
+    if (!is_array($moduleIds)) {
+        $moduleIds = [$moduleIds];
+    }
+        // Effectuer la recherche des spots par modules
+        $spotsFiltered = $entityManager->getRepository(Spot::class)->findByModules($moduleIds);
+
+        // Récupérer tous les modules disponibles pour l'affichage initial
+        $modulesFilter = $entityManager->getRepository(Module::class)->findAll();
+//FIN TEST 
 
         //retourne la réponse http affichée par le navigateur.
         // 'spots' est le tableau des spots encodé en JSON.
@@ -108,9 +124,32 @@ class SpotController extends AbstractController
             'spots' => $tabCoords,
             'spotsList' => $spots,
             'formAddSpot' => $form->createView(),
-            'edit' => $spot->getId()
+            'edit' => $spot->getId(),
+            'modules' => $modules,
+            'modulesFilter' => $modulesFilter, //TEST
+            'spotsFiltered' => $spotsFiltered //TEST
         ]);
     }
+
+    // TEST **********************************************
+    #[Route('/spots/filter', name: 'filter_spots', methods: ['GET'])]
+    public function filter(Request $request): Response
+    {
+        $moduleIds = $request->query->get('modules', []);
+
+        // Effectuer la recherche des spots par modules
+        $spots = $this->getDoctrine()->getRepository(Spot::class)->findByModules($moduleIds);
+
+        // Récupérer tous les modules disponibles pour l'affichage initial
+        $modules = $this->getDoctrine()->getRepository(Module::class)->findAll();
+
+        // Rendre la vue avec les résultats de la recherche et les modules disponibles
+        return $this->render('spot/index.html.twig', [
+            'spots' => $spots,
+            'modules' => $modules,
+        ]);
+    }
+    // TEST **********************************************
 
     #[Route('/spot/{id}', name: 'show_spot')]
     public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request): Response

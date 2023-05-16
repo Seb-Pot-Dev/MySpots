@@ -10,14 +10,55 @@
 
 <div class="example-wrapper">
     <h1>LA MAP</h1>
+<!-- TEST FORMULAIRE POUR TRIER -->
 
-<!-- FORMULAIRE SPOT -->
+
+    <h1>Liste des spots</h1>
+
+    <section>
+        <h2>Filtrer par modules</h2>
+        <form action="{{ path('app_spot') }}" method="GET">
+            {% for module in modules %}
+                <label>
+                    <input type="checkbox" name="modulesFilter[]" value="{{ module.id }}"> {{ module.name }}
+                </label><br>
+            {% endfor %}
+            <button type="submit">Filtrer</button>
+        </form>
+    </section>
+
+    <section>
+        <h2>Résultats</h2>
+        {% if spots is empty %}
+            <p>Aucun spot correspondant trouvé.</p>
+        {% else %}
+            <ul>
+                {% for spot in spotsFiltered %}
+                    <li>{{ spot.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- FIN TEST FORMULAIRE POUR TRIER -->
+{# <!-- FORMULAIRE SPOT -->
 <div class="form-add-spot">
 <h2>Ajouter un spot</h2>
 {{ form(formAddSpot) }}
 </div>
-<!-- AFFICHAGE DE LA MAP -->
-<div id="map"></div>
+<!-- AFFICHAGE DE LA MAP --> #}
+{# <div id="map"></div>
 
 <!-- Liste des spots -->
 
@@ -44,7 +85,7 @@
             {% endif %}
         {% endfor %}
     </ul>
-</div>
+</div> #}
 {% endblock %}
 
 {% block javascripts %}
