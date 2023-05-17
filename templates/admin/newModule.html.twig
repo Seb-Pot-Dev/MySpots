@@ -7,9 +7,9 @@
 </style>
 <h4>Liste des modules disponibles</h4>
 <ul>
-
+{# {{ dump() }} #}
 {% for module in modules %}
-    <li>{{module.name}}</li>
+    <li>{{module.name}} <a href="{{ path('app_module_edit', {'id':module.id}) }}">edit</a><a href="{{ path('deleteModule_admin', {'id':module.id}) }}">del</a></li>
 {% endfor %}
 </ul>
 <h4>Ajouter un module</h4>

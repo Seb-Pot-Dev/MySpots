@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Spot;
 use App\Entity\User;
+use App\Entity\Module;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,7 @@ class AdminController extends AbstractController
         ]);
     }
     //*******************************************************CRUD SPOT*********************************************************** */
-    #[Route('/admin/delete/{id}', name: 'deleteSpot_admin')]
+    #[Route('/admin/deleteSpot/{id}', name: 'deleteSpot_admin')]
     public function deleteSpot(Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
         //RESTE A GERER LES CONDITIONS ADMINS
@@ -35,12 +36,9 @@ class AdminController extends AbstractController
                 $entityManager->remove($spot);
                 $entityManager->flush();
 
-                return $this->redirectToRoute('app_admin');
             }
-            else{
-                    return $this->redirectToRoute('app_admin');
-                }
-                return $this->redirectToRoute('app_admin');
+            return $this->redirectToRoute('app_spot');
+            
     }
     #[Route('/admin/validate/{id}', name: 'validateSpot_admin')]
     public function validateSpot(Security $security, EntityManagerInterface $entityManager, Spot $spot)
@@ -113,8 +111,20 @@ class AdminController extends AbstractController
                 }
                 return $this->redirectToRoute('listUsers_admin');
     }
+//***********************************CRUD MODULE****************** */
+#[Route('/admin/deleteModule/{id}', name: 'deleteModule_admin')]
+public function deleteModule(Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, Module $module = null, Request $request): Response
+{
+    //RESTE A GERER LES CONDITIONS ADMINS
+    // $user=$security->getUser();
 
-
+    
+        if ($module){
+            $entityManager->remove($module);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('app_module');
+    }
 
 }
 
