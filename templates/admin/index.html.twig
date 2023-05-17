@@ -12,7 +12,10 @@
 {% if app.user and is_granted('ROLE_ADMIN') %}
     <h1>Hello {{ app.user.pseudo }}! ✅</h1>
 
-<a href="{{ path('listUsers_admin') }}"><i class="fa-solid fa-users"></i> Voir la liste des utilisateurs <i class="fa-solid fa-users"></i></a>
+<!-- ajouter un module -->
+<a href="{{ path('app_module') }}"><i class="fa-solid fa-pallet"></i>Ajouter un module<i class="fa-solid fa-pallet"></i></a><br><br>
+<!-- voir liste des utilisateurs -->
+<a href="{{ path('listUsers_admin') }}"><i class="fa-solid fa-users"></i>Voir la liste des utilisateurs <i class="fa-solid fa-users"></i></a>
         <h3>La liste des spots récéments ajoutés:</h3>
 
         <h4>Liste des spots en attente de validation</h4>
@@ -27,13 +30,13 @@
 
                         <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
 
+                        <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                         <!-- vérifier si le spot est validé ou non-->
                         {% if not spot.isValidated %}
                             <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square"></i></a>
                         {% else %}
                             <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square-check"></i></a>
                         {% endif %}
-                        <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                     </li>
                     {% endif %}
                 {% endfor %}
@@ -51,13 +54,13 @@
 
                     <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
 
+                    <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                     <!-- vérifier si le spot est validé ou non-->
                     {% if not spot.isValidated %}
                         <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square"></i></a>
                     {% else %}
                         <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square-check"></i></a>
                     {% endif %}
-                    <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                 </li>
                     {% endif %}
 
