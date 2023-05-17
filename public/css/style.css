@@ -8,28 +8,6 @@
     height: 800px;
 }
 
-.form-add-spot{
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(235, 244, 247);
-}
-form #spot{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-}
-form #spot div label{
-    display: flex;
-    flex-direction: row;
-    align-self: flex-start;
-}
-form #spot div {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 40%;
-}
 img.logo-strasspot-homepage{
     width: 100%;
 }
@@ -38,3 +16,28 @@ img.logo-strasspot-homepage{
     flex-direction: column;
     align-items: center;
 }
+/*---form----*/
+form #spot{
+    display: flex;
+    flex-direction: column;
+}
+#spot{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#spot>div{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+#spot>div>input{
+    width: 50%;
+}
+#spot>div>textarea{
+    width: 50%;
+    min-height: 50px;
+    max-width: 50.3%;
+    min-width: 50.3%;
+}
+

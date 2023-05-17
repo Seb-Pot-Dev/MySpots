@@ -30,7 +30,10 @@ class SpotType extends AbstractType
                 'choice_label'=>'name',
                 'multiple'=>true,
                 'expanded'=>true,
-                'required'=>false
+                'required'=>false,
+                'attr' => [
+                    'class' => 'form-row'
+                ]
             ])
             // $builder
             ->add('submit', SubmitType::class)

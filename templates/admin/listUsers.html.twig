@@ -18,6 +18,7 @@
                 <li>
                     {{user.pseudo}}
                     <a href="{{ path('banUser_admin', {'id':user.id}) }}"><i class="fa-solid fa-user-slash"></i></a>
+                    <a href="{{ path('deleteUser_admin', {'id':user.id}) }}">sup</a>
                 </li>
             {% endif %}
         {% endfor %}

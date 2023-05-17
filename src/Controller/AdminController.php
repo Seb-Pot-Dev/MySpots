@@ -103,13 +103,21 @@ class AdminController extends AbstractController
             if ($user){
                 $user->setIsBanned(1);
                 $entityManager->flush();
-
-                return $this->redirectToRoute('listUsers_admin');
             }
-            else{
-                    return $this->redirectToRoute('listUsers_admin');
-                }
                 return $this->redirectToRoute('listUsers_admin');
+    }
+    #[Route('/admin/deleteUser/{id}', name: 'deleteUser_admin')]
+    public function deleteUser(Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, User $user = null, Request $request): Response
+    {
+    //RESTE A GERER LES CONDITIONS ADMINS
+    // $user=$security->getUser();
+    
+    //supprimer un utilisateur n'est pas possible pour le moment, car les objets Spot et Comment ont besoin d'un objet User comme 'author'
+        if ($user){
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+        return $this->redirectToRoute('listUsers_admin');
     }
 //***********************************CRUD MODULE****************** */
 #[Route('/admin/deleteModule/{id}', name: 'deleteModule_admin')]
