@@ -52,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $registrationDate;
 
     #[ORM\Column]
-    private ?bool $isBanned = null;
+    private ?bool $isBanned = false; //ici je change "null" en false pour dire que mon user est "pas banni" par défaut.
 
     public function __construct()
     {

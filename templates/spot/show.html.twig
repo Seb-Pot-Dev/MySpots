@@ -30,11 +30,12 @@ Les informations concernant les ressources de ce spot n'ont pas encore été ren
 {% endif %}
 <h4>Commentaires:</h4>
 {% if spot.comments|length >= 1 %}
-    {% for comment in spot.comments %}
+    <!-- boucle sur les commentaires du spot, triés par date -->
+    {% for comment in spot.comments|sort((a, b)=>a.date<=>b.date) %}
     <div class="comment-box">
         <div class="comment-author-and-date">
         {{comment.author.pseudo}}
-        {{comment.date|date('d/m/y')}}
+        {{comment.date|date('d/m/y H:i:s')}}
         </div>
         <div class="comment-content">
         {{comment.content}}

@@ -11,12 +11,10 @@
     <!-- Si l'utilisateur est connecté et qu'il a le ROLE_ADMIN-->
 {% if app.user and is_granted('ROLE_ADMIN') %}
     <h1>Hello {{ app.user.pseudo }}! ✅</h1>
-
         <!-- Liste des utilisateurs -->
         <h4>Liste des utilisateurs</h4>
         {% for user in users %}
-            {% if user.isBanned == 0 and not is_granted('ROLE_ADMIN')%}
-                
+            {% if user.isBanned == 0 and not(user.roles == "ROLE_ADMIN") %}
                 <li>
                     {{user.pseudo}}
                     <a href="{{ path('banUser_admin', {'id':user.id}) }}"><i class="fa-solid fa-user-slash"></i></a>
@@ -26,7 +24,6 @@
 
         <h4>Utilisateurs bannis</h4>
         {% for user in users %}
-
             {% if user.isBanned == 1 %}
                 <li>
                     {{user.pseudo}}

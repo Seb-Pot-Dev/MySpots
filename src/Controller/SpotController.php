@@ -20,7 +20,9 @@ class SpotController extends AbstractController
 {
 
     #[Route("/spot/{id}/edit", name:"edit_spot")]
-    #[Route('/spot', name: 'app_spot', methods: ['GET'])] //TEST ici ajout de methods:get 
+    #[Route('/spot', name: 'app_spot',
+    //  methods: ['GET']//TEST ici ajout de methods:get
+     )]  
     public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
         //on accède aux méthodes du manager de doctrine
@@ -103,17 +105,17 @@ class SpotController extends AbstractController
 
 //TEST
 
-        $moduleIds = $request->query->get('modulesFilter', []);
+    //     $moduleIds = $request->query->get('modulesFilter', []);
 
-        // Vérifier si des modules ont été sélectionnés
-    if (!is_array($moduleIds)) {
-        $moduleIds = [$moduleIds];
-    }
-        // Effectuer la recherche des spots par modules
-        $spotsFiltered = $entityManager->getRepository(Spot::class)->findByModules($moduleIds);
+    //     // Vérifier si des modules ont été sélectionnés
+    // if (!is_array($moduleIds)) {
+    //     $moduleIds = [$moduleIds];
+    // }
+    //     // Effectuer la recherche des spots par modules
+    //     $spotsFiltered = $entityManager->getRepository(Spot::class)->findByModules($moduleIds);
 
-        // Récupérer tous les modules disponibles pour l'affichage initial
-        $modulesFilter = $entityManager->getRepository(Module::class)->findAll();
+    //     // Récupérer tous les modules disponibles pour l'affichage initial
+    //     $modulesFilter = $entityManager->getRepository(Module::class)->findAll();
 //FIN TEST 
 
         //retourne la réponse http affichée par le navigateur.
@@ -124,10 +126,10 @@ class SpotController extends AbstractController
             'spots' => $tabCoords,
             'spotsList' => $spots,
             'formAddSpot' => $form->createView(),
-            'edit' => $spot->getId(),
+            // 'edit' => $spot->getId(),
             'modules' => $modules,
-            'modulesFilter' => $modulesFilter, //TEST
-            'spotsFiltered' => $spotsFiltered //TEST
+            // 'modulesFilter' => $modulesFilter, //TEST
+            // 'spotsFiltered' => $spotsFiltered //TEST
         ]);
     }
 
@@ -151,64 +153,7 @@ class SpotController extends AbstractController
     }
     // TEST **********************************************
 
-    #[Route('/spot/{id}', name: 'show_spot')]
-    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request): Response
-    //On appel l'objet Spot dont l'id est passé en parametre par la route
-    {       
- 
-        //si le spot existe
-        if ($spot){
-
-            //créé un formulaire pour ajouter/modifier les commentaires
-            $form = $this->createForm(CommentType::class, $comment);
-
-            //intercepte la requete du formulaire soumis
-            $form->handleRequest($request);
-
-            //assigne les donnée du formulaire soumis à une variable 
-            $newComment = $form->getData();
-
-                //défini isNew comme null (pour CREER)
-                $isNew = null;
-                //si mon comment n'existe pas, créé un nouveau commentaire.
-                if(!$comment){
-                    $comment = new Comment();
-                    $isNew = true;
-                }
-            
-            //Si le formulaire est soumis ET valide
-            if($form->isSubmitted() && $form->isValid()){
-            
-                //défini quel spot est concerné par le commentaire
-                $newComment->setSpotConcerned($spot);
-
-                //on accède aux méthodes du manager de doctrine
-                $entityManager = $doctrine->getManager();
-
-                //Si c'est un nouveau commentaire, assigne la date et l'autheur
-                if($isNew){
-                    // Pour définir la date/heure actuelle comme date du commentaire
-                    $now = new \DateTime();
-                    $newComment->setDate($now);
     
-                    //Pour définir l'author du comm comme étant le user qui soumet le formulaire
-                    $user=$security->getUser();
-                    $newComment->setAuthor($user);
-                }
-
-            //prepare la requette
-            $entityManager->persist($newComment);
-            //execute pour ajouter le comm en BDD
-            $entityManager->flush();
-            }
-
-            return $this->render('spot/show.html.twig', [
-                'controller_name' => 'SpotController',
-                'spot' => $spot,
-                'formCommentSpot' => $form->createView()
-            ]);
-        }
-    }
 
     //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
     #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]
@@ -242,5 +187,68 @@ class SpotController extends AbstractController
         return $this->redirectToRoute('app_spot');
         
     
+    }
+
+    #[Route('/spot/{id}', name: 'show_spot')]
+    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request): Response
+    //On appel l'objet Spot dont l'id est passé en parametre par la route
+    {       
+        //on accède aux méthodes du manager de doctrine
+        $entityManager = $doctrine->getManager();
+        
+        //si le spot existe
+        if ($spot){
+
+            //créé un formulaire pour ajouter/modifier les commentaires
+            $form = $this->createForm(CommentType::class, $comment);
+
+            //intercepte la requete du formulaire soumis
+            $form->handleRequest($request);
+
+            //assigne les donnée du formulaire soumis à une variable 
+            $newComment = $form->getData();
+
+                //défini isNew comme null (pour CREER)
+                $isNew = null;
+                //si mon comment n'existe pas, créé un nouveau commentaire.
+                if(!$comment){
+                    $comment = new Comment();
+                    $isNew = true;
+                }
+            
+            //Si le formulaire est soumis ET valide
+            if($form->isSubmitted() && $form->isValid()){
+            
+                //défini quel spot est concerné par le commentaire
+                $newComment->setSpotConcerned($spot);
+
+                
+
+                //Si c'est un nouveau commentaire, assigne la date et l'autheur
+                if($isNew){
+                    // Pour définir la date/heure actuelle comme date du commentaire
+                    $now = new \DateTime();
+                    $newComment->setDate($now);
+    
+                    //Pour définir l'author du comm comme étant le user qui soumet le formulaire
+                    $user=$security->getUser();
+                    $newComment->setAuthor($user);
+                }
+
+            //prepare la requette
+            $entityManager->persist($newComment);
+            //execute pour ajouter le comm en BDD
+            $entityManager->flush();
+            //refresh la page
+            return $this->redirectToRoute('show_spot', ["id"=>$spot->getId()]);
+            }
+
+            return $this->render('spot/show.html.twig', [
+                'controller_name' => 'SpotController',
+                'spot' => $spot,
+                'formCommentSpot' => $form->createView(),
+                // 'comments' => $comments
+            ]);
+        }
     }
 }
