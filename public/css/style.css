@@ -56,9 +56,10 @@ form #spot{
     left:0;
     position:relative
 }
-
-
-
+/*bouton - initialement masqué */
+.closeBtnMinus{
+    display: none;
+}
 /*----footer----*/
 footer{
     border-top: 1px solid black;

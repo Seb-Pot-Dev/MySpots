@@ -5,12 +5,14 @@ var closeBtn = document.getElementById("closeBtn");
 openBtn.onclick = openFormSpot;
 closeBtn.onclick = closeFormSpot;
 
-/* Set the width of the side navigation to 250px */
 function openFormSpot() {
   formSpot.classList.add("active");
+  openBtn.style.display = "none"; // Masquer le bouton "+"
+  closeBtn.style.display = "inline-block"; // Afficher le bouton "-"
 }
 
-/* Set the width of the side navigation to 0 */
 function closeFormSpot() {
   formSpot.classList.remove("active");
+  openBtn.style.display = "inline-block"; // Afficher le bouton "+"
+  closeBtn.style.display = "none"; // Masquer le bouton "-"
 }
