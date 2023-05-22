@@ -43,10 +43,11 @@ class SpotController extends AbstractController
                     $aspot->getLng(),
                     $aspot->getDescription(),
                     $aspot->getIsValidated(),
-                    // $aspot->getId(),
+                    $aspot->getId()
                 ]
             ];
         }
+        
 
         /*encode le tableau $tab en format JSON
         Le deuxième argument JSON_HEX_APOS de la fonction json_encode() permet de remplacer les single quotes
