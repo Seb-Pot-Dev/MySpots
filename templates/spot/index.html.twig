@@ -41,9 +41,12 @@
 <!-- FIN TEST FORMULAIRE POUR TRIER -->
 
  <!-- FORMULAIRE SPOT -->
-<div class="form-add-spot">
-<h2>Ajouter un spot</h2>
-{{ form(formAddSpot) }}
+    <h2>Ajouter un spot</h2>
+    <p>formulaire ajout de spot:</p>
+ <a href="#" id="openBtn">Ouvrir</a>
+    <a href="#" id="closeBtn" class="close">Fermer</a>
+<div id="form-spot-id" class="form-add-spot">
+    {{ form(formAddSpot) }}
 </div>
 <!-- AFFICHAGE DE LA MAP --> 
 <div id="map"></div>
@@ -109,8 +112,7 @@
                     const lat = infos[0]
                     const lng = infos[1]
                     const desc = infos[2]
-                    const isValidate = infos[3]
-
+                    const isValidate = infos[3],
                 if (infos[3]){
                     const marker = L.marker([lat, lng]).addTo(map);
                     marker.bindPopup(`<b>${name}</b><br>${desc}`);
@@ -157,5 +159,8 @@ function onMapClick(e) {
 
 map.on('click', onMapClick);
     </script>
+    
+    <script src="{{ asset('js/script.js') }}"></script>
+
 {% endblock %}
 

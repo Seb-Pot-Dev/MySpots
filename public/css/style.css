@@ -41,3 +41,20 @@ form #spot{
     min-width: 50.3%;
 }
 
+/*---open/close form spot---*/
+.form-add-spot{
+    width: 250px;
+    left:-250px;
+    position:fixed;
+}
+.form-add-spot.active{
+    left:0;
+    position:relative
+}
+
+
+
+/*----footer----*/
+footer{
+    border-top: 1px solid black;
+}
