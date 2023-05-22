@@ -55,6 +55,10 @@ class Spot
     #[ORM\Column(options:["default"])]
     private ?bool $isValidated = null;
 
+    #[ORM\Column(nullable: true)]
+    #[Assert\Range(min: 1, max: 5)]
+    private ?int $note = null;
+
     public function __construct()
     {
         $this->favoritedByUsers = new ArrayCollection();
@@ -269,5 +273,17 @@ class Spot
     }
     public function __toString(){
         return $this->name;
+    }
+
+    public function getNote(): ?int
+    {
+        return $this->note;
+    }
+
+    public function setNote(?int $note): self
+    {
+        $this->note = $note;
+
+        return $this;
     }
 }
