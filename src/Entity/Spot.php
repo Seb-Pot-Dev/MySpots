@@ -57,7 +57,7 @@ class Spot
 
     #[ORM\Column(nullable: true)]
     #[Assert\Range(min: 1, max: 5)]
-    private ?int $note = null;
+    private ?float $note = null;
 
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Notation::class)]
     private Collection $notations;
@@ -279,7 +279,7 @@ class Spot
         return $this->name;
     }
 
-    public function getNote(): ?int
+    public function getNote(): ?float
     {
         $avg=null;
         $note=null;

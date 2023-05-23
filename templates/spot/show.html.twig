@@ -18,18 +18,24 @@
         {{ form(formNotation) }}
 
     <!--affichage note du spot-->
-    <p>note : 
-        {% set repeatCount = spot.note %}
-            {% for i in 1..repeatCount %}
+    <p>Note : 
+        {% if spot.note %}
+            
+        {% set repeatCount = spot.note | round(0) %}
+
+            {% for i in range(1, repeatCount) %}
                 <i class='fa-solid fa-star'></i>
             {% endfor %}
-            
+
         {% set repeatCountEmptyStars = 5 - spot.note %}
             {% for i in range(1, repeatCountEmptyStars) %}
                 <i class='fa-regular fa-star'></i>
             {% endfor %}
         
         ({{spot.note}})
+        {% else %}
+            Pas encore de note
+        {% endif %}
     </p>
 
     <!--nombre de like du spot-->
