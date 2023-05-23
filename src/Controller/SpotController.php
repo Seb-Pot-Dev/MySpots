@@ -21,7 +21,6 @@ class SpotController extends AbstractController
 
     #[Route("/spot/{id}/edit", name:"edit_spot")]
     #[Route('/spot', name: 'app_spot',
-    //  methods: ['GET']//TEST ici ajout de methods:get
      )]  
     public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
@@ -43,7 +42,8 @@ class SpotController extends AbstractController
                     $aspot->getLng(),
                     $aspot->getDescription(),
                     $aspot->getIsValidated(),
-                    $aspot->getId()
+                    $aspot->getId(),
+                    $aspot->getNote(),
                 ]
             ];
         }
@@ -60,7 +60,7 @@ class SpotController extends AbstractController
         //récupérer la liste de tout les modules
         $modules = $doctrine->getRepository(Module::class)->findAll();    
 
-        //créé un formulaire qui se repose sur le builder (qui se repose lui mm sur les propriétés de la classe) et assigner la liste de tout les modules
+        //créé un formulaire qui se repose sur le builder (qui se repose lui mm sur les propriétés de la classe) et assigner la liste de tout les modules pour les checkboxs
         $form = $this->createForm(SpotType::class, $spot, [
             'modules' => $modules
         ]);
@@ -105,20 +105,6 @@ class SpotController extends AbstractController
             return $this->redirectToRoute('app_spot');
         }
 
-//TEST
-
-    //     $moduleIds = $request->query->get('modulesFilter', []);
-
-    //     // Vérifier si des modules ont été sélectionnés
-    // if (!is_array($moduleIds)) {
-    //     $moduleIds = [$moduleIds];
-    // }
-    //     // Effectuer la recherche des spots par modules
-    //     $spotsFiltered = $entityManager->getRepository(Spot::class)->findByModules($moduleIds);
-
-    //     // Récupérer tous les modules disponibles pour l'affichage initial
-    //     $modulesFilter = $entityManager->getRepository(Module::class)->findAll();
-//FIN TEST 
 
         //retourne la réponse http affichée par le navigateur.
         // 'spots' est le tableau des spots encodé en JSON.
@@ -130,33 +116,42 @@ class SpotController extends AbstractController
             'formAddSpot' => $form->createView(),
             // 'edit' => $spot->getId(),
             'modules' => $modules,
-            // 'modulesFilter' => $modulesFilter, //TEST
-            // 'spotsFiltered' => $spotsFiltered //TEST
         ]);
     }
 
-    // TEST **********************************************
-    #[Route('/spots/filter', name: 'filter_spots', methods: ['GET'])]
-    public function filter(Request $request): Response
-    {
-        $moduleIds = $request->query->get('modules', []);
+    //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
+    #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]
+    #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
+    #[ParamConverter("user", options:["mapping"=>["idUser"=>"id"]])]
+    public function likeSpot(Security $security, ManagerRegistry $doctrine, Spot $spot, User $user = null)
+    {   
+        $entityManager=$doctrine->getManager();
 
-        // Effectuer la recherche des spots par modules
-        $spots = $this->getDoctrine()->getRepository(Spot::class)->findByModules($moduleIds);
+        //si l'utilisateur a déjà liké le spot
+        if($user->getFavoriteSpots()->contains($spot)){
 
-        // Récupérer tous les modules disponibles pour l'affichage initial
-        $modules = $this->getDoctrine()->getRepository(Module::class)->findAll();
+            //on supprime le user de la collection FavoritedByUser du spot
+            $spot->removeFavoritedByUser($user);
+    
+            $entityManager->persist($spot);
+            $entityManager->flush();
+        }
+        //sinon si l'utilisateur n'a pas encore liké
+        else{
 
-        // Rendre la vue avec les résultats de la recherche et les modules disponibles
-        return $this->render('spot/index.html.twig', [
-            'spots' => $spots,
-            'modules' => $modules,
-        ]);
-    }
-    // TEST **********************************************
+            //on ajoute le user a la collection FavoritedByUser du spot
+            $spot->addFavoritedByUser($user);
+    
+            $entityManager->persist($spot);
+            $entityManager->flush();
+        }
+
 
     
-
+        return $this->redirectToRoute('app_spot');
+        
+    
+    }
     //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
     #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]
     #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]

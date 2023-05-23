@@ -11,13 +11,31 @@
 </style>
 
 <div class="example-wrapper">
+    <!--nom du spot-->
     <h1>{{ spot.name }}</h1>
 
+    <!--note du spot-->
+    <p>note : 
+        {% set repeatCount = spot.note %}
+            {% for i in 1..repeatCount %}
+                <i class='fa-solid fa-star'></i>
+            {% endfor %}
+        {% set repeatCountEmptyStars = 5 - spot.note %}
+            {% for i in 1..repeatCountEmptyStars %}
+                <i class='fa-regular fa-star'></i>
+            {% endfor %}
+        
+        ({{spot.note}})
+    </p>
+
+    <!--nombre de like du spot-->
     <p>Nombre de like : {{ spot.favoritedByUsers | length }} </p>
 
+    <!--description du spot-->
     <p>Description: {{ spot.description }}
     </p>
 
+<!--ressources du spot-->
 <h4>Ressources sur place:</h4>
 {% if spot.modules|length >= 1 %}
 <ul>
@@ -28,6 +46,8 @@
 {% else %}
 Les informations concernant les ressources de ce spot n'ont pas encore été renseignées.
 {% endif %}
+
+<!--commentaires du spot-->
 <h4>Commentaires:</h4>
 {% if spot.comments|length >= 1 %}
     <!-- boucle sur les commentaires du spot, triés par date -->

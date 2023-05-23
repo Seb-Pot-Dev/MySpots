@@ -124,13 +124,14 @@
                     const desc = infos[2]
                     const isValidate = infos[3]
                     const spotId = infos[4] 
+                    const note = infos[5]
                 if (isValidate){
                     const marker = L.marker([lat, lng]).addTo(map);
 
                     var urlShowSpot = '{{ path("show_spot", {'id': 'exemple_id'}) }}';
                     urlShowSpot = urlShowSpot.replace("exemple_id", spotId);
 
-                    const popupContent = `<a href=${urlShowSpot}> <b>${name}</b><br>${desc}</a>`;
+                    const popupContent = `<a href=${urlShowSpot}> <b>${name}, <i class='fa-solid fa-star'></i>${note}</b><br>${desc}</a>`;
                     marker.bindPopup(popupContent);
                 }
                 })
