@@ -29,18 +29,21 @@
                 {% set roundedNote = note | round %}
                 {% set roundedSupNote = note | round(1, 'ceil') %}
 
-                {% for i in 1..(fullStarsCount - (roundedNote != roundedSupNote ? 1 : 0)) %}
+                {% for i in 1..(roundedNote - (roundedNote != roundedSupNote ? 1 : 0)) %}
                     <i class="fa-solid fa-star"></i>
                 {% endfor %}
 
                 {% if roundedNote != roundedSupNote %}
                         <i class="fa-solid fa-star-half-stroke"></i>
                 {% endif %}
+                
+                {% if roundedNote < 5 %}
+                    
+                    {% for i in 1..(5 - roundedNote ) %}
+                        <i class="fa-regular fa-star"></i>
+                    {% endfor %}
 
-                {% for i in 1..(5 - fullStarsCount ) %}
-                    <i class="fa-regular fa-star"></i>
-                {% endfor %}
-
+                {% endif %}
             <!--affichage de la note-->
             ({{spot.note}})
         {% else %}
@@ -61,7 +64,7 @@
 {% if spot.modules|length >= 1 %}
 <ul>
 {% for module in spot.modules %}
-        <li> {{ module.name }} </li>
+    <li> {{ module.name }} </li>
 {% endfor %}
 </ul>
 {% else %}

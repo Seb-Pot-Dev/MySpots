@@ -32,6 +32,10 @@ class SpotController extends AbstractController
         //récupère tout les spots de la BDD.
         $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name'=>'ASC']);
         
+        //Définition du User
+        $user=$security->getUser();
+
+        
         /*Créer un tableau $tab
         /Construit un tableau associatif contenant le nom du spot comme clé.
         /Chaque clé est associée a un tableau contenant sa latitude, sa longitude, 
@@ -81,9 +85,8 @@ class SpotController extends AbstractController
             $isNew = true;
         }
 
-        if($form->isSubmitted() && $form->isValid()){
+        if($form->isSubmitted() && $form->isValid() && $user){
             $newspot = $form->getData();
-            
             
                 //Si le spot vient d'être créé, alors ->setIsValidated()+CreationDate()+Author()
                 if($isNew){
@@ -95,7 +98,6 @@ class SpotController extends AbstractController
                     $newspot->setCreationDate($now);
         
                     //Pour définir l'author du spot comme étant le user qui soumet le formulaire
-                    $user=$security->getUser();
                     $newspot->setAuthor($user);
                 }
 
@@ -147,7 +149,8 @@ class SpotController extends AbstractController
         return $this->redirectToRoute('app_spot');  
     }
 
-    #[Route('/spot/{id}', name: 'show_spot')]
+    #[Route('/spot/{idSpot}', name: 'show_spot')]
+    #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
     public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request, Request $requestNotation, Notation $notation= null): Response
     //On appel l'objet Spot dont l'id est passé en parametre par la route
     {       
@@ -169,20 +172,22 @@ class SpotController extends AbstractController
             $newComment = $form->getData();
 
                 //défini isNew comme null (pour CREER)
-                $isNew = null;
+                $isNew = false;
                 //si mon comment n'existe pas, créé un nouveau commentaire.
                 if(!$comment){
-                    // $comment = new Comment();
+                    $comment = new Comment();
                     $isNew = true;
                 }
             
             //Si le formulaire est soumis ET valide
             if($form->isSubmitted() && $form->isValid()){
             
+                //assigne les donnée du formulaire soumis à une variable 
+                $newComment = $form->getData();
+
                 //défini quel spot est concerné par le commentaire
                 $newComment->setSpotConcerned($spot);
 
-                
 
                 //Si c'est un nouveau commentaire, assigne la date et l'autheur
                 if($isNew){
@@ -195,17 +200,17 @@ class SpotController extends AbstractController
                     $newComment->setAuthor($user);
                 }
 
-            //prepare la requette
-            $entityManager->persist($newComment);
-            //execute pour ajouter le comm en BDD
-            $entityManager->flush();
-            //refresh la page
-            return $this->redirectToRoute('show_spot', ["id"=>$spot->getId()]);
+                //prepare la requette
+                $entityManager->persist($newComment);
+                //execute pour ajouter le comm en BDD
+                $entityManager->flush();
+                //refresh la page
+                return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
             }
-
+// Vérifier si l'USER a déjà noté ce SPOT
             $formNotation->handleRequest($requestNotation);
             $newNotation = $formNotation->getData();
-
+            $newNotation = new Notation();
             //Si le formulaire de NOTATION est soumis et valide
             if($formNotation->isSubmitted() && $formNotation->isValid()){
 
@@ -221,7 +226,7 @@ class SpotController extends AbstractController
                 //execute pour ajouter le comm en BDD
                 $entityManager->flush();
 
-                return $this->redirectToRoute('show_spot', ["id"=>$spot->getId()]);
+                return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
             }
 
             return $this->render('spot/show.html.twig', [
