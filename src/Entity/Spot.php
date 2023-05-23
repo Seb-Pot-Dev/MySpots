@@ -281,7 +281,7 @@ class Spot
 
     public function getNote(): ?int
     {
-        $note=null;
+        $avg=null;
         $note=null;
         $nbNotation=count($this->notations);
 
