@@ -59,11 +59,15 @@ class Spot
     #[Assert\Range(min: 1, max: 5)]
     private ?int $note = null;
 
+    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Notation::class)]
+    private Collection $notations;
+
     public function __construct()
     {
         $this->favoritedByUsers = new ArrayCollection();
         $this->modules = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->notations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -277,12 +281,50 @@ class Spot
 
     public function getNote(): ?int
     {
-        return $this->note;
+        $note=null;
+        $note=null;
+        $nbNotation=count($this->notations);
+
+        foreach($this->notations as $notation){
+            $note+=$notation->getNote();
+            $avg = $note/$nbNotation;
+        }
+        return $avg;
     }
 
     public function setNote(?int $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notation>
+     */
+    public function getNotations(): Collection
+    {
+        return $this->notations;
+    }
+
+    public function addNotation(Notation $notation): self
+    {
+        if (!$this->notations->contains($notation)) {
+            $this->notations->add($notation);
+            $notation->setSpot($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotation(Notation $notation): self
+    {
+        if ($this->notations->removeElement($notation)) {
+            // set the owning side to null (unless already changed)
+            if ($notation->getSpot() === $this) {
+                $notation->setSpot(null);
+            }
+        }
 
         return $this;
     }

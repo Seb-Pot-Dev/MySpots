@@ -52,13 +52,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $registrationDate;
 
     #[ORM\Column]
-    private ?bool $isBanned = false; //ici je change "null" en false pour dire que mon user est "pas banni" par défaut.
+    private ?bool $isBanned = false;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notation::class)]
+    private Collection $notations; //ici je change "null" en false pour dire que mon user est "pas banni" par défaut.
 
     public function __construct()
     {
         $this->favoriteSpots = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->addedSpots = new ArrayCollection();
+        $this->notations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -262,6 +266,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsBanned(bool $isBanned): self
     {
         $this->isBanned = $isBanned;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notation>
+     */
+    public function getNotations(): Collection
+    {
+        return $this->notations;
+    }
+
+    public function addNotation(Notation $notation): self
+    {
+        if (!$this->notations->contains($notation)) {
+            $this->notations->add($notation);
+            $notation->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotation(Notation $notation): self
+    {
+        if ($this->notations->removeElement($notation)) {
+            // set the owning side to null (unless already changed)
+            if ($notation->getUser() === $this) {
+                $notation->setUser(null);
+            }
+        }
 
         return $this;
     }

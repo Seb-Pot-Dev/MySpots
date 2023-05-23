@@ -14,14 +14,18 @@
     <!--nom du spot-->
     <h1>{{ spot.name }}</h1>
 
-    <!--note du spot-->
+    <!--form note du spot -->
+        {{ form(formNotation) }}
+
+    <!--affichage note du spot-->
     <p>note : 
         {% set repeatCount = spot.note %}
             {% for i in 1..repeatCount %}
                 <i class='fa-solid fa-star'></i>
             {% endfor %}
+            
         {% set repeatCountEmptyStars = 5 - spot.note %}
-            {% for i in 1..repeatCountEmptyStars %}
+            {% for i in range(1, repeatCountEmptyStars) %}
                 <i class='fa-regular fa-star'></i>
             {% endfor %}
         

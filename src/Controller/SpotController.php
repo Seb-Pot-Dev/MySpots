@@ -7,7 +7,9 @@ use App\Entity\User;
 use App\Entity\Module;
 use App\Form\SpotType;
 use App\Entity\Comment;
+use App\Entity\Notation;
 use App\Form\CommentType;
+use App\Form\NotationType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -152,42 +154,35 @@ class SpotController extends AbstractController
         
     
     }
-    //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
-    #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]
-    #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
-    #[ParamConverter("user", options:["mapping"=>["idUser"=>"id"]])]
-    public function likeSpot(Security $security, ManagerRegistry $doctrine, Spot $spot, User $user = null)
-    {   
-        $entityManager=$doctrine->getManager();
+    // #[Route('/spot/rating/{id}', name: 'rate_spot')]
+    // public function rateSpot(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Request $request): Response
+    // {
+    //     $entityManager = $doctrine->getManager();
 
-        //si l'utilisateur a déjà liké le spot
-        if($user->getFavoriteSpots()->contains($spot)){
+    //     $user=$security->getUser();
 
-            //on supprime le user de la collection FavoritedByUser du spot
-            $spot->removeFavoritedByUser($user);
-    
-            $entityManager->persist($spot);
-            $entityManager->flush();
-        }
-        //sinon si l'utilisateur n'a pas encore liké
-        else{
+    //     if($spot){
+    //         $formNotation = $this->createForm(NotationType::class, $notation);
 
-            //on ajoute le user a la collection FavoritedByUser du spot
-            $spot->addFavoritedByUser($user);
-    
-            $entityManager->persist($spot);
-            $entityManager->flush();
-        }
+    //         $formNotation->handleRequest($request);
 
+    //         $newNotation = $formNotation->getData();
 
-    
-        return $this->redirectToRoute('app_spot');
-        
-    
-    }
+    //         $newNotation->setSpot($spot);
+    //         $newNotation->setUser($user);
 
+    //         //prepare la requette
+    //         $entityManager->persist($newNotation);
+    //         //execute pour ajouter le comm en BDD
+    //         $entityManager->flush();
+
+    //         }
+
+    //     return $this->redirectToRoute('show_spot', ["id"=>$spot->getId()]);
+
+    // }
     #[Route('/spot/{id}', name: 'show_spot')]
-    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request): Response
+    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request, Request $requestNotation, Notation $notation= null): Response
     //On appel l'objet Spot dont l'id est passé en parametre par la route
     {       
         //on accède aux méthodes du manager de doctrine
@@ -198,6 +193,8 @@ class SpotController extends AbstractController
 
             //créé un formulaire pour ajouter/modifier les commentaires
             $form = $this->createForm(CommentType::class, $comment);
+            //créé un formulaire pour créer une entité Notation
+            $formNotation = $this->createForm(NotationType::class, $notation);
 
             //intercepte la requete du formulaire soumis
             $form->handleRequest($request);
@@ -209,7 +206,7 @@ class SpotController extends AbstractController
                 $isNew = null;
                 //si mon comment n'existe pas, créé un nouveau commentaire.
                 if(!$comment){
-                    $comment = new Comment();
+                    // $comment = new Comment();
                     $isNew = true;
                 }
             
@@ -240,10 +237,32 @@ class SpotController extends AbstractController
             return $this->redirectToRoute('show_spot', ["id"=>$spot->getId()]);
             }
 
+            $formNotation->handleRequest($requestNotation);
+            $newNotation = $formNotation->getData();
+
+            //Si le formulaire de NOTATION est soumis et valide
+            if($formNotation->isSubmitted() && $formNotation->isValid()){
+
+                $newNotation = $formNotation->getData();
+
+                $user=$security->getUser();
+
+                $newNotation->setSpot($spot);
+                $newNotation->setUser($user);
+
+                //prepare la requette
+                $entityManager->persist($newNotation);
+                //execute pour ajouter le comm en BDD
+                $entityManager->flush();
+
+                return $this->redirectToRoute('show_spot', ["id"=>$spot->getId()]);
+            }
+
             return $this->render('spot/show.html.twig', [
                 'controller_name' => 'SpotController',
                 'spot' => $spot,
                 'formCommentSpot' => $form->createView(),
+                'formNotation' => $formNotation->createView(),
                 // 'comments' => $comments
             ]);
         }
