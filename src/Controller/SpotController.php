@@ -106,8 +106,6 @@ class SpotController extends AbstractController
             //refresh la page
             return $this->redirectToRoute('app_spot');
         }
-
-
         //retourne la réponse http affichée par le navigateur.
         // 'spots' est le tableau des spots encodé en JSON.
         // 'spotsList' est le tableau contenant toutes les spots et toutes les infos des spots, pour la liste des spots
@@ -116,7 +114,6 @@ class SpotController extends AbstractController
             'spots' => $tabCoords,
             'spotsList' => $spots,
             'formAddSpot' => $form->createView(),
-            // 'edit' => $spot->getId(),
             'modules' => $modules,
         ]);
     }
@@ -147,40 +144,9 @@ class SpotController extends AbstractController
             $entityManager->persist($spot);
             $entityManager->flush();
         }
-
-
-    
-        return $this->redirectToRoute('app_spot');
-        
-    
+        return $this->redirectToRoute('app_spot');  
     }
-    // #[Route('/spot/rating/{id}', name: 'rate_spot')]
-    // public function rateSpot(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Request $request): Response
-    // {
-    //     $entityManager = $doctrine->getManager();
 
-    //     $user=$security->getUser();
-
-    //     if($spot){
-    //         $formNotation = $this->createForm(NotationType::class, $notation);
-
-    //         $formNotation->handleRequest($request);
-
-    //         $newNotation = $formNotation->getData();
-
-    //         $newNotation->setSpot($spot);
-    //         $newNotation->setUser($user);
-
-    //         //prepare la requette
-    //         $entityManager->persist($newNotation);
-    //         //execute pour ajouter le comm en BDD
-    //         $entityManager->flush();
-
-    //         }
-
-    //     return $this->redirectToRoute('show_spot', ["id"=>$spot->getId()]);
-
-    // }
     #[Route('/spot/{id}', name: 'show_spot')]
     public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request, Request $requestNotation, Notation $notation= null): Response
     //On appel l'objet Spot dont l'id est passé en parametre par la route
@@ -263,7 +229,6 @@ class SpotController extends AbstractController
                 'spot' => $spot,
                 'formCommentSpot' => $form->createView(),
                 'formNotation' => $formNotation->createView(),
-                // 'comments' => $comments
             ]);
         }
     }

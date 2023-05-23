@@ -7,26 +7,24 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class NotationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('note', IntegerType::class,[
-                'attr'=>[
-                    'min' => 1,
-                    'max' => 5
+            ->add('note', ChoiceType::class,[
+                'label' => 'Note ce spot: ',
+                'choices' => [
+                    '1' => 1,
+                    '2' => 2,
+                    '3' => 3,
+                    '4' => 4,
+                    '5' => 5,
                 ],
-                'constraints'=>[
-                    new Range([
-                        'min'=> 1,
-                        'max'=> 5,
-                        'notInRangeMessage' => 'La note dois être comprise en 1 et 5'
-                    ])
-                ]
+                'required' => true, // Optional, set to true if the field is required
             ])
             // ->add('spot')
             // ->add('user')
