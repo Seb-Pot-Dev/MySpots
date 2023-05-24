@@ -88,8 +88,8 @@
                     </a>
 
                     <!-- note -->
-                    {% if spot.note is not null %}
-                    <i class="fa-regular fa-star"></i>({{spot.note}})
+                    {% if spot.avgNote is not null %}
+                    <i class="fa-regular fa-star"></i>({{spot.avgNote}})
                     {% else %}
                     <i class="fa-regular fa-star"></i>(0)
                     {% endif %}
@@ -138,7 +138,7 @@
                     const desc = infos[2]
                     const isValidate = infos[3]
                     const spotId = infos[4] 
-                    const note = infos[5]
+                    const avgNote = infos[5]
 
                 // Si le spot a été validé par un admin, alors créé un marqueur
                 if (isValidate){
@@ -148,13 +148,13 @@
                     var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
                     urlShowSpot = urlShowSpot.replace("exemple_id", spotId);
 
-                        //si la note n'est pas null (c-a-d le spot a déjà été noté)
-                        if(note){
-                        const popupContent = `<a href=${urlShowSpot}> <b>${name}, <i class='fa-solid fa-star'></i>(${note})</b><br>${desc}</a>`;
+                        //si la avgNote n'est pas null (c-a-d le spot a déjà été noté)
+                        if(avgNote){
+                        const popupContent = `<a href=${urlShowSpot}> <b>${name}, <i class='fa-solid fa-star'></i>(${avgNote})</b><br>${desc}</a>`;
                         marker.bindPopup(popupContent);
-                        }else{ //Sinon on écrit 'pas de note' a la place du int
-                        let note = '(Pas de note)'
-                        const popupContent = `<a href=${urlShowSpot}> <b>${name}, <i class='fa-regular fa-star'></i>${note}</b><br>${desc}</a>`;
+                        }else{ //Sinon on écrit 'pas de avgNote' a la place du int
+                        let avgNote = '(Pas de avgNote)'
+                        const popupContent = `<a href=${urlShowSpot}> <b>${name}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
                         marker.bindPopup(popupContent);
                     }
                 }

@@ -55,10 +55,6 @@ class Spot
     #[ORM\Column(options:["default"])]
     private ?bool $isValidated = null;
 
-    #[ORM\Column(nullable: true)]
-    #[Assert\Range(min: 1, max: 5)]
-    private ?float $note = null;
-
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Notation::class)]
     private Collection $notations;
 
@@ -279,7 +275,7 @@ class Spot
         return $this->name;
     }
 
-    public function getNote(): ?float
+    public function getAvgNote(): ?float
     {
         $avg=null;
         $note=null;
@@ -287,17 +283,12 @@ class Spot
 
         foreach($this->notations as $notation){
             $note+=$notation->getNote();
-            $avg = $note/$nbNotation;
         }
+        $avg = $note/$nbNotation;
+
         return $avg;
     }
 
-    public function setNote(?int $note): self
-    {
-        $this->note = $note;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Notation>

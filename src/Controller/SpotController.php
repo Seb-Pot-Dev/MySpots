@@ -49,7 +49,7 @@ class SpotController extends AbstractController
                     $aspot->getDescription(),
                     $aspot->getIsValidated(),
                     $aspot->getId(),
-                    $aspot->getNote(),
+                    $aspot->getAvgNote(),
                 ]
             ];
         }

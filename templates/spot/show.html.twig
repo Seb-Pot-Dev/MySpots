@@ -18,36 +18,36 @@
         {{ form(formNotation) }}
 
     <!--affichage note du spot-->
-    <p>Note : 
-        {% if spot.note %}
+    <p>avgNote : 
+        {% if spot.avgNote %}
 
-            {% set note = spot.note %}
+            {% set avgNote = spot.avgNote %}
 
                 <!-- Affichage des étoiles -->
-                {% set fullStarsCount = note | round %}
+                {% set fullStarsCount = avgNote | round %}
 
-                {% set roundedNote = note | round %}
-                {% set roundedSupNote = note | round(1, 'ceil') %}
+                {% set roundedAvgNote = avgNote | round %}
+                {% set roundedSupavgNote = avgNote | round(1, 'ceil') %}
 
-                {% for i in 1..(roundedNote - (roundedNote != roundedSupNote ? 1 : 0)) %}
+                {% for i in 1..(roundedAvgNote - (roundedAvgNote != roundedSupavgNote ? 1 : 0)) %}
                     <i class="fa-solid fa-star"></i>
                 {% endfor %}
 
-                {% if roundedNote != roundedSupNote %}
+                {% if roundedAvgNote != roundedSupavgNote %}
                         <i class="fa-solid fa-star-half-stroke"></i>
                 {% endif %}
                 
-                {% if roundedNote < 5 %}
+                {% if roundedAvgNote < 5 %}
                     
-                    {% for i in 1..(5 - roundedNote ) %}
+                    {% for i in 1..(5 - roundedAvgNote ) %}
                         <i class="fa-regular fa-star"></i>
                     {% endfor %}
 
                 {% endif %}
-            <!--affichage de la note-->
-            ({{spot.note}})
+            <!--affichage de la avgNote-->
+            ({{spot.avgNote}})
         {% else %}
-            Pas encore de note
+            Pas encore de avgNote
         {% endif %}
     </p>
 
