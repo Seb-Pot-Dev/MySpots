@@ -23,7 +23,7 @@
             {% for spot in spots %}
                 {% if spot.isValidated == false %}
                     <li>
-                        <a href="{{  path('show_spot', {'id': spot.id}) }}">
+                        <a href="{{  path('show_spot', {'idSpot': spot.id}) }}">
                             {{spot.name}}
                             {{spot.creationDate | date('d/m/Y H:i:s')}}
                         </a>
@@ -47,7 +47,7 @@
                 {% if spot.isValidated == true %}
                     
                 <li>
-                    <a href="{{  path('show_spot', {'id': spot.id}) }}">
+                    <a href="{{  path('show_spot', {'idSpot': spot.id}) }}">
                         {{spot.name}}
                         {{spot.creationDate | date('d/m/Y H:i:s')}}
                     </a>
