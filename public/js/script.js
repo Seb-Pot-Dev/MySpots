@@ -16,3 +16,8 @@ function closeFormSpot() {
   openBtn.style.display = "inline-block"; // Afficher le bouton "+"
   closeBtn.style.display = "none"; // Masquer le bouton "-"
 }
+
+var addSpotByClickOnMap = document.getElementById("addSpotByClickOnMap");
+
+addSpotByClickOnMap.onclick = openFormSpot;
+

@@ -158,10 +158,19 @@
             document.querySelector('#spot_lng').value = pos.lng
 
             //pour créer un pop up qui indique les lat/lng de l'endroit cliqué
-            /*popup
+            popup
                 .setLatLng(e.latlng)
-                .setContent("You clicked the map at " + e.latlng.toString())
-                .openOn(map);*/
+                .setContent("<a href='#' id='addSpotByClickOnMap'>ajouter un spot ici</a>")
+                .openOn(map);
+var addSpotByClickOnMap = document.getElementById("addSpotByClickOnMap");
+
+addSpotByClickOnMap.onclick = openFormSpot;
+
+function closeFormSpot() {
+  formSpot.classList.remove("active");
+  openBtn.style.display = "inline-block"; // Afficher le bouton "+"
+  closeBtn.style.display = "none"; // Masquer le bouton "-"
+}
         }
 
         //fonction pour ajouter un marqueur sur la carte
