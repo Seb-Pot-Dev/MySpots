@@ -284,7 +284,12 @@ class Spot
         foreach($this->notations as $notation){
             $note+=$notation->getNote();
         }
-        $avg = $note/$nbNotation;
+        if($nbNotation > 0){
+
+            $avg = $note/$nbNotation;
+        }else{
+            $avg = null;
+        }
 
         return $avg;
     }
