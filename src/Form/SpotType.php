@@ -8,6 +8,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
@@ -19,11 +21,15 @@ class SpotType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            // ->add('adress')
-            // ->add('cp')
-            // ->add('city')
-            ->add('lat')
-            ->add('lng')
+            ->add('adress')
+            ->add('cp')
+            ->add('city')
+            ->add('lat', NumberType::class,[
+                'disabled' => true
+            ])
+            ->add('lng', NumberType::class, [
+                'disabled' => true
+            ])
             //affiché des checkboxs non obligatoire avec plusieurs choix 
             ->add('modules', EntityType::class,[
                 'class'=> Module::class,
