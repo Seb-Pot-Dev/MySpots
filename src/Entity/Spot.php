@@ -58,12 +58,16 @@ class Spot
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Notation::class)]
     private Collection $notations;
 
+    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Picture::class, orphanRemoval: true)]
+    private Collection $pictures;
+
     public function __construct()
     {
         $this->favoritedByUsers = new ArrayCollection();
         $this->modules = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->notations = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -319,6 +323,36 @@ class Spot
             // set the owning side to null (unless already changed)
             if ($notation->getSpot() === $this) {
                 $notation->setSpot(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(Picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
+            $picture->setSpot($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(Picture $picture): self
+    {
+        if ($this->pictures->removeElement($picture)) {
+            // set the owning side to null (unless already changed)
+            if ($picture->getSpot() === $this) {
+                $picture->setSpot(null);
             }
         }
 
