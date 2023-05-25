@@ -127,8 +127,11 @@
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
+</script>
 
-            
+<!-- Si l'utilisateur est connecté, le script js pour gérer les cliques sur la map est disponible -->
+{% if app.user %}  
+    <script>
 /*********************************GESTION DU CLICK SUR LA MAP****************************************************************/
 
         //Appel la fonction onMapClick pour créer un Event lorsque l'on clique sur un endroit non marked de la map et indique les coordonnées
@@ -162,6 +165,7 @@
                 .setLatLng(e.latlng)
                 .setContent("<a href='#' id='addSpotByClickOnMap'>ajouter un spot ici</a>")
                 .openOn(map);
+
 var addSpotByClickOnMap = document.getElementById("addSpotByClickOnMap");
 
 addSpotByClickOnMap.onclick = openFormSpot;
@@ -233,8 +237,10 @@ function closeFormSpot() {
 
 
 /************************************FIN GESTION DU CLICK SUR LA CARTE********************************************/
+</script>
+{% endif %}
 
-
+<script>
 /*******************AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES***********************************************/
 
             // Convertir un tableau TWIG en tableau JS
