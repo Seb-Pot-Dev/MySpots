@@ -7,9 +7,11 @@ use App\Entity\User;
 use App\Entity\Module;
 use App\Form\SpotType;
 use App\Entity\Comment;
+use App\Entity\Picture;
 use App\Entity\Notation;
 use App\Form\CommentType;
 use App\Form\NotationType;
+use App\Service\PictureService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
@@ -24,7 +26,7 @@ class SpotController extends AbstractController
     #[Route("/spot/{id}/edit", name:"edit_spot")]
     #[Route('/spot', name: 'app_spot',
      )]  
-    public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
+    public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request, PictureService $pictureService): Response
     {
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();
@@ -61,8 +63,7 @@ class SpotController extends AbstractController
         $tabCoords = json_encode($tab, JSON_HEX_APOS);
 
         
-//-------------Formulaire pour ajouter/modifier un spot--------------------------
-        
+/**********************AJOUT DE SPOT*********************************** */        
         //récupérer la liste de tout les modules
         $modules = $doctrine->getRepository(Module::class)->findAll();    
 
@@ -75,7 +76,6 @@ class SpotController extends AbstractController
 
         //assigne les donnée du formulaire soumis à une variable 
         $newspot = $form->getData();
-        
         //défini isNew comme null
         $isNew=null;
         //si mon spot n'existe pas, créé un nouveau spot.
@@ -88,6 +88,25 @@ class SpotController extends AbstractController
         if($form->isSubmitted() && $form->isValid() && $user){
             $newspot = $form->getData();
             
+            // On récupère les images
+            $images = $form->get('pictures')->getData();
+            
+            foreach($images as $image){
+                // On défini le dossier de destination
+                $folder = 'photos-spot';
+
+                // On appel le service d'ajout
+                $fichier = $pictureService->add($image, $folder, 300, 300);
+
+                // On instancie un nouvel objet image
+                $img = new Picture();
+                // On lui assigne un nom (renvoyé par le service)
+                $img->setName($fichier);
+                $img->setSpot($newspot);
+
+                $newspot->addPicture($img);
+            }
+
                 //Si le spot vient d'être créé, alors ->setIsValidated()+CreationDate()+Author()
                 if($isNew){
                     //Pour définir isValidated comme étant false
@@ -99,6 +118,7 @@ class SpotController extends AbstractController
         
                     //Pour définir l'author du spot comme étant le user qui soumet le formulaire
                     $newspot->setAuthor($user);
+
                 }
 
             //prepare
@@ -108,6 +128,8 @@ class SpotController extends AbstractController
             //refresh la page
             return $this->redirectToRoute('app_spot');
         }
+/********************** FIN AJOUT DE SPOT*********************************** */
+
         //retourne la réponse http affichée par le navigateur.
         // 'spots' est le tableau des spots encodé en JSON.
         // 'spotsList' est le tableau contenant toutes les spots et toutes les infos des spots, pour la liste des spots

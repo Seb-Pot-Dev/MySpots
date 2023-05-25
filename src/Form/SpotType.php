@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -25,10 +26,10 @@ class SpotType extends AbstractType
             ->add('cp')
             ->add('city')
             ->add('lat', NumberType::class,[
-                'disabled' => true
+                // 'disabled' => true,
             ])
             ->add('lng', NumberType::class, [
-                'disabled' => true
+                // 'disabled' => true
             ])
             //affiché des checkboxs non obligatoire avec plusieurs choix 
             ->add('modules', EntityType::class,[
@@ -41,7 +42,12 @@ class SpotType extends AbstractType
                     'class' => 'form-row'
                 ]
             ])
-            // $builder
+            ->add('pictures', FileType::class, [
+                'label' => 'Photos',
+                'multiple'=> true,
+                'mapped' => false,
+                'required' => false
+            ])
             ->add('submit', SubmitType::class)
         ;
     }

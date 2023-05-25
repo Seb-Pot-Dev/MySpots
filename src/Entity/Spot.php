@@ -58,7 +58,7 @@ class Spot
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Notation::class)]
     private Collection $notations;
 
-    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Picture::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Picture::class, orphanRemoval: true, cascade:['persist'])]
     private Collection $pictures;
 
     public function __construct()
