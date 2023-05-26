@@ -53,7 +53,18 @@
         </div>
                     <!-- formulaire ajout spot -->
                     <div id="form-spot-id" class="form-add-spot">
-                        {{ form(formAddSpot) }}
+                        {{ form_start(formAddSpot) }}
+                            {{ form_row(formAddSpot.name) }}
+                            {{ form_row(formAddSpot.description) }}
+                            {{ form_row(formAddSpot.adress) }}
+                            {{ form_row(formAddSpot.cp) }}
+                            {{ form_row(formAddSpot.city) }}
+                            {{ form_row(formAddSpot.lat) }}
+                            {{ form_row(formAddSpot.lng) }}
+                                {{ form_row(formAddSpot.modules) }}
+                                {# {{ form_input(formAddSpot.modules) }} #}
+                            {{ form_row(formAddSpot.pictures) }}
+                        {{ form_end(formAddSpot) }}    
                     </div>
     {% else %}
         <p>Veuillez vous connecter pour ajouter un spot.</p>
@@ -153,8 +164,7 @@
             // on récupère les coordonnées du clic
             let pos = e.latlng
 
-            //on ajoute un marqueur 
-            addMarker(pos)
+            
 
             // on affiche les coordonnées dans le formulaire
             document.querySelector('#spot_lat').value = pos.lat
@@ -163,18 +173,20 @@
             //pour créer un pop up qui indique les lat/lng de l'endroit cliqué
             popup
                 .setLatLng(e.latlng)
-                .setContent("<a href='#' id='addSpotByClickOnMap'>ajouter un spot ici</a>")
+                .setContent("<a href='#' id='openFormAddSpotInPopup'>Nouveau Spot</a>")
                 .openOn(map);
 
-var addSpotByClickOnMap = document.getElementById("addSpotByClickOnMap");
-
+// Définition de l'élément "openFormAddSpotInPopup"
+var addSpotByClickOnMap = document.getElementById("openFormAddSpotInPopup");
+// Utilisation de la fonction openFormSpot lors de l'evement click sur l'élément openFormAddSpotInPopup
 addSpotByClickOnMap.onclick = openFormSpot;
 
-function closeFormSpot() {
-  formSpot.classList.remove("active");
-  openBtn.style.display = "inline-block"; // Afficher le bouton "+"
-  closeBtn.style.display = "none"; // Masquer le bouton "-"
-}
+// Défini de l'élément "leaflet-popup-close-button"
+var closePopupButton = document.getElementsByClassName("leaflet-popup-close-button")[0];
+// Utilisation de la fonction closeFormSpot lors de l'evenement click sur l'élément "leaflet-popup-close-button"
+closePopupButton.onclick = closeFormSpot;
+
+
         }
 
         //fonction pour ajouter un marqueur sur la carte
@@ -193,7 +205,7 @@ function closeFormSpot() {
             //On écoute le drag&drop sur le marqueur de façon a pouvoir déplacer le marqueur et mettre aussi a jour les lat/lng
             marqueur.on("dragend", function(e){
                 pos = e.target.getLatLng()
-
+                
                 document.querySelector('#spot_lat').value = pos.lat
                 document.querySelector('#spot_lng').value = pos.lng
             })
@@ -222,7 +234,10 @@ function closeFormSpot() {
                         document.querySelector('#spot_lng').value = lng
 
                         let pos = [lat, lng]
-                        addMarker(pos)
+                        popup
+                            .setLatLng(pos)
+                            .setContent("<a href='#' id='openFormAddSpotInPopup'>Adresse renseignée</a>")
+                            .openOn(map);
 
                         map.setView(pos, 13)
                     }
