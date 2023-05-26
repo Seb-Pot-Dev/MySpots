@@ -16,7 +16,7 @@ class NotationType extends AbstractType
     {
         $builder
             ->add('note', ChoiceType::class,[
-                'label' => 'Note ce spot: ',
+                'label' => 'Noter ce spot: ',
                 'choices' => [
                     '1' => 1,
                     '2' => 2,

@@ -72,4 +72,8 @@ footer{
 .image-show-spot{
     width: 400px;
 }
-
+/*************SHOW_SPOT******************/
+.show_spot_note{
+    display: flex;
+    align-items: center;
+}

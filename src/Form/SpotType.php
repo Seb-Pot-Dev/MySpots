@@ -26,10 +26,10 @@ class SpotType extends AbstractType
             ->add('cp')
             ->add('city')
             ->add('lat', NumberType::class,[
-                // 'disabled' => true,
+                'disabled' => true,
             ])
             ->add('lng', NumberType::class, [
-                // 'disabled' => true
+                'disabled' => true
             ])
             //affiché des checkboxs non obligatoire avec plusieurs choix 
             ->add('modules', EntityType::class,[

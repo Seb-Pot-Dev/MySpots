@@ -12,12 +12,10 @@
 {% if app.user %}
     <h1>Hello {{ user.pseudo }}! ✅</h1>
 
-<h2>Mes infos</h2><a href="{{ path('edit_pseudo') }}">(Modifier)</a>
-<p>Pseudo : {{ user.pseudo }}</p>
-<p>Mail : {{ user.email }}</p>
-<p>Role :{% if is_granted("ROLE_ADMIN") %} admin {% else %}normal {% endif %}</p>
+<h2>Modifier mon pseudo / mon email</h2>
 
-
+{{form(formEditProfile)}}
     
+
 {% endif %}
 {% endblock %}

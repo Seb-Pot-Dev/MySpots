@@ -13,8 +13,47 @@
 <div class="example-wrapper">
     <!--nom du spot-->
     <h1>{{ spot.name }}</h1>
+        <!--affichage note du spot-->
+        <p>avgNote : 
+            {% if spot.avgNote %}
 
-<p>test image:<p>
+                {% set avgNote = spot.avgNote %}
+
+                    <!-- Affichage des étoiles -->
+                    {% set fullStarsCount = avgNote | round %}
+
+                    {% set roundedAvgNote = avgNote | round %}
+                    {% set roundedSupavgNote = avgNote | round(1, 'ceil') %}
+
+                    {% for i in 1..(roundedAvgNote - (roundedAvgNote != roundedSupavgNote ? 1 : 0)) %}
+                        <i class="fa-solid fa-star"></i>
+                    {% endfor %}
+
+                    {% if roundedAvgNote != roundedSupavgNote %}
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                    {% endif %}
+                    
+                    {% if roundedAvgNote < 5 %}
+                        
+                        {% for i in 1..(5 - roundedAvgNote ) %}
+                            <i class="fa-regular fa-star"></i>
+                        {% endfor %}
+
+                    {% endif %}
+            <!--affichage de la avgNote-->
+                ({{spot.avgNote}})
+                ({{spot.notations|length}} évaluations)
+            {% else %}
+                Pas encore de avgNote
+            {% endif %}
+        </p>
+        
+            <!--form note du spot -->
+            {{ form(formNotation) }}
+
+            <!--nombre de like du spot-->
+            <p>Nombre de like : {{ spot.favoritedByUsers | length }} </p>
+<p>Photos:<p>
 
 <!-- Si il y a + que 0 photos pour ce spot -->
 {% if spot.pictures|length > 0 %}
@@ -26,45 +65,12 @@
     <p>Pas de photos ajoutées pour ce spot</p>
 {% endif %}
 
-    <!--form note du spot -->
-        {{ form(formNotation) }}
 
-    <!--affichage note du spot-->
-    <p>avgNote : 
-        {% if spot.avgNote %}
 
-            {% set avgNote = spot.avgNote %}
 
-                <!-- Affichage des étoiles -->
-                {% set fullStarsCount = avgNote | round %}
 
-                {% set roundedAvgNote = avgNote | round %}
-                {% set roundedSupavgNote = avgNote | round(1, 'ceil') %}
 
-                {% for i in 1..(roundedAvgNote - (roundedAvgNote != roundedSupavgNote ? 1 : 0)) %}
-                    <i class="fa-solid fa-star"></i>
-                {% endfor %}
 
-                {% if roundedAvgNote != roundedSupavgNote %}
-                        <i class="fa-solid fa-star-half-stroke"></i>
-                {% endif %}
-                
-                {% if roundedAvgNote < 5 %}
-                    
-                    {% for i in 1..(5 - roundedAvgNote ) %}
-                        <i class="fa-regular fa-star"></i>
-                    {% endfor %}
-
-                {% endif %}
-            <!--affichage de la avgNote-->
-            ({{spot.avgNote}})
-        {% else %}
-            Pas encore de avgNote
-        {% endif %}
-    </p>
-
-    <!--nombre de like du spot-->
-    <p>Nombre de like : {{ spot.favoritedByUsers | length }} </p>
 
     <!--description du spot-->
     <p>Description: {{ spot.description }}
