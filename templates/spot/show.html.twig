@@ -15,9 +15,16 @@
     <h1>{{ spot.name }}</h1>
 
 <p>test image:<p>
-<!-- TO BE CONTINUED HERE -->
-{# {% for image in spot.pictures %}
-<img href="href="{{ asset('uploads/photos-spot-/{{spot.name}}') }}" #}
+
+<!-- Si il y a + que 0 photos pour ce spot -->
+{% if spot.pictures|length > 0 %}
+    {% for image in spot.pictures %}
+        <img class="image-show-spot" src="{{asset('assets/uploads/photos-spot/' ~ image.name)}}"></img>
+    {% endfor %}
+<!-- Sinon -->
+{% else %}
+    <p>Pas de photos ajoutées pour ce spot</p>
+{% endif %}
 
     <!--form note du spot -->
         {{ form(formNotation) }}

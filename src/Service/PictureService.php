@@ -25,13 +25,13 @@ class PictureService
         switch($picture_infos['mime'])
         {
             case 'image/png':
-                $picture_source = imageCreateFromPng($picture);
+                $picture_source = imagereatefrompng($picture);
                 break;
             case 'image/jpeg':
-                $picture_source = imageCreateFromJpeg($picture);
+                $picture_source = imagecreatefromjpeg($picture);
                 break;
             case 'image/webp':
-                $picture_source = imageCreateFromWebp($picture);
+                $picture_source = imagecreatefromwebp($picture);
                 break;
             default:
                 throw new Exception ('Format d\'image incorrect');
