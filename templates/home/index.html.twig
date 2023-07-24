@@ -1,19 +1,107 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
-
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    /* Style the video: 100% width and height to cover the entire window */
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+/* Add some content-welcome at the bottom of the video/page */
+.content-welcome {
+  position: fixed;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 100%;
+  padding: 20px;
+}
+.content-enter {
+  position: fixed;
+  top: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Style the button used to pause/play the video */
+#pauseVideoBtn {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+#pauseVideoBtn:hover {
+  background: #ddd;
+  color: black;
+}
+.enter-cta{
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+.enter-cta:hover {
+  background: #ddd;
+  color: black;
+}
 </style>
 
-<div class="example-wrapper">
 {% if app.user %}
     <h1>Hello {{ app.user.pseudo }}! ✅</h1>
 {% endif %}
 <div class="home-main">
-   <img class="logo-strasspot-homepage" src="\img\SUJET_Cathedrale-pleine-scaled.png" alt="logo-StrasSpot">
-   <h2>Bienvenu sur StrasSpot</h2>
+   {# <img class="logo-strasspot-homepage" src="\img\SUJET_Cathedrale-pleine-scaled.png" alt="logo-StrasSpot"> #}
+    <video autoplay muted loop id="myVideo">
+        <source src="\videos\street-video-1.mp4" type="video/mp4">
+    </video>
+   
+    <div class="content-welcome">
+        <h2>Bienvenu sur StrasSpot</h2>
+      <!-- Use a button to pause/play the video with JavaScript -->
+        <button id="pauseVideoBtn" onclick="pauseVideo()">Pause</button>
+    </div>
+    
+        <div class="content-enter">
+            <h2>Découvrez ce superbe site web dédié aux skaters Strasbourgeois</h2>
+            <a href="{{ path('app_spot') }}" >
+            <button class="enter-cta">Voir la carte</button>
+            </a>
+        </div>
 </div>
+
+<script>
+// TODO: Animation kickflip sur les boutons
+// TODO: skateboard sur le curseur ? sur les marqueurs ?
+
+
+// Get the video
+var video = document.getElementById("myVideo");
+
+// Get the button
+var btn = document.getElementById("pauseVideoBtn");
+
+// Pause and play the video, and change the button text
+function pauseVideo() {
+  if (video.paused) {
+    video.play();
+    btn.innerHTML = "Pause";
+  } else {
+    video.pause();
+    btn.innerHTML = "Play";
+  }
+}
+</script>
 {% endblock %}

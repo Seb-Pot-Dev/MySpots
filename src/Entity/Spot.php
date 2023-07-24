@@ -251,6 +251,8 @@ class Spot
 
         return $this;
     }
+    // find all spot from user
+    /* */
 
     public function getCreationDate(): ?\DateTimeInterface
     {

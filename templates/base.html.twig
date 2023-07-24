@@ -8,6 +8,8 @@
         {% block stylesheets %}
             <!-- CSS PERSO -->
             <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/nav.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
 
             <!-- LEAFLET CSS -->
             <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
@@ -18,40 +20,84 @@
             <link rel="stylesheet" 
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             {{ encore_entry_link_tags('app') }}
+
+            <!-- Google Fonts -->
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+            </style>
         {% endblock %}
 
         
     </head>
     <body>
-        <!-- NAV BAR -->
-        <nav>
-                <a href="{{ path('app_spot') }}">LA MAP</a>
-            {% if app.user %}
-                <a href="{{ path('my_profile') }}">Mon profil</a>
-                {% if is_granted("ROLE_ADMIN") %}
-                <a href="{{ path('app_admin') }}">Administration</a>
-                {% endif %}
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            {% else %}
-                <a href="{{ path('app_login') }}">Se connecter</a>
-                <a href="{{ path('app_register') }}">S'inscrire</a>
-            {% endif %}
-        </nav>
+    <!-- Balise MAIN avec une classe "page-width" pour appliquer un padding a toute la page (avec adaptation a la largeur de la fenetre) -->
+    <main class="page-width">
+            <!-- NAV BAR -->
+            <div class="desktop-nav">
+                <div  class="main-nav">
+                    <!-- LOGO -->
+                    <a href="{{ path('app_home') }}">
+                    <img id="logo-strasspot" src="\img\SUJET_Cathedrale-pleine-scaled.png" alt="logo-StrasSpot">
+                    </a>
+                    <!-- autres liens -->
+                    <a href="{{ path('app_spot') }}">LA MAP</a>
+                </div>
+                <div class="user-nav">
+                    {% if app.user %}
+                        <a href="{{ path('my_profile') }}">Mon profil</a>
+                        {% if is_granted("ROLE_ADMIN") %}
+                        <a href="{{ path('app_admin') }}">Administration</a>
+                        {% endif %}
+                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">Se connecter</a>
+                        <a href="{{ path('app_register') }}">S'inscrire</a>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- NAV BAR MOBILE -->
+            <div id="mySidenav" class="sidenav">
+                <a id="nav-close-btn" href="#" class="close">×</a>
+                <ul>
+                    {% if app.user %}
+                        <li><a href="{{ path('my_profile') }}">Mon profil</a></li>
+                        {% if is_granted("ROLE_ADMIN") %}
+                            <li><a href="{{ path('app_admin') }}">Administration</a></li>
+                        {% endif %}
+                            <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                    {% else %}
+                        <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+                        <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        
+        <div class="mobile-nav">
+            <a href="#" id="nav-open-btn">
+                <span class="burger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </a>
+            <a id="logo-container" href="{{ path('app_home') }}">
+                <img id="logo-strasspot" src="\img\SUJET_Cathedrale-pleine-scaled.png" alt="logo-StrasSpot">
+            </a>        
+        </div>
 
         {% block body %}
-        <!-- INJECTION -->
+        <!-- INJECTION DU BODY-->
         {% endblock %}
-
+</main>
 <!-- LEAFLET JS -->
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
 integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
 crossorigin=""></script>
 <footer>This is a footer</footer>
         {% block javascripts %}
-
-
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
-        
+        <script src="{{ asset('js/menu_burger.js') }}"></script>
+
     </body>
 </html>

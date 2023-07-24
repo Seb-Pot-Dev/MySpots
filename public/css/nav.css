@@ -1,0 +1,110 @@
+.desktop-nav img, .mobile-nav img{
+    max-width: 100px;
+    height: auto;
+}
+
+.desktop-nav{
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    background-color: lightgray;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.main-nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.user-nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.user-nav a{
+    margin: 1rem;
+}
+
+/* NAV MOBILE */
+.mobile-nav{
+    display: flex;
+    align-items: center;
+    background-color: lightgray;
+    padding-left: 1rem;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+/* Sidenav menu */
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: -250px;
+    background-color: #e8e8e8;
+    padding-top: 60px;
+    transition: left 0.5s ease;
+  }
+  
+  /* Sidenav menu links */
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav a:hover {
+    color: #111;
+  }
+  
+  .sidenav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Active class */
+  .sidenav.active {
+    left: 0;
+  }
+  
+  /* Close btn */
+  .sidenav .close {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+  }
+  
+  /* Icône burger */
+  .burger-icon span {
+    display: block;
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+  }
+    .mobile-nav a#logo-container{
+        margin: auto;
+        max-height: fit-content;
+    }
+
+/* Responsive */
+@media (min-width: 768px) {
+    .desktop-nav{
+        display: flex ;
+    }
+    #mySideNav, #nav-close-btn, .mobile-nav{
+        display: none;
+    }
+}
