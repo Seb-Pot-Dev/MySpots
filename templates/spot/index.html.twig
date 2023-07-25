@@ -5,6 +5,7 @@
 {% block body %}
 <style>
 </style>
+<div class="page-width">
     <h1>LA MAP</h1>
 <!-- TEST FORMULAIRE POUR TRIER -->
 {# 
@@ -38,37 +39,58 @@
 
 {% if app.user %}  
  <!-- FORMULAIRE SPOT -->
-    <h2>Ajouter un spot</h2>
+    {# <h2>Ajouter un spot</h2> #}
         <div class="add-spot-title-container">
 
-            <p>Ajouter un spot:</p>
-                <!-- "+" -->
-                <a href="#" id="open-formSpot-btn" class="open-formSpot-btn"><i class="fa-solid fa-plus"></i></a>
-                <!-- "-" -->
-                <a href="#" id="close-formSpot-btn" class="close-formSpot-btn"><i class="fa-solid fa-minus"></i></a>
-        </div>
-                    <!-- formulaire ajout spot -->
-                    <div id="form-spot-id" class="form-add-spot">
-                        {{ form_start(formAddSpot) }}
-                            {{ form_row(formAddSpot.name) }}
-                            {{ form_row(formAddSpot.description) }}
-                            {{ form_row(formAddSpot.adress) }}
-                            {{ form_row(formAddSpot.cp) }}
-                            {{ form_row(formAddSpot.city) }}
-                            {{ form_row(formAddSpot.lat) }}
-                            {{ form_row(formAddSpot.lng) }}
-                                {{ form_row(formAddSpot.modules) }}
-                                {# {{ form_input(formAddSpot.modules) }} #}
-                            {{ form_row(formAddSpot.pictures) }}
-                        {{ form_end(formAddSpot) }}    
+            <p>Ajouter un spot? </p>
+            
+            <div class="toggle-wrapper">
+                <input class="toggle-checkbox" type="checkbox">
+                <div class="toggle-container">  
+                    <div class="toggle-button">
+                    <div class="toggle-button-circles-container">
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
+                        <div class="toggle-button-circle"></div>
                     </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- formulaire ajout spot -->
+        <div id="form-spot-id" class="form-add-spot">
+            {{ form_start(formAddSpot) }}
+                {{ form_row(formAddSpot.name) }}
+                {{ form_row(formAddSpot.description) }}
+                {{ form_row(formAddSpot.adress) }}
+                {{ form_row(formAddSpot.cp) }}
+                {{ form_row(formAddSpot.city) }}
+                {{ form_row(formAddSpot.lat) }}
+                {{ form_row(formAddSpot.lng) }}
+                    {{ form_row(formAddSpot.modules) }}
+                    {# {{ form_input(formAddSpot.modules) }} #}
+                {{ form_row(formAddSpot.pictures) }}
+            {{ form_end(formAddSpot) }}    
+        </div>
     {% else %}
         <p>Veuillez vous connecter pour ajouter un spot.</p>
 {% endif %}
+</div>
 
 <!-- AFFICHAGE DE LA MAP --> 
 <div id="map" class="">
- <ul class="list-spots list-spots-desktop" style="display:none;">
+
+<!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
+ <ul class="list-spots list-spots-desktop" style="">
         {% for spot in spotsList|sort((a, b)=>b.name<=>a.name) %}
             {% if spot.isValidated %}
             <!-- lien -->
@@ -94,20 +116,19 @@
 
                         <!-- note -->
                         {% if spot.avgNote is not null %}
-                        <i class="fa-regular fa-star"></i>({{spot.avgNote}})
+                            <i class="fa-regular fa-star"></i>({{spot.avgNote}})
                         {% else %}
-                        <i class="fa-regular fa-star"></i>(0)
+                            <i class="fa-regular fa-star"></i>(0)
                         {% endif %}
 
                         <!-- nb comments spot -->
-                        <i class="fa-regular fa-message"></i>({{ spot.comments | length }})
+                            <i class="fa-regular fa-message"></i>({{ spot.comments | length }})
+
                         {% if  is_granted('ROLE_ADMIN') %}
-
                         <!-- supprimer le spot -->
-                        <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
-
+                            <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
                         <!-- modifier le spot -->
-                        <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
 
                         {% endif %}
                     </div>
@@ -118,9 +139,10 @@
         {% endfor %}
     </ul>
 </div>
-<!-- Liste des spots -->
 
-    <ul class="list-spots" style="">
+<!-- Liste des spots SOUS LA MAP -->
+
+    <ul class="list-spots" style="display:none;">
         {% for spot in spotsList|sort((a, b)=>b.name<=>a.name) %}
             {% if spot.isValidated %}
             <!-- lien -->
@@ -169,6 +191,27 @@
 
         {% endfor %}
     </ul>
+
+<!-- Section STATS -->
+<div class="bg-white py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <dt class="text-base leading-7 text-gray-600">Nombre de spots référencés à strasbourg</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ spotsList|length }} spots uniques</dd>
+      </div>
+      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <dt class="text-base leading-7 text-gray-600">Un module préféré ? Les lieux partagés sur SkateSpots sont riches et variés </dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ spotsList|length }} spots uniques</dd>
+      </div>
+      <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+        <dt class="text-base leading-7 text-gray-600">Utilisateurs régulier</dt>
+        <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ spotsList|length }} spots uniques</dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block javascripts %}

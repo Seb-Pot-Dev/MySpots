@@ -1,25 +1,29 @@
 // Gestion de l'ouverture/fermeture du formulaire d'ajout de spots
 
-var formSpot = document.getElementById("form-spot-id");
-var openBtnFormSpot = document.getElementById("open-formSpot-btn");
-var closeBtnFormSpot = document.getElementById("close-formSpot-btn");
-
-openBtnFormSpot.onclick = openFormSpot;
-closeBtnFormSpot.onclick = closeFormSpot;
-
-function openFormSpot() {
-  formSpot.classList.add("active");
-  openBtnFormSpot.style.display = "none"; // Masquer le bouton "+"
-  closeBtnFormSpot.style.display = "flex"; // Afficher le bouton "-"
-}
-
-function closeFormSpot() {
-  formSpot.classList.remove("active");
-  openBtnFormSpot.style.display = "block"; // Afficher le bouton "+"
-  closeBtnFormSpot.style.display = "none"; // Masquer le bouton "-"
-}
-
+// Déclarations des variables 
+// toggle switch
+var switchFormSpot = document.querySelector('.toggle-checkbox');
+// click map
 var addSpotByClickOnMap = document.getElementById("addSpotByClickOnMap");
+// le formulaire 
+var formSpot = document.getElementById("form-spot-id");
 
-addSpotByClickOnMap.onclick = openFormSpot;
+// Déclaration des fonctions
+  // Ouvrir le formulaire
+  function openFormSpot() {
+    formSpot.classList.toggle("active");
+  }
+  // Fermer le formulaire
+  function closeFormSpot() {
+    formSpot.classList.remove("active");
+  }
+
+// Ecouteurs d'évenements
+  //si click sur switchFormSpot, ouvrir le formulaire de spot
+  switchFormSpot.addEventListener('click', openFormSpot);
+  //si click sur addSpotByClickOnMap, ouvrir le formulaire de spot
+  addSpotByClickOnMap.addEventListener('click', openFormSpot);
+
+
+
 
