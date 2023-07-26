@@ -14,7 +14,7 @@
 <h2>Mes spots favoris</h2>
 <ul>
 {% for spot in user.favoriteSpots %}
-<li><a href="{{ path('show_spot', {'id': spot.id}) }}">{{spot.name}}</a></li>
+<li><a href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
 {% endfor %}
 </ul>
 

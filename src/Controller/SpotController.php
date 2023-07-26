@@ -76,6 +76,8 @@ class SpotController extends AbstractController
 
         //assigne les donnée du formulaire soumis à une variable 
         $newspot = $form->getData();
+        // var_dump($newspot);
+
         //défini isNew comme null
         $isNew=null;
         //si mon spot n'existe pas, créé un nouveau spot.
@@ -86,6 +88,7 @@ class SpotController extends AbstractController
         }
 
         if($form->isSubmitted() && $form->isValid() && $user){
+            // assigne les donnée du formulaire soumis à une variable 
             $newspot = $form->getData();
             
             // On récupère les images
