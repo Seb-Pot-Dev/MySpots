@@ -90,6 +90,7 @@
                     {{ form_label(formAddSpot.city, 'City', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
                     {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
+                <button class="bg-blue-300 rounded px-2" id="add-user-pos">Utiliser ma position</button>
                 <div class="mb-4">
                     {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
                     {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
@@ -244,8 +245,7 @@
 {% endblock %}
 
 {% block javascripts %}
-
-    <!-- SCRIPT JS PERSO -->
+<!-- Parametres Leaflet -->
     <script>
         // défini une variable marqueur quelconque pour le click sur la carte
         let marqueur
@@ -258,7 +258,53 @@
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
-</script>
+
+// GEOLOCALISATION
+// Demande la géolocalisation de l'utilisateur et commence à suivre les mises à jour de position.
+navigator.geolocation.watchPosition(success, error);
+
+// en cas de succès
+function success(userPosition) {
+    // Lorsque la géolocalisation est obtenue avec succès, stocke la latitude et la longitude dans des variables globales.
+    window.userLat = userPosition.coords.latitude;
+    window.userLng = userPosition.coords.longitude;
+    window.isUserLocationKnown = true;
+
+    // Obtient la précision des données de géolocalisation.
+    var accuracy = userPosition.coords.accuracy;
+    
+    // Ajoute un marqueur sur la carte à l'emplacement de l'utilisateur.
+    L.marker([userLat, userLng]).addTo(map);
+    
+    // Ajoute un cercle sur la carte représentant la précision de la position de l'utilisateur.
+    L.circle([userLat, userLng], { radius: accuracy }).addTo(map);
+}
+
+// en cas d'erreur
+function error(err){
+    // En cas d'erreur lors de la géolocalisation, indique que la position de l'utilisateur n'est pas connue.
+    window.isUserLocationKnown = false;
+    if(err.code === 1){
+        alert("Veuillez autoriser l'accès à la géolocalisation.");
+    }else{
+        alert("Impossible d'obtenir la position actuelle pour le moment.");
+    }
+}
+
+const btnAddUserLoc = document.querySelector('#add-user-pos');
+
+function fillWithUserPosition(){
+    // Si la position de l'utilisateur est connue, affiche les coordonnées dans le formulaire.
+    if(isUserLocationKnown === true){
+        document.querySelector('#spot_lat').value = userLat;
+        document.querySelector('#spot_lng').value = userLng;
+    }else{
+        alert("Veuillez autoriser l'accès à la géolocalisation.");
+    }
+}
+btnAddUserLoc.addEventListener('click', fillWithUserPosition);
+
+    </script>
 
 <!-- Si l'utilisateur est connecté, le script js pour gérer les cliques sur la map est disponible -->
 {% if app.user %}  
@@ -283,8 +329,6 @@
         function onMapClick(e) { 
             // on récupère les coordonnées du clic
             let pos = e.latlng
-
-            
 
             // on affiche les coordonnées dans le formulaire
             document.querySelector('#spot_lat').value = pos.lat
