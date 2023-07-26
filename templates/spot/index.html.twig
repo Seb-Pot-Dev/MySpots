@@ -285,7 +285,7 @@ function error(err){
     // En cas d'erreur lors de la géolocalisation, indique que la position de l'utilisateur n'est pas connue.
     window.isUserLocationKnown = false;
     if(err.code === 1){
-        alert("Veuillez autoriser l'accès à la géolocalisation.");
+        alert("Veuillez autoriser l'accès à la géolocalisation pour une expérience optimale.");
     }else{
         alert("Impossible d'obtenir la position actuelle pour le moment.");
     }
@@ -299,10 +299,21 @@ function fillWithUserPosition(){
         document.querySelector('#spot_lat').value = userLat;
         document.querySelector('#spot_lng').value = userLng;
     }else{
-        alert("Veuillez autoriser l'accès à la géolocalisation.");
-    }
+promptGeolocationAccess()    }
 }
 btnAddUserLoc.addEventListener('click', fillWithUserPosition);
+
+// test
+function promptGeolocationAccess() {
+    const confirmation = window.confirm("Pour utiliser cette fonction, veuillez activer la géolocalisation.\n\nCliquez sur 'OK' pour activer la géolocalisation ou 'Annuler' pour quitter.");
+
+    if (confirmation) {
+        // L'utilisateur a cliqué sur 'OK', vous pouvez tenter de demander la géolocalisation à nouveau.
+        navigator.geolocation.watchPosition(success, error);
+    } else {
+        // L'utilisateur a cliqué sur 'Annuler' ou a fermé la fenêtre, vous pouvez faire quelque chose d'autre ou ne rien faire.
+    }
+}
 
     </script>
 
