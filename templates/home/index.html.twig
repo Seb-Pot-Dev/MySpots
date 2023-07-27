@@ -8,56 +8,126 @@
 {% endblock %}
 
 {% block body %}
-
-{% if app.user %}
-    <h1>Hello {{ app.user.pseudo }}! ✅</h1>
-{% endif %}
-{# <div class="home-main"> #}
-  <div class="home-container">
-    <video autoplay muted loop id="myVideo">
-        <source src="\videos\street-video-1.mp4" type="video/mp4">
-    </video>
-   
-    <div class="pause-video-container">
-      <!-- Use a button to pause/play the video with JavaScript -->
-        <button id="pauseVideoBtn" onclick="pauseVideo()">Pause</button>
-    </div>
+<!-- Main HOMEPAGE  -->
+<main class="homepage">
+<!-- Section HERO (VIDEO) -->
+  <div class="hero-main">
+    <div class="hero-video-container">
+      <video autoplay muted loop id="myVideo">
+          <source src="\videos\street-video-1.mp4" type="video/mp4">
+      </video>
     
-        <div class="content-enter">
-            <h2>Découvrez ce superbe site web dédié aux skaters Strasbourgeois</h2>
-            <a href="{{ path('app_spot') }}" >
-            <button class="enter-cta">Voir la carte</button>
-            </a>
-        </div>
-  </div>
-{# </div> #}
+      <div class="pause-video-container">
 
-<!-- Section STATS -->
-<div class="home-content-not-hero">
-  <div class="bg-white py-24 sm:py-32">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
-        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-          <dt class="text-base leading-7 text-gray-600">Un module préféré ? Les lieux partagés sur SkateSpots sont riches et variés.</dt>
-          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ modules|length }} modules différents</dd>
-        </div>
-        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-          <dt class="text-base leading-7 text-gray-600">Nombre de spots référencés à Strasbourg.</dt>
-          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ spotsList|length }} spots uniques</dd>
-        </div>
-        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
-          <dt class="text-base leading-7 text-gray-600">La communauté SkateSpots ne cesse de s'agrandir.</dt>
-          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ users|length }} utilisateurs réguliers</dd>
-        </div>
-      </dl>
+        <!-- Button pour mettre play/pause sur la video avec JAVASCRIPT (fonction: "pauseVideo()" ) -->
+          <button id="pauseVideoBtn" onclick="pauseVideo()">Pause</button>
+      </div>
+      
+
+
+       
+<div class="flex item-center justify-center">
+  <div
+    class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center absolute "
+  >
+    <div class="mx-auto max-w-xl text-center">
+      <h1 class="text-3xl font-extrabold sm:text-5xl">
+        {% if app.user %}
+          Content de te retrouver
+        <strong class="font-extrabold text-red-700 sm:block">
+        {{ app.user.pseudo }}
+        </strong>
+          Alors on spotte quoi aujourd'hui ? 😎
+        {% else %}
+        <p class="text-9xl text-red-700 drop-shadow-2xl">
+          Bienvenu sur SkateSpots.
+        </p>
+        <strong class="font-extrabold sm:block">
+          Prêt a découvrir les meilleurs spots de la ville ? 
+        </strong>
+          
+        {% endif %}
+      </h1>
+
+      {# <p class="mt-4 sm:text-xl/relaxed">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nesciunt illo
+        tenetur fuga ducimus numquam ea!
+      </p> #}
+          
+
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+      {% if app.user %}
+        <a
+          class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700  hover:text-white focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
+         href="{{ path('app_spot') }}"
+        >
+          Voir la carte
+        </a>
+        <a
+          class="block w-full rounded bg-black/50 px-12 py-3 text-sm font-medium text-white/50 shadow hover:text-white hover:bg-black/75 focus:outline-none focus:ring active:bg-black sm:w-auto"
+          href="/about"
+        >
+          Learn More (🚧)</a>
+        </a>
+      {% else %}
+      
+        <a
+          class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700  hover:text-white focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
+         href="{{ path('app_spot') }}"
+        >
+          Voir la carte
+        </a>
+
+        <a
+          class="block w-full rounded bg-black/50 px-12 py-3 text-sm font-medium text-white/50 shadow hover:text-white hover:bg-black/75 focus:outline-none focus:ring active:bg-black sm:w-auto"
+          href="/about"
+        >
+          Devenir membre (gratuit!)
+        </a>
+        <a
+          class="block w-full rounded bg-black/50 px-12 py-3 text-sm font-medium text-white/50 shadow hover:text-white hover:bg-black/75 focus:outline-none focus:ring active:bg-black sm:w-auto"
+          href="/about"
+        >
+          Learn More (🚧)
+        </a>
+      {% endif %}
+      </div>
     </div>
   </div>
 </div>
+    </div>
+  </div>
+
+  <!-- Section STATS -->
+  <div class="home-content-not-hero">
+    <div class="bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <dt class="text-base leading-7 text-gray-600">Un module préféré ? Les lieux partagés sur SkateSpots sont riches et variés.</dt>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ modules|length }} modules différents</dd>
+          </div>
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <dt class="text-base leading-7 text-gray-600">Nombre de spots référencés à Strasbourg.</dt>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ spotsList|length }} spots uniques</dd>
+          </div>
+          <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+            <dt class="text-base leading-7 text-gray-600">La communauté SkateSpots ne cesse de s'agrandir.</dt>
+            <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ users|length }} utilisateurs réguliers</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+</main>
 <script>
+/********----------------------TODO------------------------*********/
+
 // TODO: Animation kickflip sur les boutons
 // TODO: skateboard sur le curseur ? sur les marqueurs ?
 
-
+/********----------------------VIDEO------------------------*********/
 // Get the video
 var video = document.getElementById("myVideo");
 

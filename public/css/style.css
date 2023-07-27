@@ -1,3 +1,6 @@
+body{
+    overflow-x: hidden;
+}
 *{
     text-decoration: none;
     list-style: none;
@@ -6,11 +9,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-#map{
-    max-width: 100%;
-    height: 1000px;
-    
-}
+
 
 img.logo-strasspot-homepage{
     max-width: 100%;
@@ -20,52 +19,7 @@ img.logo-strasspot-homepage{
     flex-direction: column;
     align-items: center;
 }
-/*********form-spot*****************/
-#form-spot-id>form{
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    /* max-width: 250px; */
-}
-#form-spot-id form div{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-form>div>textarea{
-    /* width: 55%; */
-    min-height: 50px;
-    max-width: 50.3%;
-    min-width: 50.3%;
-}
-
-
-
-/*---open/close form spot---*/
-.add-spot-title-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.form-add-spot{
-    width: 400px;
-    left:-400px;
-    position:fixed;
-}
-.form-add-spot.active{
-    left:0;
-    position:relative
-}
-/*bouton - initialement masqué */
-.close-formSpot-btn{
-    display: none;
-}
-.form-add-spot.active .close-formSpot-btn{
-    display: flex;
-}
-
-      
+   
 /********************IMAGES**********************************/
 
 .image-show-spot{
@@ -75,47 +29,4 @@ form>div>textarea{
 .show_spot_note{
     display: flex;
     align-items: center;
-}
-/********************** LISTS **********************/
-ul.list-spots{
-    list-style: none;
-}
-.list-spots li{
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 12px 4px 12px;
-    margin: 0.5rem 0;
-    border-radius: 4px;;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    -o-border-radius: 4px;
-}
-.list-spots li:nth-child(even){
-    background-color: rgba(211, 211, 211, 0.466);
-}
-.list-spots li:nth-child(odd){
-    background-color: rgba(173, 216, 230, 0.377);
-}
-
-ul.list-spots{
-    width: 100%;
-    overflow: scroll;
-}
-
-ul.list-spots-desktop{
-    position: absolute;
-    /* top: 50px; */
-    z-index: 9999;
-    right: 0;
-    background-color: #ffffffa8;
-    height: 100%;
-    overflow: scroll;
-}
-
-@media (min-width: 768px) {
-    ul.list-spots-desktop{
-        width: 30%;
-    }
-    
 }

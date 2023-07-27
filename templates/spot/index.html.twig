@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SpotController!{% endblock %}
+{% block title %}LA MAP{% endblock %}
 
 {% block body %}
+<link rel="stylesheet" href="{{ asset('css/map.css') }}">
+
 <style>
 </style>
 <div class="page-width">
@@ -37,37 +39,16 @@
     </section> #}
 <!-- FIN TEST FORMULAIRE POUR TRIER -->
 
-{% if app.user %}  
- <!-- FORMULAIRE SPOT -->
-    {# <h2>Ajouter un spot</h2> #}
-    <div class="add-spot-title-container">
 
-            <p>Ajouter un spot? </p>
-            
-            <div class="toggle-wrapper">
-                <input class="toggle-checkbox" type="checkbox">
-                <div class="toggle-container">  
-                    <div class="toggle-button">
-                    <div class="toggle-button-circles-container">
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                        <div class="toggle-button-circle"></div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        </div>
           
-        <!-- formulaire ajout spot -->
+
+
+<!-- AFFICHAGE DE LA MAP --> 
+<div id="map" class="">
+</div>
+ <!-- ////////////////////////////////////////////////////////////////// -->
+ {% if app.user %}  
+ <!-- formulaire ajout spot -->
         <div id="form-spot-id" class="form-add-spot">
             {{ form_start(formAddSpot, {'attr': {'class': 'max-w-md mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
                 <div class="mb-4">
@@ -83,24 +64,24 @@
                     {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
                 <div class="mb-4">
-                    {{ form_label(formAddSpot.cp, 'Postal Code', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+                    {{ form_label(formAddSpot.cp, 'Postal Code', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
                     {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
                 <div class="mb-4">
-                    {{ form_label(formAddSpot.city, 'City', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+                    {{ form_label(formAddSpot.city, 'City', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
                     {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
                 <button class="bg-blue-300 rounded px-2" id="add-user-pos">Utiliser ma position</button>
                 <div class="mb-4">
-                    {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+                    {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
                     {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
                 <div class="mb-4">
-                    {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+                    {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
                     {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
                 <div class="mb-4">
-                    {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+                    {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
                     {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
                 <div class="mb-4">
@@ -109,18 +90,44 @@
                 </div>
                 {# <button type="submit" class="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Submit</button> #}
             {{ form_end(formAddSpot) }}
+        </div>
+    
 
-    </div>
+ <!-- ////////////////////////////////////////////////////////////////// -->
+        
     {% else %}
         <p>Veuillez vous connecter pour ajouter un spot.</p>
 {% endif %}
-</div>
-
-<!-- AFFICHAGE DE LA MAP --> 
-<div id="map" class="">
-
-<!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
- <ul class="list-spots list-spots-desktop" style="">
+<div class="list-spots-desktop">
+ {% if app.user %}
+    <div class="add-spot-title-container">
+        <p>Ajouter un spot? </p>
+        
+        <div class="toggle-wrapper">
+            <input class="toggle-checkbox" type="checkbox">
+            <div class="toggle-container">  
+                <div class="toggle-button">
+                <div class="toggle-button-circles-container">
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                    <div class="toggle-button-circle"></div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+ <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
+ <ul class="list-spots " style="">
         {% for spot in spotsList|sort((a, b)=>b.name<=>a.name) %}
             {% if spot.isValidated %}
             <!-- lien -->
@@ -169,7 +176,7 @@
         {% endfor %}
     </ul>
 </div>
-
+</div>
 <!-- Liste des spots SOUS LA MAP -->
 
     <ul class="list-spots" style="display:none;">
@@ -259,7 +266,7 @@ function success(userPosition) {
     L.marker([userLat, userLng]).addTo(map);
     
     // Ajoute un cercle sur la carte représentant la précision de la position de l'utilisateur.
-    L.circle([userLat, userLng], { radius: accuracy }).addTo(map);
+    // L.circle([userLat, userLng], { radius: accuracy }).addTo(map);
 }
 
 // en cas d'erreur
