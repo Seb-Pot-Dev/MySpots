@@ -12,7 +12,8 @@
 {% if app.user %}
     <h1>Hello {{ app.user.pseudo }}! ✅</h1>
 {% endif %}
-<div class="home-main">
+{# <div class="home-main"> #}
+  <div class="home-container">
     <video autoplay muted loop id="myVideo">
         <source src="\videos\street-video-1.mp4" type="video/mp4">
     </video>
@@ -28,8 +29,30 @@
             <button class="enter-cta">Voir la carte</button>
             </a>
         </div>
-</div>
+  </div>
+{# </div> #}
 
+<!-- Section STATS -->
+<div class="home-content-not-hero">
+  <div class="bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+          <dt class="text-base leading-7 text-gray-600">Un module préféré ? Les lieux partagés sur SkateSpots sont riches et variés.</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ modules|length }} modules différents</dd>
+        </div>
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+          <dt class="text-base leading-7 text-gray-600">Nombre de spots référencés à Strasbourg.</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ spotsList|length }} spots uniques</dd>
+        </div>
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+          <dt class="text-base leading-7 text-gray-600">La communauté SkateSpots ne cesse de s'agrandir.</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{ users|length }} utilisateurs réguliers</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>
 <script>
 // TODO: Animation kickflip sur les boutons
 // TODO: skateboard sur le curseur ? sur les marqueurs ?

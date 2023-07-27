@@ -65,7 +65,7 @@ class SpotController extends AbstractController
         
 /**********************AJOUT DE SPOT*********************************** */        
         //récupérer la liste de tout les modules
-        $modules = $doctrine->getRepository(Module::class)->findAll();    
+        $modules = $doctrine->getRepository(Module::class)->findAll();
 
         //créé un formulaire qui se repose sur le builder (qui se repose lui mm sur les propriétés de la classe) et assigner la liste de tout les modules pour les checkboxs
         $form = $this->createForm(SpotType::class, $spot, [

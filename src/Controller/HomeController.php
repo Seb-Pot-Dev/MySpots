@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Module;
+use App\Entity\Spot;
+use App\Entity\User;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,10 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     #[Route('/home', name: 'app_home')]
-    public function index(): Response
+    public function index(ManagerRegistry $doctrine, Spot $spot = null, Module $module = null): Response
     {
+        // récupérer la liste de tous les users
+        $users = $doctrine->getRepository(User::class)->findBy([], ['registrationDate' => 'DESC']);
+        //récupérer la liste de tout les spots
+        $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name' => 'ASC']);
+        //récupérer la liste de tout les modules
+        $modules = $doctrine->getRepository(Module::class)->findAll();
+
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
+            'spotsList' => $spots,
+            'modules' => $modules,
+            'users' => $users
         ]);
     }
 }
