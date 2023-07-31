@@ -54,7 +54,7 @@ ul.list-spots{
     }
     .form-add-spot.active {
         top: 105px;
-        right: 394px;
+        right: 330px;
         position: absolute;
         z-index: 9999;
         display: block;
@@ -68,6 +68,21 @@ ul.list-spots{
     margin-bottom:10px !important;
 }
 /*********form-spot*****************/
+#add-user-pos{
+    background-color: #93C5FD;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    -ms-border-radius: 0.25rem;
+    -o-border-radius: 0.25rem;
+    cursor: pointer;
+}
+#add-user-pos:hover{
+    background-color: #5aa7ff ;
+    scale: 1.01;
+}
 #closeFormSpotCross{
     width: 100%;
     display: flex;
@@ -92,9 +107,18 @@ ul.list-spots{
 }
 #form-spot-id{
     background-color: rgba(255, 255, 255, 0.694);
+    animation: fadeIn 0.5s ease;
+    -webkit-animation: fadeIn 0.5s ease;
 }
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }  
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { display: none; }
+  }  
 #form-spot-id>form{
-    width: 400px;
     display: flex;
     flex-direction: column;
     background-color: transparent;
@@ -102,15 +126,12 @@ ul.list-spots{
 }
 #form-spot-id form div{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
 }
 
 form>div>textarea{
-    /* width: 55%; */
     min-height: 50px;
-    max-width: 50.3%;
-    min-width: 50.3%;
     background-color: rgba(255, 255, 255, 0.451);
 }
 #form-spot-id form div input{
@@ -126,11 +147,13 @@ form>div>textarea{
     align-items: center;
 }
 .form-add-spot{
-    width: 400px;
-    right: 400px;
+    animation: fadeOut 0.5s ease;
+    -webkit-animation: fadeOut 0.5s ease;
+    width: 550px;
     position:fixed;
     /* formulaire initialement masqué */
     display: none;
+
 }
 
 

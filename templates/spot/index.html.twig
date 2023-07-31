@@ -58,43 +58,44 @@
                 489.292,457.678 277.331,245.004 489.292,32.337 "/>
             </svg>
         </button>
-            {{ form_start(formAddSpot, {'attr': {'class': 'max-w-md mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
-                <div class="mb-4">
-                    {{ form_label(formAddSpot.name, 'Name', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-                    {{ form_widget(formAddSpot.name, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+            {{ form_start(formAddSpot, {'attr': {'class': 'mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
+                <h1 class="mb-2 text-xl font-medium">Propose ton spot</h1>
+                <div class="">
+                    {{ form_label(formAddSpot.name, 'Name', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+                    {{ form_widget(formAddSpot.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
-                <div class="mb-4">
+                <div class="">
                     {{ form_label(formAddSpot.description, 'Description', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-                    {{ form_widget(formAddSpot.description, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_widget(formAddSpot.description, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
-                <div class="mb-4">
+                <div class="">
                     {{ form_label(formAddSpot.adress, 'Address', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-                    {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
-                <div class="mb-4">
+                <div class="">
                     {{ form_label(formAddSpot.cp, 'Postal Code', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
-                <div class="mb-4">
+                <div class="">
                     {{ form_label(formAddSpot.city, 'City', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
-                <button class="bg-blue-300 rounded px-2" id="add-user-pos">Utiliser ma position</button>
-                <div class="mb-4">
+                <button id="add-user-pos">Utiliser ma position</button>
+                <div class="">
                     {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
-                <div class="mb-4">
+                <div class="">
                     {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
-                <div class="mb-4">
+                <div class="">
                     {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
-                <div class="mb-4">
+                <div class="">
                     {{ form_label(formAddSpot.pictures, 'Pictures', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-                    {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                    {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
                 {# <button type="submit" class="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Submit</button> #}
             {{ form_end(formAddSpot) }}
