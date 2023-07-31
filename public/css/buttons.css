@@ -34,10 +34,10 @@
   box-shadow: inset 0 0 0.0625em 0.125em rgb(255 255 255 / 0.2),
     inset 0 0.0625em 0.125em rgb(0 0 0 / 0.4);
   transition: background-color 0.4s linear;
-
-  .toggle-checkbox:checked + & {
-    background-color: #f3b519;
-  }
+}
+/* Style lorsque le .toggle-wrapper possède la classe 'active' => Qd le formulaire est visible */
+.toggle-wrapper.active .toggle-container{
+  background-color: #f3b519;
 }
 
 .toggle-button {
@@ -56,9 +56,10 @@
     0 0.125em 0.125em rgb(0 0 0 / 0.5);
   transition: left 0.4s /*cubic-bezier(.65, 1.35, .5, 1)*/;
 
-  .toggle-checkbox:checked + .toggle-container > & {
-    left: 1.5625em;
-  }
+}
+/* Style lorsque le .toggle-wrapper possède la classe 'active' => Qd le formulaire est visible */
+.toggle-wrapper.active .toggle-button {
+  left: 1.5625em;
 }
 
 .toggle-button-circles-container {

@@ -50,6 +50,14 @@
  {% if app.user %}  
  <!-- formulaire ajout spot -->
         <div id="form-spot-id" class="form-add-spot">
+        <button id="closeFormSpotCross">
+             <!--SVG cross pour fermer le form -->
+            <svg fill="#000000" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                viewBox="0 0 490 490" xml:space="preserve">
+                <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490 
+                489.292,457.678 277.331,245.004 489.292,32.337 "/>
+            </svg>
+        </button>
             {{ form_start(formAddSpot, {'attr': {'class': 'max-w-md mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
                 <div class="mb-4">
                     {{ form_label(formAddSpot.name, 'Name', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
@@ -93,7 +101,7 @@
         </div>
     
 
- <!-- ////////////////////////////////////////////////////////////////// -->
+
         
     {% else %}
         <p>Veuillez vous connecter pour ajouter un spot.</p>
@@ -103,7 +111,7 @@
     <div class="add-spot-title-container">
         <p>Ajouter un spot? </p>
         
-        <div class="toggle-wrapper">
+        <div class="toggle-wrapper" id="toggle-wrapper-id">
             <input class="toggle-checkbox" type="checkbox">
             <div class="toggle-container">  
                 <div class="toggle-button">
@@ -230,7 +238,6 @@
     </ul>
 
 
-
 {% endblock %}
 
 {% block javascripts %}
@@ -261,9 +268,16 @@ function success(userPosition) {
 
     // Obtient la précision des données de géolocalisation.
     var accuracy = userPosition.coords.accuracy;
-    
+    var youAreHereIcon = L.icon({
+        iconUrl: 'https://png.pngtree.com/png-vector/20230320/ourmid/pngtree-you-are-here-location-pointer-vector-png-image_6656543.png',
+        iconSize: [60, 60],
+        iconAnchor: [22, 94],
+        popupAnchor: [-3, -76],
+        shadowAnchor: [22, 94],
+    })
     // Ajoute un marqueur sur la carte à l'emplacement de l'utilisateur.
-    L.marker([userLat, userLng]).addTo(map);
+    L.marker([userLat, userLng], {icon: youAreHereIcon, title: 'Vous êtes ici',
+        alt: 'Marqueur "vous êtes ici"'}).addTo(map);
     
     // Ajoute un cercle sur la carte représentant la précision de la position de l'utilisateur.
     // L.circle([userLat, userLng], { radius: accuracy }).addTo(map);
@@ -290,6 +304,7 @@ function fillWithUserPosition(){
     }else{
 promptGeolocationAccess()    }
 }
+// Si click sur "Utiliser ma position", utiliser la fn fillWithUserPosition 
 btnAddUserLoc.addEventListener('click', fillWithUserPosition);
 
 // test
@@ -350,9 +365,7 @@ addSpotByClickOnMap.onclick = openFormSpot;
 var closePopupButton = document.getElementsByClassName("leaflet-popup-close-button")[0];
 // Utilisation de la fonction closeFormSpot lors de l'evenement click sur l'élément "leaflet-popup-close-button"
 closePopupButton.onclick = closeFormSpot;
-
-
-        }
+}
 
         //fonction pour ajouter un marqueur sur la carte
         function addMarker(pos){

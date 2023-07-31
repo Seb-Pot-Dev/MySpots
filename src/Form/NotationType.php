@@ -15,7 +15,9 @@ class NotationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('note', ChoiceType::class,[
+            ->add('note', 
+            ChoiceType::class, 
+            [
                 'label' => 'Noter ce spot: ',
                 'choices' => [
                     '1' => 1,
@@ -28,7 +30,11 @@ class NotationType extends AbstractType
             ])
             // ->add('spot')
             // ->add('user')
-            ->add('submit', SubmitType::class)
+            ->add('submit',
+             SubmitType::class,
+            [
+                'label' => 'Ok'
+            ])
         ;
     }
 

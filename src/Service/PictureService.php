@@ -25,7 +25,7 @@ class PictureService
         switch($picture_infos['mime'])
         {
             case 'image/png':
-                $picture_source = imagereatefrompng($picture);
+                $picture_source = imagecreatefrompng($picture);
                 break;
             case 'image/jpeg':
                 $picture_source = imagecreatefromjpeg($picture);
@@ -112,4 +112,3 @@ class PictureService
         $this->params = $params;
     }
 }   
-

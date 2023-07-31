@@ -1,0 +1,25 @@
+/************-------Formulaires----------************* */
+/* Noter ce spot */
+form[name=notation]{
+    width: fit-content;
+}
+
+#notation{
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    padding: 5px;
+    gap:10px;
+}
+#notation div button[type=submit]{
+    padding: 1px;
+    border: 1px solid black;
+}
+#notation div select{
+    background-color: #D4D4D4;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
