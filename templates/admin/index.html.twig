@@ -3,71 +3,93 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+
+<link rel="stylesheet" href="{{ asset('css/boxes-cards.css') }}">
 
     <!-- Si l'utilisateur est connecté et qu'il a le ROLE_ADMIN-->
 {% if app.user and is_granted('ROLE_ADMIN') %}
+<div class="flex justify-center">
     <h1>Hello {{ app.user.pseudo }}! ✅</h1>
+</div>
+<div class="admin-top flex justify-center gap-4">
+    <!-- ajouter un module -->
+    <a href="{{ path('app_module') }}">
+        <div class="my-box">
+            <div class="box-cut"></div>
+            <i class="fa-solid fa-pallet"></i>
+            Ajouter un module
+            <i class="fa-solid fa-pallet"></i>
+        </div>
+    </a>
+    <!-- voir liste des utilisateurs -->
+    <a href="{{ path('listUsers_admin') }}">
+    <div class="my-box">
+        <div class="box-cut"></div>
+        <i class="fa-solid fa-users"></i>
+        Voir la liste des utilisateurs
+        <i class="fa-solid fa-users"></i>
+    </div>
+    </a>
+</div>
+<div class="admin-bottom flex justify-center gap-4">
 
-<!-- ajouter un module -->
-<a href="{{ path('app_module') }}"><i class="fa-solid fa-pallet"></i>Ajouter un module<i class="fa-solid fa-pallet"></i></a><br><br>
-<!-- voir liste des utilisateurs -->
-<a href="{{ path('listUsers_admin') }}"><i class="fa-solid fa-users"></i>Voir la liste des utilisateurs <i class="fa-solid fa-users"></i></a>
-        <h3>La liste des spots récéments ajoutés:</h3>
+<div class="my-box">
+    <div class="box-cut"></div>
+    <h4 class="text-xl">Liste des spots en attente de validation</h4>
+    <ul>
+    {% for spot in spots %}
+        {% if spot.isValidated == false %}
+            <li>
+                <a href="{{  path('show_spot', {'idSpot': spot.id}) }}">
+                    {{spot.name}}
+                    {{spot.creationDate | date('d/m/Y H:i:s')}}
+                </a>
 
-        <h4>Liste des spots en attente de validation</h4>
-            <ul>
-            {% for spot in spots %}
-                {% if spot.isValidated == false %}
-                    <li>
-                        <a href="{{  path('show_spot', {'idSpot': spot.id}) }}">
-                            {{spot.name}}
-                            {{spot.creationDate | date('d/m/Y H:i:s')}}
-                        </a>
+                <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
 
-                        <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
+                <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
+                <!-- vérifier si le spot est validé ou non-->
+                {% if not spot.isValidated %}
+                    <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square"></i></a>
+                {% else %}
+                    <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square-check"></i></a>
+                {% endif %}
+            </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
 
-                        <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
-                        <!-- vérifier si le spot est validé ou non-->
-                        {% if not spot.isValidated %}
-                            <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square"></i></a>
-                        {% else %}
-                            <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square-check"></i></a>
-                        {% endif %}
-                    </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <h4>Liste des spots en ligne</h4>
-            <ul>
-            {% for spot in spots %}
-                {% if spot.isValidated == true %}
-                    
-                <li>
-                    <a href="{{  path('show_spot', {'idSpot': spot.id}) }}">
-                        {{spot.name}}
-                        {{spot.creationDate | date('d/m/Y H:i:s')}}
-                    </a>
+<div class="my-box">
+    <div class="box-cut"></div>
+    <h4 class="text-xl">Liste des spots en ligne</h4>
+    <ul>
+    {% for spot in spots %}
+        {% if spot.isValidated == true %}
+            
+        <li>
+            <a href="{{  path('show_spot', {'idSpot': spot.id}) }}">
+                {{spot.name}}
+                {{spot.creationDate | date('d/m/Y H:i:s')}}
+            </a>
 
-                    <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
+            <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
 
-                    <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <!-- vérifier si le spot est validé ou non-->
-                    {% if not spot.isValidated %}
-                        <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square"></i></a>
-                    {% else %}
-                        <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square-check"></i></a>
-                    {% endif %}
-                </li>
-                    {% endif %}
+            <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
+            <!-- vérifier si le spot est validé ou non-->
+            {% if not spot.isValidated %}
+                <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square"></i></a>
+            {% else %}
+                <a href="{{ path('validateSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-square-check"></i></a>
+            {% endif %}
+        </li>
+            {% endif %}
 
-                {% endfor %}
-            </ul>
+        {% endfor %}
+    </ul>
 {% else %}
 <p>Vous devez être connecté en tant qu'administrateur pour consulter cette page.</p>
 {% endif %}
-    
+</div>
+</div>
 {% endblock %}

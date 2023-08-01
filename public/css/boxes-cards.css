@@ -1,0 +1,19 @@
+.my-box{
+    width: fit-content;
+    position: relative;
+    background-color:#D4D4D4;
+    padding: 20px;
+}
+.box-cut{
+    border-left: 1.25rem solid #D4D4D4;
+    border-top: 1.25rem solid #ffffff;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/****-------ADMIN------****/
+.admin-bottom{
+    margin-top: 16px;
+}

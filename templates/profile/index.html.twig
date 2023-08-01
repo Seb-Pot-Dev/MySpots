@@ -3,20 +3,38 @@
 {% block title %}Hello ProfileController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<link rel="stylesheet" href="{{ asset('css/boxes-cards.css') }}">
 
-{% if app.user %}
-    <h1>Hello {{ user.pseudo }}! ✅</h1>
-{% endif %}
+<div class="my-profile-container flex justify-center gap-4">
+    <div class="my-box">
+    <div class="box-cut"></div>
+        <div class="flex justify-between"><h2 class="text-xl">Mes infos</h2><a href="{{ path('edit_pseudo') }}"><i class="fa-regular fa-pen-to-square"></i></a></div>
+        <p>Pseudo : {{ user.pseudo }}</p>
+        <p>Mail : {{ user.email }}</p>
+        <p>Role :{% if is_granted("ROLE_ADMIN") %} admin {% else %}normal {% endif %}</p>
+    </div>
 
-<ul>
-<li><a href="{{ path('my_infos') }}">Mes infos</a></li>
-<li><a href="{{ path('my_spots') }}">Mes spots ajoutés</a></li>
-<li><a href="{{ path('my_favorites') }}">Mes spots favoris</a></li>
-</ul>
+    <div class="my-box">
+        <div class="box-cut"></div>
+        <h2 class="text-xl">Mes spots favoris</h2>
+        <ul>
+            {% for spot in user.favoriteSpots %}
+            <li><a href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+        
+    <div class="my-box">
+        <div class="box-cut"></div>
+
+        <h2 class="text-xl">Mes spots ajoutés</h2>
+        <ul>
+            {% for spot in user.addedspots %}
+            <li><a href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 
     
 {% endblock %}
