@@ -17,3 +17,17 @@
 .admin-bottom{
     margin-top: 16px;
 }
+/****------ LISTS ------*****/
+.list-container{
+    border: 2px solid black;
+    border-radius: 4px;
+}
+.list-container li{
+    padding: 4px;
+}
+.list-container li:nth-child(even){
+    background-color: #CCC
+}
+.list-container li:nth-child(odd){
+    background-color: #FFF
+}

@@ -1,0 +1,18 @@
+.submit-button{
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    background-color: #949494;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    -ms-border-radius: 0.25rem;
+    -o-border-radius: 0.25rem;
+    cursor: pointer;
+}
+.submit-button:hover{
+    background-color: #616161 ;
+    scale: 1.01;
+}

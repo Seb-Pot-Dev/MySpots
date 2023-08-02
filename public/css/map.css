@@ -61,6 +61,17 @@ ul.list-spots{
     }
 }
 /**********----BOUTTON---*************/
+/* Choix du tile layer */
+.choose-layer-container{
+    position: absolute;
+    z-index: 9999;
+    left: 50px;
+    bottom: 0;
+}
+.choose-layer-item{
+    color: white;
+    border: 1px solid white;
+}
 /* control de zoom Leaflet*/
 .leaflet-top{
     top: unset !important;
@@ -83,6 +94,7 @@ ul.list-spots{
     background-color: #5aa7ff ;
     scale: 1.01;
 }
+
 #closeFormSpotCross{
     width: 100%;
     display: flex;
