@@ -12,12 +12,14 @@
         <p>Pseudo : {{ user.pseudo }}</p>
         <p>Mail : {{ user.email }}</p>
         <p>Role :{% if is_granted("ROLE_ADMIN") %} admin {% else %}normal {% endif %}</p>
+        <input type="submit" onclick="return confirm('Are you sure?')" />
+        <a href="{{ path('remove_account') }}" class="text-red-600" onclick="return confirm('Cette action est irréversible. Êtes-vous certain de vouloir supprimer votre compte?')">Supprimer le compte</a>
     </div>
 
     <div class="my-box">
         <div class="box-cut"></div>
         <h2 class="text-xl">Mes spots favoris</h2>
-        <ul>
+        <ul class="list-container">
             {% for spot in user.favoriteSpots %}
             <li><a href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
             {% endfor %}
@@ -28,7 +30,7 @@
         <div class="box-cut"></div>
 
         <h2 class="text-xl">Mes spots ajoutés</h2>
-        <ul>
+        <ul class="list-container">
             {% for spot in user.addedspots %}
             <li><a href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
             {% endfor %}

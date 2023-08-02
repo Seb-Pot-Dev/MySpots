@@ -36,7 +36,7 @@
 <div class="my-box">
     <div class="box-cut"></div>
     <h4 class="text-xl">Liste des spots en attente de validation</h4>
-    <ul>
+    <ul class="list-container">
     {% for spot in spots %}
         {% if spot.isValidated == false %}
             <li>
@@ -63,7 +63,7 @@
 <div class="my-box">
     <div class="box-cut"></div>
     <h4 class="text-xl">Liste des spots en ligne</h4>
-    <ul>
+    <ul class="list-container">
     {% for spot in spots %}
         {% if spot.isValidated == true %}
             

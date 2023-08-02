@@ -5,13 +5,19 @@
 {% block body %}
 <style>
 </style>
-<h4>Liste des modules disponibles</h4>
+<div class="flex justify-center text-xl">
+    <h4>Liste des modules disponibles</h4>
+</div>
 <ul>
-{# {{ dump() }} #}
 {% for module in modules %}
-    <li>{{module.name}} <a href="{{ path('app_module_edit', {'id':module.id}) }}">edit</a><a href="{{ path('deleteModule_admin', {'id':module.id}) }}">del</a></li>
+    <li>{{module.name}} <a href="{{ path('app_module_edit', {'id':module.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a><a href="{{ path('deleteModule_admin', {'id':module.id}) }}"><i class="fa-solid fa-trash"></i></a></li>
 {% endfor %}
 </ul>
-<h4>Ajouter un module</h4>
-{{form(formNewModule)}}
+<div class="flex justify-center text-xl">
+    <h4>Ajouter un nouveau module</h4>
+</div>
+    {{form_start(formNewModule, {'attr': {'class': 'mx-auto p-4 bg-white shadow-md rounded-lg'}})}}
+        {{ form_label(formNewModule.name, 'Nom du module', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+        {{ form_widget(formNewModule.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+    {{form_end(formNewModule)}}
 {% endblock %}

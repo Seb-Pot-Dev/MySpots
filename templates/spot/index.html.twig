@@ -5,6 +5,10 @@
 {% block body %}
 <link rel="stylesheet" href="{{ asset('css/map.css') }}">
 
+<!-- Lien vers le fichier CSS de Mapbox -->
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+
+</head>
 <style>
 </style>
 <div class="page-width">
@@ -45,6 +49,13 @@
 
 <!-- AFFICHAGE DE LA MAP --> 
 <div id="map" class="">
+</div>
+
+<!-- Choix du layer -->
+<div class="choose-layer-container">
+    <button id="layer-1" class="choose-layer-item">Hell</button>
+    <button id="layer-2" class="choose-layer-item">Dark</button>
+    <button id="layer-3" class="choose-layer-item">Classic</button>
 </div>
  <!-- ////////////////////////////////////////////////////////////////// -->
  {% if app.user %}  
@@ -97,6 +108,8 @@
                     {{ form_label(formAddSpot.pictures, 'Pictures', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
                     {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
                 </div>
+            
+
                 {# <button type="submit" class="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Submit</button> #}
             {{ form_end(formAddSpot) }}
         </div>
@@ -244,17 +257,59 @@
 {% block javascripts %}
 <!-- Parametres Leaflet -->
     <script>
-        // défini une variable marqueur quelconque pour le click sur la carte
-        let marqueur
+// défini une variable marqueur quelconque pour le click sur la carte
+let marqueur
 
-        // défini la manière dont la carte est centré et le zoom
-        let map = L.map('map').setView([48.583328, 7.75], 14);
-        
-            // Ajouter une couche de tuiles OpenStreetMap à la carte, avec un maximum de zoom de 19 et une attribution
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                maxZoom: 19,
-                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }).addTo(map);
+// défini la manière dont la carte est centré et le zoom
+let map = L.map('map').setView([48.583328, 7.75], 14);
+
+// Tile layer de base OpenStreetMap
+var osm_layer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+// Tile layer de ThunderForest "Spinal Map" (API KEY : 396269ca3cfb446d96f2e63dd998a5b9)
+var Thunderforest_SpinalMap = L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
+	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	apikey: '396269ca3cfb446d96f2e63dd998a5b9',
+	maxZoom: 22
+});
+// Tile layer de Jawg Lab "dark" (API KEY : UruJTpSBYzy3a17xRdwM4O3RGfWF3EWeeFJMUkQKcRHyyAlYMB5LEx7wxl4ppHd8)
+var Jawg_Dark = L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
+	attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	minZoom: 0,
+	maxZoom: 22,
+	subdomains: 'abcd',
+	accessToken: 'UruJTpSBYzy3a17xRdwM4O3RGfWF3EWeeFJMUkQKcRHyyAlYMB5LEx7wxl4ppHd8'
+});
+
+var tileLayer1 = document.getElementById('layer-1');
+var tileLayer2 = document.getElementById('layer-2');
+var tileLayer3 = document.getElementById('layer-3');
+
+function ChooseTileLayer1(){
+    map.removeLayer(Jawg_Dark);
+    map.removeLayer(osm_layer);
+    Thunderforest_SpinalMap.addTo(map);
+    console.log("oui1")
+}
+function ChooseTileLayer2(){
+    map.removeLayer(osm_layer);
+    map.removeLayer(Thunderforest_SpinalMap);
+    Jawg_Dark.addTo(map);
+    console.log("oui2")
+}
+function ChooseTileLayer3(){
+    map.removeLayer(Thunderforest_SpinalMap);
+    map.removeLayer(Jawg_Dark);
+    osm_layer.addTo(map);
+    console.log("oui3")
+}
+
+tileLayer1.addEventListener('click', ChooseTileLayer1);
+tileLayer2.addEventListener('click', ChooseTileLayer2);
+tileLayer3.addEventListener('click', ChooseTileLayer3);
+
 
 // GEOLOCALISATION
 // Demande la géolocalisation de l'utilisateur et commence à suivre les mises à jour de position.
@@ -269,6 +324,8 @@ function success(userPosition) {
 
     // Obtient la précision des données de géolocalisation.
     var accuracy = userPosition.coords.accuracy;
+
+    //icon custom pour l'emplacement de l'utilisateur
     var youAreHereIcon = L.icon({
         iconUrl: 'https://png.pngtree.com/png-vector/20230320/ourmid/pngtree-you-are-here-location-pointer-vector-png-image_6656543.png',
         iconSize: [60, 60],
@@ -320,41 +377,41 @@ function promptGeolocationAccess() {
     }
 }
 
-    </script>
+</script>
 
 <!-- Si l'utilisateur est connecté, le script js pour gérer les cliques sur la map est disponible -->
 {% if app.user %}  
-    <script>
+<script>
 /*********************************GESTION DU CLICK SUR LA MAP****************************************************************/
 
-        //Appel la fonction onMapClick pour créer un Event lorsque l'on clique sur un endroit non marked de la map et indique les coordonnées
-        map.on('click', onMapClick);
+//Appel la fonction onMapClick pour créer un Event lorsque l'on clique sur un endroit non marked de la map et indique les coordonnées
+map.on('click', onMapClick);
 
-        //stockage de la fonction popup() de Leaflet dans la variable popup
-        var popup = L.popup();
+//stockage de la fonction popup() de Leaflet dans la variable popup
+var popup = L.popup();
 
-        // Lorsque je déselectionne un des champs 'spot_city, spot_cp etc..', utiliser la fonction getPosByAdress
-        /* getPosByAdress permet de définir de définir un marqueur grâce a l'API Nominatim, 
-        qui grâce a l'adresse permet de retrouver la latitude/longitude  */
-        document.querySelector('#spot_city').addEventListener('blur', getPosByAdress)
-        document.querySelector('#spot_cp').addEventListener('blur', getPosByAdress)
-        document.querySelector('#spot_adress').addEventListener('blur', getPosByAdress)
+// Lorsque je déselectionne un des champs 'spot_city, spot_cp etc..', utiliser la fonction getPosByAdress
+/* getPosByAdress permet de définir de définir un marqueur grâce a l'API Nominatim, 
+qui grâce a l'adresse permet de retrouver la latitude/longitude  */
+document.querySelector('#spot_city').addEventListener('blur', getPosByAdress)
+document.querySelector('#spot_cp').addEventListener('blur', getPosByAdress)
+document.querySelector('#spot_adress').addEventListener('blur', getPosByAdress)
 
 
-        //Fonction pour créer un marqueur lorsque l'on clique sur un endroit de la map et renseigner les champs lat/lng du formulaire d'ajout de spot
-        function onMapClick(e) { 
-            // on récupère les coordonnées du clic
-            let pos = e.latlng
+//Fonction pour créer un marqueur lorsque l'on clique sur un endroit de la map et renseigner les champs lat/lng du formulaire d'ajout de spot
+function onMapClick(e) { 
+    // on récupère les coordonnées du clic
+    let pos = e.latlng
 
-            // on affiche les coordonnées dans le formulaire
-            document.querySelector('#spot_lat').value = pos.lat
-            document.querySelector('#spot_lng').value = pos.lng
+    // on affiche les coordonnées dans le formulaire
+    document.querySelector('#spot_lat').value = pos.lat
+    document.querySelector('#spot_lng').value = pos.lng
 
-            //pour créer un pop up qui indique les lat/lng de l'endroit cliqué
-            popup
-                .setLatLng(e.latlng)
-                .setContent("<a href='#' id='openFormAddSpotInPopup'>Nouveau Spot</a>")
-                .openOn(map);
+    //pour créer un pop up qui indique les lat/lng de l'endroit cliqué
+    popup
+        .setLatLng(e.latlng)
+        .setContent("<a href='#' id='openFormAddSpotInPopup'>Nouveau Spot</a>")
+        .openOn(map);
 
 // Définition de l'élément "openFormAddSpotInPopup"
 var addSpotByClickOnMap = document.getElementById("openFormAddSpotInPopup");
@@ -364,11 +421,12 @@ addSpotByClickOnMap.onclick = openFormSpot;
 
 // Défini de l'élément "leaflet-popup-close-button"
 var closePopupButton = document.getElementsByClassName("leaflet-popup-close-button")[0];
+
 // Utilisation de la fonction closeFormSpot lors de l'evenement click sur l'élément "leaflet-popup-close-button"
 closePopupButton.onclick = closeFormSpot;
 }
 
-        //fonction pour ajouter un marqueur sur la carte
+        {# //fonction pour ajouter un marqueur sur la carte lors du click
         function addMarker(pos){
             if(marqueur!=undefined){
                 map.removeLayer(marqueur)
@@ -376,7 +434,7 @@ closePopupButton.onclick = closeFormSpot;
 
             marqueur = L.marker(pos, {
                 //On rend le marqueur déplaçable
-                draggable: true
+                draggable: true,
             })
 
             marqueur.addTo(map)
@@ -388,46 +446,47 @@ closePopupButton.onclick = closeFormSpot;
                 document.querySelector('#spot_lat').value = pos.lat
                 document.querySelector('#spot_lng').value = pos.lng
             })
-        }
-        //fonction pour récupérer la pos à partir de l'adresse entrée dans le formulaire de Spot (SpotType)
-        function getPosByAdress(){
-            //On fabrique l'adresse
-            let adresse = document.querySelector('#spot_adress').value + ", " + document.
-            querySelector("#spot_cp").value + " " + document.querySelector('#spot_city').value
+        } #}
 
-            // On initialise une requête AJAX
-            const xmlhttp = new XMLHttpRequest
+//fonction pour récupérer la pos à partir de l'adresse entrée dans le formulaire de Spot (SpotType)
+function getPosByAdress(){
+    //On fabrique l'adresse
+    let adresse = document.querySelector('#spot_adress').value + ", " + document.
+    querySelector("#spot_cp").value + " " + document.querySelector('#spot_city').value
 
-            xmlhttp.onreadystatechange = () => {
-                // Si la requête est terminée 
-                if(xmlhttp.readyState == 4){
-                    // Si on a une une réponse
-                    if(xmlhttp.status == 200){
-                        //on récupère la réponse
-                        let response = JSON.parse(xmlhttp.response)
-                        
-                        let lat = response[0]["lat"]
-                        let lng = response[0]["lon"]
+    // On initialise une requête AJAX
+    const xmlhttp = new XMLHttpRequest
 
-                        document.querySelector('#spot_lat').value = lat
-                        document.querySelector('#spot_lng').value = lng
+    xmlhttp.onreadystatechange = () => {
+        // Si la requête est terminée 
+        if(xmlhttp.readyState == 4){
+            // Si on a une une réponse
+            if(xmlhttp.status == 200){
+                //on récupère la réponse
+                let response = JSON.parse(xmlhttp.response)
+                
+                let lat = response[0]["lat"]
+                let lng = response[0]["lon"]
 
-                        let pos = [lat, lng]
-                        popup
-                            .setLatLng(pos)
-                            .setContent("<a href='#' id='openFormAddSpotInPopup'>Adresse renseignée</a>")
-                            .openOn(map);
+                document.querySelector('#spot_lat').value = lat
+                document.querySelector('#spot_lng').value = lng
 
-                        map.setView(pos, 13)
-                    }
-                }
+                let pos = [lat, lng]
+                popup
+                    .setLatLng(pos)
+                    .setContent("<a href='#' id='openFormAddSpotInPopup'>Adresse renseignée</a>")
+                    .openOn(map);
+
+                map.setView(pos, 13)
             }
-
-            // On ouvre la requête HTTP
-            xmlhttp.open("get", `https://nominatim.openstreetmap.org/search?q=${adresse}&format=json&addressdetails=1&limit=1&polygon_svg=1`)
-            
-            xmlhttp.send()
         }
+    }
+
+    // On ouvre la requête HTTP
+    xmlhttp.open("get", `https://nominatim.openstreetmap.org/search?q=${adresse}&format=json&addressdetails=1&limit=1&polygon_svg=1`)
+    
+    xmlhttp.send()
+}
 
 
 /************************************FIN GESTION DU CLICK SUR LA CARTE********************************************/
@@ -451,9 +510,22 @@ closePopupButton.onclick = closeFormSpot;
                     const spotId = infos[4] 
                     const avgNote = infos[5]
 
+                //icon custom pour l'emplacement de l'utilisateur
+                const fireIcon = L.icon({
+                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
+                    iconSize: [25, 25],
+                    iconAnchor: [0, 25],
+                    popupAnchor: [10, -15]
+                })
                 // Si le spot a été validé par un admin, alors créé un marqueur
                 if (isValidate){
-                    const marker = L.marker([lat, lng]).addTo(map);
+                    const marker = L.marker([lat, lng],{
+                    icon: fireIcon,
+                    title: name
+                    }
+                    )
+                    
+                    marker.addTo(map);
                     
                     //pour créer l'URL de show_spot
                     var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
@@ -499,8 +571,11 @@ closePopupButton.onclick = closeFormSpot;
                 }).addTo(map);
 
     </script>
-    
-    <script src="{{ asset('js/script.js') }}"></script>
 
+<!-- Faire le tri dans le JS -->
+<script src="{{ asset('js/script.js') }}"></script>
+
+<!-- Lien vers le fichier JavaScript de Mapbox -->
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
 {% endblock %}
 
