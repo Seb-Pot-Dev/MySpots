@@ -47,6 +47,7 @@ class Spot
     private Collection $comments;
 
     #[ORM\ManyToOne(inversedBy: 'addedSpots')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')] // L'attribut est nulable et passe NULL si il est supprimé 
     private ?User $author = null ;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, options:["default"=>"CURRENT_TIMESTAMP"])]

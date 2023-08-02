@@ -18,6 +18,7 @@ class Notation
     private ?Spot $spot = null;
 
     #[ORM\ManyToOne(inversedBy: 'notations')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')] // L'attribut est nulable et passe NULL si il est supprimé 
     private ?User $user = null;
 
     #[ORM\Column]

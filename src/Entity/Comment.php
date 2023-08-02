@@ -21,7 +21,7 @@ class Comment
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')] // L'attribut est nulable et passe NULL si il est supprimé 
     private ?User $author = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]

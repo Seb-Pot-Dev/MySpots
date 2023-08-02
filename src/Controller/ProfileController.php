@@ -121,6 +121,33 @@ class ProfileController extends AbstractController
             'formEditProfile' => $form->createView()
         ]);
     }
+    #[Route('/profile/removeAccount', name: 'remove_account')]
+    public function removeAccount(Security $security, ManagerRegistry $doctrine, User $user = null, UserPasswordHasherInterface $hasher): Response
+    {
+        $entityManager = $doctrine->getManager();
+        $user = $security->getUser();
+
+        // Si aucun user est connecté renvoie vers la page de connexion
+        if(!$this->getUser()){
+            return $this->redirectToRoute('app_login');
+        }
+
+        // Si le user connecté n'est pas strictement le même que celui récupéré par la class Security
+        if($this->getUser() !== $user) {
+            return $this->redirectToRoute('app_home');
+        }
+
+        // Si le user connecté est le même que celui récupéré par la class Security
+        if($this->getUser() == $user){
+            // supprime l'objet User
+            $entityManager->remove($user);
+            $entityManager->flush();
+            // supprime les informations de session pour éviter les conflits
+            session_destroy();
+        }
+        
+        return $this->redirectToRoute('app_home');
+    }
 
 }
 

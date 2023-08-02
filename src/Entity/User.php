@@ -46,6 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $comments;
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Spot::class)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private Collection $addedSpots;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable:true, options:["default"=>"CURRENT_TIMESTAMP"])]
