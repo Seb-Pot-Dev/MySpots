@@ -1,0 +1,13 @@
+Voir le "site map"
+Voir le "SEO"
+Voir les balises "meta" -> "meta-description"
+Voir les alts sur les images
+Tailles des images (max 72 dpi ?)
+Choisir certains mots clé (ajouter balises "strong" "em")
+Responsive design : smartphone/tablette/desktop -> mettre les maquettes sur le figma
+Prendre en compte l'accès handicapé
+OWASP recommandations (dire comment on a fait pour contrer les failles listées par OWASP dans notre DS)
+REGEX sur les mots de passe (obligatoire), protection contre les brutforce, voir pour Google reCaptcha, voir pour mettre un HoneyPot
+
+Faire en sorte lors de la suppression d'un user que ses spots passent en Author= null (retirer la supression en cascade)
+
