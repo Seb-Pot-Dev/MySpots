@@ -56,7 +56,9 @@ class SpotType extends AbstractType
                 'mapped' => false,
                 'required' => false
             ])
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class,[
+                'attr' => ['class' => 'w-full py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600']
+            ])
         ;
     }
 

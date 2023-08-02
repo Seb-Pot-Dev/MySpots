@@ -14,7 +14,9 @@ class ModuleType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class,[
+                'attr' => ['class' => 'w-full py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600']
+            ])
         ;
     }
 
