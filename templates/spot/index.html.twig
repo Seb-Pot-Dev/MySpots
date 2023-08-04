@@ -9,12 +9,10 @@
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
 
 </head>
-<style>
-</style>
 <div class="page-width">
     <h1>LA MAP</h1>
-<!-- TEST FORMULAIRE POUR TRIER -->
-{# 
+{# <!-- TEST FORMULAIRE POUR TRIER -->
+
     <h1>Liste des spots</h1>
 
     <section>
@@ -40,11 +38,8 @@
                 {% endfor %}
             </ul>
         {% endif %}
-    </section> #}
-<!-- FIN TEST FORMULAIRE POUR TRIER -->
-
-
-          
+    </section> 
+<!-- FIN TEST FORMULAIRE POUR TRIER --> #}
 
 
 <!-- AFFICHAGE DE LA MAP --> 
@@ -53,9 +48,9 @@
 
 <!-- Choix du layer -->
 <div class="choose-layer-container">
-    <button id="layer-1" class="choose-layer-item">Hell</button>
-    <button id="layer-2" class="choose-layer-item">Dark</button>
-    <button id="layer-3" class="choose-layer-item">Classic</button>
+    <button id="layer-1" class="choose-layer-item"><span>Hell</span></button>
+    <button id="layer-2" class="choose-layer-item"><span>Dark</span></button>
+    <button id="layer-3" class="choose-layer-item"><span>Classic</span></button>
 </div>
  <!-- ////////////////////////////////////////////////////////////////// -->
  {% if app.user %}  
@@ -256,6 +251,7 @@
 
 {% block javascripts %}
 <!-- Parametres Leaflet -->
+
     <script>
 // défini une variable marqueur quelconque pour le click sur la carte
 let marqueur
@@ -267,7 +263,7 @@ let map = L.map('map').setView([48.583328, 7.75], 14);
 var osm_layer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
+})
 // Tile layer de ThunderForest "Spinal Map" (API KEY : 396269ca3cfb446d96f2e63dd998a5b9)
 var Thunderforest_SpinalMap = L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -281,7 +277,9 @@ var Jawg_Dark = L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.p
 	maxZoom: 22,
 	subdomains: 'abcd',
 	accessToken: 'UruJTpSBYzy3a17xRdwM4O3RGfWF3EWeeFJMUkQKcRHyyAlYMB5LEx7wxl4ppHd8'
-});
+})
+// le tile layer par défaut est Jawg_Dark. 
+.addTo(map);
 
 var tileLayer1 = document.getElementById('layer-1');
 var tileLayer2 = document.getElementById('layer-2');
@@ -545,37 +543,11 @@ function getPosByAdress(){
             })
 /************************************FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
 
-                // Définir les coordonnées d'un polygone
-                var polygonCoords = [  [48.623860, 7.727798],
-                [48.604371, 7.693883],
-                [48.575899, 7.686080],
-                [48.568368, 7.729530],
-                [48.556536, 7.741879],
-                [48.540214, 7.740874],
-                [48.520945, 7.753266],
-                [48.517002, 7.802228],
-                [48.525297, 7.830220],
-                [48.548539, 7.848697],
-                [48.563863, 7.858974],
-                [48.586015, 7.840496],
-                [48.605270, 7.820451],
-                [48.610125, 7.795036],
-                [48.623860, 7.727798]
-                ];
-                
-                // Créer un polygone à partir des coordonnées stockées dans var polygonCoords et l'ajouter à la carte
-                var myPolygon = L.polygon(polygonCoords, {
-                    color: 'red',
-                    fillColor: 'transparent',
-                    weight: 2
-                }).addTo(map);
-
-    </script>
+</script>
 
 <!-- Faire le tri dans le JS -->
 <script src="{{ asset('js/script.js') }}"></script>
 
-<!-- Lien vers le fichier JavaScript de Mapbox -->
-<script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
+
 {% endblock %}
 
