@@ -13,10 +13,11 @@
 <!-- Section HERO (VIDEO) -->
   <div class="hero-main">
     <div class="hero-video-container">
-      <video autoplay muted loop id="myVideo">
-          <source src="\videos\street-video-1.mp4" type="video/mp4">
-      </video>
-    
+
+    <!-- Première vidéo à être lue -->
+      <video autoplay muted id="myVideo" style="width: 100%; height: 100%;"></video>
+
+
       <div class="pause-video-container">
 
         <!-- Button pour mettre play/pause sur la video avec JAVASCRIPT (fonction: "pauseVideo()" ) -->
@@ -80,7 +81,7 @@
 
         <a
           class="block w-full rounded bg-black/50 px-12 py-3 text-sm font-medium text-white/50 shadow hover:text-white hover:bg-black/75 focus:outline-none focus:ring active:bg-black sm:w-auto"
-          href="/about"
+          href="{{ path('app_register') }}"
         >
           Devenir membre (gratuit!)
         </a>
@@ -122,27 +123,39 @@
 
 </main>
 <script>
-/********----------------------TODO------------------------*********/
+    // Définition du tableau de vidéos
+    const videos = [
+      "/videos/production_id_4824358.mp4",
+      "/videos/pexels-koolshooters-9724563.mp4",
+      "/videos/pexels-allan-mas-5362598.mp4",
+      "/videos/street-video-1.mp4"
+      // Ajoutez ici les chemins vers les vidéos suivantes...
+    ];
 
-// TODO: Animation kickflip sur les boutons
-// TODO: skateboard sur le curseur ? sur les marqueurs ?
+    // Obtenir un index de vidéo aléatoire pour commencer
+    let currentVideoIndex = Math.floor(Math.random() * videos.length);
 
-/********----------------------VIDEO------------------------*********/
-// Get the video
-var video = document.getElementById("myVideo");
+    // Obtenez le lecteur vidéo
+    const videoPlayer = document.getElementById("myVideo");
 
-// Get the button
-var btn = document.getElementById("pauseVideoBtn");
+    // Fonction pour lire la vidéo suivante ou recommencer la boucle
+    function playNextVideo() {
+      // Changer l'index de la vidéo pour passer à la suivante
+      currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+      const nextVideoSrc = videos[currentVideoIndex];
 
-// Pause and play the video, and change the button text
-function pauseVideo() {
-  if (video.paused) {
-    video.play();
-    btn.innerHTML = "Pause";
-  } else {
-    video.pause();
-    btn.innerHTML = "Play";
-  }
-}
-</script>
+      // Mettre à jour la source du lecteur vidéo pour la prochaine vidéo
+      videoPlayer.src = nextVideoSrc;
+
+      // Lorsque la vidéo suivante est terminée, jouer la suivante
+      videoPlayer.addEventListener("ended", playNextVideo);
+    }
+
+    // Lancer la première vidéo aléatoire
+    videoPlayer.src = videos[currentVideoIndex];
+    videoPlayer.play();
+
+    // Événement pour passer à la vidéo suivante à la fin de la première vidéo
+    videoPlayer.addEventListener("ended", playNextVideo);
+  </script>
 {% endblock %}

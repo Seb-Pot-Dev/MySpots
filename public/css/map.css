@@ -67,10 +67,17 @@ ul.list-spots{
     z-index: 9999;
     left: 50px;
     bottom: 0;
+    margin-bottom: 10px;
 }
 .choose-layer-item{
-    color: white;
+    background-color: white;
     border: 1px solid white;
+    border-radius: 2px;
+}
+.choose-layer-item span{
+    color: black;
+    font-size:22px;
+    margin: 6px;
 }
 /* control de zoom Leaflet*/
 .leaflet-top{
