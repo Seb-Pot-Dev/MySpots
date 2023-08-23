@@ -190,6 +190,15 @@
                             <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
 
                         {% endif %}
+                        <!-- miniature des images -->
+                        {% if spot.pictures|length > 0 %}
+                            <div class="miniatures-spot">
+                            {% for picture in spot.pictures %}
+                                <img src="{{asset('assets/uploads/photos-spot/' ~ picture.name)}}" alt="" width="100">
+                            {% endfor %}
+                            </div>
+                                {# <img src="{{spot.pictures}}" alt=""> #}
+                        {% endif %}
                     </div>
                 </li>
                 </a> 
@@ -509,6 +518,7 @@ function getPosByAdress(){
                     const isValidate = infos[3]
                     const spotId = infos[4] 
                     const avgNote = infos[5]
+                    const pictures = infos[6]
 
                 //icon custom pour l'emplacement de l'utilisateur
                 const fireIcon = L.icon({
@@ -530,14 +540,25 @@ function getPosByAdress(){
                     //pour créer l'URL de show_spot
                     var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
                     urlShowSpot = urlShowSpot.replace("exemple_id", spotId);
-
+                    
+                    // Pour découper une chaine de caractères après un certain nombre de car. et ajouter "..." si découpée 
+                    function limitNameLenght(chaine, limite) {
+                    if (chaine.length > limite) {
+                        return chaine.slice(0, limite) + "...";
+                    } else {
+                        return chaine;
+                    }
+                    }
+                    // le nom final, découpé 
+                    const nameCut = limitNameLenght(name, 10);
                         //si la avgNote n'est pas null (c-a-d le spot a déjà été noté)
                         if(avgNote){
-                        const popupContent = `<a href=${urlShowSpot}> <b>${name}, <i class='fa-solid fa-star'></i>(${avgNote})</b><br>${desc}</a>`;
+                        const popupContent = `<a href=${urlShowSpot}> <b>${nameCut} <i class='fa-solid fa-star'></i>(${avgNote})</b><br>${desc}<br>
+                        </a>`;
                         marker.bindPopup(popupContent);
                         }else{ //Sinon on écrit 'pas de avgNote' a la place du int
-                        let avgNote = '(Pas de avgNote)'
-                        const popupContent = `<a href=${urlShowSpot}> <b>${name}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
+                        let avgNote = '(Pas de note)';
+                        const popupContent = `<a href=${urlShowSpot}> <b>${nameCut}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
                         marker.bindPopup(popupContent);
                     }
                 }

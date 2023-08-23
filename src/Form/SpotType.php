@@ -59,6 +59,10 @@ class SpotType extends AbstractType
             ->add('submit', SubmitType::class,[
                 'attr' => ['class' => 'w-full py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600']
             ])
+            /* Pour après la pause : 
+            voir où l'info passe après la soumission du formulaire PictureType dans showSpot
+            voir si je peux passer par le SpotType pour ajouter uniquement une photo (rendre les autres champs non obligatoire et renseigner automatiquement le spotId ?)
+            */
         ;
     }
 

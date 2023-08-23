@@ -20,6 +20,9 @@ z-index: 9999;
     z-index: 9999;
     right: 0;
     background-color: rgba(255, 255, 255, 0.273);
+    max-width: 30%;
+    max-height: 100vh;
+    overflow: scroll;
 }
 /********************** LISTS **********************/
 ul.list-spots{
@@ -35,6 +38,7 @@ ul.list-spots{
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
+    overflow-x: scroll;
 }
 .list-spots li:nth-child(even){
     background-color: rgba(211, 211, 211, 0.466);
@@ -59,6 +63,12 @@ ul.list-spots{
         z-index: 9999;
         display: block;
     }
+}
+/*************- MINIATURE LISTE SPOT ************/
+.miniatures-spot{
+    display: flex;
+    gap: 1px;
+
 }
 /**********----BOUTTON---*************/
 /* Choix du tile layer */

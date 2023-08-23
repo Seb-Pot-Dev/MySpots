@@ -11,6 +11,7 @@ use App\Entity\Picture;
 use App\Entity\Notation;
 use App\Form\CommentType;
 use App\Form\NotationType;
+use App\Form\PictureType;
 use App\Service\PictureService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,6 +53,7 @@ class SpotController extends AbstractController
                     $aspot->getIsValidated(),
                     $aspot->getId(),
                     $aspot->getAvgNote(),
+                    $aspot->getPictures()
                 ]
             ];
         }
@@ -107,6 +109,7 @@ class SpotController extends AbstractController
                 $img->setName($fichier);
                 $img->setSpot($newspot);
 
+                // ajoute l'image au spot
                 $newspot->addPicture($img);
             }
 
@@ -176,7 +179,7 @@ class SpotController extends AbstractController
 
     #[Route('/spot/{idSpot}', name: 'show_spot')]
     #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
-    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request, Request $requestNotation, Notation $notation= null): Response
+    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request, Request $requestNotation, Notation $notation= null, PictureService $pictureService): Response
     //On appel l'objet Spot dont l'id est passé en parametre par la route
     {       
         //on accède aux méthodes du manager de doctrine
@@ -186,15 +189,18 @@ class SpotController extends AbstractController
         if ($spot){
 
             //créé un formulaire pour ajouter/modifier les commentaires
-            $form = $this->createForm(CommentType::class, $comment);
+            $formComment = $this->createForm(CommentType::class, $comment);
             //créé un formulaire pour créer une entité Notation
             $formNotation = $this->createForm(NotationType::class, $notation);
+            //créé un formulaire qui se repose sur le builder
+            $formPicture = $this->createForm(PictureType::class);
 
+/* Pour le formulaire de Comment */
             //intercepte la requete du formulaire soumis
-            $form->handleRequest($request);
+            $formComment->handleRequest($request);
 
             //assigne les donnée du formulaire soumis à une variable 
-            $newComment = $form->getData();
+            $newComment = $formComment->getData();
 
                 //défini isNew comme null (pour CREER)
                 $isNew = false;
@@ -205,10 +211,10 @@ class SpotController extends AbstractController
                 }
             
             //Si le formulaire est soumis ET valide
-            if($form->isSubmitted() && $form->isValid()){
+            if($formComment->isSubmitted() && $formComment->isValid()){
             
                 //assigne les donnée du formulaire soumis à une variable 
-                $newComment = $form->getData();
+                $newComment = $formComment->getData();
 
                 //défini quel spot est concerné par le commentaire
                 $newComment->setSpotConcerned($spot);
@@ -232,6 +238,7 @@ class SpotController extends AbstractController
                 //refresh la page
                 return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
             }
+/* Pour le formulaire de Notation */
 // Vérifier si l'USER a déjà noté ce SPOT
             $formNotation->handleRequest($requestNotation);
             $newNotation = $formNotation->getData();
@@ -254,12 +261,58 @@ class SpotController extends AbstractController
                 return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
             }
 
+            
+            // On intercepte le formulaire d'image soumis
+            $formPicture->handleRequest($request);
+            //Si le formulaire de PICTURE est soumis et valide
+            if($formPicture->isSubmitted() && $formPicture->isValid()){
+                // On récupère les images
+                $images = $formPicture->get('pictures')->getData();
+                            
+                    foreach($images as $image){
+                        // On défini le dossier de destination
+                        $folder = 'photos-spot';
+                        // On appel le service d'ajout
+                        $fichier = $pictureService->add($image, $folder, 300, 300);
+                        // On instancie un nouvel objet image
+                        $img = new Picture();
+                        // On lui assigne un nom (renvoyé par le service) et un spot (défini via l'ID dans l'url ?)
+                        $img->setName($fichier);
+                        $img->setSpot($spot);
+
+                        // On ajoute les images au spot
+                        $spot->addPicture($img);
+                    }
+                //prepare la requette
+                $entityManager->persist($img);
+                //execute pour ajouter la picture en BDD
+                $entityManager->flush();
+
+                return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
+                }
+
             return $this->render('spot/show.html.twig', [
                 'controller_name' => 'SpotController',
                 'spot' => $spot,
-                'formCommentSpot' => $form->createView(),
+                'formCommentSpot' => $formComment->createView(),
                 'formNotation' => $formNotation->createView(),
+                'formPicture' => $formPicture->createView(),
             ]);
+        }
+    }
+    #[Route('/spot/{idSpot}', name: 'add_picture_spot')]
+    #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
+    public function addPicture(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Request $request): Response
+    //On appel l'objet Spot dont l'id est passé en parametre par la route
+    {   
+        $user = $this->getUser();
+
+        //on accède aux méthodes du manager de doctrine
+        $entityManager = $doctrine->getManager();
+        
+        //si le spot existe
+        if ($spot && $user){
+        
         }
     }
 }

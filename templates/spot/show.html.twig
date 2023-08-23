@@ -55,7 +55,12 @@
 
             <!--nombre de like du spot-->
             <p>Nombre de like : {{ spot.favoritedByUsers | length }} </p>
-
+            
+{{ form_start(formPicture, {'attr': {'class': 'mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
+    {{ form_label(formPicture)}}
+{{ form_end(formPicture) }}
+{% if spot.pictures|length > 0 %}
+    
 <!-- carrousel -->
 <div id="carrousel">
     <div id="carrouselContainer">
@@ -82,9 +87,16 @@
 	</g>
 </g>
 </svg>
-
-    
 </div>
+{% else %}
+<p>Il n'y a pas encore de photos pour ce spot</p>
+<a class="text-red-500" href="">
+Ajouter des photos
+</a>
+
+
+
+{% endif %}
     {# <p>Photos:<p>
     <!-- Si il y a + que 0 photos pour ce spot -->
     {% if spot.pictures|length > 0 %}
