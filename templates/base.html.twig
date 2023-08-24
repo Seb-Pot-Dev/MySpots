@@ -12,6 +12,7 @@
             <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/buttons.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/footer.css') }}">
 
             <!-- LEAFLET CSS -->
             <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
@@ -31,7 +32,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
 
         
     </head>
-    <body>
+    <body class="">
     <main class="">
     
     <!-- Main navigation container -->
@@ -134,16 +135,17 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   </div>
 </nav> #}
             <!-- NAV BAR -->
-            <div class="desktop-nav m-4 bg-neutral-300 shadow ">
+            <div class="desktop-nav m-4 shadow ">
                 <div  class="main-nav">
-                    <!-- LOGO -->
+                    <!-- LOGO - LIEN VERS HOME -->
                     <a href="{{ path('app_home') }}">
                     <img id="logo-strasspot" src="\img\SUJET_Cathedrale-pleine-scaled.png" alt="logo-StrasSpot">
                     </a>
-                    <!-- autres liens -->
+                    <!-- LIEN VERS MAP -->
                     <a 
                     class="inline-block rounded bg-success px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]"
                     href="{{ path('app_spot') }}">LA MAP</a>
+                    <a id="toggle-night-mode">Dark mode</a>
                 </div>
                 <div class="user-nav">
                     {% if app.user %}
@@ -243,13 +245,39 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
+
         <script src="{{ asset('js/menu_burger.js') }}"></script>
         
+        {# Gestion du switch Dark/Night Mode #}
         <script>
+            // Définition des var
+            const body = document.body;
+            const toggleButton = document.getElementById("toggle-night-mode");
+            
+            // Ecouteur d'évenement click sur l'élément toggleButton
+            toggleButton.addEventListener("click", () => {
+            // Ajout de la classe "night mode" sur le body
+            body.classList.toggle("night-mode");
+                // Si la classe night-mode est ajotuée au body, on stock en session une clé "night mode" avec la valeur "true"
+                if (body.classList.contains("night-mode")) {
+                    sessionStorage.setItem("nightMode", "true");
+                } else {
+                //Sinon, on supprime la clé "night mode"
+                    sessionStorage.removeItem("nightMode");
+                }
+            });
+
+            // Sur chaque page, on va vérifier la présence de la clé "sessionStorage" stockée en session
+            document.addEventListener("DOMContentLoaded", () => {
+                if (sessionStorage.getItem("nightMode") === "true") {
+                    body.classList.add("night-mode");
+                }
+            });
+
         </script>
 
 
-<footer class="bg-neutral-300 rounded-lg shadow dark:bg-neutral-300 m-4">
+<footer class="footer rounded-lg shadow m-4">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div class="sm:flex sm:items-center sm:justify-between">
             <a href="https://https://github.com/Seb-Pot-Dev/" class="flex items-center mb-4 sm:mb-0">

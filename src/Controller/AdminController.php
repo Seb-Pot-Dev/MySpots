@@ -35,12 +35,14 @@ class AdminController extends AbstractController
     
     // Pour supprimer une photo d'un spot
     #[Route('/admin/deletePicture/{idSpot}/{idPic}', name: 'deletePicture_admin')]
-    public function deletePicture(Security $security, Spot $idSpot , Picture $idPic , ManagerRegistry $doctrine) : Response
+    public function deletePicture(Security $security, Spot $idSpot, Picture $idPic , ManagerRegistry $doctrine) : Response
     {   
         $spot = $idSpot;
         $picture = $idPic;
+
+        $user = $security->getUser();
         // Définition du rôle 
-        $userRole = $security->getUser()->getRoles();
+        $userRole = $user->getRoles();
         // Définition du manager de doctrine
         $entityManager = $doctrine->getManager();
         // dd($userRole);
@@ -115,10 +117,12 @@ class AdminController extends AbstractController
         //RESTE A GERER LES CONDITIONS ADMINS
         // $user=$security->getUser();
 
-            if ($user){
+            if ($user && $user->isIsBanned() == 0){
                 $user->setIsBanned(1);
-                $entityManager->flush();
+            }else{
+                $user->setIsBanned(0);
             }
+            $entityManager->flush();
                 return $this->redirectToRoute('listUsers_admin');
     }
     #[Route('/admin/deleteUser/{id}', name: 'deleteUser_admin')]
@@ -126,8 +130,6 @@ class AdminController extends AbstractController
     {
     //RESTE A GERER LES CONDITIONS ADMINS
     // $user=$security->getUser();
-    
-    //supprimer un utilisateur n'est pas possible pour le moment, car les objets Spot et Comment ont besoin d'un objet User comme 'author'
         if ($user){
             $entityManager->remove($user);
             $entityManager->flush();

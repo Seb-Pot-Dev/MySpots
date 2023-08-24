@@ -76,3 +76,25 @@
   height: 0.125em;
   background-image: radial-gradient(circle at 50% 0, #f6f0e9, #bebcb0);
 }
+
+.delete-button {
+  padding: 4px;
+  margin: 4px;
+  background-color: red;
+  color: black;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+.delete-button-confirm {
+  background-color: rgb(228, 0, 0);
+  border: 2px solid rgb(117, 0, 0);
+  color: black;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}

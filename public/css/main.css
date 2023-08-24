@@ -1,3 +1,28 @@
+/**********GESTION DES COULEURS ET MODE NUIT *************/
+:root {
+    --bg-color: white;          /* Couleur de fond */
+    --text-color: #333;         /* Couleur du texte */
+    --accent-color: #007bff;    /* Couleur d'accentuation */
+    --menu-background: #D4D4D4;
+}
+
+/* Mode nuit */
+body.night-mode {
+    --bg-color: #1a1a1a;
+    --text-color: #ddd;
+    --accent-color: #9c27b0;
+    --menu-background: #102A43;
+}
+/* Appliquer les couleurs */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+a {
+    color: var(--accent-color);
+}
+
+/*******GESTION DES MARGES SUR LA PAGE ********/ 
 .page-width{
     margin:0 1.5rem;
 }

@@ -5,8 +5,9 @@
 {% block body %}
 
 <link rel="stylesheet" href="{{ asset('css/boxes-cards.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
 
-    <!-- Si l'utilisateur est connecté et qu'il a le ROLE_ADMIN-->
+<!-- Si l'utilisateur est connecté et qu'il a le ROLE_ADMIN-->
 {% if app.user and is_granted('ROLE_ADMIN') %}
 <div class="flex justify-center">
     <h1>Hello {{ app.user.pseudo }}! ✅</h1>
@@ -45,7 +46,7 @@
                     {{spot.creationDate | date('d/m/Y H:i:s')}}
                 </a>
 
-                <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
+                <a class="delete-button" href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
 
                 <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
                 <!-- vérifier si le spot est validé ou non-->
@@ -73,7 +74,7 @@
                 {{spot.creationDate | date('d/m/Y H:i:s')}}
             </a>
 
-            <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
+            <a class="delete-button" href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
 
             <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
             <!-- vérifier si le spot est validé ou non-->
@@ -92,4 +93,6 @@
 {% endif %}
 </div>
 </div>
+
+<script src="{{ asset('js/buttons.js') }}"></script>
 {% endblock %}

@@ -6,59 +6,66 @@
 {% block body %}
 <link rel="stylesheet" href="{{ asset('css/showSpot.css') }}">
 <link rel="stylesheet" href="{{ asset('css/carrousel.css') }}">
+<link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
+<link rel="stylesheet" href="{{ asset('css/forms.css') }}">
 
-    <!--nom du spot-->
-    <h1>{{ spot.name }} par 
-    {% if spot.author == null %}
-        Inconnu
-    {% else %}
-        {{ spot.author.pseudo }}
+<!--nom du spot-->
+<h1>{{ spot.name }} par 
+{% if spot.author == null %}
+Inconnu
+{% else %}
+{{ spot.author.pseudo }}
+{% endif %}
+</h1>
+<!--affichage note du spot-->
+<p>avgNote : 
+{% if spot.avgNote %}
+
+{% set avgNote = spot.avgNote %}
+
+    <!-- Affichage des étoiles -->
+    {% set fullStarsCount = avgNote | round %}
+
+    {% set roundedAvgNote = avgNote | round %}
+    {% set roundedSupavgNote = avgNote | round(1, 'ceil') %}
+
+    {% for i in 1..(roundedAvgNote - (roundedAvgNote != roundedSupavgNote ? 1 : 0)) %}
+        <i class="fa-solid fa-star"></i>
+    {% endfor %}
+
+    {% if roundedAvgNote != roundedSupavgNote %}
+            <i class="fa-solid fa-star-half-stroke"></i>
     {% endif %}
-    </h1>
-        <!--affichage note du spot-->
-        <p>avgNote : 
-            {% if spot.avgNote %}
-
-                {% set avgNote = spot.avgNote %}
-
-                    <!-- Affichage des étoiles -->
-                    {% set fullStarsCount = avgNote | round %}
-
-                    {% set roundedAvgNote = avgNote | round %}
-                    {% set roundedSupavgNote = avgNote | round(1, 'ceil') %}
-
-                    {% for i in 1..(roundedAvgNote - (roundedAvgNote != roundedSupavgNote ? 1 : 0)) %}
-                        <i class="fa-solid fa-star"></i>
-                    {% endfor %}
-
-                    {% if roundedAvgNote != roundedSupavgNote %}
-                            <i class="fa-solid fa-star-half-stroke"></i>
-                    {% endif %}
-                    
-                    {% if roundedAvgNote < 5 %}
-                        
-                        {% for i in 1..(5 - roundedAvgNote ) %}
-                            <i class="fa-regular fa-star"></i>
-                        {% endfor %}
-
-                    {% endif %}
-            <!--affichage de la avgNote-->
-                ({{spot.avgNote}})
-                ({{spot.notations|length}} évaluations)
-            {% else %}
-                Pas encore de avgNote
-            {% endif %}
-        </p>
+    
+    {% if roundedAvgNote < 5 %}
         
-            <!--form note du spot -->
-            {{ form(formNotation) }}
+        {% for i in 1..(5 - roundedAvgNote ) %}
+            <i class="fa-regular fa-star"></i>
+        {% endfor %}
 
-            <!--nombre de like du spot-->
-            <p>Nombre de like : {{ spot.favoritedByUsers | length }} </p>
+    {% endif %}
+<!--affichage de la avgNote-->
+({{spot.avgNote}})
+({{spot.notations|length}} évaluations)
+{% else %}
+Pas encore de avgNote
+{% endif %}
+</p>
+
+{# Attribuer une note #}
+{% if app.user %}
+<!--form note du spot -->
+{{ form(formNotation) }}
+{% endif %}
+
+<!--nombre de like du spot-->
+<p>Nombre de like : {{ spot.favoritedByUsers | length }} </p>
             
-{{ form_start(formPicture, {'attr': {'class': 'mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
+{% if app.user %}
+{{ form_start(formPicture) }}
     {{ form_label(formPicture)}}
 {{ form_end(formPicture) }}
+{% endif %}
 {% if spot.pictures|length > 0 %}
     
 <!-- carrousel -->
@@ -90,43 +97,14 @@
 </div>
 {% else %}
 <p>Il n'y a pas encore de photos pour ce spot</p>
-<a class="text-red-500" href="">
-Ajouter des photos
-</a>
-
-
-
 {% endif %}
-    {# <p>Photos:<p>
-    <!-- Si il y a + que 0 photos pour ce spot -->
-    {% if spot.pictures|length > 0 %}
-    <ul>
-        {% for image in spot.pictures %}
-        <li>
-            <img class="image-show-spot" src="{{asset('assets/uploads/photos-spot/' ~ image.name)}}"></img>
-        </li>
-        {% endfor %}
-    <!-- Sinon -->
-    </ul>
-    {% else %}
-        <p>Pas de photos ajoutées pour ce spot</p>
-    {% endif %} #}
 </div>
 
-
-
-
-
-
-
-
-    <!--description du spot-->
-    <p>Description: {{ spot.description }}
-    </p>
+<!--description du spot-->
+<p>Description: {{ spot.description }}</p>
 
 <!--ressources du spot-->
 <h4>Ressources sur place:</h4>
-
 {% if spot.modules|length >= 1 %}
 <ul>
 {% for module in spot.modules %}
@@ -174,23 +152,39 @@ const boutonCarrouselGauche = document.getElementById("boutonCarrouselGauche");
 // appel de fonctions au chargement de la page
 afficherMasquerChevronCarrousel();
 
-// Pour le carrousel:
-document.body.onload=function(){
-    carrouselContainer.style.width = (800*nbr)+"px";
+document.body.onload = function() {
+    carrouselContainer.style.width = (800 * nbr) + "px";
 
-{% for image in spot.pictures %}
-    var div = document.createElement("div");
-    div.className = "photo-spot";
-    div.style.backgroundImage = "url('{{asset('assets/uploads/photos-spot/' ~ image.name)}}')";
-    carrouselContainer.appendChild(div);
+    {% for image in spot.pictures %}
+        (function() {
+            var div = document.createElement("div");
+            div.className = "photo-spot";
+            div.style.backgroundImage = "url('{{asset('assets/uploads/photos-spot/' ~ image.name)}}')";
+            carrouselContainer.appendChild(div);
 
-    var link = document.createElement("a");
-    link.href = "{{ path('deletePicture_admin', {'idSpot': spot.id, 'idPic': image.id}) }}";
-    link.textContent = "Supprimer";
-    div.appendChild(link);
-{% endfor %}
+            {% if is_granted('ROLE_ADMIN')%}
+                
+            var deleteLink = document.createElement("a");
+            deleteLink.className = "delete-button";
+            deleteLink.href = "#";
+            deleteLink.textContent = "Supprimer";
 
-}   
+            deleteLink.addEventListener("click", function(event) {
+                event.preventDefault();
+                
+                if (deleteLink.textContent === "Supprimer") {
+                    deleteLink.textContent = "Sûr?";
+                    deleteLink.classList.add("delete-button-confirm");
+                } else if (deleteLink.textContent === "Sûr?") {
+                    window.location.href = "{{ path('deletePicture_admin', {'idSpot': spot.id, 'idPic': image.id}) }}";
+                }
+            });
+            div.appendChild(deleteLink);
+            {% endif %}
+        })();
+    {% endfor %}
+}
+
 boutonCarrouselDroite.onclick=function(){
     if(p > -nbr +1){
         p--;

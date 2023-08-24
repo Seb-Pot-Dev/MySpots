@@ -156,24 +156,27 @@ class SpotController extends AbstractController
     {   
         $entityManager=$doctrine->getManager();
 
-        //si l'utilisateur a déjà liké le spot
-        if($user->getFavoriteSpots()->contains($spot)){
+        if($user){
+            //si l'utilisateur a déjà liké le spot
+            if($user->getFavoriteSpots()->contains($spot)){
 
-            //on supprime le user de la collection FavoritedByUser du spot
-            $spot->removeFavoritedByUser($user);
-    
-            $entityManager->persist($spot);
-            $entityManager->flush();
-        }
-        //sinon si l'utilisateur n'a pas encore liké
-        else{
+                //on supprime le user de la collection FavoritedByUser du spot
+                $spot->removeFavoritedByUser($user);
+        
+                $entityManager->persist($spot);
+                $entityManager->flush();
+            }
+            //sinon si l'utilisateur n'a pas encore liké
+            else{
 
-            //on ajoute le user a la collection FavoritedByUser du spot
-            $spot->addFavoritedByUser($user);
-    
-            $entityManager->persist($spot);
-            $entityManager->flush();
+                //on ajoute le user a la collection FavoritedByUser du spot
+                $spot->addFavoritedByUser($user);
+        
+                $entityManager->persist($spot);
+                $entityManager->flush();
+            }
         }
+        // ELSE voir pour mettre condition si user non connecté
         return $this->redirectToRoute('app_spot');  
     }
 
@@ -187,7 +190,6 @@ class SpotController extends AbstractController
         
         //si le spot existe
         if ($spot){
-
             //créé un formulaire pour ajouter/modifier les commentaires
             $formComment = $this->createForm(CommentType::class, $comment);
             //créé un formulaire pour créer une entité Notation

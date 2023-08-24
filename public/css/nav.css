@@ -7,7 +7,7 @@
     display: none;
     align-items: center;
     justify-content: space-between;
-    background-color: lightgray;
+    background-color: var(--menu-background);
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -32,7 +32,7 @@
 .mobile-nav{
     display: flex;
     align-items: center;
-    background-color: lightgray;
+    background-color: var(--menu-background);
     padding-left: 1rem;
     border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -51,7 +51,7 @@
     z-index: 9999;
     top: 0;
     left: -250px;
-    background-color: #e8e8e8;
+    background-color: var(--menu-background);
     padding-top: 60px;
     transition: left 0.5s ease;
   }
@@ -61,7 +61,7 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: var(--menu-background);
     display: block;
     transition: 0.3s;
   }
