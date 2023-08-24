@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Spot;
 use App\Entity\User;
 use App\Entity\Module;
+use App\Entity\Picture;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,16 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
-    #[Route('/admin', name: 'app_admin')]
-    public function index(ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
-    {
-        $spots = $doctrine->getRepository(Spot::class)->findBy([], ['creationDate'=>'DESC']);
-
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
-            'spots' => $spots
-        ]);
-    }
+   
     //*******************************************************CRUD SPOT*********************************************************** */
     #[Route('/admin/deleteSpot/{id}', name: 'deleteSpot_admin')]
     public function deleteSpot(Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
@@ -37,9 +29,32 @@ class AdminController extends AbstractController
                 $entityManager->flush();
 
             }
-            return $this->redirectToRoute('app_spot');
+            return $this->redirectToRoute('app_admin');
             
     }
+    
+    // Pour supprimer une photo d'un spot
+    #[Route('/admin/deletePicture/{idSpot}/{idPic}', name: 'deletePicture_admin')]
+    public function deletePicture(Security $security, Spot $idSpot , Picture $idPic , ManagerRegistry $doctrine) : Response
+    {   
+        $spot = $idSpot;
+        $picture = $idPic;
+        // Définition du rôle 
+        $userRole = $security->getUser()->getRoles();
+        // Définition du manager de doctrine
+        $entityManager = $doctrine->getManager();
+        // dd($userRole);
+        //si le user est admin
+        if(in_array('ROLE_ADMIN', $userRole)){
+            // Supprimer l'entrée de Picture correspondante
+            $entityManager->remove($picture);
+            $entityManager->flush();
+            
+        }
+
+       return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
+    }
+
     #[Route('/admin/validate/{id}', name: 'validateSpot_admin')]
     public function validateSpot(Security $security, EntityManagerInterface $entityManager, Spot $spot)
     {
@@ -134,5 +149,16 @@ public function deleteModule(Security $security, EntityManagerInterface $entityM
         return $this->redirectToRoute('app_module');
     }
 
+
+    #[Route('/admin', name: 'app_admin')]
+    public function index(ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
+    {
+        $spots = $doctrine->getRepository(Spot::class)->findBy([], ['creationDate'=>'DESC']);
+
+        return $this->render('admin/index.html.twig', [
+            'controller_name' => 'AdminController',
+            'spots' => $spots
+        ]);
+    }
 }
 

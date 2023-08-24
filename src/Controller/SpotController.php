@@ -300,19 +300,5 @@ class SpotController extends AbstractController
             ]);
         }
     }
-    #[Route('/spot/{idSpot}', name: 'add_picture_spot')]
-    #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
-    public function addPicture(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Request $request): Response
-    //On appel l'objet Spot dont l'id est passé en parametre par la route
-    {   
-        $user = $this->getUser();
-
-        //on accède aux méthodes du manager de doctrine
-        $entityManager = $doctrine->getManager();
-        
-        //si le spot existe
-        if ($spot && $user){
-        
-        }
-    }
+    
 }

@@ -17,6 +17,7 @@ class Picture
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'pictures')]
+    // passage de nullable: false => nullable: true pour retirer une photo d'un spot
     #[ORM\JoinColumn(nullable: false)]
     private ?Spot $spot = null;
 
