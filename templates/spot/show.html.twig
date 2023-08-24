@@ -181,7 +181,6 @@ document.body.onload=function(){
 {% for image in spot.pictures %}
     var div = document.createElement("div");
     div.className = "photo-spot";
-    div.alt ="photo illustration";
     div.style.backgroundImage = "url('{{asset('assets/uploads/photos-spot/' ~ image.name)}}')";
     carrouselContainer.appendChild(div);
 
