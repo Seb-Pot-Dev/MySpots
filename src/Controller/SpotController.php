@@ -47,7 +47,7 @@ class SpotController extends AbstractController
 
         $paginationSpots = $paginator->paginate(
             $spotsQuery, //requete a paginer
-            $request->query->getInt('page', 0), // numéro de page pas défaut
+            $request->query->getInt('page', 1), // 1= numéro de page pas défaut
             5 // Nombre d'elements par page
         );
         

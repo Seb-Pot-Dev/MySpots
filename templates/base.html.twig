@@ -145,7 +145,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
                     <a 
                     class="inline-block rounded bg-success px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#14a44d] transition duration-150 ease-in-out hover:bg-success-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]"
                     href="{{ path('app_spot') }}">LA MAP</a>
-                    <a id="toggle-night-mode">Dark mode</a>
+
+                    <!-- DARK MODE --> 
+                    
+                    <input type="checkbox" id="toggle-night-mode"/>
+                    <label id="dark-mode-label" for="toggle-night-mode">
+                    
+                    {# <a id="toggle-night-mode">Dark mode</a> #}
                 </div>
                 <div class="user-nav">
                     {% if app.user %}
@@ -260,6 +266,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             body.classList.toggle("night-mode");
                 // Si la classe night-mode est ajotuée au body, on stock en session une clé "night mode" avec la valeur "true"
                 if (body.classList.contains("night-mode")) {
+                    
                     sessionStorage.setItem("nightMode", "true");
                 } else {
                 //Sinon, on supprime la clé "night mode"
@@ -271,6 +278,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             document.addEventListener("DOMContentLoaded", () => {
                 if (sessionStorage.getItem("nightMode") === "true") {
                     body.classList.add("night-mode");
+                    // coche la bouton switch/toggle du darkmode 
+                    document.getElementById("toggle-night-mode").checked = true;
                 }
             });
 

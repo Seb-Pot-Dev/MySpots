@@ -11,7 +11,6 @@
 </head>
 <style>
 </style>
-<div class="page-width">
     <h1>LA MAP</h1>
 
 <!-- AFFICHAGE DE LA MAP --> 
@@ -122,16 +121,20 @@
             {% if spot.isValidated %}
             <!-- lien -->
                 <a href="{{ path('show_spot', {'idSpot': spot.id}) }}">
-                <li>
+                {% if spot.pictures|length > 0 %}
+                <li style="height: 100px; background-position: center center; background-size: cover; background-image: url('{{ asset('assets/uploads/photos-spot/' ~ spot.pictures[0].name) }}');">
+                {% else %}
+                <li style="height: 100px;">
+                {% endif %}
                     <div class="left">
                     <!-- nom du spot -->
                             <!-- défini spotName comme le nom du spot -->
                             {% set spotName = spot.name %}
                             <!-- afficher spotName et mettre la première lettre en MAJ 
-                            + limiter au 25 premiers charactères -->
-                            {{spotName|capitalize|slice(0, 25)}}
-                            <!-- Si le nom du spot était supérieur a 25 -->
-                            {% if spotName | length > 25 %}...{% endif %}
+                            + limiter au 10 premiers charactères -->
+                            {{spotName|capitalize|slice(0, 10)}}
+                            <!-- Si le nom du spot était supérieur a 10 -->
+                            {% if spotName | length > 10 %}...{% endif %}
                     </div>
                     <div class="right">
                         <!-- nb likes du spot -->
@@ -159,14 +162,7 @@
 
                         {% endif %}
                         <!-- miniature des images -->
-                        {% if spot.pictures|length > 0 %}
-                            <div class="miniatures-spot">
-                            {% for picture in spot.pictures %}
-                                <img src="{{asset('assets/uploads/photos-spot/' ~ picture.name)}}" alt="" width="100">
-                            {% endfor %}
-                            </div>
-                                {# <img src="{{spot.pictures}}" alt=""> #}
-                        {% endif %}
+                        
                     </div>
                 </li>
                 </a> 
@@ -177,9 +173,8 @@
     {# Affichage des liens de pagination #}
 {{ knp_pagination_render(paginationSpots) }}
 </div>
-</div>
-<!-- Liste des spots SOUS LA MAP -->
 
+<!-- Liste des spots SOUS LA MAP -->
     <ul class="list-spots" style="display:none;">
         {% for spot in spotsList|sort((a, b)=>b.name<=>a.name) %}
             {% if spot.isValidated %}
@@ -191,10 +186,10 @@
                             <!-- défini spotName comme le nom du spot -->
                             {% set spotName = spot.name %}
                             <!-- afficher spotName et mettre la première lettre en MAJ 
-                            + limiter au 25 premiers charactères -->
-                            {{spotName|capitalize|slice(0, 25)}}
-                            <!-- Si le nom du spot était supérieur a 25 -->
-                            {% if spotName | length > 25 %}...{% endif %}
+                            + limiter au 10 premiers charactères -->
+                            {{spotName|capitalize|slice(0, 10)}}
+                            <!-- Si le nom du spot était supérieur a 10 -->
+                            {% if spotName | length > 10 %}...{% endif %}
                     </div>
                     <div class="right">
                         <!-- nb likes du spot -->
