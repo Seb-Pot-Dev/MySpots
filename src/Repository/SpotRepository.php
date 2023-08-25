@@ -20,7 +20,21 @@ class SpotRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Spot::class);
     }
+    // public function findSpotsPaginated(int $page, string $slug, int $limit = 6): array
+    // {
+    //     // Pour que la limite soit toujours positive
+    //     $limit = abs($limit);
+        
+    //     $result = [];
 
+    //     $query = $this->$getEntityManager()->createQueryBuilder('s')
+    //         ->select('c', 's')
+    //         ->from('App/Entity/Spot')
+    //         ->join('s.spot')
+
+    //     return $result;
+
+    // }
     public function save(Spot $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);

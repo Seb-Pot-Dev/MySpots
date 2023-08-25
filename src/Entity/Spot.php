@@ -62,6 +62,12 @@ class Spot
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Picture::class, orphanRemoval: true, cascade:['persist'])]
     private Collection $pictures;
 
+    #[ORM\Column]
+    private ?bool $covered = null;
+
+    #[ORM\Column]
+    private ?bool $official = null;
+
     public function __construct()
     {
         $this->favoritedByUsers = new ArrayCollection();
@@ -358,6 +364,30 @@ class Spot
                 $picture->setSpot(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isCovered(): ?bool
+    {
+        return $this->covered;
+    }
+
+    public function setCovered(bool $covered): self
+    {
+        $this->covered = $covered;
+
+        return $this;
+    }
+
+    public function isOfficial(): ?bool
+    {
+        return $this->official;
+    }
+
+    public function setOfficial(bool $official): self
+    {
+        $this->official = $official;
 
         return $this;
     }
