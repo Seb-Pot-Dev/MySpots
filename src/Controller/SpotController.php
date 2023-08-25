@@ -20,6 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+// Pour KNP PAGINATOR 
+use Knp\Component\Pager\PaginatorInterface;
 
 class SpotController extends AbstractController
 {
@@ -27,13 +29,28 @@ class SpotController extends AbstractController
     #[Route("/spot/{id}/edit", name:"edit_spot")]
     #[Route('/spot', name: 'app_spot',
      )]  
-    public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request, PictureService $pictureService): Response
+    public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request, PictureService $pictureService, PaginatorInterface $paginator): Response
     {
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();
 
-        //récupère tout les spots de la BDD.
+
+        //récupère tout les spots de la BDD pour les marqueurs sur la carte
         $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name'=>'ASC']);
+
+
+        // Requête pour la pagination des spots
+        $spotsQuery = $doctrine->getRepository(Spot::class)
+            ->createQueryBuilder('s')
+            ->orderBy('s.name', 'ASC')
+            ->getQuery();
+
+        $paginationSpots = $paginator->paginate(
+            $spotsQuery, //requete a paginer
+            $request->query->getInt('page', 0), // numéro de page pas défaut
+            5 // Nombre d'elements par page
+        );
+        
         
         //Définition du User
         $user=$security->getUser();
@@ -53,7 +70,9 @@ class SpotController extends AbstractController
                     $aspot->getIsValidated(),
                     $aspot->getId(),
                     $aspot->getAvgNote(),
-                    $aspot->getPictures()
+                    $aspot->getPictures(),
+                    $aspot->isCovered(),
+                    $aspot->isOfficial()
                 ]
             ];
         }
@@ -78,7 +97,6 @@ class SpotController extends AbstractController
 
         //assigne les donnée du formulaire soumis à une variable 
         $newspot = $form->getData();
-        // var_dump($newspot);
 
         //défini isNew comme null
         $isNew=null;
@@ -143,6 +161,7 @@ class SpotController extends AbstractController
             'controller_name' => 'SpotController',
             'spots' => $tabCoords,
             'spotsList' => $spots,
+            'paginationSpots' => $paginationSpots,
             'formAddSpot' => $form->createView(),
             'modules' => $modules,
         ]);

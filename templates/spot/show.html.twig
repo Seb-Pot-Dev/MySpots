@@ -17,6 +17,21 @@ Inconnu
 {{ spot.author.pseudo }}
 {% endif %}
 </h1>
+<!-- Affichage couvert ou non -->
+Environnement : 
+{% if spot.isCovered == 0 %}
+    Non-couvert
+{% else %}
+    Couvert
+{% endif %}
+<br>
+<!-- Affichage officiel ou non -->
+Type : 
+{% if spot.isOfficial == 0 %}
+    Street
+{% else %}
+    Skatepark
+{% endif %}
 <!--affichage note du spot-->
 <p>avgNote : 
 {% if spot.avgNote %}

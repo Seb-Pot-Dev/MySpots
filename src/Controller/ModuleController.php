@@ -46,11 +46,8 @@ class ModuleController extends AbstractController
 
         //si le formulaire est soumit
         if($form->isSubmitted() && $form->isValid()){
-            
-            //récupère les infos du form
-            $newspot = $form->getData();
             //prepare
-            $entityManager->persist($newspot);
+            $entityManager->persist($newModule);
             //execute
             $entityManager->flush();
             //refresh la page

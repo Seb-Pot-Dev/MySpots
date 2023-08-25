@@ -27,10 +27,12 @@ class SpotRepository extends ServiceEntityRepository
         
     //     $result = [];
 
-    //     $query = $this->$getEntityManager()->createQueryBuilder('s')
+    //     $query = $this->getEntityManager()->createQueryBuilder('s')
     //         ->select('c', 's')
-    //         ->from('App/Entity/Spot')
-    //         ->join('s.spot')
+    //         ->from('App/Entity/Spot', 's')
+    //         ->join('s.covered', 'c')
+    //         ->where("c.slug = '$slug'")
+    //         ;
 
     //     return $result;
 
