@@ -10,18 +10,20 @@ use App\Entity\Comment;
 use App\Entity\Picture;
 use App\Entity\Notation;
 use App\Form\CommentType;
-use App\Form\NotationType;
 use App\Form\PictureType;
+use App\Model\SearchData;
+use App\Form\NotationType;
 use App\Service\PictureService;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+// Pour KNP PAGINATOR 
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-// Pour KNP PAGINATOR 
-use Knp\Component\Pager\PaginatorInterface;
 
 class SpotController extends AbstractController
 {
@@ -34,10 +36,8 @@ class SpotController extends AbstractController
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();
 
-
         //récupère tout les spots de la BDD pour les marqueurs sur la carte
         $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name'=>'ASC']);
-
 
         // Requête pour la pagination des spots
         $spotsQuery = $doctrine->getRepository(Spot::class)
@@ -51,11 +51,17 @@ class SpotController extends AbstractController
             5 // Nombre d'elements par page
         );
         
-        
         //Définition du User
         $user=$security->getUser();
 
-        
+        $searchData = new SearchData();
+        $formSearch = $this->createForm(SearchType::class, $searchData);
+        $formSearch->handleRequest($request);
+
+        if ($formSearch->isSubmitted() && $formSearch->isValid()) {
+            $searchData = $formSearch->getData();
+        }
+
         /*Créer un tableau $tab
         /Construit un tableau associatif contenant le nom du spot comme clé.
         /Chaque clé est associée a un tableau contenant sa latitude, sa longitude, 
@@ -164,6 +170,7 @@ class SpotController extends AbstractController
             'paginationSpots' => $paginationSpots,
             'formAddSpot' => $form->createView(),
             'modules' => $modules,
+            'formSearch' => $formSearch->createView(),
         ]);
     }
 

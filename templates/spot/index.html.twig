@@ -79,13 +79,10 @@
                 {# <button type="submit" class="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Submit</button> #}
             {{ form_end(formAddSpot) }}
         </div>
-    
-
-
-        
     {% else %}
         <p>Veuillez vous connecter pour ajouter un spot.</p>
-{% endif %}
+    {% endif %}
+
 <div class="list-spots-desktop">
  {% if app.user %}
     <div class="add-spot-title-container">
@@ -114,8 +111,16 @@
         </div>
     </div>
 {% endif %}
+<div class="search-filters-container">
+{{ form_start(formSearch) }}
+    {# {{ form_widget(formSearch.q) }}
+    {{ form_row(formSearch.modules) }} 
+    {{ form_widget(formSearch.submit) }} #}
+{{ form_end(formSearch) }}
+
+</div>
  <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
- <ul class="list-spots " style="">
+ <ul class="list-spots" style="">
         <!-- Boucle sur chaques éléments Spot récupérer du controller par la variable paginationSpots, qui permet la pagination grâce au bundle Knp Paginator
         {% for spot in paginationSpots|sort((a, b)=>b.name<=>a.name) %}
             {% if spot.isValidated %}
@@ -167,11 +172,12 @@
                 </li>
                 </a> 
             {% endif %}
-
         {% endfor %}
     </ul>
-    {# Affichage des liens de pagination #}
-{{ knp_pagination_render(paginationSpots) }}
+    <div class="js-filter-pagination">
+        {# Affichage des liens de pagination #}
+        {{ knp_pagination_render(paginationSpots) }}
+    </div>
 </div>
 
 <!-- Liste des spots SOUS LA MAP -->
