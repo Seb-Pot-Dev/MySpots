@@ -13,14 +13,17 @@ use App\Form\CommentType;
 use App\Form\PictureType;
 use App\Model\SearchData;
 use App\Form\NotationType;
+use App\Form\SpotSearchType;
 use App\Service\PictureService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 // Pour KNP PAGINATOR 
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
+// Pour les filtres en AJAX
 use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -54,13 +57,9 @@ class SpotController extends AbstractController
         //Définition du User
         $user=$security->getUser();
 
-        $searchData = new SearchData();
-        $formSearch = $this->createForm(SearchType::class, $searchData);
-        $formSearch->handleRequest($request);
 
-        if ($formSearch->isSubmitted() && $formSearch->isValid()) {
-            $searchData = $formSearch->getData();
-        }
+        $formSearch = $this->createForm(SpotSearchType::class);
+
 
         /*Créer un tableau $tab
         /Construit un tableau associatif contenant le nom du spot comme clé.
@@ -173,6 +172,25 @@ class SpotController extends AbstractController
             'formSearch' => $formSearch->createView(),
         ]);
     }
+
+    #[Route('/spot/search', name: 'spot_search', methods: ['GET', 'POST'])]
+public function search(Request $request, SpotRepository $spotRepository, SerializerInterface $serializer)
+{
+    $spots = [];
+    $data = $request->request->all();  // Get all POST parameters
+
+    // Validate your data as per your needs
+    if (isset($data['name'], $data['moduleTypes'])) {
+        $spots = $spotRepository->findByModules($data['name'], $data['moduleTypes']);
+
+        if ($request->isXmlHttpRequest()) {
+            $jsonSpots = $serializer->serialize($spots, 'json');
+            dd($jsonSpots);
+            return new JsonResponse($jsonSpots);
+        }
+    }
+}
+
 
     //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
     #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]

@@ -20,12 +20,10 @@ class ProfileController extends AbstractController
         $user = $this->getUser();
 
         if(!$user){
-            throw new \Exception('Accès refusé');
+            throw new \Exception('Accès reservé aux utilisateurs connectés.');
             redirectToRoute('/home/index.html.twig');
         }
-    
         return $this->render('profile/index.html.twig', [
-            'controller_name' => 'ProfileController',
             'user' => $user,
         ]);
     }

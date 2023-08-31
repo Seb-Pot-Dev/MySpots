@@ -112,16 +112,15 @@
     </div>
 {% endif %}
 <div class="search-filters-container">
-{{ form_start(formSearch) }}
-    {# {{ form_widget(formSearch.q) }}
-    {{ form_row(formSearch.modules) }} 
-    {{ form_widget(formSearch.submit) }} #}
-{{ form_end(formSearch) }}
-
+    {{ form_start(formSearch, {'attr': {'id': 'search-form', 'class': 'my-custom-class'}}) }}
+        {{ form_row(formSearch.name) }}
+        {{ form_row(formSearch.moduleTypes) }}
+        <button type="submit">Search</button>
+    {{ form_end(formSearch) }}
 </div>
  <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
  <ul class="list-spots" style="">
-        <!-- Boucle sur chaques éléments Spot récupérer du controller par la variable paginationSpots, qui permet la pagination grâce au bundle Knp Paginator
+        <!-- Boucle sur chaques éléments Spot récupérés du controller par la variable paginationSpots, qui permet la pagination grâce au bundle Knp Paginator
         {% for spot in paginationSpots|sort((a, b)=>b.name<=>a.name) %}
             {% if spot.isValidated %}
             <!-- lien -->
@@ -570,9 +569,8 @@ function getPosByAdress(){
 <!-- Lien vers le fichier JavaScript de Mapbox -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
 
-<!-- Pour la gestio en AJAX de la pagination -->
-<script>
+<!-- Pour la gestion en AJAX des filtres -->
+<script src="{{ asset('js/AJAX_spot_filters_search.js') }}"></script>
 
-</script>
 {% endblock %}
 

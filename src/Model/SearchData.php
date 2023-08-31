@@ -4,12 +4,9 @@ namespace App\Model;
 
 class SearchData
 {
-    /** @var int */
-    public $page = 1;
-
     /** @var string */
-    public string $q = '';
+    public string $name = '';
 
     /** @var array */
-    public array $categories = [];
+    public array $moduleTypes = [];
 }

@@ -69,14 +69,19 @@ class SpotRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-public function findByModules(array $moduleIds): array
+public function findByModules($name = null, $moduleTypes = []): array
 {
     $qb = $this->createQueryBuilder('s');
 
-    if (!empty($moduleIds)) {
-        $qb->join('s.modules', 'm')
-            ->andWhere('m.id IN (:moduleIds)')
-            ->setParameter('moduleIds', $moduleIds);
+    if ($name) {
+        $qb->andWhere('s.name LIKE :name')
+           ->setParameter('name', '%'.$name.'%');
+    }
+
+    if (!empty($moduleTypes)) {
+        $qb->leftJoin('s.modules', 'm')
+           ->andWhere('m.type IN (:types)')
+           ->setParameter('types', $moduleTypes);
     }
 
     return $qb->getQuery()->getResult();
