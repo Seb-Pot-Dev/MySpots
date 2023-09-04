@@ -69,7 +69,9 @@ class SpotRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
-public function findByModules($name = null, $moduleTypes = []): array
+
+//La fonction findByModules vous renvoie un tableau (array) d'objets Spot qui correspondent aux critères spécifiés par les paramètres $name et $moduleNames.
+public function findByModules($name = null, $moduleNames = []): array
 {
     $qb = $this->createQueryBuilder('s');
 
@@ -78,14 +80,15 @@ public function findByModules($name = null, $moduleTypes = []): array
            ->setParameter('name', '%'.$name.'%');
     }
 
-    if (!empty($moduleTypes)) {
+    if (!empty($moduleNames)) {
         $qb->leftJoin('s.modules', 'm')
-           ->andWhere('m.type IN (:types)')
-           ->setParameter('types', $moduleTypes);
+           ->andWhere('m.name IN (:moduleNames)')
+           ->setParameter('moduleNames', $moduleNames);
     }
 
     return $qb->getQuery()->getResult();
 }
+
 //    public function findOneBySomeField($value): ?Spot
 //    {
 //        return $this->createQueryBuilder('s')

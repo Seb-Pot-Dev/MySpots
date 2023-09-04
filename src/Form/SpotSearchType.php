@@ -3,10 +3,12 @@
 // src/Form/SpotSearchType.php
 namespace App\Form;
 
+use App\Entity\Module;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilderInterface;
 
 class SpotSearchType extends AbstractType
 {
@@ -16,15 +18,14 @@ class SpotSearchType extends AbstractType
             ->add('name', TextType::class, [
                 'required' => false,
             ])
-            ->add('moduleTypes', ChoiceType::class, [
-                'choices' => [
-                    'Ramp' => 'Ramp',
-                    'Rail' => 'Rail',
-                    // ... other module types
-                ],
-                'multiple' => true,
-                'required' => false,
-            ]);
-    }
-}
+            //affiché des checkboxs non obligatoire avec plusieurs choix 
+            ->add('modules', EntityType::class,[
+                'class'=> Module::class,
+                'choice_label'=>'name',
+                'multiple'=>true,
+                'attr' => [
+                    'class' => 'form-row'
+                ]
+                ]); 
+}}
 
