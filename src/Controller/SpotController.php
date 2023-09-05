@@ -35,7 +35,7 @@ class SpotController extends AbstractController
     #[Route("/spot/{id}/edit", name:"edit_spot")]
     #[Route('/spot', name: 'app_spot',
      )]  
-    public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request, PictureService $pictureService, PaginatorInterface $paginator): Response
+    public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request, PictureService $pictureService, PaginatorInterface $paginator, SpotRepository $spotRepository): Response
     {
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();
@@ -58,10 +58,26 @@ class SpotController extends AbstractController
         //Définition du User
         $user=$security->getUser();
 
+        // Gestion des FILTRES *********************************************//
+        $searchData = new SearchData();
+        $formSearch = $this->createForm(SpotSearchType::class, $searchData);
+        $formSearch->handleRequest($request);  // reçoit les parametres POST
+        $spotsFiltered = [];
 
-        $formSearch = $this->createForm(SpotSearchType::class);
-
-
+        if ($formSearch->isSubmitted() && $formSearch->isValid()) {
+            $searchFilter = $searchData->search;
+            // dd($searchFilter);
+            $moduleFilter = $searchData->moduleFilter;
+            // dd($moduleFilter);
+            $spotsFiltered = $spotRepository->findByModules($searchFilter, $moduleFilter);
+            // dd($spotsFiltered);
+        }
+            // dd($spots);
+    
+            // if ($request->isXmlHttpRequest()) {
+            //     $jsonSpots = $serializer->serialize($spots, 'json');
+            //     return new JsonResponse($jsonSpots);
+            // }
         /*Créer un tableau $tab
         /Construit un tableau associatif contenant le nom du spot comme clé.
         /Chaque clé est associée a un tableau contenant sa latitude, sa longitude, 
@@ -171,38 +187,11 @@ class SpotController extends AbstractController
             'formAddSpot' => $form->createView(),
             'modules' => $modules,
             'formSearch' => $formSearch->createView(),
+            'spotsFiltered' => $spotsFiltered
         ]);
     }
 
-    #[Route('/spot/search', name: 'spot_search', methods: ['GET', 'POST'])]
-public function search(Request $request, SpotRepository $spotRepository, SerializerInterface $serializer)
-{
-    $spots = [];
-    //création d'une instance vierge du formulaire 
-    /*"Pourquoi ne pas simplement extraire les données de la Request directement ?" La raison est que le formulaire offre de nombreux avantages :
-        Validation : Les contraintes de validation que vous avez définies pour votre formulaire seront automatiquement vérifiées lorsque vous appelez $form->isValid().
-        Protection contre les attaques : Les formulaires de Symfony offrent une protection intégrée contre les attaques CSRF.
-        Transformation des données : Les formulaires permettent de transformer automatiquement les données entre les valeurs soumises et les valeurs utilisées dans votre modèle (par exemple, transformer une chaîne en une DateTime).
-        Mappage d'objet : Si vous avez lié un objet à votre formulaire (par exemple, une entité Doctrine), Symfony peuplera automatiquement cet objet avec les données soumises.
-    */
-    $formSearch = $this->createForm(SpotSearchType::class);
-    $formSearch->handleRequest($request);  // Get all POST parameters
-
-    // Validate your data as per your needs
-    if ($formSearch->isSubmitted() && $formSearch->isValid()) {
-        $formData = $formSearch->getData();
-        $name = $formData['name'] ?? null;
-        $moduleNames = $formData['modules'] ?? [];
-
-        $spots = $spotRepository->findByModules($name, $moduleNames);
-
-        if ($request->isXmlHttpRequest()) {
-            dd($spots);
-            $jsonSpots = $serializer->serialize($spots, 'json');
-            return new JsonResponse($jsonSpots);
-        }
-    }
-}
+   
 
 
     //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
@@ -356,6 +345,7 @@ public function search(Request $request, SpotRepository $spotRepository, Seriali
                 'formCommentSpot' => $formComment->createView(),
                 'formNotation' => $formNotation->createView(),
                 'formPicture' => $formPicture->createView(),
+                
             ]);
         }
     }

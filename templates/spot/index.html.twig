@@ -113,70 +113,29 @@
 {% endif %}
 <div class="search-filters-container">
     {{ form_start(formSearch, {'attr': {'id': 'search-form', 'class': 'my-custom-class'}}) }}
-        {{ form_row(formSearch.name) }}
-        {{ form_row(formSearch.modules) }}
+        {{ form_row(formSearch.search) }}
+        {{ form_row(formSearch.moduleFilter) }}
         <button type="submit">Search</button>
     {{ form_end(formSearch) }}
 </div>
- <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
+<!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
  <ul class="list-spots" style="">
+ {% if spotsFiltered %}
         <!-- Boucle sur chaques éléments Spot récupérés du controller par la variable paginationSpots, qui permet la pagination grâce au bundle Knp Paginator
-        {% for spot in paginationSpots|sort((a, b)=>b.name<=>a.name) %}
-            {% if spot.isValidated %}
-            <!-- lien -->
-                <a href="{{ path('show_spot', {'idSpot': spot.id}) }}">
-                {% if spot.pictures|length > 0 %}
-                <li style="height: 100px; background-position: center center; background-size: cover; background-image: url('{{ asset('assets/uploads/photos-spot/' ~ spot.pictures[0].name) }}');">
-                {% else %}
-                <li style="height: 100px;">
-                {% endif %}
-                    <div class="left">
-                    <!-- nom du spot -->
-                            <!-- défini spotName comme le nom du spot -->
-                            {% set spotName = spot.name %}
-                            <!-- afficher spotName et mettre la première lettre en MAJ 
-                            + limiter au 10 premiers charactères -->
-                            {{spotName|capitalize|slice(0, 10)}}
-                            <!-- Si le nom du spot était supérieur a 10 -->
-                            {% if spotName | length > 10 %}...{% endif %}
-                    </div>
-                    <div class="right">
-                        <!-- nb likes du spot -->
-                        {% if app.user %} <!-- si le user est co, il peut liker-->
-                        <a href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}">    
-                        {% endif %}
-                        <i class="fa-regular fa-heart" alt='nb-likes'></i>({{ spot.favoritedByUsers | length }})
-                        </a>
-
-                        <!-- note -->
-                        {% if spot.avgNote is not null %}
-                            <i class="fa-regular fa-star"></i>({{spot.avgNote}})
-                        {% else %}
-                            <i class="fa-regular fa-star"></i>(0)
-                        {% endif %}
-
-                        <!-- nb comments spot -->
-                            <i class="fa-regular fa-message"></i>({{ spot.comments | length }})
-
-                        {% if  is_granted('ROLE_ADMIN') %}
-                        <!-- supprimer le spot -->
-                            <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
-                        <!-- modifier le spot -->
-                            <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
-
-                        {% endif %}
-                        <!-- miniature des images -->
-                        
-                    </div>
-                </li>
-                </a> 
-            {% endif %}
-        {% endfor %}
+    {% for spot in spotsFiltered %}
+        {% include 'spot/_list_spots.html.twig' %}
+    {% endfor %}
+{% else %}
+    {% for spot in spotsList %}
+        {% include 'spot/_list_spots.html.twig' %}
+    {% endfor %}
+ {% endif %}
+            
     </ul>
-    <div class="js-filter-pagination">
-        {# Affichage des liens de pagination #}
+    {# <div class="js-filter-pagination">
+        Affichage des liens de pagination
         {{ knp_pagination_render(paginationSpots) }}
-    </div>
+    </div> #}
 </div>
 
 <!-- Liste des spots SOUS LA MAP -->
@@ -569,8 +528,7 @@ function getPosByAdress(){
 <!-- Lien vers le fichier JavaScript de Mapbox -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
 
-<!-- Pour la gestion en AJAX des filtres -->
-<script src="{{ asset('js/AJAX_spot_filters_search.js') }}"></script>
+
 
 {% endblock %}
 
