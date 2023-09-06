@@ -262,6 +262,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
             
             // Ecouteur d'évenement click sur l'élément toggleButton
             toggleButton.addEventListener("click", () => {
+            // Choix du layer DARK pour la map
+            ChooseTileLayer2();
             // Ajout de la classe "night mode" sur le body
             body.classList.toggle("night-mode");
                 // Si la classe night-mode est ajotuée au body, on stock en session une clé "night mode" avec la valeur "true"
@@ -269,6 +271,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
                     
                     sessionStorage.setItem("nightMode", "true");
                 } else {
+                // Choix du layer WHITE pour la map
+                ChooseTileLayer3();
                 //Sinon, on supprime la clé "night mode"
                     sessionStorage.removeItem("nightMode");
                 }

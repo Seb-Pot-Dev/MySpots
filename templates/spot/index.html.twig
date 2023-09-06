@@ -201,25 +201,26 @@ let marqueur
 // défini la manière dont la carte est centré et le zoom
 let map = L.map('map').setView([48.583328, 7.75], 14);
 
-// Tile layer de base OpenStreetMap
-var osm_layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+// Tile layer de base CLASSIC (white)
+var default_layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 22,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
-// Tile layer de ThunderForest "Spinal Map" (API KEY : 396269ca3cfb446d96f2e63dd998a5b9)
+// Tile layer de ThunderForest "Spinal Map" (HELL) (API KEY : 396269ca3cfb446d96f2e63dd998a5b9)
 var Thunderforest_SpinalMap = L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
 	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	apikey: '396269ca3cfb446d96f2e63dd998a5b9',
 	maxZoom: 22
 });
-// Tile layer de Jawg Lab "dark" (API KEY : UruJTpSBYzy3a17xRdwM4O3RGfWF3EWeeFJMUkQKcRHyyAlYMB5LEx7wxl4ppHd8)
+// Tile layer de Jawg Lab "DARK" (API KEY : UruJTpSBYzy3a17xRdwM4O3RGfWF3EWeeFJMUkQKcRHyyAlYMB5LEx7wxl4ppHd8)
 var Jawg_Dark = L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
 	attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 	minZoom: 0,
 	maxZoom: 22,
 	subdomains: 'abcd',
 	accessToken: 'UruJTpSBYzy3a17xRdwM4O3RGfWF3EWeeFJMUkQKcRHyyAlYMB5LEx7wxl4ppHd8'
-}).addTo(map);
+})
+.addTo(map); // Définition du layer par défaut
 
 var tileLayer1 = document.getElementById('layer-1');
 var tileLayer2 = document.getElementById('layer-2');
@@ -227,26 +228,33 @@ var tileLayer3 = document.getElementById('layer-3');
 
 function ChooseTileLayer1(){
     map.removeLayer(Jawg_Dark);
-    map.removeLayer(osm_layer);
+    map.removeLayer(default_layer);
     Thunderforest_SpinalMap.addTo(map);
-    console.log("oui1")
 }
 function ChooseTileLayer2(){
-    map.removeLayer(osm_layer);
+    map.removeLayer(default_layer);
     map.removeLayer(Thunderforest_SpinalMap);
     Jawg_Dark.addTo(map);
-    console.log("oui2")
 }
 function ChooseTileLayer3(){
     map.removeLayer(Thunderforest_SpinalMap);
     map.removeLayer(Jawg_Dark);
-    osm_layer.addTo(map);
-    console.log("oui3")
+    default_layer.addTo(map);
 }
 
 tileLayer1.addEventListener('click', ChooseTileLayer1);
 tileLayer2.addEventListener('click', ChooseTileLayer2);
 tileLayer3.addEventListener('click', ChooseTileLayer3);
+
+// Si click sur le switch dark mode, changer le fond en noir
+
+// Si choix du dark mode, afficher en noir, sinon, en blanc
+if (sessionStorage.getItem("nightMode") === "true") {
+    ChooseTileLayer2();
+}
+else{
+    ChooseTileLayer3();
+}
 
 
 // GEOLOCALISATION
