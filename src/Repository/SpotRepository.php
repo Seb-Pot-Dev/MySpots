@@ -72,10 +72,13 @@ class SpotRepository extends ServiceEntityRepository
 //    }
 
 //La fonction findByModules vous renvoie un tableau (array) d'objets Spot qui correspondent aux critères spécifiés par les paramètres $name et $moduleNames.
-public function findByModules(?string $searchFilter, array $moduleFilter): array
+public function findByCriteria(?string $searchFilter, array $moduleFilter, bool $official, bool $covered, ?string $orderCreationDate): array
 {
     // Crée un nouvel objet QueryBuilder pour construire la requête.
     $qb = $this->createQueryBuilder('s');
+
+    // Ajout de la condition pour les spots validés
+    $qb->andWhere('s.isValidated = 1');
 
     // Si un filtre de recherche est fourni pour le nom du spot...
     if ($searchFilter !== null) {
@@ -108,6 +111,19 @@ public function findByModules(?string $searchFilter, array $moduleFilter): array
         }
     }
 
+    if ($official) {
+        $qb->andWhere('s.official = true');
+    }
+    
+    if ($covered) {
+        $qb->andWhere('s.covered = true');
+    }
+    // Si une des options trier par date d'ajout est selectionnée'
+    if ($orderCreationDate == 'asc') {
+        $qb->orderBy('s.creationDate', 'ASC');
+    }else{
+        $qb->orderBy('s.creationDate', 'DESC');
+    }
     // Exécute la requête et retourne les résultats.
     return $qb->getQuery()->getResult();
 }

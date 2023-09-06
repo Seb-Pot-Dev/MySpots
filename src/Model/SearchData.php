@@ -13,12 +13,16 @@ class SearchData
     /** @var array|null */
     public array $moduleFilter = [];
 
-    // /**
-    //  * @var boolean
-    //  */
-    // public $official = false;
-    // /**
-    //  * @var boolean
-    //  */
-    // public $covered = false;
+    /**
+     * @var boolean
+     */
+    public $official = false;
+    /**
+     * @var boolean
+     */
+    public $covered = false;
+    /**
+     * @var string|null
+     */
+    public $orderCreation= '';
 }

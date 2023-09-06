@@ -32,16 +32,18 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class SpotController extends AbstractController
 {
 
-    #[Route("/spot/{id}/edit", name:"edit_spot")]
-    #[Route('/spot', name: 'app_spot',
-     )]  
+    #[Route("/spot/{id}/edit", name: "edit_spot")]
+    #[Route(
+        '/spot',
+        name: 'app_spot',
+    )]
     public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request, PictureService $pictureService, PaginatorInterface $paginator, SpotRepository $spotRepository): Response
     {
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();
 
         //récupère tout les spots de la BDD pour les marqueurs sur la carte
-        $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name'=>'ASC']);
+        $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name' => 'ASC']);
 
         // Requête pour la pagination des spots
         $spotsQuery = $doctrine->getRepository(Spot::class)
@@ -54,30 +56,34 @@ class SpotController extends AbstractController
             $request->query->getInt('page', 1), // 1= numéro de page pas défaut
             5 // Nombre d'elements par page
         );
-        
-        //Définition du User
-        $user=$security->getUser();
 
-        // Gestion des FILTRES *********************************************//
+        //Définition du User
+        $user = $security->getUser();
+
+// Gestion des FILTRES *********************************************//
+        // instancie un nouvel object SearchData
         $searchData = new SearchData();
+        // création du formulaire SpotSearchType pour les filtres
         $formSearch = $this->createForm(SpotSearchType::class, $searchData);
-        $formSearch->handleRequest($request);  // reçoit les parametres POST
-        $spotsFiltered = [];
+        // interception du formulaire SpotSearchType lorsqu'une requete est fournie 
+        $formSearch->handleRequest($request);  
+        // instancie une variable $sportFiltered 
+        $spotsFiltered = $spots; // égale a $spots tant qu'aucun filtre n'as été renseigner.
+        $filtersEmpty = false;
 
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
             $searchFilter = $searchData->search;
             // dd($searchFilter);
             $moduleFilter = $searchData->moduleFilter;
             // dd($moduleFilter);
-            $spotsFiltered = $spotRepository->findByModules($searchFilter, $moduleFilter);
-            // dd($spotsFiltered);
+            $officialFilter = $searchData->official;
+            $coveredFilter = $searchData->covered;
+            $orderCreation = $searchData->orderCreation;
+            $spotsFiltered = $spotRepository->findByCriteria($searchFilter, $moduleFilter, $officialFilter, $coveredFilter, $orderCreation);
+            if(empty($spotsFiltered)) {
+                $filtersEmpty = true;
+            }
         }
-            // dd($spots);
-    
-            // if ($request->isXmlHttpRequest()) {
-            //     $jsonSpots = $serializer->serialize($spots, 'json');
-            //     return new JsonResponse($jsonSpots);
-            // }
         /*Créer un tableau $tab
         /Construit un tableau associatif contenant le nom du spot comme clé.
         /Chaque clé est associée a un tableau contenant sa latitude, sa longitude, 
@@ -86,11 +92,11 @@ class SpotController extends AbstractController
 
         // Si des filtres ont été selectionné, $spotsFiltered n'est pas empty
         // dans ce cas,j'utilise $spotsFiltered pour créé les marqueurs
-        if(!empty($spotsFiltered)){
-            foreach($spotsFiltered as $aspot){
+        if (!empty($spotsFiltered)) {
+            foreach ($spotsFiltered as $aspot) {
                 $tab[] = [
                     $aspot->getName() => [
-                        $aspot->getLat(), 
+                        $aspot->getLat(),
                         $aspot->getLng(),
                         $aspot->getDescription(),
                         $aspot->getIsValidated(),
@@ -102,32 +108,33 @@ class SpotController extends AbstractController
                     ]
                 ];
             }
-        // Sinon, pas de filtres. J'utilise $spots pour créé les marqueurs (TOUS les spots de ma BDD)
-        }else{
-            foreach($spots as $aspot){
-            $tab[] = [
-                $aspot->getName() => [
-                    $aspot->getLat(), 
-                    $aspot->getLng(),
-                    $aspot->getDescription(),
-                    $aspot->getIsValidated(),
-                    $aspot->getId(),
-                    $aspot->getAvgNote(),
-                    $aspot->getPictures(),
-                    $aspot->isCovered(),
-                    $aspot->isOfficial()
-                ]
-            ];
-        }}
-        
+            // Sinon, pas de filtres. J'utilise $spots pour créé les marqueurs (TOUS les spots de ma BDD)
+        } else {
+            foreach ($spots as $aspot) {
+                $tab[] = [
+                    $aspot->getName() => [
+                        $aspot->getLat(),
+                        $aspot->getLng(),
+                        $aspot->getDescription(),
+                        $aspot->getIsValidated(),
+                        $aspot->getId(),
+                        $aspot->getAvgNote(),
+                        $aspot->getPictures(),
+                        $aspot->isCovered(),
+                        $aspot->isOfficial()
+                    ]
+                ];
+            }
+        }
+
 
         /*encode le tableau $tab en format JSON
         Le deuxième argument JSON_HEX_APOS de la fonction json_encode() permet de remplacer les single quotes
         par des entités HTML hexadécimales, pour éviter des problèmes de syntaxe dans le code JavaScript.*/
         $tabCoords = json_encode($tab, JSON_HEX_APOS);
 
-        
-/**********************AJOUT DE SPOT*********************************** */        
+
+        /**********************AJOUT DE SPOT*********************************** */
         //récupérer la liste de tout les modules
         $modules = $doctrine->getRepository(Module::class)->findAll();
 
@@ -142,22 +149,22 @@ class SpotController extends AbstractController
         $newspot = $form->getData();
 
         //défini isNew comme null
-        $isNew=null;
+        $isNew = null;
         //si mon spot n'existe pas, créé un nouveau spot.
-        if(!$spot){
+        if (!$spot) {
             $spot = new Spot();
             //initialisation d'une variable $isNew qui permet plus tard de vérifier si le spot viens d'être créé
             $isNew = true;
         }
 
-        if($form->isSubmitted() && $form->isValid() && $user){
+        if ($form->isSubmitted() && $form->isValid() && $user) {
             // assigne les donnée du formulaire soumis à une variable 
             $newspot = $form->getData();
-            
+
             // On récupère les images
             $images = $form->get('pictures')->getData();
-            
-            foreach($images as $image){
+
+            foreach ($images as $image) {
                 // On défini le dossier de destination
                 $folder = 'photos-spot';
 
@@ -174,19 +181,18 @@ class SpotController extends AbstractController
                 $newspot->addPicture($img);
             }
 
-                //Si le spot vient d'être créé, alors ->setIsValidated()+CreationDate()+Author()
-                if($isNew){
-                    //Pour définir isValidated comme étant false
-                    $newspot->setIsValidated(false);
-        
-                    // Pour définir la date/heure actuelle comme date d'inscription
-                    $now = new \DateTime();
-                    $newspot->setCreationDate($now);
-        
-                    //Pour définir l'author du spot comme étant le user qui soumet le formulaire
-                    $newspot->setAuthor($user);
+            //Si le spot vient d'être créé, alors ->setIsValidated()+CreationDate()+Author()
+            if ($isNew) {
+                //Pour définir isValidated comme étant false
+                $newspot->setIsValidated(false);
 
-                }
+                // Pour définir la date/heure actuelle comme date d'inscription
+                $now = new \DateTime();
+                $newspot->setCreationDate($now);
+
+                //Pour définir l'author du spot comme étant le user qui soumet le formulaire
+                $newspot->setAuthor($user);
+            }
 
             //prepare
             $entityManager->persist($newspot);
@@ -195,7 +201,7 @@ class SpotController extends AbstractController
             //refresh la page
             return $this->redirectToRoute('app_spot');
         }
-/********************** FIN AJOUT DE SPOT*********************************** */
+        /********************** FIN AJOUT DE SPOT*********************************** */
 
         //retourne la réponse http affichée par le navigateur.
         // 'spots' est le tableau des spots encodé en JSON.
@@ -208,55 +214,53 @@ class SpotController extends AbstractController
             'formAddSpot' => $form->createView(),
             'modules' => $modules,
             'formSearch' => $formSearch->createView(),
-            'spotsFiltered' => $spotsFiltered
+            'spotsFiltered' => $spotsFiltered,
+            'filtersEmpty' => $filtersEmpty
         ]);
     }
 
-   
-
-
     //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
     #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]
-    #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
-    #[ParamConverter("user", options:["mapping"=>["idUser"=>"id"]])]
+    #[ParamConverter("spot", options: ["mapping" => ["idSpot" => "id"]])]
+    #[ParamConverter("user", options: ["mapping" => ["idUser" => "id"]])]
     public function likeSpot(Security $security, ManagerRegistry $doctrine, Spot $spot, User $user = null)
-    {   
-        $entityManager=$doctrine->getManager();
+    {
+        $entityManager = $doctrine->getManager();
 
-        if($user){
+        if ($user) {
             //si l'utilisateur a déjà liké le spot
-            if($user->getFavoriteSpots()->contains($spot)){
+            if ($user->getFavoriteSpots()->contains($spot)) {
 
                 //on supprime le user de la collection FavoritedByUser du spot
                 $spot->removeFavoritedByUser($user);
-        
+
                 $entityManager->persist($spot);
                 $entityManager->flush();
             }
             //sinon si l'utilisateur n'a pas encore liké
-            else{
+            else {
 
                 //on ajoute le user a la collection FavoritedByUser du spot
                 $spot->addFavoritedByUser($user);
-        
+
                 $entityManager->persist($spot);
                 $entityManager->flush();
             }
         }
         // ELSE voir pour mettre condition si user non connecté
-        return $this->redirectToRoute('app_spot');  
+        return $this->redirectToRoute('app_spot');
     }
 
     #[Route('/spot/{idSpot}', name: 'show_spot')]
-    #[ParamConverter("spot", options:["mapping"=>["idSpot"=>"id"]])]
-    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request, Request $requestNotation, Notation $notation= null, PictureService $pictureService): Response
+    #[ParamConverter("spot", options: ["mapping" => ["idSpot" => "id"]])]
+    public function show(Security $security, Spot $spot = null, ManagerRegistry $doctrine, Comment $comment = null, Request $request, Request $requestNotation, Notation $notation = null, PictureService $pictureService): Response
     //On appel l'objet Spot dont l'id est passé en parametre par la route
-    {       
+    {
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();
-        
+
         //si le spot existe
-        if ($spot){
+        if ($spot) {
             //créé un formulaire pour ajouter/modifier les commentaires
             $formComment = $this->createForm(CommentType::class, $comment);
             //créé un formulaire pour créer une entité Notation
@@ -264,24 +268,24 @@ class SpotController extends AbstractController
             //créé un formulaire qui se repose sur le builder
             $formPicture = $this->createForm(PictureType::class);
 
-/* Pour le formulaire de Comment */
+            /* Pour le formulaire de Comment */
             //intercepte la requete du formulaire soumis
             $formComment->handleRequest($request);
 
             //assigne les donnée du formulaire soumis à une variable 
             $newComment = $formComment->getData();
 
-                //défini isNew comme null (pour CREER)
-                $isNew = false;
-                //si mon comment n'existe pas, créé un nouveau commentaire.
-                if(!$comment){
-                    $comment = new Comment();
-                    $isNew = true;
-                }
-            
+            //défini isNew comme null (pour CREER)
+            $isNew = false;
+            //si mon comment n'existe pas, créé un nouveau commentaire.
+            if (!$comment) {
+                $comment = new Comment();
+                $isNew = true;
+            }
+
             //Si le formulaire est soumis ET valide
-            if($formComment->isSubmitted() && $formComment->isValid()){
-            
+            if ($formComment->isSubmitted() && $formComment->isValid()) {
+
                 //assigne les donnée du formulaire soumis à une variable 
                 $newComment = $formComment->getData();
 
@@ -290,13 +294,13 @@ class SpotController extends AbstractController
 
 
                 //Si c'est un nouveau commentaire, assigne la date et l'autheur
-                if($isNew){
+                if ($isNew) {
                     // Pour définir la date/heure actuelle comme date du commentaire
                     $now = new \DateTime();
                     $newComment->setDate($now);
-    
+
                     //Pour définir l'author du comm comme étant le user qui soumet le formulaire
-                    $user=$security->getUser();
+                    $user = $security->getUser();
                     $newComment->setAuthor($user);
                 }
 
@@ -305,60 +309,60 @@ class SpotController extends AbstractController
                 //execute pour ajouter le comm en BDD
                 $entityManager->flush();
                 //refresh la page
-                return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
+                return $this->redirectToRoute('show_spot', ["idSpot" => $spot->getId()]);
             }
-/* Pour le formulaire de Notation */
-// Vérifier si l'USER a déjà noté ce SPOT
+            /* Pour le formulaire de Notation */
+            // Vérifier si l'USER a déjà noté ce SPOT
+
             $formNotation->handleRequest($requestNotation);
-            $newNotation = $formNotation->getData();
             $newNotation = new Notation();
             //Si le formulaire de NOTATION est soumis et valide
-            if($formNotation->isSubmitted() && $formNotation->isValid()){
+            if ($formNotation->isSubmitted() && $formNotation->isValid()) {
 
                 $newNotation = $formNotation->getData();
 
-                $user=$security->getUser();
+                $user = $security->getUser();
 
                 $newNotation->setSpot($spot);
                 $newNotation->setUser($user);
 
                 //prepare la requette
                 $entityManager->persist($newNotation);
-                //execute pour ajouter le comm en BDD
+                //execute pour ajouter la notation en BDD
                 $entityManager->flush();
 
-                return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
+                return $this->redirectToRoute('show_spot', ["idSpot" => $spot->getId()]);
             }
 
-            
+
             // On intercepte le formulaire d'image soumis
             $formPicture->handleRequest($request);
             //Si le formulaire de PICTURE est soumis et valide
-            if($formPicture->isSubmitted() && $formPicture->isValid()){
+            if ($formPicture->isSubmitted() && $formPicture->isValid()) {
                 // On récupère les images
                 $images = $formPicture->get('pictures')->getData();
-                            
-                    foreach($images as $image){
-                        // On défini le dossier de destination
-                        $folder = 'photos-spot';
-                        // On appel le service d'ajout
-                        $fichier = $pictureService->add($image, $folder, 300, 300);
-                        // On instancie un nouvel objet image
-                        $img = new Picture();
-                        // On lui assigne un nom (renvoyé par le service) et un spot (défini via l'ID dans l'url ?)
-                        $img->setName($fichier);
-                        $img->setSpot($spot);
 
-                        // On ajoute les images au spot
-                        $spot->addPicture($img);
-                    }
+                foreach ($images as $image) {
+                    // On défini le dossier de destination
+                    $folder = 'photos-spot';
+                    // On appel le service d'ajout
+                    $fichier = $pictureService->add($image, $folder, 300, 300);
+                    // On instancie un nouvel objet image
+                    $img = new Picture();
+                    // On lui assigne un nom (renvoyé par le service) et un spot (défini via l'ID dans l'url ?)
+                    $img->setName($fichier);
+                    $img->setSpot($spot);
+
+                    // On ajoute les images au spot
+                    $spot->addPicture($img);
+                }
                 //prepare la requette
                 $entityManager->persist($img);
                 //execute pour ajouter la picture en BDD
                 $entityManager->flush();
 
-                return $this->redirectToRoute('show_spot', ["idSpot"=>$spot->getId()]);
-                }
+                return $this->redirectToRoute('show_spot', ["idSpot" => $spot->getId()]);
+            }
 
             return $this->render('spot/show.html.twig', [
                 'controller_name' => 'SpotController',
@@ -366,9 +370,8 @@ class SpotController extends AbstractController
                 'formCommentSpot' => $formComment->createView(),
                 'formNotation' => $formNotation->createView(),
                 'formPicture' => $formPicture->createView(),
-                
+
             ]);
         }
     }
-    
 }

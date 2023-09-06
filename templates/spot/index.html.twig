@@ -113,10 +113,40 @@
 {% endif %}
 <div class="search-filters-container">
     {{ form_start(formSearch, {'attr': {'id': 'search-form', 'class': 'my-custom-class'}}) }}
+        {# Barre de recherche #}
         {{ form_row(formSearch.search) }}
-        {{ form_row(formSearch.moduleFilter) }}
+        {# Choix des modules #}
+        <p>Filtrer par module:</p>
+        {% for module in formSearch.moduleFilter %}
+            <label class="flex items-baseline mr-4">
+                {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(module) }}
+            </label>
+        {% endfor %}
+        <p>Autres critères:</p>
+        <label class="flex items-baseline mr-4">
+            {{ form_widget(formSearch.official, {'attr': {'class': 'mr-2'}}) }}
+            {{ form_label(formSearch.official) }}
+        </label>
+        <label class="flex items-baseline mr-4">
+            {{ form_widget(formSearch.covered, {'attr': {'class': 'mr-2'}}) }}
+            {{ form_label(formSearch.covered) }}
+        </label>
+        <label class="flex items-baseline mr-4">
+            {{ form_label(formSearch.orderCreation) }}
+            {{ form_widget(formSearch.orderCreation, {'attr': {'class': 'mr-2'}}) }}
+        </label>
         <button type="submit">Search</button>
+        <a href="{{ path('app_spot') }}" class="btn btn-secondary">Réinitialiser</a>
     {{ form_end(formSearch) }}
+
+    {% if filtersEmpty == true %}
+        <p>Aucun spot ne correspond à ces critères sorry boy</p> 
+    {% else %}
+    <div class="inline-flex">
+        <p>Résultats({{ spotsFiltered|length }}):</p>
+    </div>
+    {% endif %}
 </div>
 <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
  <ul class="list-spots" style="">
@@ -245,9 +275,15 @@ function ChooseTileLayer3(){
 tileLayer1.addEventListener('click', ChooseTileLayer1);
 tileLayer2.addEventListener('click', ChooseTileLayer2);
 tileLayer3.addEventListener('click', ChooseTileLayer3);
-
+if (typeof toggleButton == "undefined") {
+    console.log('helo');
+// définition du switch toggle-night-mode
+var toggleButton = document.getElementById("toggle-night-mode");}
 // Si click sur le switch dark mode, changer le fond en noir
-
+toggleButton.addEventListener("click", () => {
+// Choix de la carte DARK
+ChooseTileLayer2();
+});
 // Si choix du dark mode, afficher en noir, sinon, en blanc
 if (sessionStorage.getItem("nightMode") === "true") {
     ChooseTileLayer2();

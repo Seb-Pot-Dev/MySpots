@@ -1,0 +1,81 @@
+
+
+<script>
+// définition var du caroussel
+const nbr={{ spot.pictures|length }};
+var p=0;
+if(document.getElementById("carrouselContainer")){
+
+    const carrousselContainer = document.getElementById("carrouselContainer");
+    const boutonCarrouselDroite = document.getElementById("boutonCarrouselDroite");
+    const boutonCarrouselGauche = document.getElementById("boutonCarrouselGauche");
+    // appel de fonctions au chargement de la page
+    afficherMasquerChevronCarrousel();
+    
+    document.body.onload = function() {
+        carrouselContainer.style.width = (800 * nbr) + "px";
+    
+        {% for image in spot.pictures %}
+            (function() {
+                var div = document.createElement("div");
+                div.className = "photo-spot";
+                div.style.backgroundImage = "url('{{asset('assets/uploads/photos-spot/' ~ image.name)}}')";
+                carrouselContainer.appendChild(div);
+    
+                {% if is_granted('ROLE_ADMIN')%}
+                    
+                var deleteLink = document.createElement("a");
+                deleteLink.className = "delete-button";
+                deleteLink.href = "#";
+                deleteLink.textContent = "Supprimer";
+    
+                deleteLink.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    
+                    if (deleteLink.textContent === "Supprimer") {
+                        deleteLink.textContent = "Sûr?";
+                        deleteLink.classList.add("delete-button-confirm");
+                    } else if (deleteLink.textContent === "Sûr?") {
+                        window.location.href = "{{ path('deletePicture_admin', {'idSpot': spot.id, 'idPic': image.id}) }}";
+                    }
+                });
+                div.appendChild(deleteLink);
+                {% endif %}
+            })();
+        {% endfor %}
+    }
+    
+    boutonCarrouselDroite.onclick=function(){
+        if(p > -nbr +1){
+            p--;
+            carrousselContainer.style.transform="translate("+p*800+"px)";
+            carrousselContainer.style.transition="all 0.5s ease";
+            
+            afficherMasquerChevronCarrousel();
+        }
+    }
+    boutonCarrouselGauche.onclick=function(){
+        if(p < 0){
+            p++;
+            carrousselContainer.style.transform="translate("+p*800+"px)";
+            carrousselContainer.style.transition="all 0.5s ease";
+            
+            afficherMasquerChevronCarrousel();
+        }
+    
+    }
+    
+    function afficherMasquerChevronCarrousel(){
+        if(p == -nbr+1){
+            boutonCarrouselDroite.style.visibility="hidden";
+        }else{
+            boutonCarrouselDroite.style.visibility="visible";
+        }
+        if(p == 0){
+            boutonCarrouselGauche.style.visibility="hidden";
+        }else{
+            boutonCarrouselGauche.style.visibility="visible";
+        }
+}
+}
+</script>
