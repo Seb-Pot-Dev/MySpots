@@ -83,7 +83,28 @@ class SpotController extends AbstractController
         /Chaque clé est associée a un tableau contenant sa latitude, sa longitude, 
         /sa description et son état de validation comme valeur*/
         $tab = [];
-        foreach($spots as $aspot){
+
+        // Si des filtres ont été selectionné, $spotsFiltered n'est pas empty
+        // dans ce cas,j'utilise $spotsFiltered pour créé les marqueurs
+        if(!empty($spotsFiltered)){
+            foreach($spotsFiltered as $aspot){
+                $tab[] = [
+                    $aspot->getName() => [
+                        $aspot->getLat(), 
+                        $aspot->getLng(),
+                        $aspot->getDescription(),
+                        $aspot->getIsValidated(),
+                        $aspot->getId(),
+                        $aspot->getAvgNote(),
+                        $aspot->getPictures(),
+                        $aspot->isCovered(),
+                        $aspot->isOfficial()
+                    ]
+                ];
+            }
+        // Sinon, pas de filtres. J'utilise $spots pour créé les marqueurs (TOUS les spots de ma BDD)
+        }else{
+            foreach($spots as $aspot){
             $tab[] = [
                 $aspot->getName() => [
                     $aspot->getLat(), 
@@ -97,7 +118,7 @@ class SpotController extends AbstractController
                     $aspot->isOfficial()
                 ]
             ];
-        }
+        }}
         
 
         /*encode le tableau $tab en format JSON
