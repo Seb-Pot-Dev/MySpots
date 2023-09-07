@@ -385,5 +385,9 @@ class SpotController extends AbstractController
 
             ]);
         }
+        // Si le spot n'existe pas, redirection vers la map
+        else{
+            return $this->redirectToRoute('app_spot');
+        }
     }
 }
