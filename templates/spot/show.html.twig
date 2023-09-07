@@ -45,11 +45,14 @@ Type :
     {% set starsDisplayed = fullStarsCount + (remainder >= 0.25 ? 1 : 0) %}
     {% set emptyStarsCount = 5 - starsDisplayed %}
 
+{# Fix la génération de demi étoile, lorsque que avgNote entre .25 et .75, affiché demi étoile. 
+En dessous, etoile vide
+Au dessus, etoile pleine 
+#}
     {# Boucle sur les étoiles pleines #}
     {% for i in 1..fullStarsCount %}
         <i class="fa-solid fa-star"></i>
     {% endfor %}
-{{ avgNoteRoundedLow }}
     {# Affichage d'une demi etoile ou d'une étoile pleine selon la note #}
     {% if remainder >= 0.25 and remainder < 0.75 %}
         <i class="fa-solid fa-star-half-stroke"></i>
