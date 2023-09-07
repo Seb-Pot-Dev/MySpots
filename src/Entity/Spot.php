@@ -291,7 +291,7 @@ class Spot
     public function getAvgNote(): ?float
     {
         $avg=null;
-        $note=null;
+        $note=0;
         $nbNotation=count($this->notations);
 
         foreach($this->notations as $notation){

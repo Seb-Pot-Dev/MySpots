@@ -75,7 +75,9 @@ class SpotRepository extends ServiceEntityRepository
 public function findByCriteria(?string $searchFilter, array $moduleFilter, bool $official, bool $covered, ?string $orderCreationDate): array
 {
     // Crée un nouvel objet QueryBuilder pour construire la requête.
-    $qb = $this->createQueryBuilder('s');
+    $qb = $this->createQueryBuilder('s')
+        // left join de la collection de notations pour permettre la sous requete de tri sur la note moyenne d'un spot
+        ->leftJoin('s.notations', 'n');  
 
     // Ajout de la condition pour les spots validés
     $qb->andWhere('s.isValidated = 1');
@@ -110,21 +112,30 @@ public function findByCriteria(?string $searchFilter, array $moduleFilter, bool 
                 ->setParameter("module$index", $module);
         }
     }
-
+    // SI l'option de tri "skatepark" est selectionnée 
     if ($official) {
         $qb->andWhere('s.official = true');
     }
-    
+    // Si l'option de tri "couvert" est selectionnée
     if ($covered) {
         $qb->andWhere('s.covered = true');
     }
     // Si une des options trier par date d'ajout est selectionnée'
-    if ($orderCreationDate == 'asc') {
+    if ($orderCreationDate == 'dateLast') {
         $qb->orderBy('s.creationDate', 'ASC');
-    }else{
+    }elseif ($orderCreationDate == 'dateNew'){
         $qb->orderBy('s.creationDate', 'DESC');
+    //tri par notation decroissante
+    }elseif ($orderCreationDate == 'noteDesc'){
+        $qb->addSelect('AVG(n.note) as HIDDEN avg_note')
+        ->groupBy('s.id')
+        ->orderBy('avg_note', 'DESC');
+    // tri par notation croissante
+    }elseif ($orderCreationDate == 'noteAsc'){
+        $qb->addSelect('AVG(n.note) as HIDDEN avg_note')
+            ->groupBy('s.id')
+            ->orderBy('avg_note', 'ASC');
     }
-    // Exécute la requête et retourne les résultats.
     return $qb->getQuery()->getResult();
 }
 

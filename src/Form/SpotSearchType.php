@@ -45,10 +45,12 @@ class SpotSearchType extends AbstractType
                 'required' => false,
             ])
             ->add('orderCreation', ChoiceType::class, [
-                'label' => 'Trier par date de création: ',
+                'label' => 'Trier par : ',
                 'choices' => [
-                    'Nouveau en premier' => 'desc',
-                    'Nouveau en dernier' => 'asc',
+                    'Ajout: Nouveau en premier' => 'DateNew',
+                    'Ajout: Nouveau en dernier' => 'DateLast',
+                    'Note: croissant' => 'noteDesc',
+                    'Note: décroissant' => 'noteAsc'
                 ],
             ]);
             

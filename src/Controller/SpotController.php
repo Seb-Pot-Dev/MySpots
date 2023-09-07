@@ -258,6 +258,8 @@ class SpotController extends AbstractController
     {
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();
+        // définition du user
+        $user = $security->getUser();
 
         //si le spot existe
         if ($spot) {
@@ -312,29 +314,39 @@ class SpotController extends AbstractController
                 return $this->redirectToRoute('show_spot', ["idSpot" => $spot->getId()]);
             }
             /* Pour le formulaire de Notation */
-            // Vérifier si l'USER a déjà noté ce SPOT
-
             $formNotation->handleRequest($requestNotation);
-            $newNotation = new Notation();
+            // Vérifier si le User a déjà noté ce Spot
+            $existingNotation = $doctrine->getRepository(Notation::class)->findOneBy([
+                'spot' => $spot,
+                'user' => $user
+            ]);
+            // Si une notation existante est trouvée pour l'utilisateur et le spot, utilisez-la, sinon créez une nouvelle instance de Notation
+            $notationToSave = $existingNotation ? $existingNotation : new Notation();
+
             //Si le formulaire de NOTATION est soumis et valide
             if ($formNotation->isSubmitted() && $formNotation->isValid()) {
 
-                $newNotation = $formNotation->getData();
+                if ($existingNotation) {
+                    // L'utilisateur a déjà noté ce spot: mise à jour de la notation
+                    $this->addFlash('info', 'Votre notation a été mise à jour.');
+                } else {
+                    // Ajout d'une nouvelle notation
+                    $notationToSave->setSpot($spot);
+                    $notationToSave->setUser($user);
+                }
 
-                $user = $security->getUser();
+                $notationToSave->setNote($formNotation->get('note')->getData()); // Ajoutez ceci si 'note' est un champ de votre formulaire. Ajustez en fonction des champs réels.
 
-                $newNotation->setSpot($spot);
-                $newNotation->setUser($user);
-
-                //prepare la requette
-                $entityManager->persist($newNotation);
-                //execute pour ajouter la notation en BDD
+                // Prépare la requête
+                $entityManager->persist($notationToSave);
+                
+                // Exécute pour ajouter/actualiser la notation en BDD
                 $entityManager->flush();
 
                 return $this->redirectToRoute('show_spot', ["idSpot" => $spot->getId()]);
             }
 
-
+/*********** GESTION DES IMAGES ******/
             // On intercepte le formulaire d'image soumis
             $formPicture->handleRequest($request);
             //Si le formulaire de PICTURE est soumis et valide

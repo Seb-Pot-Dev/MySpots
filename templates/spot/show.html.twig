@@ -34,37 +34,44 @@ Type :
 {% endif %}
 <!--affichage note du spot-->
 <p>avgNote : 
-{% if spot.avgNote %}
+    {% if spot.avgNote %}
 
-{% set avgNote = spot.avgNote %}
+<!-- Affichage des étoiles -->
+    {# Définition des variables #}
+    {% set avgNote = spot.avgNote %}
+    {% set fullStarsCount = avgNote | round  %}
+    {% set avgNoteRoundedLow = avgNote | number_format(0, '.', '', 'floor') %}
+    {% set remainder = avgNote - avgNoteRoundedLow %}
+    {% set starsDisplayed = fullStarsCount + (remainder >= 0.25 ? 1 : 0) %}
+    {% set emptyStarsCount = 5 - starsDisplayed %}
 
-    <!-- Affichage des étoiles -->
-    {% set fullStarsCount = avgNote | round %}
-
-    {% set roundedAvgNote = avgNote | round %}
-    {% set roundedSupavgNote = avgNote | round(1, 'ceil') %}
-
-    {% for i in 1..(roundedAvgNote - (roundedAvgNote != roundedSupavgNote ? 1 : 0)) %}
+    {# Boucle sur les étoiles pleines #}
+    {% for i in 1..fullStarsCount %}
         <i class="fa-solid fa-star"></i>
     {% endfor %}
-
-    {% if roundedAvgNote != roundedSupavgNote %}
-            <i class="fa-solid fa-star-half-stroke"></i>
+{{ avgNoteRoundedLow }}
+    {# Affichage d'une demi etoile ou d'une étoile pleine selon la note #}
+    {% if remainder >= 0.25 and remainder < 0.75 %}
+        <i class="fa-solid fa-star-half-stroke"></i>
+    {% elseif remainder >= 0.75 %}
+        <i class="fa-solid fa-star"></i>
     {% endif %}
-    
-    {% if roundedAvgNote < 5 %}
-        
-        {% for i in 1..(5 - roundedAvgNote ) %}
-            <i class="fa-regular fa-star"></i>
-        {% endfor %}
 
+    {% if emptyStarsCount > 0 %}
+    {% for i in 1..emptyStarsCount %}
+        <i class="fa-regular fa-star"></i>
+    {% endfor %}
     {% endif %}
-<!--affichage de la avgNote-->
-({{spot.avgNote}})
-({{spot.notations|length}} évaluations)
-{% else %}
-Pas encore de avgNote
-{% endif %}
+
+
+
+
+    <!--affichage de la avgNote-->
+    ({{spot.avgNote|number_format(2, '.', '')}})
+    ({{spot.notations|length}} évaluations)
+    {% else %}
+    Pas encore de avgNote
+    {% endif %}
 </p>
 
 {# Attribuer une note #}
@@ -72,6 +79,12 @@ Pas encore de avgNote
 <!--form note du spot -->
 {{ form(formNotation) }}
 {% endif %}
+{# Si l'utilisateur a déjà noté ce spot: message d'erreur #}
+{% for message in app.flashes('info') %}
+    <div class="alert alert-info">
+        {{ message }}
+    </div>
+{% endfor %}
 
 <!--nombre de like du spot-->
 <p>Nombre de like : {{ spot.favoritedByUsers | length }} </p>
@@ -81,6 +94,7 @@ Pas encore de avgNote
     {{ form_label(formPicture)}}
 {{ form_end(formPicture) }}
 {% endif %}
+
 
 {% if spot.pictures|length > 0 %}
     {% include 'component/_carrousel.html.twig' %}
