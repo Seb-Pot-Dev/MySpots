@@ -112,6 +112,9 @@
     </div>
 {% endif %}
 
+{# Inclure les filtres #}
+{% include 'component/_filters.html.twig' %}
+
 <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
  <ul class="list-spots" style="">
  {% if spotsFiltered %}

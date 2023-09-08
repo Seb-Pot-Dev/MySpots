@@ -13,7 +13,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+// Contraintes d'uniticité d'email et de pseudo
+#[UniqueEntity(fields: ['email'], message: "L'email renseigné est déjà utilisé. Veuillez entrer un email différent.")]
+#[UniqueEntity(fields: ['pseudo'], message: "Le pseudo renseigné est déjà utilisé. Veuillez entrer un pseudo différent.")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -36,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\Column(length: 50)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $pseudo = null;
 
     #[ORM\ManyToMany(targetEntity: Spot::class, inversedBy: 'favoritedByUsers')]
