@@ -20,9 +20,10 @@ class ModuleController extends AbstractController
     {
         // définition du $user actif
         $user=$this->getUser();
+        $userRole = $user->getRole();
         // Si le $user possède le role admin
-        if($user && $user->getRoles()==='["ROLE_ADMIN"]'){
-            // Vérifie si un ID de module est fourni
+        if ($user && in_array('ROLE_ADMIN', $userRole)) {
+                    // Vérifie si un ID de module est fourni
             if ($id !== null) {
                 // Récupére l'entité Module correspondante depuis la base de données
                 $module = $doctrine->getRepository(Module::class)->find($id);
@@ -61,7 +62,6 @@ class ModuleController extends AbstractController
                 'formNewModule' => $form->createView()
             ]);
         }else{
-            throw new \Exception('Accès reservé aux administrateurs connectés.');
             return $this->redirectToRoute('app_home');
         }
     }
