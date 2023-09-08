@@ -187,334 +187,106 @@
 {% endblock %}
 
 {% block javascripts %}
-<!-- Parametres Leaflet -->
-    <script>
-// défini une variable marqueur quelconque pour le click sur la carte
-let marqueur
-
-// défini la manière dont la carte est centré et le zoom
-let map = L.map('map').setView([48.583328, 7.75], 14);
-
-// Tile layer de base CLASSIC (white)
-var default_layer = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 22,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
-// Tile layer de ThunderForest "Spinal Map" (HELL) (API KEY : 396269ca3cfb446d96f2e63dd998a5b9)
-var Thunderforest_SpinalMap = L.tileLayer('https://{s}.tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey={apikey}', {
-	attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-	apikey: '396269ca3cfb446d96f2e63dd998a5b9',
-	maxZoom: 22
-});
-// Tile layer de Jawg Lab "DARK" (API KEY : UruJTpSBYzy3a17xRdwM4O3RGfWF3EWeeFJMUkQKcRHyyAlYMB5LEx7wxl4ppHd8)
-var Jawg_Dark = L.tileLayer('https://{s}.tile.jawg.io/jawg-dark/{z}/{x}/{y}{r}.png?access-token={accessToken}', {
-	attribution: '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-	minZoom: 0,
-	maxZoom: 22,
-	subdomains: 'abcd',
-	accessToken: 'UruJTpSBYzy3a17xRdwM4O3RGfWF3EWeeFJMUkQKcRHyyAlYMB5LEx7wxl4ppHd8'
-})
-.addTo(map); // Définition du layer par défaut
-
-var tileLayer1 = document.getElementById('layer-1');
-var tileLayer2 = document.getElementById('layer-2');
-var tileLayer3 = document.getElementById('layer-3');
-
-function ChooseTileLayer1(){
-    map.removeLayer(Jawg_Dark);
-    map.removeLayer(default_layer);
-    Thunderforest_SpinalMap.addTo(map);
-}
-function ChooseTileLayer2(){
-    map.removeLayer(default_layer);
-    map.removeLayer(Thunderforest_SpinalMap);
-    Jawg_Dark.addTo(map);
-}
-function ChooseTileLayer3(){
-    map.removeLayer(Thunderforest_SpinalMap);
-    map.removeLayer(Jawg_Dark);
-    default_layer.addTo(map);
-}
-
-tileLayer1.addEventListener('click', ChooseTileLayer1);
-tileLayer2.addEventListener('click', ChooseTileLayer2);
-tileLayer3.addEventListener('click', ChooseTileLayer3);
-
-
-
-
-// GEOLOCALISATION
-// Demande la géolocalisation de l'utilisateur et commence à suivre les mises à jour de position.
-navigator.geolocation.watchPosition(success, error);
-
-// en cas de succès
-function success(userPosition) {
-    // Lorsque la géolocalisation est obtenue avec succès, stocke la latitude et la longitude dans des variables globales.
-    window.userLat = userPosition.coords.latitude;
-    window.userLng = userPosition.coords.longitude;
-    window.isUserLocationKnown = true;
-
-    // Obtient la précision des données de géolocalisation.
-    var accuracy = userPosition.coords.accuracy;
-
-    //icon custom pour l'emplacement de l'utilisateur
-    var youAreHereIcon = L.icon({
-        iconUrl: 'https://png.pngtree.com/png-vector/20230320/ourmid/pngtree-you-are-here-location-pointer-vector-png-image_6656543.png',
-        iconSize: [60, 60],
-        iconAnchor: [22, 94],
-        popupAnchor: [-3, -76],
-        shadowAnchor: [22, 94],
-    })
-    // Ajoute un marqueur sur la carte à l'emplacement de l'utilisateur.
-    L.marker([userLat, userLng], {icon: youAreHereIcon, title: 'Vous êtes ici',
-        alt: 'Marqueur "vous êtes ici"'}).addTo(map);
-    
-    // Ajoute un cercle sur la carte représentant la précision de la position de l'utilisateur.
-    // L.circle([userLat, userLng], { radius: accuracy }).addTo(map);
-}
-
-// en cas d'erreur
-function error(err){
-    // En cas d'erreur lors de la géolocalisation, indique que la position de l'utilisateur n'est pas connue.
-    window.isUserLocationKnown = false;
-    if(err.code === 1){
-        alert("Veuillez autoriser l'accès à la géolocalisation pour une expérience optimale.");
-    }else{
-        alert("Impossible d'obtenir la position actuelle pour le moment.");
-    }
-}
-
-const btnAddUserLoc = document.querySelector('#add-user-pos');
-
-function fillWithUserPosition(){
-    // Si la position de l'utilisateur est connue, affiche les coordonnées dans le formulaire.
-    if(isUserLocationKnown === true){
-        document.querySelector('#spot_lat').value = userLat;
-        document.querySelector('#spot_lng').value = userLng;
-    }else{
-promptGeolocationAccess()    }
-}
-// Si click sur "Utiliser ma position", utiliser la fn fillWithUserPosition 
-btnAddUserLoc.addEventListener('click', fillWithUserPosition);
-
-// test
-function promptGeolocationAccess() {
-    const confirmation = window.confirm("Pour utiliser cette fonction, veuillez activer la géolocalisation.\n\nCliquez sur 'OK' pour activer la géolocalisation ou 'Annuler' pour quitter.");
-
-    if (confirmation) {
-        // L'utilisateur a cliqué sur 'OK', vous pouvez tenter de demander la géolocalisation à nouveau.
-        navigator.geolocation.watchPosition(success, error);
-    } else {
-        // L'utilisateur a cliqué sur 'Annuler' ou a fermé la fenêtre, vous pouvez faire quelque chose d'autre ou ne rien faire.
-    }
-}
-
-</script>
+{# Gestion de la carte #}
+<script src="{{ asset('js/script_map.js') }}"></script>
 
 <!-- Si l'utilisateur est connecté, le script js pour gérer les cliques sur la map est disponible -->
 {% if app.user %}  
 <script>
-/*********************************GESTION DU CLICK SUR LA MAP****************************************************************/
 
-//Appel la fonction onMapClick pour créer un Event lorsque l'on clique sur un endroit non marked de la map et indique les coordonnées
-map.on('click', onMapClick);
-
-//stockage de la fonction popup() de Leaflet dans la variable popup
-var popup = L.popup();
-
-// Lorsque je déselectionne un des champs 'spot_city, spot_cp etc..', utiliser la fonction getPosByAdress
-/* getPosByAdress permet de définir de définir un marqueur grâce a l'API Nominatim, 
-qui grâce a l'adresse permet de retrouver la latitude/longitude  */
-document.querySelector('#spot_city').addEventListener('blur', getPosByAdress)
-document.querySelector('#spot_cp').addEventListener('blur', getPosByAdress)
-document.querySelector('#spot_adress').addEventListener('blur', getPosByAdress)
-
-
-//Fonction pour créer un marqueur lorsque l'on clique sur un endroit de la map et renseigner les champs lat/lng du formulaire d'ajout de spot
-function onMapClick(e) { 
-    // on récupère les coordonnées du clic
-    let pos = e.latlng
-
-    // on affiche les coordonnées dans le formulaire
-    document.querySelector('#spot_lat').value = pos.lat
-    document.querySelector('#spot_lng').value = pos.lng
-
-    //pour créer un pop up qui indique les lat/lng de l'endroit cliqué
-    popup
-        .setLatLng(e.latlng)
-        .setContent("<a href='#' id='openFormAddSpotInPopup'>Nouveau Spot</a>")
-        .openOn(map);
-
-// Définition de l'élément "openFormAddSpotInPopup"
-var addSpotByClickOnMap = document.getElementById("openFormAddSpotInPopup");
-
-// Utilisation de la fonction openFormSpot lors de l'evement click sur l'élément openFormAddSpotInPopup
-addSpotByClickOnMap.onclick = openFormSpot;
-
-// Défini de l'élément "leaflet-popup-close-button"
-var closePopupButton = document.getElementsByClassName("leaflet-popup-close-button")[0];
-
-// Utilisation de la fonction closeFormSpot lors de l'evenement click sur l'élément "leaflet-popup-close-button"
-closePopupButton.onclick = closeFormSpot;
-}
-
-        {# //fonction pour ajouter un marqueur sur la carte lors du click
-        function addMarker(pos){
-            if(marqueur!=undefined){
-                map.removeLayer(marqueur)
-            }
-
-            marqueur = L.marker(pos, {
-                //On rend le marqueur déplaçable
-                draggable: true,
-            })
-
-            marqueur.addTo(map)
-
-            //On écoute le drag&drop sur le marqueur de façon a pouvoir déplacer le marqueur et mettre aussi a jour les lat/lng
-            marqueur.on("dragend", function(e){
-                pos = e.target.getLatLng()
-                
-                document.querySelector('#spot_lat').value = pos.lat
-                document.querySelector('#spot_lng').value = pos.lng
-            })
-        } #}
-
-//fonction pour récupérer la pos à partir de l'adresse entrée dans le formulaire de Spot (SpotType)
-function getPosByAdress(){
-    //On fabrique l'adresse
-    let adresse = document.querySelector('#spot_adress').value + ", " + document.
-    querySelector("#spot_cp").value + " " + document.querySelector('#spot_city').value
-
-    // On initialise une requête AJAX
-    const xmlhttp = new XMLHttpRequest
-
-    xmlhttp.onreadystatechange = () => {
-        // Si la requête est terminée 
-        if(xmlhttp.readyState == 4){
-            // Si on a une une réponse
-            if(xmlhttp.status == 200){
-                //on récupère la réponse
-                let response = JSON.parse(xmlhttp.response)
-                
-                let lat = response[0]["lat"]
-                let lng = response[0]["lon"]
-
-                document.querySelector('#spot_lat').value = lat
-                document.querySelector('#spot_lng').value = lng
-
-                let pos = [lat, lng]
-                popup
-                    .setLatLng(pos)
-                    .setContent("<a href='#' id='openFormAddSpotInPopup'>Adresse renseignée</a>")
-                    .openOn(map);
-
-                map.setView(pos, 13)
-            }
-        }
-    }
-
-    // On ouvre la requête HTTP
-    xmlhttp.open("get", `https://nominatim.openstreetmap.org/search?q=${adresse}&format=json&addressdetails=1&limit=1&polygon_svg=1`)
-    
-    xmlhttp.send()
-}
-
-
-/************************************FIN GESTION DU CLICK SUR LA CARTE********************************************/
 </script>
 {% endif %}
 
 <script>
 /*******************AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES***********************************************/
+// Convertir un tableau TWIG en tableau JS
+const markersSpots = '{{ spots | raw }}';
+const jsonTabForMarkersSpots = JSON.parse(markersSpots);
 
-            // Convertir un tableau TWIG en tableau JS
-            const markersSpots = '{{ spots | raw }}';
-            const jsonTabForMarkersSpots = JSON.parse(markersSpots);
+// Parcourir le tableau et créer des marqueurs pour chaque élément
+jsonTabForMarkersSpots.forEach(obj => {
+    Object.entries(obj).forEach(([name, infos]) => { 
+        const lat = infos[0]
+        const lng = infos[1]
+        const desc = infos[2]
+        const isValidate = infos[3]
+        const spotId = infos[4] 
+        const avgNote = infos[5]
+        const pictures = infos[6]
 
-            // Parcourir le tableau et créer des marqueurs pour chaque élément
-            jsonTabForMarkersSpots.forEach(obj => {
-                Object.entries(obj).forEach(([name, infos]) => { 
-                    const lat = infos[0]
-                    const lng = infos[1]
-                    const desc = infos[2]
-                    const isValidate = infos[3]
-                    const spotId = infos[4] 
-                    const avgNote = infos[5]
-                    const pictures = infos[6]
-
-                //icon custom pour l'emplacement de l'utilisateur
-                const fireIcon = L.icon({
-                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
-                    iconSize: [25, 25],
-                    iconAnchor: [0, 25],
-                    popupAnchor: [10, -15]
-                })
-                // Si le spot a été validé par un admin, alors créé un marqueur
-                if (isValidate){
-                    const marker = L.marker([lat, lng],{
-                    icon: fireIcon,
-                    title: name
-                    }
-                    )
-                    
-                    marker.addTo(map);
-                    
-                    //pour créer l'URL de show_spot
-                    var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
-                    urlShowSpot = urlShowSpot.replace("exemple_id", spotId);
-                    
-                    // Pour découper une chaine de caractères après un certain nombre de car. et ajouter "..." si découpée 
-                    function limitNameLenght(chaine, limite) {
-                    if (chaine.length > limite) {
-                        return chaine.slice(0, limite) + "...";
-                    } else {
-                        return chaine;
-                    }
-                    }
-                    // le nom final, découpé 
-                    const nameCut = limitNameLenght(name, 10);
-                        //si la avgNote n'est pas null (c-a-d le spot a déjà été noté)
-                        if(avgNote){
-                        const popupContent = `<a href=${urlShowSpot}> <b>${nameCut} <i class='fa-solid fa-star'></i>(${avgNote})</b><br>${desc}<br>
-                        </a>`;
-                        marker.bindPopup(popupContent);
-                        }else{ //Sinon on écrit 'pas de avgNote' a la place du int
-                        let avgNote = '(Pas de note)';
-                        const popupContent = `<a href=${urlShowSpot}> <b>${nameCut}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
-                        marker.bindPopup(popupContent);
-                    }
-                }
-                })
-            })
+//icon custom pour l'emplacement de l'utilisateur
+const fireIcon = L.icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
+    iconSize: [25, 25],
+    iconAnchor: [0, 25],
+    popupAnchor: [10, -15]
+})
+    // Si le spot a été validé par un admin, alors créé un marqueur
+    if (isValidate){
+        const marker = L.marker([lat, lng],{
+        icon: fireIcon,
+        title: name
+        }
+        )
+        
+        marker.addTo(map);
+        
+        //pour créer l'URL de show_spot
+        var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
+        urlShowSpot = urlShowSpot.replace("exemple_id", spotId);
+        
+        // Pour découper une chaine de caractères après un certain nombre de car. et ajouter "..." si découpée 
+        function limitNameLenght(chaine, limite) {
+        if (chaine.length > limite) {
+            return chaine.slice(0, limite) + "...";
+        } else {
+            return chaine;
+        }
+        }
+        // le nom final, découpé 
+        const nameCut = limitNameLenght(name, 10);
+            //si la avgNote n'est pas null (c-a-d le spot a déjà été noté)
+            if(avgNote){
+            const popupContent = `<a href=${urlShowSpot}> <b>${nameCut} <i class='fa-solid fa-star'></i>(${avgNote})</b><br>${desc}<br>
+            </a>`;
+            marker.bindPopup(popupContent);
+            }else{ //Sinon on écrit 'pas de avgNote' a la place du int
+            let avgNote = '(Pas de note)';
+            const popupContent = `<a href=${urlShowSpot}> <b>${nameCut}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
+            marker.bindPopup(popupContent);
+        }
+    }
+    })
+})
 /************************************FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
+</script>
+<script>
+    // Définir les coordonnées d'un polygone
+    var polygonCoords = [  [48.623860, 7.727798],
+    [48.604371, 7.693883],
+    [48.575899, 7.686080],
+    [48.568368, 7.729530],
+    [48.556536, 7.741879],
+    [48.540214, 7.740874],
+    [48.520945, 7.753266],
+    [48.517002, 7.802228],
+    [48.525297, 7.830220],
+    [48.548539, 7.848697],
+    [48.563863, 7.858974],
+    [48.586015, 7.840496],
+    [48.605270, 7.820451],
+    [48.610125, 7.795036],
+    [48.623860, 7.727798]
+    ];
 
-                // Définir les coordonnées d'un polygone
-                var polygonCoords = [  [48.623860, 7.727798],
-                [48.604371, 7.693883],
-                [48.575899, 7.686080],
-                [48.568368, 7.729530],
-                [48.556536, 7.741879],
-                [48.540214, 7.740874],
-                [48.520945, 7.753266],
-                [48.517002, 7.802228],
-                [48.525297, 7.830220],
-                [48.548539, 7.848697],
-                [48.563863, 7.858974],
-                [48.586015, 7.840496],
-                [48.605270, 7.820451],
-                [48.610125, 7.795036],
-                [48.623860, 7.727798]
-                ];
-                
-                // Créer un polygone à partir des coordonnées stockées dans var polygonCoords et l'ajouter à la carte
-                var myPolygon = L.polygon(polygonCoords, {
-                    color: 'red',
-                    fillColor: 'transparent',
-                    weight: 2
-                }).addTo(map);
+    // Créer un polygone à partir des coordonnées stockées dans var polygonCoords et l'ajouter à la carte
+    var myPolygon = L.polygon(polygonCoords, {
+        color: 'red',
+        fillColor: 'transparent',
+        weight: 2
+    }).addTo(map);
 
-    </script>
+</script>
 
 <!-- Faire le tri dans le JS -->
 <script src="{{ asset('js/script.js') }}"></script>
