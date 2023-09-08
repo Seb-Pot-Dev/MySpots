@@ -16,9 +16,15 @@ class ProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class,[
+                'attr' => [
+                    'class' => 'text-black',
+                ]])
             // ->add('roles')
-            ->add('pseudo', TextType::class)
+            ->add('pseudo', TextType::class,[
+                'attr' => [
+                    'class' => 'text-black',
+                ]])
             // ->add('registrationDate')
             // ->add('isBanned')
             // ->add('favoriteSpots')
@@ -28,7 +34,10 @@ class ProfileType extends AbstractType
             //     'mapped' => false,
             //     'required' => true,
             // ])            
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class,[
+                'attr' => [
+                    'class' => 'text-black',
+                ]])
         ;
     }
 
