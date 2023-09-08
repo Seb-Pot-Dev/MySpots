@@ -16,12 +16,11 @@ class HomeController extends AbstractController
     public function index(ManagerRegistry $doctrine, Spot $spot = null, Module $module = null): Response
     {
         // récupérer la liste de tous les users
-        $users = $doctrine->getRepository(User::class)->findBy([], ['registrationDate' => 'DESC']);
+        $users = $doctrine->getRepository(User::class)->findAll();
         //récupérer la liste de tout les spots
-        $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name' => 'ASC']);
+        $spots = $doctrine->getRepository(Spot::class)->findAll();
         //récupérer la liste de tout les modules
         $modules = $doctrine->getRepository(Module::class)->findAll();
-
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',

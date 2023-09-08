@@ -19,28 +19,31 @@ class ProfileController extends AbstractController
     {
         $user = $this->getUser();
 
-        if(!$user){
+        if($user){
+            return $this->render('profile/index.html.twig', [
+                'user' => $user,
+            ]);
+        }else{
             throw new \Exception('Accès reservé aux utilisateurs connectés.');
             redirectToRoute('/home/index.html.twig');
         }
-        return $this->render('profile/index.html.twig', [
-            'user' => $user,
-        ]);
     }
     #[Route('/profile/my_infos', name: 'my_infos')]
     public function my_infos(Security $security, ManagerRegistry $doctrine, User $user = null, Request $request): Response
     {
         $user = $this->getUser();
 
-        if(!$user){
+        
+        if($user){
+            return $this->render('profile/my_infos.html.twig', [
+                'controller_name' => 'ProfileController',
+                'user' => $user,
+            ]);
+        }else{
             throw new \Exception('Accès refusé');
             redirectToRoute('/home/index.html.twig');
         }
     
-        return $this->render('profile/my_infos.html.twig', [
-            'controller_name' => 'ProfileController',
-            'user' => $user,
-        ]);
     }
     #[Route('/profile/my_favorites', name: 'my_favorites')]
     public function my_favorite(Security $security, ManagerRegistry $doctrine, User $user = null, Request $request): Response

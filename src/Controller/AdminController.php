@@ -21,13 +21,18 @@ class AdminController extends AbstractController
     #[Route('/admin/deleteSpot/{id}', name: 'deleteSpot_admin')]
     public function deleteSpot(Security $security, EntityManagerInterface $entityManager, ManagerRegistry $doctrine, Spot $spot = null, Request $request): Response
     {
-        //RESTE A GERER LES CONDITIONS ADMINS
-        // $user=$security->getUser();
-
-            if ($spot){
-                $entityManager->remove($spot);
-                $entityManager->flush();
-
+        // Définition du user
+        $user=$this->getUser();
+            // Si un user est connecté && qu'il a le role admin
+            if($user && $user->getRoles() === '["ROLE_ADMIN"]'){
+                if ($spot){
+                    $entityManager->remove($spot);
+                    $entityManager->flush();
+    
+                }
+            }else{
+                throw new \Exception('Accès reservé aux administrateurs connectés.');
+                return $this->redirectToRoute('app_home');
             }
             return $this->redirectToRoute('app_admin');
             
