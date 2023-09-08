@@ -26,6 +26,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "tarteaucitronjs": "^1.14.0",
         "tw-elements": "^1.0.0-beta2"
     }
 }
