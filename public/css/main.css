@@ -9,7 +9,7 @@
 /* Mode nuit */
 body.night-mode {
     --bg-color: #1a1a1a;
-    --text-color: #000000;
+    --text-color: white;
     --accent-color: #9c27b0;
     --menu-background: #102A43;
 }

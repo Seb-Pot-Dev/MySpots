@@ -1,11 +1,11 @@
 .my-box{
     width: fit-content;
     position: relative;
-    background-color:#D4D4D4;
+    background-color:var(--menu-background);
     padding: 20px;
 }
 .box-cut{
-    border-left: 1.25rem solid #D4D4D4;
+    border-left: 1.25rem solid var(--menu-background);
     border-top: 1.25rem solid var(--bg-color);
     content: "";
     position: absolute;

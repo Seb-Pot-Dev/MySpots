@@ -21,7 +21,7 @@
         <h2 class="text-xl">Mes spots favoris</h2>
         <ul class="list-container">
             {% for spot in user.favoriteSpots %}
-            <li><a href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
+            <li><a class="text-black" href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -32,7 +32,7 @@
         <h2 class="text-xl">Mes spots ajoutés</h2>
         <ul class="list-container">
             {% for spot in user.addedspots %}
-            <li><a href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
+            <li><a class="text-black" href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
             {% endfor %}
         </ul>
     </div>
