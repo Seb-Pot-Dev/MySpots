@@ -31,12 +31,12 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        // Initialisation d'un nouvel utilisateur
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+            // Sécurité : Hachage du mot de passe avant stockage
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -48,31 +48,33 @@ class RegistrationController extends AbstractController
             $now = new \DateTime();
             $user->setRegistrationDate($now);
 
+            // Tente d'enregistrer l'utilisateur
             try{
-            //Prepapre puis execute de la requete
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
+            // Sécurité : Vérification de l'e-mail par l'envoi d'un lien de confirmation
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('skatespot@admin.com', 'Seb (admin de Skate Spot)'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            (new TemplatedEmail())
+                ->from(new Address('skatespot@admin.com', 'Seb (admin de Skate Spot)'))
+                ->to($user->getEmail())
+                ->subject('Please Confirm your Email')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
             );
-            // do anything else you need here, like send an email
+            // Gestion des erreurs
         }catch(\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e){
             $this->addFlash('error', 'The provided pseudo or email is already in use.');
         return $this->render('registration/register.html.twig', [
             'registrationFormType' => $form->createView(),
         ]);
         }
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+        // Authentification et redirection de l'utilisateur après inscription réussie
+
+        return $userAuthenticator->authenticateUser(
+            $user,
+            $authenticator,
+            $request
+        );
         }
 
         return $this->render('registration/register.html.twig', [
@@ -83,18 +85,21 @@ class RegistrationController extends AbstractController
     #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {
+        // Sécurité : S'assurer que l'utilisateur est entièrement authentifié avant la vérification
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        // validate email confirmation link, sets User::isVerified=true and persists
+        // Valider le lien de confirmation d'e-mail et mettre à jour le statut de vérification de l'utilisateur
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
+        // Gérer les erreurs de manière sécurisée sans divulguer de détails spécifiques
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
             return $this->redirectToRoute('app_register');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
+        // Message de réussite pour l'utilisateur
         $this->addFlash('success', 'Votre adresse a été vérifiée correctement. Vous pouvez désormais vous connecter');
 
         return $this->redirectToRoute('app_login');

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -40,8 +41,13 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
-                'label' => 'Mot de passe*'
-            ])
+                'label' => 'Mot de passe*',
+                'constraints' => [
+                    new Regex([
+                        'pattern' => "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/",
+                        'message' => "The password should be minimum eight characters, at least one letter and one number."
+                    ])
+            ]])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'label' => "Conditions d'utilisation",

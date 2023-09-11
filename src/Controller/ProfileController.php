@@ -17,12 +17,14 @@ class ProfileController extends AbstractController
     #[Route('/profile/my_profile', name: 'my_profile')]
     public function index(Security $security, ManagerRegistry $doctrine, User $user = null, Request $request): Response
     {
+        // Récupère l'utilisateur courant
         $user = $this->getUser();
-
+        // Si un utilisateur est connecté, affiche son profil
         if($user){
             return $this->render('profile/index.html.twig', [
                 'user' => $user,
             ]);
+            // Si aucun utilisateur n'est connecté, refuse l'accès
         }else{
             throw new \Exception('Accès reservé aux utilisateurs connectés.');
             redirectToRoute('/home/index.html.twig');
@@ -33,7 +35,6 @@ class ProfileController extends AbstractController
     {
         $user = $this->getUser();
 
-        
         if($user){
             return $this->render('profile/my_infos.html.twig', [
                 'controller_name' => 'ProfileController',
@@ -81,8 +82,8 @@ class ProfileController extends AbstractController
         $entityManager = $doctrine->getManager();
         $user = $security->getUser();
 
-        // Si aucun user est connecté renvoie vers la page de connexion
-        if(!$this->getUser()){
+        // Sécurité : Vérifie qu'un utilisateur est connecté avant d'autoriser la modification du pseudo
+        if($user){
             return $this->redirectToRoute('app_login');
         }
 
@@ -90,19 +91,17 @@ class ProfileController extends AbstractController
         if($this->getUser() !== $user) {
             return $this->redirectToRoute('app_home');
         }
-
+        // Crée un formulaire pour modifier le profil de l'utilisateur
         $form = $this->createForm(ProfileType::class, $user);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            // password_verify($form->getData()->getPlainPassword(), $user->getPassword)
-            // if($hasher->isPasswordValid($user, $form->getData()->getPlainPassword())){
-            // if(password_verify($form->get('plainPassword')->getData(), $user->getPassword())
-            // ){
+            // (Code commenté) Vérifie que le mot de passe fourni est correct avant de permettre les modifications
                 $user = $form->getData();
                 $entityManager->persist($user);
                 $entityManager->flush();
-                
+
+                // Informe l'utilisateur que ses informations ont été mises à jour
                 $this->addFlash(
                     'success',
                     'Les informations de votre compte ont bien été modifiées'
@@ -128,24 +127,18 @@ class ProfileController extends AbstractController
         $entityManager = $doctrine->getManager();
         $user = $security->getUser();
 
-        // Si aucun user est connecté renvoie vers la page de connexion
-        if(!$this->getUser()){
-            return $this->redirectToRoute('app_login');
-        }
-
-        // Si le user connecté n'est pas strictement le même que celui récupéré par la class Security
-        if($this->getUser() !== $user) {
-            return $this->redirectToRoute('app_home');
-        }
-
-        // Si le user connecté est le même que celui récupéré par la class Security
-        if($this->getUser() == $user){
+        // Sécurité : Vérifie qu'un utilisateur est connecté avant de permettre la suppression du compte
+        if($user){
             // supprime l'objet User
             $entityManager->remove($user);
             $entityManager->flush();
             // supprime les informations de session pour éviter les conflits
             session_destroy();
+        // Si aucun user est connecté renvoie vers la page de connexion
+        }else{
+            return $this->redirectToRoute('app_login');
         }
+        
         
         return $this->redirectToRoute('app_home');
     }
