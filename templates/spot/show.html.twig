@@ -12,9 +12,9 @@
 <!--nom du spot-->
 <h1>{{ spot.name }} par 
 {% if spot.author == null %}
-Inconnu
+    <p>Inconnu</p> 
 {% else %}
-{{ spot.author.pseudo }}
+    {{ spot.author.pseudo }}
 {% endif %}
 </h1>
 <!-- Affichage couvert ou non -->
@@ -33,7 +33,7 @@ Type :
     Skatepark
 {% endif %}
 <!--affichage note du spot-->
-<p>avgNote : 
+<p>Note : 
     {% if spot.avgNote %}
 
 <!-- Affichage des étoiles -->
@@ -98,10 +98,42 @@ Au dessus, etoile pleine
 {{ form_end(formPicture) }}
 {% endif %}
 
-
+{# ****** #}
 {% if spot.pictures|length > 0 %}
-    {% include 'component/_carrousel.html.twig' %}
+
+<!-- carrousel -->
+<div id="carrousel">
+    <div id="carrouselContainer">
+    </div>
+
+<svg height="800px" width="800px" version="1.1" class="bouton-carrousel" id="boutonCarrouselGauche" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 185.343 185.343" xml:space="preserve">
+<g>
+	<g>
+		<path style="fill:#010002;" d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175
+			l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934
+			c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/>
+	</g>
+</g>
+</svg>
+
+<svg height="800px" width="800px" version="1.1" class="bouton-carrousel" id="boutonCarrouselDroite" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+	 viewBox="0 0 185.343 185.343" xml:space="preserve">
+<g>
+	<g>
+		<path style="fill:#010002;" d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175
+			l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934
+			c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/>
+	</g>
+</g>
+</svg>
+</div>
+{% include 'component/_carrousel.html.twig' %}
+
+{% else %}
+    <p class="text-red-500">Il n'y a pas encore de photos pour ce spot</p>
 {% endif %}
+
 <!--description du spot-->
 <p>Description: {{ spot.description }}</p>
 
@@ -124,7 +156,12 @@ Les informations concernant les ressources de ce spot n'ont pas encore été ren
     {% for comment in spot.comments|sort((a, b)=>a.date<=>b.date) %}
     <div class="comment-box">
         <div class="comment-author-and-date">
-        {{comment.author.pseudo}}
+        {# Si l'auteur du commentaire n'as pas supprimé son compte #}
+        {% if comment.author is not same as null %}
+            {{comment.author.pseudo}}
+        {% else %}
+            <p>Inconnu</p>
+        {% endif %}
         {{comment.date|date('d/m/y H:i:s')}}
         </div>
         <div class="comment-content">
