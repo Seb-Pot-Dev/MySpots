@@ -297,9 +297,6 @@ class SpotController extends AbstractController
                 //Si le formulaire est soumis ET valide
                 if ($formComment->isSubmitted() && $formComment->isValid()) {
 
-                    //assigne les donnée du formulaire soumis à une variable 
-                    $newComment = $formComment->getData();
-
                     //défini quel spot est concerné par le commentaire
                     $newComment->setSpotConcerned($spot);
 
@@ -311,7 +308,6 @@ class SpotController extends AbstractController
                         $newComment->setDate($now);
 
                         //Pour définir l'author du comm comme étant le user qui soumet le formulaire
-                        $user = $security->getUser();
                         $newComment->setAuthor($user);
                     }
 
@@ -362,7 +358,6 @@ class SpotController extends AbstractController
                 if ($formPicture->isSubmitted() && $formPicture->isValid()) {
                     // On récupère les images
                     $images = $formPicture->get('pictures')->getData();
-
                     foreach ($images as $image) {
                         // On défini le dossier de destination
                         $folder = 'photos-spot';

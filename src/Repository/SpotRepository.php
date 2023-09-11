@@ -138,8 +138,19 @@ public function findByCriteria(?string $searchFilter, array $moduleFilter, bool 
     }
     return $qb->getQuery()->getResult();
 }
+// La fonction findValidatedSpots renvoie les spots validés par l'administrateur uniquement.
+public function findValidatedSpots(): array
+    {
+        $entityManager = $this->getEntityManager();
 
+        $query = $entityManager->createQuery(
+            'SELECT s
+            FROM App\Entity\Spot s
+            WHERE s.isValidated = :validated'
+        )->setParameter('validated', 1);
 
+        return $query->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Spot
 //    {
