@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}LA MAP{% endblock %}
+{% block title %}La carte des spots{% endblock %}
 
 {% block body %}
 <!-- Lien vers le css de la map -->
 <link rel="stylesheet" href="{{ asset('css/map.css') }}">
+<link rel="stylesheet" href="{{ asset('css/filters.css') }}">
 <!-- Lien vers le fichier CSS de Mapbox -->
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
 <!-- CSS pour les clusters de markers -->
@@ -14,7 +15,7 @@
 </head>
 <style>
 </style>
-    <h1>LA MAP</h1>
+    <h1>La carte des spots</h1>
 
 <!-- AFFICHAGE DE LA MAP --> 
 <div id="map" class="">
@@ -26,7 +27,10 @@
     <button id="layer-2" class="choose-layer-item">Dark</button>
     <button id="layer-3" class="choose-layer-item">Classic</button>
 </div>
+<!-- >Inclure les filtres -->
+{% include 'component/_filters.html.twig' %}
  <!-- ////////////////////////////////////////////////////////////////// -->
+
  {% if app.user %}  
  <!-- formulaire ajout spot -->
         <div id="form-spot-id" class="form-add-spot">
@@ -115,12 +119,18 @@
     </div>
 {% endif %}
 
-{# Inclure les filtres #}
-{% include 'component/_filters.html.twig' %}
+
 
 <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
  <ul class="list-spots" style="">
  {% if spotsFiltered %}
+    {% if filtersEmpty == true %}
+            <p>Aucun spot ne correspond à ces critères sorry boy</p> 
+        {% else %}
+        <div class="inline-flex">
+            <p>Résultats({{ spotsFiltered|length }}):</p>
+        </div>
+        {% endif %}
         <!-- Boucle sur chaques éléments Spot récupérés du controller par la variable paginationSpots, qui permet la pagination grâce au bundle Knp Paginator
     {% for spot in spotsFiltered %}
         {% include 'spot/_list_spots.html.twig' %}
@@ -312,6 +322,7 @@ map.addLayer(markersCluster);
 {% if app.user %}
 <script src="{{ asset('js/script.js') }}"></script>
 {% endif %}
+<script src="{{ asset('js/filters-listing.js') }}"></script>
 
 <!-- Lien vers le fichier JavaScript de Mapbox -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>

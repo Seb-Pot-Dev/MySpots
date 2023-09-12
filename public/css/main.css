@@ -10,16 +10,21 @@
 :root {
     --bg-color: white;          /* Couleur de fond */
     --text-color: #333;         /* Couleur du texte */
-    --accent-color: #007bff;    /* Couleur d'accentuation */
+    --accent-color: #3b71ca;    /* Couleur d'accentuation */
     --menu-background: #D4D4D4;
+    --transparent-background: rgba(255, 255, 255, 0.273);
+    --text-color-opposite: white;
 }
 
 /* Mode nuit */
 body.night-mode {
     --bg-color: #1a1a1a;
     --text-color: white;
-    --accent-color: #9c27b0;
+    --accent-color: #3b71ca;
     --menu-background: #102A43;
+    --transparent-background: rgba(0, 0, 0, 0.273);
+    --text-color-opposite: #333;
+
 }
 
 /* Appliquer les couleurs */
