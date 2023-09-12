@@ -3,10 +3,13 @@
 {% block title %}LA MAP{% endblock %}
 
 {% block body %}
+<!-- Lien vers le css de la map -->
 <link rel="stylesheet" href="{{ asset('css/map.css') }}">
-
 <!-- Lien vers le fichier CSS de Mapbox -->
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+<!-- CSS pour les clusters de markers -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.Default.css" />
 
 </head>
 <style>
@@ -190,8 +193,14 @@
 {% endblock %}
 
 {% block javascripts %}
+<!-- Pour déterminer dans les fichiers JS joints si un User est connecté, je créé une variable -->
+<script>
+    const IS_USER_LOGGED_IN = {{ app.user is not null ? 'true' : 'false' }};
+</script>
 {# Gestion de la carte #}
 <script src="{{ asset('js/script_map.js') }}"></script>
+<!-- JS de Leaflet pour les clusters de markers -->
+<script src="https://unpkg.com/leaflet.markercluster@latest/dist/leaflet.markercluster-src.js"></script>
 
 <!-- Si l'utilisateur est connecté, le script js pour gérer les cliques sur la map est disponible -->
 {% if app.user %}  
@@ -199,9 +208,10 @@
 
 </script>
 {% endif %}
-
 <script>
 /*******************AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES***********************************************/
+// Définition du markersCluster (fonction de Leaflet pour gérer des clusters de markers)
+const markersCluster = L.markerClusterGroup();
 // Convertir un tableau TWIG en tableau JS
 const markersSpots = '{{ spots | raw }}';
 const jsonTabForMarkersSpots = JSON.parse(markersSpots);
@@ -221,9 +231,12 @@ jsonTabForMarkersSpots.forEach(obj => {
 const fireIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
     iconSize: [25, 25],
-    iconAnchor: [0, 25],
+    iconAnchor: [3, 22],
     popupAnchor: [10, -15]
 })
+
+
+
     // Si le spot a été validé par un admin, alors créé un marqueur
     if (isValidate){
         const marker = L.marker([lat, lng],{
@@ -231,8 +244,9 @@ const fireIcon = L.icon({
         title: name
         }
         )
-        
-        marker.addTo(map);
+
+        // Ajout du marqueur au groupe de clusters
+        markersCluster.addLayer(marker);
         
         //pour créer l'URL de show_spot
         var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
@@ -261,6 +275,9 @@ const fireIcon = L.icon({
     }
     })
 })
+// Ajout du groupe de clusters à la carte
+map.addLayer(markersCluster);
+
 /************************************FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
 </script>
 <script>
@@ -291,8 +308,10 @@ const fireIcon = L.icon({
 
 </script>
 
-<!-- Faire le tri dans le JS -->
+<!-- Si le User est connecté (sinon pas besoin d'importer ce JS) -->
+{% if app.user %}
 <script src="{{ asset('js/script.js') }}"></script>
+{% endif %}
 
 <!-- Lien vers le fichier JavaScript de Mapbox -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>

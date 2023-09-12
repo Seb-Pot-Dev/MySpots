@@ -6,8 +6,11 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
+
+            <!-- Google Font -->
+            <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
             <!-- CSS PERSO -->
-            <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/nav.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/buttons.css') }}">
@@ -24,10 +27,7 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             {{ encore_entry_link_tags('app') }}
 
-            <!-- Google Fonts -->
-            <style>
-                @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-            </style>
+
         {% endblock %}
 
         

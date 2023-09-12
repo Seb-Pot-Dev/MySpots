@@ -1,3 +1,11 @@
+*{
+    text-decoration: none;
+    list-style: none;
+    font-family: 'Roboto';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 /**********GESTION DES COULEURS ET MODE NUIT *************/
 :root {
     --bg-color: white;          /* Couleur de fond */
@@ -18,10 +26,36 @@ body.night-mode {
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
+    overflow-x: hidden;
+
 }
 a {
     color: var(--accent-color);
 }
+
+
+
+
+img.logo-strasspot-homepage{
+    max-width: 100%;
+}
+.home-main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+   
+/********************IMAGES**********************************/
+
+.image-show-spot{
+    width: 400px;
+}
+/*************SHOW_SPOT******************/
+.show_spot_note{
+    display: flex;
+    align-items: center;
+}
+
 
 /*******GESTION DES MARGES SUR LA PAGE ********/ 
 .page-width{

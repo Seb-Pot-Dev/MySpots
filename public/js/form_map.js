@@ -32,6 +32,6 @@ var switchFormSpot = document.getElementById("toggle-wrapper-id");
   
   //si click sur closeFormSpotCross, fermer le formulaire de spot
   formAddSpotCloseButton.addEventListener('click', closeFormSpot)
-
+  
 
 

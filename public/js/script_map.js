@@ -103,8 +103,10 @@ function fillWithUserPosition(){
     }else{
 promptGeolocationAccess()    }
 }
-// Si click sur "Utiliser ma position", utiliser la fn fillWithUserPosition 
-btnAddUserLoc.addEventListener('click', fillWithUserPosition);
+if(IS_USER_LOGGED_IN){
+    // Si click sur "Utiliser ma position", utiliser la fn fillWithUserPosition 
+    btnAddUserLoc.addEventListener('click', fillWithUserPosition);
+}
 
 // test
 function promptGeolocationAccess() {
@@ -117,7 +119,8 @@ function promptGeolocationAccess() {
         // L'utilisateur a cliqué sur 'Annuler' ou a fermé la fenêtre, vous pouvez faire quelque chose d'autre ou ne rien faire.
     }
 }
-
+// Si l'utilisateur est connecté
+if(IS_USER_LOGGED_IN){
 /*********************************GESTION DU CLICK SUR LA MAP****************************************************************/
     //Appel la fonction onMapClick pour créer un Event lorsque l'on clique sur un endroit non marked de la map et indique les coordonnées
     map.on('click', onMapClick);
@@ -160,7 +163,7 @@ function promptGeolocationAccess() {
     // Utilisation de la fonction closeFormSpot lors de l'evenement click sur l'élément "leaflet-popup-close-button"
     closePopupButton.onclick = closeFormSpot;
     }
-
+}
         
 
     //fonction pour récupérer la pos à partir de l'adresse entrée dans le formulaire de Spot (SpotType)
