@@ -89,29 +89,28 @@ public function findByCriteria(?string $searchFilter, array $moduleFilter, bool 
             ->setParameter('search', '%' . $searchFilter . '%');
     }
 
-    // Si des modules sont fournis pour filtrage...
-    if (!empty($moduleFilter)) {
-        // ...traite chaque module individuellement.
-        foreach ($moduleFilter as $index => $module) {
-            // Crée une sous-requête pour vérifier l'association du spot avec le module actuel.
-            $subQb = $this->createQueryBuilder("sq$index");
-            
-            // Sélectionne une valeur constante (1) pour la sous-requête.
-            $subQb->select("1")
-                // Fait une jointure avec la table des modules pour le spot.
-                ->innerJoin("sq$index.modules", "m$index")
-                // Assure que le spot dans la sous-requête est le même que le spot dans la requête principale.
-                ->where("sq$index = s")
-                // Ajoute une condition pour vérifier que le module actuel est associé au spot.
-                ->andWhere("m$index = :module$index")
-                ->setParameter("module$index", $module);
+// Vérifie si on a des modules à filtrer.
+if (!empty($moduleFilter)) {
+    // Pour chaque module...
+    foreach ($moduleFilter as $index => $module) {
+        // Prépare une sous requête pour voir si un spot a ce module.
+        $subQb = $this->createQueryBuilder("sq$index");
+        
+        // Cherche les spots avec le module.
+        $subQb->select("1")
+            ->innerJoin("sq$index.modules", "m$index")
+            ->where("sq$index = s")
+            ->andWhere("m$index = :module$index")
+            ->setParameter("module$index", $module);
 
-            // Ajoute une condition à la requête principale pour s'assurer que le spot est associé au module actuel.
-            // Utilise la sous-requête pour cette condition.
-            $qb->andWhere($qb->expr()->exists($subQb->getDQL()))
-                ->setParameter("module$index", $module);
-        }
+        // Ajoute cette vérification à notre requête principale.
+        $qb->andWhere($qb->expr()->exists($subQb->getDQL()))
+            ->setParameter("module$index", $module);
     }
+}
+
+
+
     // SI l'option de tri "skatepark" est selectionnée 
     if ($official) {
         $qb->andWhere('s.official = true');

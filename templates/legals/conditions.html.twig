@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Conditions d'utilisation de SkateSpot{% endblock %}
+
+{% block body %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background-color: #333;
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+h2 {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin: 20px 0;
+    font-size: 1.5em;
+}
+
+p, ul {
+    margin: 20px;
+    line-height: 1.5;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 20px;
+}
+
+ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #0077cc;
+}
+
+ul li > * {
+    display: inline;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    h1, h2 {
+        font-size: 1.25em;
+    }
+
+    p, ul {
+        margin: 10px;
+    }
+}
+
+</style>
+{# &#x1F6F9 = 🛹 #}
+<h1>&#x1F6F9 Conditions d'utilisation du site SkateSpot &#x1F6F9</h1>
+
+<h2>1. Acceptation des conditions</h2>
+<p>En vous inscrivant et en utilisant SkateSpot, vous acceptez de respecter les présentes conditions d'utilisation. Si vous n'acceptez pas ces termes, veuillez ne pas utiliser ce site.</p>
+
+<h2>2. Description du service</h2>
+<p>SkateSpot offre une plateforme où les utilisateurs peuvent partager et découvrir des lieux de skate. Ces informations sont fournies par les utilisateurs et ne sont pas vérifiées par SkateSpot.</p>
+
+<h2>3. Utilisation responsable</h2>
+<p>En partageant un lieu de skate, vous vous engagez à :</p>
+<ul>
+    <li>Ne pas partager de lieux privés ou interdits à la pratique du skate.</li>
+    <li>Ne pas publier d'informations fausses ou trompeuses.</li>
+    <li>Respecter la vie privée d'autrui, en ne partageant aucune information personnelle sans consentement.</li>
+</ul>
+
+<h2>4. Décharge de responsabilité</h2>
+<p>SkateSpot ne saurait être tenu responsable :</p>
+<ul>
+    <li>Des lieux partagés par les utilisateurs. La pratique du skate à ces endroits se fait à vos propres risques.</li>
+    <li>Des éventuels dommages matériels ou physiques survenus suite à la pratique du skate.</li>
+</ul>
+
+<h2>5. Comportement des utilisateurs</h2>
+<p>Vous vous engagez à :</p>
+<ul>
+    <li>Respecter les autres membres.</li>
+    <li>Ne pas utiliser ce site pour des activités illégales ou malveillantes.</li>
+    <li>Signaler tout contenu inapproprié ou qui viole ces conditions d'utilisation.</li>
+</ul>
+
+<h2>6. Modifications du service et des conditions</h2>
+<p>SkateSpot se réserve le droit de :</p>
+<ul>
+    <li>Modifier ou interrompre le service à tout moment, pour n'importe quelle raison, et sans notification.</li>
+    <li>Modifier les présentes conditions d'utilisation. Les modifications seront effectives dès leur publication sur ce site.</li>
+</ul>
+
+<h2>7. Droits d'auteur</h2>
+<p>Tout le contenu de ce site, à l'exception des lieux partagés par les utilisateurs, est protégé par des droits d'auteur et appartient à SkateSpot. Toute utilisation non autorisée est strictement interdite.</p>
+
+<h2>8. Suppression de compte et contenu</h2>
+<p>SkateSpot se réserve le droit de supprimer tout compte ou contenu qui viole ces conditions d'utilisation, ou pour n'importe quelle autre raison jugée pertinente.</p>
+
+<h2>9. Loi applicable</h2>
+<p>Ces conditions d'utilisation sont régies et interprétées conformément aux lois de [votre pays ou État], sans égard aux conflits de lois.</p>
+
+<h2>10. Limitation du stockage des données</h2> 
+<ul>
+<li>
+a. Conservation des données : SkateSpot conserve vos données personnelles aussi longtemps que nécessaire pour fournir les services demandés, pour des raisons légales, fiscales, ou comptables, ou pour d'autres raisons essentielles d'entreprise.
+</li>
+
+<li>
+b. Durée de stockage : Les informations de compte des utilisateurs seront conservées pour une durée maximale de 5 ans après la dernière activité de l'utilisateur. Au-delà de cette période, SkateSpot se réserve le droit de supprimer ou de rendre anonyme toute donnée personnelle.
+</li>
+
+<li>
+c. Droit de l'utilisateur : Vous avez le droit de demander la suppression de vos données à tout moment. Cependant, certaines données pourraient être conservées pour des raisons légales ou de sécurité.
+</li>
+
+<li>
+d. Sécurité : Nous nous engageons à mettre en œuvre toutes les mesures techniques et organisationnelles nécessaires pour garantir la sécurité et la confidentialité des données stockées.
+</li>
+</ul>
+{% endblock %}
