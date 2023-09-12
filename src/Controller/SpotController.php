@@ -54,7 +54,7 @@ class SpotController extends AbstractController
             ->orderBy('s.name', 'ASC')
             ->getQuery();
 
-        $paginationSpots = $paginator->paginate(
+        $paginatedSpots = $paginator->paginate(
             $spotsQuery, //requete a paginer
             $request->query->getInt('page', 1), // 1= numéro de page pas défaut
             5 // Nombre d'elements par page
@@ -216,11 +216,11 @@ class SpotController extends AbstractController
         return $this->render('spot/index.html.twig', [
             'controller_name' => 'SpotController',
             'spots' => $tabCoords,
-            'spotsList' => $spots,
-            'paginationSpots' => $paginationSpots,
             'formAddSpot' => $form->createView(),
             'modules' => $modules,
             'formSearch' => $formSearch->createView(),
+            'spotsList' => $spots,
+            'paginatedSpots' => $paginatedSpots,
             'spotsFiltered' => $spotsFiltered,
             'filtersEmpty' => $filtersEmpty
         ]);

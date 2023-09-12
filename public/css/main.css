@@ -6,6 +6,10 @@
     padding: 0;
     box-sizing: border-box;
 }
+@font-face {
+    font-family: 'SkateFont1';
+    src: url('/fonts/ENDLESSBUMMER-Regular.otf') format('opentype');
+}
 /**********GESTION DES COULEURS ET MODE NUIT *************/
 :root {
     --bg-color: white;          /* Couleur de fond */

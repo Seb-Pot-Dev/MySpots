@@ -9,7 +9,7 @@ toggleFilters.addEventListener('click', function() {
         container.style.overflow = 'hidden';
         toggleFilters.style.top = '92px' 
         arrows.forEach(function(arrow) {
-            arrow.style.rotate = '180deg';
+            arrow.innerHTML = 'OUVRIR FILTRES';
             // Do something with each arrow element
         });
         
@@ -18,7 +18,7 @@ toggleFilters.addEventListener('click', function() {
         container.style.maxHeight = '100%'; // Rétablissez ceci à votre max-width initial*
         arrows.forEach(function(arrow) {
             // Do something with each arrow element
-            arrow.style.rotate = 'unset';
+            arrow.innerHTML = 'FERMER FILTRES';
         });
         
     }
