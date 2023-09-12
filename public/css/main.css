@@ -10,6 +10,14 @@
     font-family: 'SkateFont1';
     src: url('/fonts/ENDLESSBUMMER-Regular.otf') format('opentype');
 }
+@font-face {
+    font-family: 'SkateFont2';
+    src: url('/fonts/BaskaraDemoRegular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'SkateFont3';
+    src: url('/fonts/pandoramaDEMO.otf') format('opentype');
+}
 /**********GESTION DES COULEURS ET MODE NUIT *************/
 :root {
     --bg-color: white;          /* Couleur de fond */

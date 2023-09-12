@@ -4,13 +4,20 @@
     top: 75px;
     max-width: none;
     overflow:none;
- */
+
 }
 #search-form{
     margin-bottom: 0;
     padding-bottom: 0;
     box-shadow: unset;
-    
+}
+#search-form h4, .filter-button, .filter-button-big, .filter-button-big label{
+    font-family: 'SkateFont2';
+}
+#search-form label label, .filter-button{
+    font-family: 'SkateFont3';
+    font-size: 1.25rem;
+    margin-bottom: unset;
 }
 #toggleFilters{
     z-index: 9999;
@@ -37,7 +44,7 @@
     fill: var(--text-color);
     height: 45px;
     font-size: 20px;
-    font-family: 'SkateFont1', sans-serif;    /* width: 45px; */
+    font-family: 'SkateFont2', sans-serif;    /* width: 45px; */
     /* transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
