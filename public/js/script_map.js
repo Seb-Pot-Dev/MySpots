@@ -119,7 +119,7 @@ function promptGeolocationAccess() {
         // L'utilisateur a cliqué sur 'Annuler' ou a fermé la fenêtre, vous pouvez faire quelque chose d'autre ou ne rien faire.
     }
 }
-// Si l'utilisateur est connecté
+// Si l'utilisateur est
 if(IS_USER_LOGGED_IN){
 /*********************************GESTION DU CLICK SUR LA MAP****************************************************************/
     //Appel la fonction onMapClick pour créer un Event lorsque l'on clique sur un endroit non marked de la map et indique les coordonnées

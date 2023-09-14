@@ -6,6 +6,8 @@
 <!-- Lien vers le css de la map -->
 <link rel="stylesheet" href="{{ asset('css/map.css') }}">
 <link rel="stylesheet" href="{{ asset('css/filters.css') }}">
+<link rel="stylesheet" href="{{ asset('css/list_spot.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form_spot.css') }}">
 <!-- Lien vers le fichier CSS de Mapbox -->
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
 <!-- CSS pour les clusters de markers -->
@@ -32,116 +34,87 @@
  <!-- ////////////////////////////////////////////////////////////////// -->
 
  {% if app.user %}  
- <!-- formulaire ajout spot -->
-        <div id="form-spot-id" class="form-add-spot">
-        <button id="closeFormSpotCross">
-             <!--SVG cross pour fermer le form -->
-            <svg fill="#000000" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                viewBox="0 0 490 490" xml:space="preserve">
-                <polygon points="456.851,0 245,212.564 33.149,0 0.708,32.337 212.669,245.004 0.708,457.678 33.149,490 245,277.443 456.851,490 
-                489.292,457.678 277.331,245.004 489.292,32.337 "/>
-            </svg>
-        </button>
-            {{ form_start(formAddSpot, {'attr': {'class': 'mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
-                <h1 class="mb-2 text-xl font-medium">Propose ton spot</h1>
-                <div class="">
-                    {{ form_label(formAddSpot.name, 'Name', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-                    {{ form_widget(formAddSpot.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-                <div class="">
-                    {{ form_label(formAddSpot.description, 'Description', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-                    {{ form_widget(formAddSpot.description, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-                <div class="">
-                    {{ form_label(formAddSpot.adress, 'Address', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-                    {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-                <div class="">
-                    {{ form_label(formAddSpot.cp, 'Postal Code', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-                <div class="">
-                    {{ form_label(formAddSpot.city, 'City', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-                <button id="add-user-pos">Utiliser ma position</button>
-                <div class="">
-                    {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-                <div class="">
-                    {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-                <div class="">
-                    {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
-                    {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-                <div class="">
-                    {{ form_label(formAddSpot.pictures, 'Pictures', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-                    {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                </div>
-            
-
-                {# <button type="submit" class="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Submit</button> #}
-            {{ form_end(formAddSpot) }}
+<!-- formulaire ajout spot -->
+<div id="form-add-spot-global">
+    <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
+    {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
+        <h1 class="mb-2 text-xl font-medium">Propose ton spot</h1>
+        <div class="">
+            {{ form_label(formAddSpot.name, 'Name', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+            {{ form_widget(formAddSpot.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
         </div>
-    {% else %}
-        <p>Veuillez vous connecter pour ajouter un spot.</p>
-    {% endif %}
-
-<div class="list-spots-desktop">
- {% if app.user %}
-    <div class="add-spot-title-container">
-        <p>Ajouter un spot? </p>
-        
-        <div class="toggle-wrapper" id="toggle-wrapper-id">
-            <input class="toggle-checkbox" type="checkbox">
-            <div class="toggle-container">  
-                <div class="toggle-button">
-                <div class="toggle-button-circles-container">
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                    <div class="toggle-button-circle"></div>
-                </div>
-                </div>
-            </div>
+        <div class="">
+            {{ form_label(formAddSpot.description, 'Description', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+            {{ form_widget(formAddSpot.description, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
         </div>
-    </div>
+        <div class="">
+            {{ form_label(formAddSpot.adress, 'Address', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+            {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        </div>
+        <div class="">
+            {{ form_label(formAddSpot.cp, 'Postal Code', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
+            {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        </div>
+        <div class="">
+            {{ form_label(formAddSpot.city, 'City', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
+            {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        </div>
+        <button id="add-user-pos">Utiliser ma position</button>
+        <div class="">
+            {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
+            {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        </div>
+        <div class="">
+            {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
+            {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        </div>
+        <div class="">
+            {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium text-black'}}) }}
+            {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        </div>
+        <div class="">
+            {{ form_label(formAddSpot.pictures, 'Pictures', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+            {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        </div>
+    
+
+        {# <button type="submit" class="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Submit</button> #}
+    {{ form_end(formAddSpot) }} 
+</div>
+{% else %}
+    <p>Veuillez vous connecter pour ajouter un spot.</p>
 {% endif %}
 
-
-
-<!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
- <ul class="list-spots" style="">
- {% if spotsFiltered %}
-    {% if filtersEmpty == true %}
-            <p>Aucun spot ne correspond à ces critères sorry boy</p> 
-        {% else %}
-        <div class="inline-flex">
-            <p>Résultats({{ spotsFiltered|length }}):</p>
+<div id="list-spots-desktop-global">
+    
+    <div class="list-spots-desktop" id="list-spots-desktop-id">
+        <div id="list-spots-desktop-main">
+            <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
+            <ul class="list-spots" style="">
+                {% if spotsFiltered %}
+                    {% if filtersEmpty == true %}
+                            <p>Aucun spot ne correspond à ces critères sorry boy</p> 
+                        {% else %}
+                        <div class="inline-flex">
+                            <p>Résultats({{ spotsFiltered|length }}):</p>
+                        </div>
+                        {% endif %}
+                    {% for spot in spotsFiltered %}
+                        {% include 'spot/_list_spots.html.twig' %}
+                    {% endfor %}
+                {% else %}
+                    {% for spot in spotsList %}
+                        {% include 'spot/_list_spots.html.twig' %}
+                    {% endfor %}
+                {% endif %}
+            </ul>
         </div>
-        {% endif %}
-        <!-- Boucle sur chaques éléments Spot récupérés du controller par la variable paginationSpots, qui permet la pagination grâce au bundle Knp Paginator
-    {% for spot in spotsFiltered %}
-        {% include 'spot/_list_spots.html.twig' %}
-    {% endfor %}
-{% else %}
-    {% for spot in spotsList %}
-        {% include 'spot/_list_spots.html.twig' %}
-    {% endfor %}
- {% endif %}
-            
-    </ul>
+    </div>
+
+    <a id="toggleListSpots" href="#">
+        FERMER LA LISTE
+    </a>
+</div>
     {# <div class="js-filter-pagination">
         Affichage des liens de pagination
         {{ knp_pagination_render(paginationSpots) }}
@@ -149,7 +122,7 @@
 </div>
 
 <!-- Liste des spots SOUS LA MAP -->
-    <ul class="list-spots" style="display:none;">
+    {# <ul class="list-spots" style="display:none;">
         {% for spot in spotsList|sort((a, b)=>b.name<=>a.name) %}
             {% if spot.isValidated %}
             <!-- lien -->
@@ -197,7 +170,7 @@
             {% endif %}
 
         {% endfor %}
-    </ul>
+    </ul> #}
 
 
 {% endblock %}
@@ -212,84 +185,81 @@
 <!-- JS de Leaflet pour les clusters de markers -->
 <script src="https://unpkg.com/leaflet.markercluster@latest/dist/leaflet.markercluster-src.js"></script>
 
-<!-- Si l'utilisateur est connecté, le script js pour gérer les cliques sur la map est disponible -->
-{% if app.user %}  
+{# Gestion des points issus de la BDD #}
 <script>
+    /*******************AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES***********************************************/
+    // Définition du markersCluster (fonction de Leaflet pour gérer des clusters de markers)
+    const markersCluster = L.markerClusterGroup();
+    // Convertir un tableau TWIG en tableau JS
+    const markersSpots = '{{ spots | raw }}';
+    const jsonTabForMarkersSpots = JSON.parse(markersSpots);
 
-</script>
-{% endif %}
-<script>
-/*******************AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES***********************************************/
-// Définition du markersCluster (fonction de Leaflet pour gérer des clusters de markers)
-const markersCluster = L.markerClusterGroup();
-// Convertir un tableau TWIG en tableau JS
-const markersSpots = '{{ spots | raw }}';
-const jsonTabForMarkersSpots = JSON.parse(markersSpots);
+    // Parcourir le tableau et créer des marqueurs pour chaque élément
+    jsonTabForMarkersSpots.forEach(obj => {
+        Object.entries(obj).forEach(([name, infos]) => { 
+            const lat = infos[0]
+            const lng = infos[1]
+            const desc = infos[2]
+            const isValidate = infos[3]
+            const spotId = infos[4] 
+            const avgNote = infos[5]
+            const pictures = infos[6]
 
-// Parcourir le tableau et créer des marqueurs pour chaque élément
-jsonTabForMarkersSpots.forEach(obj => {
-    Object.entries(obj).forEach(([name, infos]) => { 
-        const lat = infos[0]
-        const lng = infos[1]
-        const desc = infos[2]
-        const isValidate = infos[3]
-        const spotId = infos[4] 
-        const avgNote = infos[5]
-        const pictures = infos[6]
-
-//icon custom pour l'emplacement de l'utilisateur
-const fireIcon = L.icon({
-    iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
-    iconSize: [25, 25],
-    iconAnchor: [3, 22],
-    popupAnchor: [10, -15]
-})
-
-
-
-    // Si le spot a été validé par un admin, alors créé un marqueur
-    if (isValidate){
-        const marker = L.marker([lat, lng],{
-        icon: fireIcon,
-        title: name
-        }
-        )
-
-        // Ajout du marqueur au groupe de clusters
-        markersCluster.addLayer(marker);
-        
-        //pour créer l'URL de show_spot
-        var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
-        urlShowSpot = urlShowSpot.replace("exemple_id", spotId);
-        
-        // Pour découper une chaine de caractères après un certain nombre de car. et ajouter "..." si découpée 
-        function limitNameLenght(chaine, limite) {
-        if (chaine.length > limite) {
-            return chaine.slice(0, limite) + "...";
-        } else {
-            return chaine;
-        }
-        }
-        // le nom final, découpé 
-        const nameCut = limitNameLenght(name, 10);
-            //si la avgNote n'est pas null (c-a-d le spot a déjà été noté)
-            if(avgNote){
-            const popupContent = `<a href=${urlShowSpot}> <b>${nameCut} <i class='fa-solid fa-star'></i>(${avgNote})</b><br>${desc}<br>
-            </a>`;
-            marker.bindPopup(popupContent);
-            }else{ //Sinon on écrit 'pas de avgNote' a la place du int
-            let avgNote = '(Pas de note)';
-            const popupContent = `<a href=${urlShowSpot}> <b>${nameCut}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
-            marker.bindPopup(popupContent);
-        }
-    }
+    //icon custom pour l'emplacement de l'utilisateur
+    const fireIcon = L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
+        iconSize: [25, 25],
+        iconAnchor: [3, 22],
+        popupAnchor: [10, -15]
     })
-})
-// Ajout du groupe de clusters à la carte
-map.addLayer(markersCluster);
 
-/************************************FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
+
+
+        // Si le spot a été validé par un admin, alors créé un marqueur
+        if (isValidate){
+            const marker = L.marker([lat, lng],{
+            icon: fireIcon,
+            title: name
+            }
+            )
+
+            // Ajout du marqueur au groupe de clusters
+            markersCluster.addLayer(marker);
+            
+            //pour créer l'URL de show_spot
+            var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
+            urlShowSpot = urlShowSpot.replace("exemple_id", spotId);
+            
+            // Pour découper une chaine de caractères après un certain nombre de car. et ajouter "..." si découpée 
+            function limitNameLenght(chaine, limite) {
+            if (chaine.length > limite) {
+                return chaine.slice(0, limite) + "...";
+            } else {
+                return chaine;
+            }
+            }
+            // le nom final, découpé 
+            const nameCut = limitNameLenght(name, 10);
+                //si la avgNote n'est pas null (c-a-d le spot a déjà été noté)
+                if(avgNote){
+                const popupContent = `<a href=${urlShowSpot}> <b>${nameCut} <i class='fa-solid fa-star'></i>(${avgNote})</b><br>${desc}<br>
+                </a>`;
+                marker.bindPopup(popupContent);
+                }else{ //Sinon on écrit 'pas de avgNote' a la place du int
+                let avgNote = '(Pas de note)';
+                const popupContent = `<a href=${urlShowSpot}> <b>${nameCut}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
+                marker.bindPopup(popupContent);
+            }
+        }
+        })
+    })
+    // Ajout du groupe de clusters à la carte
+    map.addLayer(markersCluster);
+
+    /************************************FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
 </script>
+
+{# Polygone #}
 <script>
     // Définir les coordonnées d'un polygone
     var polygonCoords = [  [48.623860, 7.727798],
@@ -321,6 +291,7 @@ map.addLayer(markersCluster);
 <!-- Si le User est connecté (sinon pas besoin d'importer ce JS) -->
 {% if app.user %}
 <script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/form_map.js') }}"></script>
 {% endif %}
 <script src="{{ asset('js/filters-listing.js') }}"></script>
 

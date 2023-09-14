@@ -3,6 +3,7 @@
     top: 0px;
     right: 0px;
     outline: none;
+    min-height: 100vh;
     width: 100vw;
     height: 100vh;
 }
@@ -14,71 +15,7 @@ width: 98.5%;
 background-color: rgba(255, 255, 255, 0.273);
 z-index: 9999;
 }
-.list-spots-desktop{
-    position:absolute;
-    top: 75px;
-    z-index: 999;
-    right: -9px;
-    /* max-width: 30%; */
-    /* height: 100vh; */
-    /* overflow: scroll; */
-    margin: 1rem;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    max-width: 28rem;
-    background-color: var(--transparent-background);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-/********************** LISTS **********************/
-ul.list-spots{
-    list-style: none;
 
-}
-.list-spots li{
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 12px 4px 12px;
-    margin: 0.5rem 0;
-    border-radius: 4px;;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    -o-border-radius: 4px;
-    /* overflow-x: scroll; */
-    color: white;
-    text-shadow: 1px 0 black, -1px 0 black, 0 1px black, 0 -1px black,
-               0.5px 0.5px black, -0.5px -0.5px black, 0.5px -0.5px black, -0.5px 0.5px black;
-}
-.list-spots li:nth-child(even){
-    background-color: rgba(211, 211, 211, 0.466);
-}
-.list-spots li:nth-child(odd){
-    background-color: rgba(173, 216, 230, 0.377);
-}
-
-ul.list-spots{
-    width: 100%;
-    /* overflow: scroll; */
-}
-
-@media (min-width: 768px) {
-    ul.list-spots-desktop{
-        width: 30%;
-    }
-    .form-add-spot.active {
-        top: 105px;
-        right: 330px;
-        position: absolute;
-        z-index: 9999;
-        display: block;
-    }
-}
-/*************- MINIATURE LISTE SPOT ************/
-.miniatures-spot{
-    display: flex;
-    gap: 1px;
-
-}
 /**********----BOUTTON---*************/
 /* Choix du tile layer */
 .choose-layer-container{
@@ -179,21 +116,6 @@ form>div>textarea{
 
 
 
-/*---open/close form spot---*/
-.add-spot-title-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.form-add-spot{
-    animation: fadeOut 0.5s ease;
-    -webkit-animation: fadeOut 0.5s ease;
-    width: 550px;
-    position:fixed;
-    /* formulaire initialement masqué */
-    display: none;
-
-}
 
 
 /*bouton - initialement masqué */
