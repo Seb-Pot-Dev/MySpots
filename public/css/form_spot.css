@@ -36,3 +36,18 @@
     -ms-border-radius: unset;
     -o-border-radius: unset;
 }
+
+.submit-form-spot{
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+    background-color: var(--text-color-opposite);
+    border: 1px solid var(--text-color);
+    border-radius: 0.25rem;
+    -webkit-border-radius: 0.25rem;
+    -moz-border-radius: 0.25rem;
+    -ms-border-radius: 0.25rem;
+    -o-border-radius: 0.25rem;
+    margin-bottom: 1rem;
+}

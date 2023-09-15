@@ -49,8 +49,6 @@ ul.list-spots{
     -o-border-radius: 4px;
     /* overflow-x: scroll; */
     color: white;
-    text-shadow: 1px 0 black, -1px 0 black, 0 1px black, 0 -1px black,
-               0.5px 0.5px black, -0.5px -0.5px black, 0.5px -0.5px black, -0.5px 0.5px black;
 }
 .list-spots li:nth-child(even){
     background-color: rgba(211, 211, 211, 0.466);
@@ -74,5 +72,9 @@ ul.list-spots-desktop{
 .miniatures-spot{
     display: flex;
     gap: 1px;
-
+}
+.right{
+    color: var(--text-color);
+    text-shadow: 1px 1.5px 1px var(--text-color-opposite);
+    height: fit-content;
 }

@@ -25,11 +25,16 @@ z-index: 9999;
     bottom: 0;
     margin-bottom: 10px;
     color: black;
+    font-family: 'SkateFont2';
 }
 .choose-layer-item{
+    padding: 1px;
     background-color: white;
     border: 1px solid white;
     border-radius: 2px;
+    background-color: var(--transparent-background);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
 }
 .choose-layer-item span{
     color: black;
@@ -186,4 +191,13 @@ span.current{
 .tarteaucitronIconBottomLeft {
     bottom: 65px;
     left: 0;
+}
+/***********MODIF DU THEME LEAFLET *******************/
+.leaflet-control-zoom-in, .leaflet-control-zoom-out{
+    background-color: var(--transparent-background)!important;
+    border: 1px solid var(--text-color)!important;
+    color: var(--text-color)!important;
+}
+.leaflet-control-zoom{
+    border: none!important;
 }

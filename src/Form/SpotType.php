@@ -68,7 +68,8 @@ class SpotType extends AbstractType
                 'required' => false
             ])
             ->add('submit', SubmitType::class,[
-                'attr' => ['class' => 'w-full py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600']
+                'label' => 'Envoyer',
+                'attr' => ['class' => ' submit-form-spot header-medium']
             ])
             /* Pour après la pause : 
             voir où l'info passe après la soumission du formulaire PictureType dans showSpot

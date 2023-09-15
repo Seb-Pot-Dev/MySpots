@@ -16,3 +16,16 @@
     font-family: 'SkateFont3', sans-serif;
     color: var(--text-color)
 }
+.body-large{
+    font-size: 1.25rem;
+    font-family: 'SkateFont3', sans-serif;
+    color: var(--text-color)
+}
+.body-xlarge{
+    font-size: 1.5rem;
+    font-family: 'SkateFont3', sans-serif;
+    color: var(--text-color)
+}
+.text-shadow-1{
+    text-shadow: 1px 1.5px 1px var(--text-color-opposite);
+}

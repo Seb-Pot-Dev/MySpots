@@ -1,4 +1,4 @@
-// Gestion de l'ouverture/fermeture du formulaire d'ajout de spots
+// /*Gestion de l'ouverture/fermeture du formulaire d'ajout de spots*/
 
 // // Déclarations des variables 
 // // toggle switch

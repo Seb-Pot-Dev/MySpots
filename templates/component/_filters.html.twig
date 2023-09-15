@@ -4,12 +4,12 @@
         {{ form_row(formSearch.search) }}
         {# Choix des modules #}
         <h4>Filtrer par module</h4>
-        {% for module in formSearch.moduleFilter %}
-            <label class="flex items-baseline mx-4">
-                {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
-                {{ form_label(module) }}
-            </label>
-        {% endfor %}
+            {% for module in formSearch.moduleFilter %}
+                <label class="flex items-baseline mx-4">
+                    {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
+                    {{ form_label(module) }}
+                </label>
+            {% endfor %}
         <h4>Autres criteres</h4>
         <label class="flex items-baseline mx-4">
             {{ form_widget(formSearch.official, {'attr': {'class': 'mr-2'}}) }}

@@ -1,7 +1,7 @@
 *{
     text-decoration: none;
     list-style: none;
-    font-family: 'Roboto';
+    font-family: 'SkateFont2', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -12,12 +12,13 @@
 }
 @font-face {
     font-family: 'SkateFont2';
-    src: url('/fonts/BaskaraDemoRegular.ttf') format('truetype');
+    src: url('/fonts/Baskararegular.ttf') format('truetype');
 }
 @font-face {
     font-family: 'SkateFont3';
     src: url('/fonts/pandoramaDEMO.otf') format('opentype');
 }
+
 /**********GESTION DES COULEURS ET MODE NUIT *************/
 :root {
     --bg-color: white;          /* Couleur de fond */

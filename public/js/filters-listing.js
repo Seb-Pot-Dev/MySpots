@@ -46,10 +46,10 @@ toggleList.addEventListener('click', function() {
 /**************** MEME LOGIQUE POUR LE FORMULAIRE D'AJOUT *********************** */
 const toggleForm = document.getElementById('toggleFormSpot');
 const containerForm = document.getElementById('form-spot-id');
+// NEED FIX ICI
+const openFormAddSpotInPopup = document.getElementById('openFormAddSpotInPopup');
 
-toggleForm.addEventListener('click', function(event) {
-
-    // pour voir l'état actuel des styles de form-spot-id  (pas uniquement ceux appliqués en ligne sur l'element HTML, mais aussi ceux issus de feuilles css)
+function toggleContainer() {
     let computedStyle = window.getComputedStyle(containerForm);
     
     if (computedStyle.maxHeight !== '0px') {
@@ -60,5 +60,9 @@ toggleForm.addEventListener('click', function(event) {
         containerForm.style.maxHeight = 'unset';
         containerForm.style.overflow = 'unset';
         toggleForm.innerHTML = 'FERMER';
+        // Note: De même, ajustez le texte du bouton si nécessaire
     }
-});
+}
+// L'ajout de l'écouteur d'événement:
+toggleForm.addEventListener('click', toggleContainer);
+openFormAddSpotInPopup.addEventListener('click', toggleContainer);
