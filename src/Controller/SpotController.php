@@ -69,7 +69,7 @@ class SpotController extends AbstractController
         $formSearch->handleRequest($request);
         // instancie une variable $sportFiltered 
         $spotsFiltered = $spots; // égale a $spots tant qu'aucun filtre n'as été renseigner.
-        $filtersEmpty = false;
+        $filtersEmptyMessage = false;
 
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
             $searchFilter = $searchData->search;
@@ -81,7 +81,7 @@ class SpotController extends AbstractController
             $orderCreation = $searchData->orderCreation;
             $spotsFiltered = $spotRepository->findByCriteria($searchFilter, $moduleFilter, $officialFilter, $coveredFilter, $orderCreation);
             if (empty($spotsFiltered)) {
-                $filtersEmpty = true;
+                $filtersEmptyMessage = "Aucun spots ne corresponds a tout ces criteres sorry boy";
             }
         }
         // Récupération des spots pour créé les MARKERS ************************************************************************************************
@@ -222,7 +222,7 @@ class SpotController extends AbstractController
             'spotsList' => $spots,
             'paginatedSpots' => $paginatedSpots,
             'spotsFiltered' => $spotsFiltered,
-            'filtersEmpty' => $filtersEmpty
+            'filtersEmptyMessage' => $filtersEmptyMessage
         ]);
     }
 

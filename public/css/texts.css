@@ -1,0 +1,18 @@
+.header-medium{
+    font-family: 'SkateFont2', sans-serif;
+}
+.header-small{
+    font-size: 0.75rem;
+    font-family: 'SkateFont2', sans-serif;
+    color: var(--text-color)
+}
+.body-small{
+    font-size: 0.75rem;
+    font-family: 'SkateFont3', sans-serif;
+    color: var(--text-color)
+}
+.body-medium{
+    font-size: 1rem;
+    font-family: 'SkateFont3', sans-serif;
+    color: var(--text-color)
+}

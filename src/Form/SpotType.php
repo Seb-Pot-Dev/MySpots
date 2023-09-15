@@ -48,14 +48,17 @@ class SpotType extends AbstractType
                 'required'=>false,
                 'attr' => [
                     'class' => 'form-row'
+                ],
+                'label_attr' => [
+                    'class' => 'inline-flex'
                 ]
             ])
             ->add('covered', CheckboxType::class,[
-                'label' => 'Cocher si le spot est couvert',
+                'label' => 'Couvert?',
                 'required' => false
             ])
             ->add('official', CheckboxType::class,[
-                'label' => 'Cocher si le spot est un skatepark',
+                'label' => 'Skatepark?',
                 'required' => false
             ])
             ->add('pictures', FileType::class, [
