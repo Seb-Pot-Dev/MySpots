@@ -1,11 +1,11 @@
 {% if spot.isValidated %}
             <!-- lien -->
                 {% if spot.pictures|length > 0 %}
-                <li onclick="location.href = this.getAttribute('data-url');"
+                <li onclick="location.href = this.getAttribute('data-url');" title="{{ spot.name }}"
                 style="height: 100px; background-position: center center; background-size: cover; background-image: url('{{ asset('assets/uploads/photos-spot/' ~ spot.pictures[0].name) }}');"
                 data-url="{{ spot_url }}">
                 {% else %}
-                <li onclick="location.href = this.getAttribute('data-url');" style="height: 100px;" data-url="{{ spot_url }}">
+                <li onclick="location.href = this.getAttribute('data-url');" style="height: 100px;" data-url="{{ spot_url }}" title="{{ spot.name }}">
                 {% endif %}
                     <div class="left">
                     <!-- nom du spot -->
@@ -22,13 +22,18 @@
                         <!-- nb likes du spot -->
                         {% if app.user %} <!-- si le user est co, il peut liker-->
                         <a href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}">    
-                        {% endif %}
-                        {% if spot in app.user.favoriteSpots %}
-                            <i class="fa-solid fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur plein -->
-                        {% else %}
-                            <i class="fa-regular fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur vide -->
-                        {% endif %}
+                        
+                                
+                            {% if spot in app.user.favoriteSpots %}
+                                <i class="fa-solid fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur plein + Nb likes-->
+                            {% else %}
+                                <i class="fa-regular fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur vide + Nb likes-->
+                            {% endif %}
+                                                       
                         </a>
+                        {% else %}
+                            <i class="fa-regular fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur vide + Nb likes -->
+                        {% endif %}
 
                         <!-- note -->
                         {% if spot.avgNote is not null %}

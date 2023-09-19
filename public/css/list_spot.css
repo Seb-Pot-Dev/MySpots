@@ -49,6 +49,17 @@ ul.list-spots{
     -o-border-radius: 4px;
     /* overflow-x: scroll; */
     color: white;
+    cursor: pointer;
+}
+div.left p{
+    transition: transform 0.3s ease-out;
+}
+.list-spots li:hover div.left p{
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
 }
 .list-spots li:nth-child(even){
     background-color: rgba(211, 211, 211, 0.466);
