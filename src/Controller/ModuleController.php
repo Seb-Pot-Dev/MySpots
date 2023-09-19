@@ -20,7 +20,7 @@ class ModuleController extends AbstractController
     {
         // définition du $user actif
         $user=$this->getUser();
-        $userRole = $user->getRole();
+        $userRole = $user->getRoles();
         // Si le $user possède le role admin
         if ($user && in_array('ROLE_ADMIN', $userRole)) {
                     // Vérifie si un ID de module est fourni
