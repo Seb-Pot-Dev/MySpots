@@ -95,7 +95,8 @@ function error(err){
 
 const btnAddUserLoc = document.querySelector('#add-user-pos');
 
-function fillWithUserPosition(){
+function fillWithUserPosition(event){
+    event.preventDefault()
     // Si la position de l'utilisateur est connue, affiche les coordonnées dans le formulaire.
     if(isUserLocationKnown === true){
         document.querySelector('#spot_lat').value = userLat;

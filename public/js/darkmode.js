@@ -1,7 +1,8 @@
         // Définition des var
         const body = document.body;
-        
-        const toggleButton = document.getElementById("toggle-night-mode");
+        if(!toggleButton){
+            const toggleButton = document.getElementById("toggle-night-mode");
+        }
         
 
         // Si click sur le switch dark mode
