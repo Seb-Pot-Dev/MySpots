@@ -9,176 +9,267 @@
 <link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
 <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
 
-<!--nom du spot-->
-<h1>{{ spot.name }} par 
-{% if spot.author == null %}
-    <p>Inconnu</p> 
-{% else %}
-    {{ spot.author.pseudo }}
-{% endif %}
-</h1>
-<!-- Affichage couvert ou non -->
-Environnement : 
-{% if spot.isCovered == 0 %}
-    Non-couvert
-{% else %}
-    Couvert
-{% endif %}
-<br>
-<!-- Affichage officiel ou non -->
-Type : 
-{% if spot.isOfficial == 0 %}
-    Street
-{% else %}
-    Skatepark
-{% endif %}
-<!--affichage note du spot-->
-<p>Note : 
-    {% if spot.avgNote %}
-
-<!-- Affichage des étoiles -->
-    {# Définition des variables #}
-    {% set avgNote = spot.avgNote %}
-    {% set fullStarsCount = avgNote | round  %}
-    {% set avgNoteRoundedLow = avgNote | number_format(0, '.', '', 'floor') %}
-    {% set remainder = avgNote - avgNoteRoundedLow %}
-    {% set starsDisplayed = fullStarsCount + (remainder >= 0.25 ? 1 : 0) %}
-    {% set emptyStarsCount = 5 - starsDisplayed %}
-
-{# Fix la génération de demi étoile, lorsque que avgNote entre .25 et .75, affiché demi étoile. 
-En dessous, etoile vide
-Au dessus, etoile pleine 
-#}
-    {# Boucle sur les étoiles pleines #}
-    {% for i in 1..fullStarsCount %}
-        <i class="fa-solid fa-star"></i>
-    {% endfor %}
-    {# Affichage d'une demi etoile ou d'une étoile pleine selon la note #}
-    {% if remainder >= 0.25 and remainder < 0.75 %}
-        <i class="fa-solid fa-star-half-stroke"></i>
-    {% elseif remainder >= 0.75 %}
-        <i class="fa-solid fa-star"></i>
-    {% endif %}
-
-    {% if emptyStarsCount > 0 %}
-    {% for i in 1..emptyStarsCount %}
-        <i class="fa-regular fa-star"></i>
-    {% endfor %}
-    {% endif %}
-
-
-
-
-    <!--affichage de la avgNote-->
-    ({{spot.avgNote|number_format(2, '.', '')}})
-    ({{spot.notations|length}} évaluations)
-    {% else %}
-    Pas encore de avgNote
-    {% endif %}
-</p>
-
-{# Attribuer une note #}
-{% if app.user %}
-<!--form note du spot -->
-{{ form(formNotation) }}
-{% endif %}
-{# Si l'utilisateur a déjà noté ce spot: message d'erreur #}
-{% for message in app.flashes('info') %}
-    <div class="alert alert-info">
-        {{ message }}
-    </div>
-{% endfor %}
-
-<!--nombre de like du spot-->
-<p>Nombre de like : {{ spot.favoritedByUsers | length }} </p>
-            
-{% if app.user %}
-{{ form_start(formPicture) }}
-    {{ form_label(formPicture)}}
-{{ form_end(formPicture) }}
-{% endif %}
-
-{# ****** #}
-{% if spot.pictures|length > 0 %}
-
-<!-- carrousel -->
-<div id="carrousel">
-    <div id="carrouselContainer">
-    </div>
-
-<svg height="800px" width="800px" version="1.1" class="bouton-carrousel" id="boutonCarrouselGauche" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 viewBox="0 0 185.343 185.343" xml:space="preserve">
-<g>
-	<g>
-		<path style="fill:#010002;" d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175
-			l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934
-			c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/>
-	</g>
-</g>
-</svg>
-
-<svg height="800px" width="800px" version="1.1" class="bouton-carrousel" id="boutonCarrouselDroite" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-	 viewBox="0 0 185.343 185.343" xml:space="preserve">
-<g>
-	<g>
-		<path style="fill:#010002;" d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175
-			l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934
-			c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/>
-	</g>
-</g>
-</svg>
-</div>
-{% include 'component/_carrousel.html.twig' %}
-
-{% else %}
-    <p class="text-red-500">Il n'y a pas encore de photos pour ce spot</p>
-{% endif %}
-
-<!--description du spot-->
-<p>Description: {{ spot.description }}</p>
-
-<!--ressources du spot-->
-<h4>Ressources sur place:</h4>
-{% if spot.modules|length >= 1 %}
-<ul>
-{% for module in spot.modules %}
-    <li> {{ module.name }} </li>
-{% endfor %}
-</ul>
-{% else %}
-Les informations concernant les ressources de ce spot n'ont pas encore été renseignées.
-{% endif %}
-
-<!--commentaires du spot-->
-<h4>Commentaires:</h4>
-{% if spot.comments|length >= 1 %}
-    <!-- boucle sur les commentaires du spot, triés par date -->
-    {% for comment in spot.comments|sort((a, b)=>a.date<=>b.date) %}
-    <div class="comment-box">
-        <div class="comment-author-and-date">
-        {# Si l'auteur du commentaire n'as pas supprimé son compte #}
-        {% if comment.author is not same as null %}
-            {{comment.author.pseudo}}
+<div class="inline-flex items-center justify-between w-full px-4">
+    <!--nom du spot-->
+    <h1 class="show-spot-title">
+        {{ spot.name }} par 
+        {% if spot.author == null %}
+            <p>Inconnu</p> 
         {% else %}
-            <p>Inconnu</p>
+            {{ spot.author.pseudo }}
         {% endif %}
-        {{comment.date|date('d/m/y H:i:s')}}
+    </h1>
+    <div id="validate-and-note-container">
+        <div id="show-spot-validate">
+            {% if spot.isValidated %}
+                Spot validé ✅
+            {% else %}
+                Spot non validé ❌
+            {% endif %}
         </div>
-        <div class="comment-content">
-        {{comment.content}}
-        </div>
+    
+        {# Note moyenne #}
+        {% if spot.avgNote %}
+            {# Définition des variables #}
+            {% set avgNote = spot.avgNote %}
+            {% set fullStarsCount = avgNote | round %}
+            {% set avgNoteRoundedLow = avgNote | number_format(0, '.', '', 'floor') %}
+            {% set remainder = avgNote - avgNoteRoundedLow %}
+            {% set starsDisplayed = fullStarsCount + (remainder >= 0.25 ? 1 : 0) %}
+            {% set emptyStarsCount = 5 - starsDisplayed %}
+            {# Fix la génération de demi étoile, lorsque que avgNote entre .25 et .75, affiché demi étoile. 
+            En dessous, etoile vide
+            Au dessus, etoile pleine 
+            #}
+            {# Boucle sur les étoiles pleines #}
+            {% for i in 1..fullStarsCount %}
+                <i class="fa-solid fa-star"></i>
+            {% endfor %}
+            {# Affichage d'une demi etoile ou d'une étoile pleine selon la note #}
+            {% if remainder >= 0.25 and remainder < 0.75 %}
+                <i class="fa-solid fa-star-half-stroke"></i>
+            {% elseif remainder >= 0.75 %}
+                <i class="fa-solid fa-star"></i>
+            {% endif %}
+            {% if emptyStarsCount > 0 %}
+                {% for i in 1..emptyStarsCount %}
+                    <i class="fa-regular fa-star"></i>
+                {% endfor %}
+            {% endif %}
+            <!--affichage de la avgNote-->
+            ({{spot.avgNote|number_format(2, '.', '')}})
+            ({{spot.notations|length}} évaluations)
+        {% else %}
+            Pas encore de note
+        {% endif %}
     </div>
-    {% endfor %}
-{% else %}
-<p>Pas encore de commentaire sur ce spot</p>
-{% endif %}
-
-{% if app.user %}
-{{ form(formCommentSpot) }}
-{% else %}
-<p>Veuillez vous connecter pour pouvoir commenter un spot.</p>
-{% endif %}
 </div>
 
+    
+<div class="show-spot-global">
+    <div class="show-spot-infos">
+        <table>
+            <tr>
+                <td id="show-is-covered">
+                        {% if spot.isCovered == 0 %}
+                            <img src="\icons\outdoor.png" alt="icon of outdoor" id="outdoor-icon">
+                            Non-couvert
+                        {% else %}
+                            <img src="\icons\house.png" alt="icon of a house" id="indoor-icon">
+                            Couvert
+                        {% endif %}
+                </td>
+            
+                <td>
+                    {% if spot.isOfficial == 0 %}
+                        <div class="flex items-center justify-center">
+                            <img src="\icons\skatepark.png" alt="icon skatepark" id="skatepark-icon">
+                        </div>
+                        SKATEPARK
+                    {% else %}
+                        <img src="\icons\street.png" alt="icon street" id="street-icon">
+                        SPOT STREET
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td> 
+                    {# <div class="relative"> #}
+                        <img src="\icons\heart_1.png" id="like-icon">
+                        <p class="nb-like">{{ spot.favoritedByUsers | length }}</p>
+                    {# </div> #}
+                </td>
+                <td>
+                    <div class="flex items-center justify-center">
+                        <!-- SVG RAMP  -->
+                        <svg version="1.1" id="ressource-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 18 16" style="enable-background:new 0 0 18 16;" xml:space="preserve">
+                            <desc>Ressource icon</desc>
+                            <g id="website">
+                                <g id="skatespot_detail" transform="translate(-947.000000, -629.000000)">
+                                    <g id="Group-4" transform="translate(857.000000, 526.000000)">
+                                        <g transform="translate(90.000000, 103.645189)">
+                                            <path id="Shape" class="st0" d="M10.7,2.3V1.6H3.5H0v11h10.9H18v-1.3C13.9,11.3,10.7,7.3,10.7,2.3z M1.1,11.3V2.9h1.4
+                                                c0.1,2.5,1,4.9,2.4,6.7c0.6,0.7,1.2,1.3,1.9,1.7H1.1L1.1,11.3z M10.9,11.3c-3.9,0-7.1-3.7-7.3-8.4h6.1c0.1,2.5,1,4.9,2.4,6.7
+                                                c0.6,0.7,1.2,1.3,1.9,1.7H10.9z"/>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                    {% if spot.modules|length >= 1 %}
+                        <ul>
+                            {% for module in spot.modules %}
+                                <li>{{ module.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        ?
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+    </div>
 
+
+    {# carrousel#}
+    {% if spot.pictures|length > 0 %}
+    <!-- carrousel -->
+    <div id="carrousel">
+        <div id="carrouselContainer">
+        </div>
+
+    <svg height="800px" width="800px" version="1.1" class="bouton-carrousel" id="boutonCarrouselGauche" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+        viewBox="0 0 185.343 185.343" xml:space="preserve">
+        <g>
+            <g>
+                <path style="fill:#010002;" d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175
+                    l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934
+                    c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/>
+            </g>
+        </g>
+    </svg>
+
+    <svg height="800px" width="800px" version="1.1" class="bouton-carrousel" id="boutonCarrouselDroite" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+        viewBox="0 0 185.343 185.343" xml:space="preserve">
+        <g>
+            <g>
+                <path style="fill:#010002;" d="M51.707,185.343c-2.741,0-5.493-1.044-7.593-3.149c-4.194-4.194-4.194-10.981,0-15.175
+                    l74.352-74.347L44.114,18.32c-4.194-4.194-4.194-10.987,0-15.175c4.194-4.194,10.987-4.194,15.18,0l81.934,81.934
+                    c4.194,4.194,4.194,10.987,0,15.175l-81.934,81.939C57.201,184.293,54.454,185.343,51.707,185.343z"/>
+            </g>
+        </g>
+    </svg>
+    </div>
+    {% include 'component/_carrousel.html.twig' %}
+
+    {% else %}
+        <p class="text-red-500">Il n'y a pas encore de photos pour ce spot</p>
+    {% endif %}
+    </div>
+
+    {# CONTRIBUTE : Ajouter une note / Une photo #}
+    <div class="show-contribute flex flex-row-reverse ">
+        <div class="show-contribute-picture">
+            {# Ajouter une photo #}
+            {% if app.user %}
+            {{ form(formPicture)}}
+                    {# {{ form_start(formPicture) }}
+                    {{ form_label(formPicture)}}
+                    {{ form_end(formPicture) }} #}
+            {% endif %}
+        </div>
+        <div class="show-contribute-note">
+            {# Pour noter #}
+            {% if app.user %}
+                <!--form note du spot -->
+                {{ form(formNotation) }}
+                {# Si l'utilisateur a déjà noté ce spot: message d'erreur #}
+                {% for message in app.flashes('info') %}
+                    <div class="alert alert-info">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+
+
+    <!--commentaires du spot-->
+    <p>Commentaires:</p>
+    {% if spot.comments|length >= 1 %}
+        <!-- boucle sur les commentaires du spot, triés par date -->
+        {% for comment in spot.comments|sort((a, b)=>a.date<=>b.date) %}
+        <div class="comment-box">
+            <div class="comment-author-and-date">
+            {# Si l'auteur du commentaire n'as pas supprimé son compte #}
+            {% if comment.author is not same as null %}
+                {{comment.author.pseudo}}
+            {% else %}
+                <p>Inconnu</p>
+            {% endif %}
+            {{comment.date|date('d/m/y H:i:s')}}
+            </div>
+            <div class="comment-content">
+            {{comment.content}}
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <p>Pas encore de commentaire sur ce spot</p>
+    {% endif %}
+
+    {% if app.user %}
+        {{ form(formCommentSpot) }}
+    {% else %}
+    <p>Veuillez vous connecter pour pouvoir commenter un spot.</p>
+    {% endif %}
+</div>
+
+<script>
+    // Créer un tableau pour contenir les icônes
+    const icons = [
+        document.getElementById('like-icon'),
+        document.getElementById('outdoor-icon'),
+        document.getElementById('skatepark-icon')
+    ];
+    
+    // Fonction pour appliquer le filtre
+    const applyFilter = () => {
+        icons.forEach(icon => {
+            if (icon) {  // Vérifie que l'élément existe
+                icon.style.filter = "invert(1)";
+            }
+        });
+    };
+    // Fonction pour appliquer le filtre
+    const unsetFilter = () => {
+        icons.forEach(icon => {
+            if (icon) {  // Vérifie que l'élément existe
+                icon.style.filter = "unset";
+            }
+        });
+    };
+
+    // Vérifier la condition
+    if (sessionStorage.getItem("nightMode") === "true") {
+        applyFilter();
+    }
+
+    const toggleButton = document.getElementById("toggle-night-mode");
+    // Ajouter un écouteur d'événement pour le clic
+
+    toggleButton.addEventListener('click', () => {
+        if (sessionStorage.getItem("nightMode") === "true") {
+        unsetFilter();
+    }else{
+        applyFilter();
+    }
+    });
+
+
+</script>
 {% endblock %}
