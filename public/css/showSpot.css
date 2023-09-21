@@ -16,10 +16,115 @@ form[name=notation]{
     border: 1px solid black;
 }
 #notation div select{
-    background-color: #D4D4D4;
+    background-color: var(--text-color-opposite);
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
+}
+.show-spot-title{
+    font-family: SkateFont2;
+    font-size: 4rem;
+}
+.show-spot-global{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ***** */
+/* Style de base pour le tableau */
+table {
+    /* width: 100%; */
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin: 1rem;
+}
+
+/* Style pour les cellules du tableau */
+table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+    position: relative;
+    
+}
+
+
+
+
+
+
+/* Style pour les listes à puces dans la deuxième colonne */
+table td ul {
+    margin: 0;
+    padding-left: 20px;
+    text-align: left;
+}
+
+/* Style pour les éléments de liste dans la deuxième colonne */
+table td ul li {
+    list-style: disc;
+    margin-bottom: 5px;
+}
+
+.comment-box{
+    margin: 1rem;
+    padding: 1rem; 
+    border-radius: 0.5rem; 
+    max-width: 28rem; 
+    background-color: var(--transparent-background); 
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+.comment-author-and-date{
+    display: flex; 
+    justify-content: space-between;
+    color: var(--text-color);
+}
+.comment-content{
+    font-family: SkateFont3;
+    font-size: 1.25rem;
+}
+#ressource-icon, img#like-icon, #indoor-icon, #outdoor-icon, img#street-icon, img#skatepark-icon{
+    display: inherit;
+    width: 50px;
+    height: 50px;
+    fill: var(--text-color);
+    color: var(--text-color);
+}
+.nb-like{
+    position: absolute;
+    top: 41%;
+    left: 48.5%;
+}
+#like-icon{
+    position: absolute;
+    top: 30%;
+    left: 29%;
+}
+#show-is-covered{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#show-spot-validate{
+    display: flex;
+    align-items: center;
+    background-color: var(--text-color);
+    color: var(--text-color-opposite);
+    width: fit-content;
+    padding: 0.25rem;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+#validate-and-note-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
