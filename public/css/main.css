@@ -31,7 +31,8 @@
 
 /* Mode nuit */
 body.night-mode {
-    --bg-color: #1a1a1a;
+    /* --bg-color: #1a1a1a; */
+    --bg-color: #222222;
     --text-color: white;
     --accent-color: #3b71ca;
     --menu-background: #102A43;
@@ -45,7 +46,8 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     overflow-x: hidden;
-
+    background-image: url('../img/nnnoise.svg');
+    background-repeat: repeat;
 }
 a {
     color: var(--accent-color);
