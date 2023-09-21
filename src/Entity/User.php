@@ -65,7 +65,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isBanned = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notation::class)]
-    private Collection $notations; //ici je change "null" en false pour dire que mon user est "pas banni" par défaut.
+    private Collection $notations;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable:true)]
+    private ?\DateTimeInterface $lastActivityAt = null; //ici je change "null" en false pour dire que mon user est "pas banni" par défaut.
 
     public function __construct()
     {
@@ -306,6 +309,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $notation->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLastActivityAt(): ?\DateTimeInterface
+    {
+        return $this->lastActivityAt;
+    }
+
+    public function setLastActivityAt(\DateTimeInterface $lastActivityAt): self
+    {
+        $this->lastActivityAt = $lastActivityAt;
 
         return $this;
     }

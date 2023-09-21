@@ -14,3 +14,9 @@ Faire en sorte lors de la suppression d'un user que ses spots passent en Author=
 Faire une Politique de confidentialité et obliger de l'accepter à l'inscription
 Ajouter un attribut "Dernière connexion" à l'entité User et automatiser la suppression de son compte
 après un certain temps.
+
+Faire un rate limiter sur les tentatives de login (throttling)
+
+Axe d'amélioration : fonction automatisation pour supprimer utilisateur
+
+Finir l'action de MAJ de lastActivityAt lors du register
