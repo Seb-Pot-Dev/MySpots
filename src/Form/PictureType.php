@@ -14,12 +14,13 @@ class PictureType extends AbstractType
     {
         $builder
         ->add('pictures', FileType::class, [
-            'label' => 'Photos',
+            'label' => 'Ajouter une photo',
             'multiple'=> true,
             'mapped' => false,
             'required' => false
         ])
         ->add('submit', SubmitType::class,[
+            'label' => 'Envoyer!'
         ])
         ;
     }
