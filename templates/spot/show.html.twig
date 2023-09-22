@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
 <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
 
-<div class="inline-flex items-center justify-between w-full px-4">
+<div class="inline-flex items-center justify-between w-full">
     <!--nom du spot-->
     <h1 class="show-spot-title">
         {{ spot.name }} par 
@@ -27,7 +27,8 @@
                 Spot non validé ❌
             {% endif %}
         </div>
-    
+        <div class="show-spot-notation inline-flex items-center">
+        
         {# Note moyenne #}
         {% if spot.avgNote %}
             {# Définition des variables #}
@@ -58,16 +59,20 @@
             {% endif %}
             <!--affichage de la avgNote-->
             ({{spot.avgNote|number_format(2, '.', '')}})
+            </div>
+            <div class="show-notation-count">
             ({{spot.notations|length}} évaluations)
+            </div>
         {% else %}
             Pas encore de note
         {% endif %}
+        
     </div>
 </div>
 
     
 <div class="show-spot-global">
-    <div class="show-spot-infos">
+    <div class="show-spot-infos m-auto">
         <table>
             <tr>
                 <td id="show-is-covered">
@@ -205,13 +210,17 @@
         {% for comment in spot.comments|sort((a, b)=>a.date<=>b.date) %}
         <div class="comment-box">
             <div class="comment-author-and-date">
-            {# Si l'auteur du commentaire n'as pas supprimé son compte #}
-            {% if comment.author is not same as null %}
-                {{comment.author.pseudo}}
-            {% else %}
-                <p>Inconnu</p>
-            {% endif %}
-            {{comment.date|date('d/m/y H:i:s')}}
+                <div class="comment-author">
+                {# Si l'auteur du commentaire n'as pas supprimé son compte #}
+                {% if comment.author is not same as null %}
+                    {{comment.author.pseudo}}
+                {% else %}
+                    <p>Inconnu</p>
+                {% endif %}
+                </div>
+                <div class="comment-date">
+                {{comment.date|date('d/m/y H:i:s')}}
+                </div>
             </div>
             <div class="comment-content">
             {{comment.content}}
@@ -230,45 +239,8 @@
 </div>
 
 <script>
-    // Créer un tableau pour contenir les icônes
-    const icons = [
-        document.getElementById('like-icon'),
-        document.getElementById('outdoor-icon'),
-        document.getElementById('skatepark-icon')
-    ];
+
     
-    // Fonction pour appliquer le filtre
-    const applyFilter = () => {
-        icons.forEach(icon => {
-            if (icon) {  // Vérifie que l'élément existe
-                icon.style.filter = "invert(1)";
-            }
-        });
-    };
-    // Fonction pour appliquer le filtre
-    const unsetFilter = () => {
-        icons.forEach(icon => {
-            if (icon) {  // Vérifie que l'élément existe
-                icon.style.filter = "unset";
-            }
-        });
-    };
-
-    // Vérifier la condition
-    if (sessionStorage.getItem("nightMode") === "true") {
-        applyFilter();
-    }
-
-    const toggleButton = document.getElementById("toggle-night-mode");
-    // Ajouter un écouteur d'événement pour le clic
-
-    toggleButton.addEventListener('click', () => {
-        if (sessionStorage.getItem("nightMode") === "true") {
-        unsetFilter();
-    }else{
-        applyFilter();
-    }
-    });
 
 
 </script>

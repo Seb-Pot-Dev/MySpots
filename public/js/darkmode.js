@@ -1,8 +1,8 @@
         // Définition des var
         const body = document.body;
-        if(!toggleButton){
-            const toggleButton = document.getElementById("toggle-night-mode");
-        }
+
+        const toggleButton = document.getElementById("toggle-night-mode");
+
         
 
         // Si click sur le switch dark mode
@@ -41,3 +41,47 @@
                     }
                 }
             })
+
+            // Fonction spécifiques de la vue Show : 
+// Créer un tableau pour contenir les icônes
+const icons = [
+    document.getElementById('like-icon'),
+    document.getElementById('outdoor-icon'),
+    document.getElementById('skatepark-icon')
+];
+
+// Fonction pour appliquer le filtre
+const applyFilter = () => {
+    icons.forEach(icon => {
+        if (icon) {  // Vérifie que l'élément existe
+            icon.style.filter = "invert(1)";
+        }
+    });
+};
+// Fonction pour appliquer le filtre
+const unsetFilter = () => {
+    icons.forEach(icon => {
+        if (icon) {  // Vérifie que l'élément existe
+            icon.style.filter = "unset";
+        }
+    });
+};
+
+// Vérifier la condition
+document.addEventListener("DOMContentLoaded", function() {
+    if (sessionStorage.getItem("nightMode") === "true") {
+        applyFilter();
+    }
+    else{
+        unsetFilter();
+    }
+})
+
+// Ajouter un écouteur d'événement pour le clic
+toggleButton.addEventListener('click', () => {
+    if (sessionStorage.getItem("nightMode") === "true") {
+        applyFilter();
+    }else{
+    unsetFilter();
+}
+});

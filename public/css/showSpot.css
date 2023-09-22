@@ -124,7 +124,7 @@ table td ul li {
 }
 #validate-and-note-container{
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
     flex-direction: column;
 }

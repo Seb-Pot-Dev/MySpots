@@ -59,6 +59,16 @@ class RegistrationFormType extends AbstractType
                 // 'label' => "Conditions d'utilisation",
                 'label' => false,  // On désactive le label ici
             ])
+            ->add('agreeConfidentiality', CheckboxType::class, [
+                'mapped'=> false,
+                'constraints' => [
+                    new isTrue([
+                        'message' => 'You should agree to our confidentiality policy.',
+                    ]),
+                ],
+                'required' => true,
+                'label' => false,
+            ])
         ;
     }
 
