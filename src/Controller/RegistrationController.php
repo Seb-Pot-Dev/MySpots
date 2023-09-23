@@ -44,9 +44,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            // Pour définir la date/heure actuelle comme date d'inscription
+            // Pour définir la date/heure actuelle comme date d'inscription + date de dernière activité
             $now = new \DateTime();
             $user->setRegistrationDate($now);
+            $user->setLastActivityAt($now);
 
             // Tente d'enregistrer l'utilisateur
             try{

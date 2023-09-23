@@ -44,8 +44,8 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Mot de passe*',
                 'constraints' => [
                     new Regex([
-                        'pattern' => "/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/",
-                        'message' => "The password should be minimum eight characters, at least one letter and one number."
+                        'pattern' => "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&\-])[A-Za-z\d@$!%*?&\-]{8,}$/",
+                        'message' => "Le mot de passe doit avoir au moins 8 caractères, contenir au moins une lettre, un chiffre et un caractère spécial."
                     ])
             ]])
             ->add('agreeTerms', CheckboxType::class, [
@@ -58,6 +58,16 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 // 'label' => "Conditions d'utilisation",
                 'label' => false,  // On désactive le label ici
+            ])
+            ->add('agreeConfidentiality', CheckboxType::class, [
+                'mapped'=> false,
+                'constraints' => [
+                    new isTrue([
+                        'message' => 'You should agree to our confidentiality policy.',
+                    ]),
+                ],
+                'required' => true,
+                'label' => false,
             ])
         ;
     }

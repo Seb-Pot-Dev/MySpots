@@ -17,26 +17,26 @@
     </div>
     <div class="mb-4">
         <div class="inline-flex">{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-        <div class="text-red-500">*</div></div>
+        <div class="text-red-500 text-4xl">*</div></div>
         {{ form_widget(registrationForm.email, {'attr': {'text-black class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
     <div class="mb-4">
         <div class="inline-flex">{{ form_label(registrationForm.pseudo, 'Pseudo', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-        <div class="text-red-500">*</div></div> 
+        <div class="text-red-500 text-4xl">*</div></div> 
         {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
     <div class="mb-4">
-        <div class="inline-flex">{{ form_label(registrationForm.plainPassword.first, 'Password', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-        <div class="text-red-500">*</div></div> 
+        <div class="inline-flex">{{ form_label(registrationForm.plainPassword.first, 'Mot de passe', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+        <div class="text-red-500 text-4xl">*</div></div> 
         {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
     <div class="mb-4">
-        <div class="inline-flex">{{ form_label(registrationForm.plainPassword.second, 'Repeat Password', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-        <div class="text-red-500">*</div></div> 
+        <div class="inline-flex">{{ form_label(registrationForm.plainPassword.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+        <div class="text-red-500 text-4xl">*</div></div> 
         {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
 
-    <div class="inline-flex items-baseline justify-center mb-4">
+    <div class="inline-flex  justify-center mb-4">
         {{ form_errors(registrationForm) }}
         <label for="{{ registrationForm.agreeTerms.vars.id }}">
         <!-- Le lien pointant vers la page des conditions générales d'utilsiation -->
@@ -51,11 +51,29 @@
         - "noreferrer" empêche l'envoi d'informations à la nouvelle page concernant la page d'origine.
         -->
         </label>
-        <div class="text-red-500">*</div>
+        <div class="text-red-500 text-4xl">*</div>
         {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'text-black mr-2 leading-tight'}}) }}
     </div>
-    <div class="inline-flex"><p class="text-red-500">* </p><p> : Champs obligatoires</p></div>
-    <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">Register</button>
+    <div class="inline-flex  justify-center mb-4">
+        <label for="{{ registrationForm.agreeConfidentiality.vars.id }}">
+        <!-- Le lien pointant vers la page de politique de confidentialité -->
+        J'accepte la
+        <a class="underline" target="_blank" rel="noopener noreferrer" href="{{ path('confidentiality') }}">
+            politique de confidentialité de MySpots
+        </a>
+        <!-- 
+        - "target='_blank'": Permet d'ouvrir le lien dans un nouvel onglet ou une nouvelle fenêtre.
+        - "rel='noopener noreferrer'": 
+        - "noopener" empêche la nouvelle page d'accéder à la page d'origine.
+        - "noreferrer" empêche l'envoi d'informations à la nouvelle page concernant la page d'origine.
+        -->
+        </label>
+        <div class="text-red-500 text-4xl">*</div>
+        {{ form_widget(registrationForm.agreeConfidentiality, {'attr': {'class': 'text-black mr-2 leading-tight'}}) }}
+    </div>
+    
+    <div class="inline-flex"><p class="text-red-500 text-4xl">* </p><p> : Champs obligatoires</p></div>
+    <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">S'inscrire</button>
 
 {{ form_end(registrationForm) }}
 

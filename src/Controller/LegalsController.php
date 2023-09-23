@@ -20,4 +20,9 @@ class LegalsController extends AbstractController
     {
         return $this->render('legals/conditions.html.twig', []);
     }
+    #[Route('/legals/confidentiality', name: 'confidentiality')]
+    public function confidentiality(): Response
+    {
+        return $this->render('legals/confidentiality.html.twig', []);
+    }
 }
