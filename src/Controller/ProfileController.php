@@ -142,6 +142,14 @@ class ProfileController extends AbstractController
         
         return $this->redirectToRoute('app_home');
     }
+    #[Route('/profile/show/{id}', name: 'show_profile')]
+    public function show(User $user, ManagerRegistry $doctrine)
+    {
+        return $this->render('profile/show.html.twig', [
+            'user' => $user,
+        ]);
+        
+    }
 
 }
 

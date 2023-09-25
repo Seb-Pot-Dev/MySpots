@@ -16,7 +16,7 @@
         {% if spot.author == null %}
             <p>Inconnu</p> 
         {% else %}
-            {{ spot.author.pseudo }}
+            <a href="{{ path('show_profile', {'id': spot.author.id} )}}">{{ spot.author.pseudo }}</a>
         {% endif %}
     </h1>
     <div id="validate-and-note-container">
@@ -27,46 +27,46 @@
                 Spot non validé ❌
             {% endif %}
         </div>
+        
         <div class="show-spot-notation inline-flex items-center">
-        
-        {# Note moyenne #}
-        {% if spot.avgNote %}
-            {# Définition des variables #}
-            {% set avgNote = spot.avgNote %}
-            {% set fullStarsCount = avgNote | round %}
-            {% set avgNoteRoundedLow = avgNote | number_format(0, '.', '', 'floor') %}
-            {% set remainder = avgNote - avgNoteRoundedLow %}
-            {% set starsDisplayed = fullStarsCount + (remainder >= 0.25 ? 1 : 0) %}
-            {% set emptyStarsCount = 5 - starsDisplayed %}
-            {# Fix la génération de demi étoile, lorsque que avgNote entre .25 et .75, affiché demi étoile. 
-            En dessous, etoile vide
-            Au dessus, etoile pleine 
-            #}
-            {# Boucle sur les étoiles pleines #}
-            {% for i in 1..fullStarsCount %}
-                <i class="fa-solid fa-star"></i>
-            {% endfor %}
-            {# Affichage d'une demi etoile ou d'une étoile pleine selon la note #}
-            {% if remainder >= 0.25 and remainder < 0.75 %}
-                <i class="fa-solid fa-star-half-stroke"></i>
-            {% elseif remainder >= 0.75 %}
-                <i class="fa-solid fa-star"></i>
-            {% endif %}
-            {% if emptyStarsCount > 0 %}
-                {% for i in 1..emptyStarsCount %}
-                    <i class="fa-regular fa-star"></i>
+            {# Note moyenne #}
+            {% if spot.avgNote %}
+                {# Définition des variables #}
+                {% set avgNote = spot.avgNote %}
+                {% set fullStarsCount = avgNote | round %}
+                {% set avgNoteRoundedLow = avgNote | number_format(0, '.', '', 'floor') %}
+                {% set remainder = avgNote - avgNoteRoundedLow %}
+                {% set starsDisplayed = fullStarsCount + (remainder >= 0.25 ? 1 : 0) %}
+                {% set emptyStarsCount = 5 - starsDisplayed %}
+                {# Fix la génération de demi étoile, lorsque que avgNote entre .25 et .75, affiché demi étoile. 
+                En dessous, etoile vide
+                Au dessus, etoile pleine 
+                #}
+                {# Boucle sur les étoiles pleines #}
+                {% for i in 1..fullStarsCount %}
+                    <i class="fa-solid fa-star"></i>
                 {% endfor %}
+                {# Affichage d'une demi etoile ou d'une étoile pleine selon la note #}
+                {% if remainder >= 0.25 and remainder < 0.75 %}
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                {% elseif remainder >= 0.75 %}
+                    <i class="fa-solid fa-star"></i>
+                {% endif %}
+                {% if emptyStarsCount > 0 %}
+                    {% for i in 1..emptyStarsCount %}
+                        <i class="fa-regular fa-star"></i>
+                    {% endfor %}
+                {% endif %}
+                <!--affichage de la avgNote-->
+                ({{spot.avgNote|number_format(2, '.', '')}})
+                </div>
+                <div class="show-notation-count">
+                ({{spot.notations|length}} évaluations)
+                </div>
+            {% else %}
+                Pas encore de note
             {% endif %}
-            <!--affichage de la avgNote-->
-            ({{spot.avgNote|number_format(2, '.', '')}})
-            </div>
-            <div class="show-notation-count">
-            ({{spot.notations|length}} évaluations)
-            </div>
-        {% else %}
-            Pas encore de note
-        {% endif %}
-        
+        </div>
     </div>
 </div>
 
