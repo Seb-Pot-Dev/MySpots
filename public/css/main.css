@@ -18,9 +18,7 @@
     font-family: 'SkateFont3';
     src: url('/fonts/pandoramaDEMO.otf') format('opentype');
 }
-main{
-    margin: 0 2rem;
-}
+
 /**********GESTION DES COULEURS ET MODE NUIT *************/
 :root {
     --bg-color: white;          /* Couleur de fond */
