@@ -31,9 +31,9 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, UserAuthenticatorInterface $userAuthenticator, AppAuthenticator $authenticator, EntityManagerInterface $entityManager): Response
     {
+        $form = $this->createForm(RegistrationFormType::class, $user);
         // Initialisation d'un nouvel utilisateur
         $user = new User();
-        $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // Sécurité : Hachage du mot de passe avant stockage

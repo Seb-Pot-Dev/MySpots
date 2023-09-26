@@ -33,10 +33,7 @@ class SpotController extends AbstractController
 {
 
     #[Route("/spot/{id}/edit", name: "edit_spot")]
-    #[Route(
-        '/spot',
-        name: 'app_spot',
-    )]
+    #[Route("/spot", name: "app_spot")]
     public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request, PictureService $pictureService, PaginatorInterface $paginator, SpotRepository $spotRepository): Response
     {
         // Définition des variables de base****************************************************************************************************************

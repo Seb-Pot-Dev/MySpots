@@ -21,23 +21,7 @@ class SpotRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Spot::class);
     }
-    // public function findSpotsPaginated(int $page, string $slug, int $limit = 6): array
-    // {
-    //     // Pour que la limite soit toujours positive
-    //     $limit = abs($limit);
-        
-    //     $result = [];
 
-    //     $query = $this->getEntityManager()->createQueryBuilder('s')
-    //         ->select('c', 's')
-    //         ->from('App/Entity/Spot', 's')
-    //         ->join('s.covered', 'c')
-    //         ->where("c.slug = '$slug'")
-    //         ;
-
-    //     return $result;
-
-    // }
     public function save(Spot $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -160,4 +144,21 @@ public function findValidatedSpots(): array
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    // public function findSpotsPaginated(int $page, string $slug, int $limit = 6): array
+    // {
+    //     // Pour que la limite soit toujours positive
+    //     $limit = abs($limit);
+        
+    //     $result = [];
+
+    //     $query = $this->getEntityManager()->createQueryBuilder('s')
+    //         ->select('c', 's')
+    //         ->from('App/Entity/Spot', 's')
+    //         ->join('s.covered', 'c')
+    //         ->where("c.slug = '$slug'")
+    //         ;
+
+    //     return $result;
+
+    // }
 }
