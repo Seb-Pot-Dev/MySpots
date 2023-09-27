@@ -12,7 +12,6 @@ position: absolute;
 top: 0;
 left: 0;
 width: -webkit-fill-available;
-background-color: rgba(255, 255, 255, 0.273);
 z-index: 9999;
 }
 
