@@ -10,7 +10,7 @@ use App\Entity\Comment;
 use App\Entity\Picture;
 use App\Entity\Notation;
 use App\Form\CommentType;
-use App\Form\PictureType;
+use App\Form\PictureType;   
 use App\Model\SearchData;
 use App\Form\NotationType;
 use App\Form\SpotSearchType;
@@ -35,7 +35,7 @@ class SpotController extends AbstractController
 
     #[Route("/spot/{id}/edit", name: "edit_spot")]
     #[Route("/spot", name: "app_spot")]
-    public function index(Security $security, ManagerRegistry $doctrine, Spot $spot = null, Request $request, PictureService $pictureService, PaginatorInterface $paginator, SpotRepository $spotRepository): Response
+    public function index(Security $security, ManagerRegistry $doctrine, SpotRepository $spotRepository, Spot $spot = null, Request $request, PictureService $pictureService, PaginatorInterface $paginator): Response
     {
         // Définition des variables de base****************************************************************************************************************
         //on accède aux méthodes du manager de doctrine
@@ -67,7 +67,6 @@ class SpotController extends AbstractController
         $formSearch->handleRequest($request);
         // instancie une variable $sportFiltered 
         $spotsFiltered = $spots; // égale a $spots tant qu'aucun filtre n'as été renseigner.
-        $filtersEmptyMessage = false;
 
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
             $searchFilter = $searchData->search;
@@ -79,7 +78,7 @@ class SpotController extends AbstractController
             $orderCreation = $searchData->orderCreation;
             $spotsFiltered = $spotRepository->findByCriteria($searchFilter, $moduleFilter, $officialFilter, $coveredFilter, $orderCreation);
             if (empty($spotsFiltered)) {
-                $filtersEmptyMessage = "Aucun spots ne corresponds a tout ces criteres sorry boy";
+                $filtersEmptyMessage = "Aucun spots ne corresponds à ces critères.";
             }
         }
         // Récupération des spots pour créé les MARKERS ************************************************************************************************
@@ -208,7 +207,8 @@ class SpotController extends AbstractController
     }
         /********************** FIN AJOUT DE SPOT*********************************** */
 
-        //retourne la réponse http affichée par le navigateur.
+        // Utilise la méthode render héritée de AbstractController pour retourner une réponse HTTP.
+        // Cette réponse contient le contenu de la vue index.html.twig et des variables
         // 'spots' est le tableau des spots encodé en JSON.
         // 'spotsList' est le tableau contenant toutes les spots et toutes les infos des spots, pour la liste des spots
         return $this->render('spot/index.html.twig', [
