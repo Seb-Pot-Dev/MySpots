@@ -21,7 +21,23 @@ class SpotRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Spot::class);
     }
+    // public function findSpotsPaginated(int $page, string $slug, int $limit = 6): array
+    // {
+    //     // Pour que la limite soit toujours positive
+    //     $limit = abs($limit);
+        
+    //     $result = [];
 
+    //     $query = $this->getEntityManager()->createQueryBuilder('s')
+    //         ->select('c', 's')
+    //         ->from('App/Entity/Spot', 's')
+    //         ->join('s.covered', 'c')
+    //         ->where("c.slug = '$slug'")
+    //         ;
+
+    //     return $result;
+
+    // }
     public function save(Spot $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -109,12 +125,12 @@ if (!empty($moduleFilter)) {
     }elseif ($orderCreationDate == 'dateNew'){
         $qb->orderBy('s.creationDate', 'DESC');
     //tri par notation decroissante
-    }elseif ($orderCreationDate == 'noteDesc'){
+    }elseif ($orderCreationDate == 'noteAsc'){
         $qb->addSelect('AVG(n.note) as HIDDEN avg_note')
         ->groupBy('s.id')
         ->orderBy('avg_note', 'DESC');
     // tri par notation croissante
-    }elseif ($orderCreationDate == 'noteAsc'){
+    }elseif ($orderCreationDate == 'noteDesc'){
         $qb->addSelect('AVG(n.note) as HIDDEN avg_note')
             ->groupBy('s.id')
             ->orderBy('avg_note', 'ASC');
@@ -144,21 +160,4 @@ public function findValidatedSpots(): array
 //            ->getOneOrNullResult()
 //        ;
 //    }
-    // public function findSpotsPaginated(int $page, string $slug, int $limit = 6): array
-    // {
-    //     // Pour que la limite soit toujours positive
-    //     $limit = abs($limit);
-        
-    //     $result = [];
-
-    //     $query = $this->getEntityManager()->createQueryBuilder('s')
-    //         ->select('c', 's')
-    //         ->from('App/Entity/Spot', 's')
-    //         ->join('s.covered', 'c')
-    //         ->where("c.slug = '$slug'")
-    //         ;
-
-    //     return $result;
-
-    // }
 }
