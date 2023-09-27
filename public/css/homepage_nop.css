@@ -5,7 +5,7 @@
   top: 0;
   left: 0;
   width: 98.5%;
-  background-color: rgba(255, 255, 255, 0.273);
+  /* background-color: rgba(255, 255, 255, 0.273); */
   z-index: 9999;
 }
 
@@ -34,7 +34,6 @@ header{
   height: 100vh;
   overflow: hidden;
 }
-/* Style the video: 100% width and height to cover the entire window */
     #myVideo {
         position: absolute;
         top: 0;
@@ -43,7 +42,6 @@ header{
         object-fit: cover;
       }
       
-      /* Add some content-welcome at the bottom of the video/page */
       .pause-video-container {
         position: absolute;
         bottom: 0;
@@ -55,15 +53,13 @@ header{
       .content-enter {
         position: absolute;
         top: 10%;
-        /* background: rgba(0, 0, 0, 0.5); */
-        /* color: white; */
+
         font-weight: 900;
         width: 100%;
         padding: 20px;
         text-align: center;
       }
       
-      /* Style the button used to pause/play the video */
       #pauseVideoBtn {
         width: 200px;
         font-size: 18px;

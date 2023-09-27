@@ -79,7 +79,7 @@ img.logo-strasspot-homepage{
 
 /*******GESTION DES MARGES SUR LA PAGE ********/ 
 .page-width{
-    margin:0 1.5rem;
+    /* margin:0 1.5rem; */
 }
 
 @media (min-width: 1024px) {
