@@ -31,6 +31,16 @@ form[name=notation]{
     display: flex;
     justify-content: space-between;
 }
+.show-contribute-note form div{
+    display: flex;
+    align-items: baseline;
+    
+}
+.show-contribute-note form{
+    display: flex;
+    align-items: center;
+
+}
 
 /* ***** */
 /* Style de base pour le tableau */

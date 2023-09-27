@@ -34,7 +34,7 @@ class NotationType extends AbstractType
              SubmitType::class,
             [
                 'label' => 'Ok',
-                'attr' => ['class' => 'w-full py-2 mt-4 text-white bg-blue-500 rounded-lg hover:bg-blue-600']
+                'attr' => ['class' => 'w-full  text-white bg-blue-500 rounded-lg hover:bg-blue-600']
             ])
         ;
     }
