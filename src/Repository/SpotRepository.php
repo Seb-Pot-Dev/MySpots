@@ -71,7 +71,7 @@ class SpotRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//La fonction findByModules  renvoie un tableau d'objets Spot qui correspondent aux critères spécifiés par les paramètres $name et $moduleNames.
+//La fonction findByCriteria  renvoie un tableau d'objets Spot qui correspondent aux critères spécifiés par les paramètres $name et $moduleNames.
 public function findByCriteria(?string $searchFilter, array $moduleFilter, bool $official, bool $covered, ?string $orderCreationDate): array
 {
     // Crée un nouvel objet QueryBuilder pour construire la requête.
@@ -89,7 +89,7 @@ public function findByCriteria(?string $searchFilter, array $moduleFilter, bool 
             ->setParameter('search', '%' . $searchFilter . '%');
     }
 
-// Vérifie si on a des modules à filtrer.
+// Vérifie si on a des filtres de modules.
 if (!empty($moduleFilter)) {
     // Pour chaque module...
     foreach ($moduleFilter as $index => $module) {
@@ -108,7 +108,7 @@ if (!empty($moduleFilter)) {
             ->setParameter("module$index", $module);
     }
 }
-    // SI l'option de tri "skatepark" est selectionnée 
+    // Si l'option de tri "skatepark" est selectionnée 
     if ($official) {
         $qb->andWhere('s.official = true');
     }
