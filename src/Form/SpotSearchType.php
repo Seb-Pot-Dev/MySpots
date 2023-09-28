@@ -25,7 +25,7 @@ class SpotSearchType extends AbstractType
                 'required' => false,
                 'label' => false,
             ])
-            //affiché des checkboxs non obligatoire avec plusieurs choix 
+            //afficher des checkboxs non obligatoire avec plusieurs choix 
             ->add('moduleFilter', EntityType::class,[
                 'class'=> Module::class,
                 'choice_label'=>'name',
@@ -44,25 +44,26 @@ class SpotSearchType extends AbstractType
                 'label' => 'Couvert',
                 'required' => false,
             ])
-            ->add('orderCreation', ChoiceType::class, [
+            ->add('onlyValidated', CheckboxType::class, [
+                'label' => 'Spots valides',
+                'required' => false,
+            ])
+            ->add('order', ChoiceType::class, [
                 'label' => 'Trier par : ',
                 'choices' => [
                     'Ajout: Nouveau en premier' => 'DateNew',
                     'Ajout: Nouveau en dernier' => 'DateLast',
-                    'Note: croissant' => 'noteDesc',
-                    'Note: décroissant' => 'noteAsc'
+                    'Note: croissant' => 'noteAsc',
+                    'Note: décroissant' => 'noteDesc'
                 ],
             ]);
-            
-
-
 }
 public function configureOptions(OptionsResolver $resolver)
 {
     $resolver->setDefaults([
         'data_class' => SearchData::class,
         // pour que les parametres passent dans l'URL
-        // 'method' => 'GET',
+        'method' => 'GET',
         // formulaire de recherche, pas besoin de csrf
         'csrf_protection' => false
     ]);

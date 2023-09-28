@@ -151,83 +151,43 @@ crossorigin=""/>
 </div>
     {# <div class="js-filter-pagination">
         Affichage des liens de pagination
-        {{ knp_pagination_render(paginationSpots) }}
-    </div> #}
+            {{ knp_pagination_render(paginationSpots) }}
+        </div> #}
 </div>
-
-<!-- Liste des spots SOUS LA MAP -->
-    {# <ul class="list-spots" style="display:none;">
-        {% for spot in spotsList|sort((a, b)=>b.name<=>a.name) %}
-            {% if spot.isValidated %}
-            <!-- lien -->
-                <a href="{{ path('show_spot', {'idSpot': spot.id}) }}">
-                <li>
-                    <div class="left">
-                    <!-- nom du spot -->
-                            <!-- défini spotName comme le nom du spot -->
-                            {% set spotName = spot.name %}
-                            <!-- afficher spotName et mettre la première lettre en MAJ 
-                            + limiter au 10 premiers charactères -->
-                            {{spotName|capitalize|slice(0, 10)}}
-                            <!-- Si le nom du spot était supérieur a 10 -->
-                            {% if spotName | length > 10 %}...{% endif %}
-                    </div>
-                    <div class="right">
-                        <!-- nb likes du spot -->
-                        {% if app.user %} <!-- si le user est co, il peut liker-->
-                        <a href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}">    
-                        {% endif %}
-                        <i class="fa-regular fa-heart" alt='nb-likes'></i>({{ spot.favoritedByUsers | length }})
-                        </a>
-
-                        <!-- note -->
-                        {% if spot.avgNote is not null %}
-                        <i class="fa-regular fa-star"></i>({{spot.avgNote}})
-                        {% else %}
-                        <i class="fa-regular fa-star"></i>(0)
-                        {% endif %}
-
-                        <!-- nb comments spot -->
-                        <i class="fa-regular fa-message"></i>({{ spot.comments | length }})
-                        {% if  is_granted('ROLE_ADMIN') %}
-
-                        <!-- supprimer le spot -->
-                        <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
-
-                        <!-- modifier le spot -->
-                        <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
-
-                        {% endif %}
-                    </div>
-                </li>
-                </a> 
-            {% endif %}
-
-        {% endfor %}
-    </ul> #}
-
 
 {% endblock %}
 
 {% block javascripts %}
 
+
 <!-- Pour déterminer dans les fichiers JS joints si un User est connecté, je créé une variable -->
 <script>
     const IS_USER_LOGGED_IN = {{ app.user is not null ? 'true' : 'false' }};
 </script>
+
 {# Gestion de la carte #}
 <script src="{{ asset('js/script_map.js') }}"></script>
+<script src="{{ asset('js/filters-listing.js') }}"></script>
+
 <!-- JS de Leaflet pour les clusters de markers -->
 <script src="https://unpkg.com/leaflet.markercluster@latest/dist/leaflet.markercluster-src.js"></script>
 
 {# Gestion des points issus de la BDD #}
 <script>
-    /*******************AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES***********************************************/
+    /**AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES*****************************/
     // Définition du markersCluster (fonction de Leaflet pour gérer des clusters de markers)
     const markersCluster = L.markerClusterGroup();
     // Convertir un tableau TWIG en tableau JS
     const markersSpots = '{{ spots | raw }}';
     const jsonTabForMarkersSpots = JSON.parse(markersSpots);
+    
+    // Définir une icone custom
+    const customIcon = L.icon({
+    iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
+    iconSize: [25, 25],
+    iconAnchor: [3, 22],
+    popupAnchor: [10, -15]
+    })
 
     // Parcourir le tableau et créer des marqueurs pour chaque élément
     jsonTabForMarkersSpots.forEach(obj => {
@@ -240,23 +200,10 @@ crossorigin=""/>
             const avgNote = infos[5]
             const pictures = infos[6]
 
-    //icon custom pour l'emplacement de l'utilisateur
-    const fireIcon = L.icon({
-        iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
-        iconSize: [25, 25],
-        iconAnchor: [3, 22],
-        popupAnchor: [10, -15]
-    })
-
-
-
-        // Si le spot a été validé par un admin, alors créé un marqueur
-        if (isValidate){
             const marker = L.marker([lat, lng],{
-            icon: fireIcon,
+            icon: customIcon,
             title: name
-            }
-            )
+            })
 
             // Ajout du marqueur au groupe de clusters
             markersCluster.addLayer(marker);
@@ -285,49 +232,19 @@ crossorigin=""/>
                 const popupContent = `<a href=${urlShowSpot}> <b>${nameCut}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
                 marker.bindPopup(popupContent);
             }
-        }
+        
         })
     })
     // Ajout du groupe de clusters à la carte
     map.addLayer(markersCluster);
 
-    /************************************FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
+    /*FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
 </script>
-
-{# Polygone #}
-{# <script>
-    // Définir les coordonnées d'un polygone
-    var polygonCoords = [  [48.623860, 7.727798],
-    [48.604371, 7.693883],
-    [48.575899, 7.686080],
-    [48.568368, 7.729530],
-    [48.556536, 7.741879],
-    [48.540214, 7.740874],
-    [48.520945, 7.753266],
-    [48.517002, 7.802228],
-    [48.525297, 7.830220],
-    [48.548539, 7.848697],
-    [48.563863, 7.858974],
-    [48.586015, 7.840496],
-    [48.605270, 7.820451],
-    [48.610125, 7.795036],
-    [48.623860, 7.727798]
-    ];
-
-    // Créer un polygone à partir des coordonnées stockées dans var polygonCoords et l'ajouter à la carte
-    var myPolygon = L.polygon(polygonCoords, {
-        color: 'red',
-        fillColor: 'transparent',
-        weight: 2
-    }).addTo(map);
-
-</script> #}
 
 <!-- Si le User est connecté (sinon pas besoin d'importer ce JS) -->
 {% if app.user %}
 <script src="{{ asset('js/form_map.js') }}"></script>
 {% endif %}
-<script src="{{ asset('js/filters-listing.js') }}"></script>
 
 <!-- Lien vers le fichier JavaScript de Mapbox -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>

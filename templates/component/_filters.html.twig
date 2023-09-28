@@ -19,9 +19,13 @@
             {{ form_widget(formSearch.covered, {'attr': {'class': 'mr-2'}}) }}
             {{ form_label(formSearch.covered) }}
         </label>
+        <label class="flex items-baseline mx-4">
+            {{ form_widget(formSearch.onlyValidated, {'attr': {'class': 'mr-2'}}) }}
+            {{ form_label(formSearch.onlyValidated) }}
+        </label>
         <label class="flex items-baseline  filter-button">
-            {{ form_label(formSearch.orderCreation) }}
-            {{ form_widget(formSearch.orderCreation, {'attr': {'class': 'mr-2'}}) }}
+            {{ form_label(formSearch.order) }}
+            {{ form_widget(formSearch.order, {'attr': {'class': 'mr-2'}}) }}
         </label>
         <div class="flex justify-between mt-4">
             <button type="submit" class="filter-button-big">Rechercher</button>

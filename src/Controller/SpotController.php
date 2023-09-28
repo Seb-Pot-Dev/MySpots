@@ -40,11 +40,10 @@ class SpotController extends AbstractController
         // Définition des variables de base****************************************************************************************************************
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();
-
         //Définition du User
         $user = $security->getUser();
         //récupère tout les spots de la BDD pour les marqueurs sur la carte
-        $spots = $doctrine->getRepository(Spot::class)->findBy([], ['name' => 'ASC']);
+        $allSpots = $doctrine->getRepository(Spot::class)->findBy([], ['name' => 'ASC']);
 
         // Requête pour la pagination des spots***********************************************************************************************************************
         $spotsQuery = $doctrine->getRepository(Spot::class)
@@ -58,7 +57,9 @@ class SpotController extends AbstractController
             5 // Nombre d'elements par page
         );
 
-        // Gestion des FILTRES ****************************************************************************************************************************
+        // Gestion des FILTRES ******************************************************************************************************
+        // initialisation d'un variable string vide
+        $filtersEmptyMessage = '';
         // instancie un nouvel object SearchData
         $searchData = new SearchData();
         // création du formulaire SpotSearchType pour les filtres
@@ -66,75 +67,65 @@ class SpotController extends AbstractController
         // interception du formulaire SpotSearchType lorsqu'une requete est fournie 
         $formSearch->handleRequest($request);
         // instancie une variable $sportFiltered 
-        $spotsFiltered = $spots; // égale a $spots tant qu'aucun filtre n'as été renseigner.
-
+        $spotsFiltered = $allSpots; // égale a $allSpots tant qu'aucun filtre n'as été renseigner.
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
             $searchFilter = $searchData->search;
-            // dd($searchFilter);
             $moduleFilter = $searchData->moduleFilter;
-            // dd($moduleFilter);
             $officialFilter = $searchData->official;
             $coveredFilter = $searchData->covered;
-            $orderCreation = $searchData->orderCreation;
-            $spotsFiltered = $spotRepository->findByCriteria($searchFilter, $moduleFilter, $officialFilter, $coveredFilter, $orderCreation);
+            $order = $searchData->order;
+            $onlyValidated = $searchData->onlyValidated;
+            $spotsFiltered = $spotRepository->findByCriteria($searchFilter, $moduleFilter, $officialFilter, $coveredFilter, $onlyValidated, $order);
+            // Si $spotFiltered est vide, c'est qu'aucun spot ne correspond aux critères selectionnées.
             if (empty($spotsFiltered)) {
+                // On affecte un message pour en informer l'utilisateur
                 $filtersEmptyMessage = "Aucun spots ne corresponds à ces critères.";
             }
         }
-        // Récupération des spots pour créé les MARKERS ************************************************************************************************
-        /*
-        Construit un tableau associatif contenant le nom du spot comme clé.
-        Chaque clé est associée a un tableau contenant sa latitude, sa longitude, 
-        sa description et son état de validation comme valeur
+        /* Gestion des MARKERS ************************************************************************************************
+        Construit un tableau associatif contenant le nom du spot comme clé. Chaque clé est associée a un tableau contenant les informations du spot.
         */
-
-        // instancie un tableau $tab
-        $tab = [];
-        // Si des filtres ont été selectionné, $spotsFiltered n'est pas empty
-        // dans ce cas,j'utilise $spotsFiltered pour créé les marqueurs
-        if (!empty($spotsFiltered)) {
-            foreach ($spotsFiltered as $aspot) {
-                $tab[] = [
-                    $aspot->getName() => [
-                        $aspot->getLat(),
-                        $aspot->getLng(),
-                        $aspot->getDescription(),
-                        $aspot->getIsValidated(),
-                        $aspot->getId(),
-                        $aspot->getAvgNote(),
-                        $aspot->getPictures(),
-                        $aspot->isCovered(),
-                        $aspot->isOfficial()
+        // Initialisation d'une variable arraySpots en tant que tableau vide
+        $arraySpots = [];
+        // Si des filtres ont été selectionné, que le form est valide et que des occurences de spot sont trouvés
+        if ($formSearch->isSubmitted() && $formSearch->isValid() && !empty($spotsFiltered)) {
+            foreach ($spotsFiltered as $spotMarker) {
+                $arraySpots[] = [
+                    $spotMarker->getName() => [
+                        $spotMarker->getLat(),
+                        $spotMarker->getLng(),
+                        $spotMarker->getDescription(),
+                        $spotMarker->getIsValidated(),
+                        $spotMarker->getId(),
+                        $spotMarker->getAvgNote(),
+                        $spotMarker->getPictures(),
+                        $spotMarker->isCovered(),
+                        $spotMarker->isOfficial(),
                     ]
                 ];
             }
-            // Sinon, pas de filtres. J'utilise $spots pour créé les marqueurs (avec TOUS les spots de ma BDD)
+            // Sinon j'utilise $allSpots pour créé les marqueurs (avec TOUS les spots de ma BDD)
         } else {
-            foreach ($spots as $aspot) {
-                $tab[] = [
-                    $aspot->getName() => [
-                        $aspot->getLat(),
-                        $aspot->getLng(),
-                        $aspot->getDescription(),
-                        $aspot->getIsValidated(),
-                        $aspot->getId(),
-                        $aspot->getAvgNote(),
-                        $aspot->getPictures(),
-                        $aspot->isCovered(),
-                        $aspot->isOfficial()
+            foreach ($allSpots as $spotMarker) {
+                $arraySpots[] = [
+                    $spotMarker->getName() => [
+                        $spotMarker->getLat(),
+                        $spotMarker->getLng(),
+                        $spotMarker->getDescription(),
+                        $spotMarker->getIsValidated(),
+                        $spotMarker->getId(),
+                        $spotMarker->getAvgNote(),
+                        $spotMarker->getPictures(),
+                        $spotMarker->isCovered(),
+                        $spotMarker->isOfficial()
                     ]
                 ];
             }
         }
+        // encode le tableau $arraySpots en format JSON
+        $arraySpotJson = json_encode($arraySpots);
 
-
-        /*encode le tableau $tab en format JSON
-        Le deuxième argument JSON_HEX_APOS de la fonction json_encode() permet de remplacer les single quotes
-        par des entités HTML hexadécimales, pour éviter des problèmes de syntaxe dans le code JavaScript.*/
-        $tabCoords = json_encode($tab, JSON_HEX_APOS);
-
-
-    /**********************AJOUT DE SPOT*********************************** */
+    /*AJOUT DE SPOT*********************************** */
     
     //récupérer la liste de tout les modules
     $modules = $doctrine->getRepository(Module::class)->findAll();
@@ -208,16 +199,16 @@ class SpotController extends AbstractController
         /********************** FIN AJOUT DE SPOT*********************************** */
 
         // Utilise la méthode render héritée de AbstractController pour retourner une réponse HTTP.
-        // Cette réponse contient le contenu de la vue index.html.twig et des variables
+        // Cette réponse contient le contenu de la vue index.html.twig + des variables
         // 'spots' est le tableau des spots encodé en JSON.
         // 'spotsList' est le tableau contenant toutes les spots et toutes les infos des spots, pour la liste des spots
         return $this->render('spot/index.html.twig', [
             'controller_name' => 'SpotController',
-            'spots' => $tabCoords,
+            'spots' => $arraySpotJson,
             'formAddSpot' => $form->createView(),
             'modules' => $modules,
             'formSearch' => $formSearch->createView(),
-            'spotsList' => $spots,
+            'spotsList' => $allSpots,
             'paginatedSpots' => $paginatedSpots,
             'spotsFiltered' => $spotsFiltered,
             'filtersEmptyMessage' => $filtersEmptyMessage

@@ -20,7 +20,12 @@ class SearchData
      */
     public $covered = false;
     /**
+     * @var boolean
+     */
+    public $onlyValidated = false;
+    /**
      * @var string|null
      */
-    public $orderCreation= '';
+    public $order= '';
+
 }

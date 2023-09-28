@@ -71,19 +71,22 @@ class SpotRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//La fonction findByCriteria  renvoie un tableau d'objets Spot qui correspondent aux critères spécifiés par les paramètres $name et $moduleNames.
-public function findByCriteria(?string $searchFilter, array $moduleFilter, bool $official, bool $covered, ?string $orderCreationDate): array
+//La fonction findByCriteria  renvoie un tableau d'objets Spot qui correspondent aux critères spécifiés
+public function findByCriteria(?string $searchFilter, array $moduleFilter, bool $official, bool $covered, bool $onlyValidated, ?string $order): array
 {
     // Crée un nouvel objet QueryBuilder pour construire la requête.
     $qb = $this->createQueryBuilder('s')
         // left join de la collection de notations pour permettre la sous requete de tri sur la note moyenne d'un spot
-        ->leftJoin('s.notations', 'n');  
+        ->leftJoin('s.notations', 'n'); 
 
-    // Ajout de la condition pour les spots validés
-    $qb->andWhere('s.isValidated = 1');
+    // Si choix d'afficher uniquement les spots validés
+    if($onlyValidated){
+        // dd($onlyValidated);
+        $qb->andWhere('s.isValidated = true');
+    }
 
     // Si un filtre de recherche est fourni pour le nom du spot...
-    if ($searchFilter !== null) {
+    if ($searchFilter) {
         // ...ajoute une condition à la requête pour filtrer les spots par leur nom.
         $qb->andWhere('s.name LIKE :search')
             ->setParameter('search', '%' . $searchFilter . '%');
@@ -117,23 +120,24 @@ if (!empty($moduleFilter)) {
         $qb->andWhere('s.covered = true');
     }
     // Si une des options trier par date d'ajout est selectionnée'
-    if ($orderCreationDate == 'dateLast') {
+    if ($order == 'dateLast') {
         $qb->orderBy('s.creationDate', 'ASC');
-    }elseif ($orderCreationDate == 'dateNew'){
+    }elseif ($order == 'dateNew'){
         $qb->orderBy('s.creationDate', 'DESC');
     //tri par notation decroissante
-    }elseif ($orderCreationDate == 'noteAsc'){
+    }elseif ($order == 'noteAsc'){
         $qb->addSelect('AVG(n.note) as HIDDEN avg_note')
         ->groupBy('s.id')
-        ->orderBy('avg_note', 'DESC');
+        ->orderBy('avg_note', 'ASC');
     // tri par notation croissante
-    }elseif ($orderCreationDate == 'noteDesc'){
+    }elseif ($order == 'noteDesc'){
         $qb->addSelect('AVG(n.note) as HIDDEN avg_note')
             ->groupBy('s.id')
-            ->orderBy('avg_note', 'ASC');
+            ->orderBy('avg_note', 'DESC');
     }
     return $qb->getQuery()->getResult();
 }
+
 // La fonction findValidatedSpots renvoie les spots validés par l'administrateur uniquement.
 public function findValidatedSpots(): array
     {
