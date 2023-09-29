@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -17,12 +17,12 @@
             <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/footer.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/texts.css') }}">
-            
+
 
      
             <!-- FONT AWESOME KIT -->
             <link rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
             {{ encore_entry_link_tags('app') }}
 
 
@@ -161,6 +161,7 @@ crossorigin=""></script>
 <script src="{{ asset('js/menu_burger.js') }}"></script>
 {# Gestion du switch Dark/Night Mode #}
 <script src="{{ asset('js/darkmode.js') }}"></script>
+
 
 
 <footer class="footer rounded-lg shadow m-4">

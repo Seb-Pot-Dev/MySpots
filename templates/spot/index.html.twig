@@ -14,6 +14,8 @@ crossorigin=""/>
 <link rel="stylesheet" href="{{ asset('css/list_spot.css') }}">
 <link rel="stylesheet" href="{{ asset('css/form_spot.css') }}">
 <link rel="stylesheet" href="{{ asset('css/texts.css') }}">
+<link rel="stylesheet" media="(max-width: 768px)" type="text/css" href="{{ asset('css/mobile.css') }}">
+
 <!-- Lien vers le fichier CSS de Mapbox -->
 <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
 <!-- CSS pour les clusters de markers -->
@@ -22,8 +24,13 @@ crossorigin=""/>
 
 </head>
 <style>
-</style>
-    <h1>La carte des spots</h1>
+</style>    
+<div id="mobile-duo">
+    <div id="mobile-choice-map"><p>Carte</p></div>
+    <div id="mobile-choice-list"><p>Liste</p></div>
+</div>
+
+<div id="global-map" class="">
 
 <!-- AFFICHAGE DE LA MAP --> 
 <div id="map" class="">
@@ -118,7 +125,7 @@ crossorigin=""/>
     <p>Veuillez vous connecter pour ajouter un spot.</p>
 {% endif %}
 
-<div id="list-spots-desktop-global">
+<div id="list-spots-desktop-global" class="">
     
     <div class="list-spots-desktop" id="list-spots-desktop-id">
         <div id="list-spots-desktop-main">
@@ -154,7 +161,7 @@ crossorigin=""/>
             {{ knp_pagination_render(paginationSpots) }}
         </div> #}
 </div>
-
+</div>
 {% endblock %}
 
 {% block javascripts %}
@@ -168,6 +175,8 @@ crossorigin=""/>
 {# Gestion de la carte #}
 <script src="{{ asset('js/script_map.js') }}"></script>
 <script src="{{ asset('js/filters-listing.js') }}"></script>
+{# Vue mobile #}
+<script src="{{ asset('js/mobile.js') }}"></script>
 
 <!-- JS de Leaflet pour les clusters de markers -->
 <script src="https://unpkg.com/leaflet.markercluster@latest/dist/leaflet.markercluster-src.js"></script>

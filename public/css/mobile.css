@@ -1,0 +1,38 @@
+
+@media screen and (max-width: 768px) {
+    #mobile-duo{
+        position: absolute;
+        display: flex;
+        z-index: 10000;
+        width: 100%;
+        height: 30px;
+        top:91px;
+    }
+    #mobile-choice-map, #mobile-choice-list{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        background-color: red;
+        color: white;
+        border-radius: 12px;
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 12px;
+        -ms-border-radius: 12px;
+        -o-border-radius: 12px;
+}
+    #mobile-choice-list{
+
+        background-color: blue;
+    }
+    #search-form, #toggleFormSpot, #toggleFilters, #list-spots-desktop-global {
+        display: none;
+    }
+    #list-spots-desktop-global{
+        width: 100%;
+    }
+    #list-spots-desktop{
+        max-width: unset;
+        margin: 1rem;
+    }
+  }
