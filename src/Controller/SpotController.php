@@ -66,8 +66,10 @@ class SpotController extends AbstractController
         $formSearch = $this->createForm(SpotSearchType::class, $searchData);
         // interception du formulaire SpotSearchType lorsqu'une requete est fournie 
         $formSearch->handleRequest($request);
+
         // instancie une variable $sportFiltered 
         $spotsFiltered = $allSpots; // égale a $allSpots tant qu'aucun filtre n'as été renseigner.
+
         if ($formSearch->isSubmitted() && $formSearch->isValid()) {
             $searchFilter = $searchData->search;
             $moduleFilter = $searchData->moduleFilter;
@@ -82,48 +84,41 @@ class SpotController extends AbstractController
                 $filtersEmptyMessage = "Aucun spots ne corresponds à ces critères.";
             }
         }
-        /* Gestion des MARKERS ************************************************************************************************
-        Construit un tableau associatif contenant le nom du spot comme clé. Chaque clé est associée a un tableau contenant les informations du spot.
-        */
+        /* Gestion des MARKER ********************************************/
+        // Fonction pour récupérer la première photo ou retourner une chaîne vide
+        function getFirstPictureName($spotMarker) {
+            return count($spotMarker->getPictures()) > 0 ? $spotMarker->getPictures()[0]->getName() : '';
+        }
+
+        // Fonction pour créer un tableau associatif pour un spot donné
+        function createSpotArray($spotMarker) {
+            return [
+                $spotMarker->getName() => [
+                    $spotMarker->getLat(),
+                    $spotMarker->getLng(),
+                    $spotMarker->getDescription(),
+                    $spotMarker->getIsValidated(),
+                    $spotMarker->getId(),
+                    $spotMarker->getAvgNote(),
+                    getFirstPictureName($spotMarker),
+                ]
+            ];
+        }
+
         // Initialisation d'une variable arraySpots en tant que tableau vide
         $arraySpots = [];
-        // Si des filtres ont été selectionné, que le form est valide et que des occurences de spot sont trouvés
-        if ($formSearch->isSubmitted() && $formSearch->isValid() && !empty($spotsFiltered)) {
-            foreach ($spotsFiltered as $spotMarker) {
-                $arraySpots[] = [
-                    $spotMarker->getName() => [
-                        $spotMarker->getLat(),
-                        $spotMarker->getLng(),
-                        $spotMarker->getDescription(),
-                        $spotMarker->getIsValidated(),
-                        $spotMarker->getId(),
-                        $spotMarker->getAvgNote(),
-                        $spotMarker->getPictures(),
-                        $spotMarker->isCovered(),
-                        $spotMarker->isOfficial(),
-                    ]
-                ];
-            }
-            // Sinon j'utilise $allSpots pour créé les marqueurs (avec TOUS les spots de ma BDD)
-        } else {
-            foreach ($allSpots as $spotMarker) {
-                $arraySpots[] = [
-                    $spotMarker->getName() => [
-                        $spotMarker->getLat(),
-                        $spotMarker->getLng(),
-                        $spotMarker->getDescription(),
-                        $spotMarker->getIsValidated(),
-                        $spotMarker->getId(),
-                        $spotMarker->getAvgNote(),
-                        $spotMarker->getPictures(),
-                        $spotMarker->isCovered(),
-                        $spotMarker->isOfficial()
-                    ]
-                ];
-            }
+
+        // Détermine quel ensemble de spots utiliser
+        $spotsToUse = !empty($spotsFiltered) && $formSearch->isSubmitted() && $formSearch->isValid() ? $spotsFiltered : $allSpots;
+
+        // Boucle sur l'ensemble de spots choisi pour créer le tableau
+        foreach ($spotsToUse as $spotMarker) {
+            $arraySpots[] = createSpotArray($spotMarker);
         }
-        // encode le tableau $arraySpots en format JSON
+
+        // Encode le tableau $arraySpots en format JSON
         $arraySpotJson = json_encode($arraySpots);
+
 
     /*AJOUT DE SPOT*********************************** */
     
@@ -202,14 +197,13 @@ class SpotController extends AbstractController
         // Cette réponse contient le contenu de la vue index.html.twig + des variables
         // 'spots' est le tableau des spots encodé en JSON.
         // 'spotsList' est le tableau contenant toutes les spots et toutes les infos des spots, pour la liste des spots
+        // 'spotsFiltered' est le tableau des sports filtrés et ordonnés si des critères sont renseignés et que des occurences correspondent à ces derniers
         return $this->render('spot/index.html.twig', [
-            'controller_name' => 'SpotController',
             'spots' => $arraySpotJson,
+            'spotsList' => $allSpots,
             'formAddSpot' => $form->createView(),
             'modules' => $modules,
             'formSearch' => $formSearch->createView(),
-            'spotsList' => $allSpots,
-            'paginatedSpots' => $paginatedSpots,
             'spotsFiltered' => $spotsFiltered,
             'filtersEmptyMessage' => $filtersEmptyMessage
         ]);

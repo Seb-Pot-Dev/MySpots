@@ -6,7 +6,7 @@
         z-index: 10000;
         width: 100%;
         height: 30px;
-        top:91px;
+        top: 50px;
     }
     #mobile-choice-map, #mobile-choice-list{
         display: flex;
@@ -30,9 +30,42 @@
     }
     #list-spots-desktop-global{
         width: 100%;
+        height: 100%;
+        overflow: scroll;
     }
-    #list-spots-desktop{
+    #list-spots-desktop-id{
         max-width: unset;
-        margin: 1rem;
+        max-height: unset;
+    }
+    .choose-layer-container{
+        display: none;
+    }
+    .search-filters-container{
+        display: none;
+    }
+    #please-connect{
+        display: none;
+    }
+    /* main{
+        overflow: hidden;
+        position: fixed;
+    } */
+    ul.list-spots{
+        padding: 0 10px 100px 10px;
+    }
+    .mobile-active{
+        height: 100vh;
+        width: 100vw;
+        display: inherit!important;
+        z-index: 10000;
+    }
+    .search-filters-container.mobile-active{
+        top: 80px;
+    }
+    #list-spots-desktop-global.mobile-active{
+        display: none;
+    }
+    #search-form{
+        background-color: grey;
     }
   }

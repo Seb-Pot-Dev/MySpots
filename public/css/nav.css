@@ -1,6 +1,6 @@
 .desktop-nav img, .mobile-nav img{
     max-width: 100px;
-    height: auto;
+    height: 100%;
 }
 
 .desktop-nav{
@@ -35,26 +35,23 @@
     align-items: center;
     background-color: var(--menu-background);
     padding-left: 1rem;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
     z-index: 9999;
     position: absolute;
     width: 100%;
+    height: 50px;
 }
 /* Sidenav menu */
 .sidenav {
     height: 100%;
     width: 250px;
     position: fixed;
-    z-index: 9999;
+    z-index: 10001;
     top: 0;
     left: -250px;
     background-color: var(--menu-background);
     padding-top: 60px;
     transition: left 0.5s ease;
+    color: var(--text-color-opposite);
   }
   
   /* Sidenav menu links */
@@ -62,9 +59,10 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: var(--menu-background);
     display: block;
     transition: 0.3s;
+    color: var(--text-color);
+
   }
   
   .sidenav a:hover {
@@ -100,7 +98,7 @@
   }
     .mobile-nav a#logo-container{
         margin: auto;
-        max-height: fit-content;
+        height: 100%;
     }
 
 /* Responsive */

@@ -89,3 +89,9 @@ ul.list-spots-desktop{
     text-shadow: 1px 1.5px 1px var(--text-color-opposite);
     height: fit-content;
 }
+/****OPTION MOBILE POUR LA CARTE*****/
+@media screen and (max-width: 768px) {
+    #toggleListSpots{
+        display: none;
+    }
+}

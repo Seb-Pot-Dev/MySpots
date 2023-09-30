@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class SpotType extends AbstractType
 {
@@ -20,25 +21,13 @@ class SpotType extends AbstractType
     {
 
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('adress')
-            ->add('cp')
-            ->add('city')
-            ->add('lat'
-            , NumberType::class,[
-                'attr' => [
-                    'readonly' => 'readonly',
-                ]
-            ]
-            )
-            ->add('lng'
-            , NumberType::class, [
-                'attr' => [
-                    'readonly' => 'readonly',
-                ]
-            ]
-            )
+            ->add('name', TextType::class)
+            ->add('description', TextareaType::class)
+            ->add('adress' , TextType::class)
+            ->add('cp', TextType::class)
+            ->add('city', TextType::class)
+            ->add('lat', NumberType::class)
+            ->add('lng', NumberType::class)
             //affiché des checkboxs non obligatoire avec plusieurs choix 
             ->add('modules', EntityType::class,[
                 'class'=> Module::class,

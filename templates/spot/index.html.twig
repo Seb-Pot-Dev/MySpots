@@ -3,164 +3,157 @@
 {% block title %}La carte des spots{% endblock %}
 
 {% block body %}
-
+<head>
  <!-- LEAFLET CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-crossorigin=""/>
-<!-- Lien vers le css de la map -->
-<link rel="stylesheet" href="{{ asset('css/map.css') }}">
-<link rel="stylesheet" href="{{ asset('css/filters.css') }}">
-<link rel="stylesheet" href="{{ asset('css/list_spot.css') }}">
-<link rel="stylesheet" href="{{ asset('css/form_spot.css') }}">
-<link rel="stylesheet" href="{{ asset('css/texts.css') }}">
-<link rel="stylesheet" media="(max-width: 768px)" type="text/css" href="{{ asset('css/mobile.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+    <!-- Lien vers le css de la map -->
+    <link rel="stylesheet" href="{{ asset('css/map.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/filters.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/list_spot.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form_spot.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/texts.css') }}">
+    <link rel="stylesheet" media="(max-width: 768px)" type="text/css" href="{{ asset('css/mobile.css') }}">
 
-<!-- Lien vers le fichier CSS de Mapbox -->
-<link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
-<!-- CSS pour les clusters de markers -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.css" />
-<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.Default.css" />
-
+    <!-- Lien vers le fichier CSS de Mapbox -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.css' rel='stylesheet' />
+    <!-- CSS pour les clusters de markers -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.Default.css" />
 </head>
-<style>
-</style>    
-<div id="mobile-duo">
-    <div id="mobile-choice-map"><p>Carte</p></div>
-    <div id="mobile-choice-list"><p>Liste</p></div>
-</div>
 
-<div id="global-map" class="">
 
-<!-- AFFICHAGE DE LA MAP --> 
-<div id="map" class="">
-</div>
-
-<!-- Choix du layer -->
-<div class="choose-layer-container">
-    <button id="layer-1" class="choose-layer-item">Hell</button>
-    <button id="layer-2" class="choose-layer-item">Dark</button>
-    <button id="layer-3" class="choose-layer-item">Classic</button>
-</div>
-<!-- >Inclure les filtres -->
-{% include 'component/_filters.html.twig' %}
- <!-- ////////////////////////////////////////////////////////////////// -->
-
- {% if app.user %}  
-<!-- formulaire ajout spot -->
-<div id="form-add-spot-global">
-    <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
-    {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
-        <h1 class="mb-2 header-medium">Propose ton spot</h1>
-            <div class="flex gap-1">
-                <div class="">
-                    <div class="">
-                        {{ form_label(formAddSpot.name, 'Nom', {'label_attr': {'class': 'header-small'}}) }}
-                        {{ form_widget(formAddSpot.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div>
-                    <div class="">
-                        {{ form_label(formAddSpot.description, 'Description', {'label_attr': {'class': 'header-small'}}) }}
-                        {{ form_widget(formAddSpot.description, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div>
-                    <p class="header-small">Modules et Ressources</p>
-                    {# APRES LA PAUSE, VOIR POUR MODIFIER LA FONT FAMILLY DU LABEL MODULE PUIS FRONT SHOW SPOT #}
-                    {% for module in formAddSpot.modules %}
-                        <label class="flex items-center justify-between mx-4 body-small mb-0">
-                            {{ form_label(module, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
-                            {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
-                        </label>
-                    {% endfor %}
-                    <p class="header-small">Autres caracteristiques</p>
-                    <div class="flex items-baseline justify-between mx-4">
-                        {{ form_label(formAddSpot.covered, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
-                        {{ form_widget(formAddSpot.covered, {'attr': {'class': 'mr-2'}}) }}
-                    </div>
-                    <div class="flex items-baseline justify-between mx-4">
-                        {{ form_label(formAddSpot.official, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
-                        {{ form_widget(formAddSpot.official, {'attr': {'class': 'mr-2'}}) }}
-                    </div>
-
-                    {# <div class="">
-                        {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium '}}) }}
-                        {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div> #}
-                </div>
-                <div>
-                    <div class="">
-                        {{ form_label(formAddSpot.pictures, 'Photos', {'label_attr': {'class': 'header-small'}}) }}
-                        {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div>
-                    
-                </div>
-                
-                <div>   
-                    <div class="">
-                    {{ form_label(formAddSpot.adress, 'Addresse', {'label_attr': {'class': 'header-small'}}) }}
-                    {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div>
-                    <div class="">
-                        {{ form_label(formAddSpot.cp, 'Code postal', {'label_attr': {'class': 'header-small '}}) }}
-                        {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div>
-                    <div class="">
-                        {{ form_label(formAddSpot.city, 'Ville', {'label_attr': {'class': 'header-small '}}) }}
-                        {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div>
-                    <div class="">
-                        {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'header-small '}}) }}
-                        {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div>
-                    <div class="">
-                        {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'header-small'}}) }}
-                        {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                    </div>
-
-                    <button class="header-small" id="add-user-pos">Utiliser ma position</button>
-                </div> 
-            </div>
-        {# Le bouton submit est généré automatiquement  #}
-{{ form_end(formAddSpot) }} 
-</div>
-{% else %}
-    <p>Veuillez vous connecter pour ajouter un spot.</p>
-{% endif %}
-
-<div id="list-spots-desktop-global" class="">
-    
-    <div class="list-spots-desktop" id="list-spots-desktop-id">
-        <div id="list-spots-desktop-main">
-            <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
-            <ul class="list-spots" style="">
-                {% if spotsFiltered  is not empty %}
-                    <div class="inline-flex">
-                        <p class="header-medium">{{ spotsFiltered|length }} resultats</p>
-                    </div>
-                    {% for spot in spotsFiltered %}
-                        {# Défini l'url de chaque spot pour pouvoir l'utiliser dans la liste #}
-                        {% set spot_url = path('show_spot', {'idSpot': spot.id}) %}
-                        {% include 'spot/_list_spots.html.twig' %}
-                    {% endfor %}
-
-                {% else %}
-                <p class="header-medium">{{ filtersEmptyMessage }}</p>
-                    {% for spot in spotsList %}
-                        {% set spot_url = path('show_spot', {'idSpot': spot.id}) %}
-                        {% include 'spot/_list_spots.html.twig' %}
-                    {% endfor %}
-                {% endif %}
-            </ul>
-        </div>
+    <div id="global-map" class="">
+    <div id="mobile-duo">
+        <div id="mobile-choice-map"><p>Carte</p></div>
+        <div id="mobile-choice-list"><p>Liste</p></div>
+        <a href="#" id="mobileToggleFilters">Voir filtres</a>
     </div>
 
-    <a id="toggleListSpots" href="#">
-        FERMER LA LISTE
-    </a>
-</div>
-    {# <div class="js-filter-pagination">
-        Affichage des liens de pagination
-            {{ knp_pagination_render(paginationSpots) }}
-        </div> #}
-</div>
+    <!-- AFFICHAGE DE LA MAP --> 
+    <div id="map" class="">
+    </div>
+
+    <!-- Choix du layer -->
+    <div class="choose-layer-container">
+        <button id="layer-1" class="choose-layer-item">Hell</button>
+        <button id="layer-2" class="choose-layer-item">Dark</button>
+        <button id="layer-3" class="choose-layer-item">Classic</button>
+    </div>
+    <!-- >Inclure les filtres -->
+    {% include 'component/_filters.html.twig' %}
+    <!-- ////////////////////////////////////////////////////////////////// -->
+
+    {% if app.user %}  
+    <!-- formulaire ajout spot -->
+    <div id="form-add-spot-global">
+        <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
+        {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
+            <h1 class="mb-2 header-medium">Propose ton spot</h1>
+                <div class="flex gap-1">
+                    <div class="">
+                        <div class="">
+                            {{ form_label(formAddSpot.name, 'Nom', {'label_attr': {'class': 'header-small'}}) }}
+                            {{ form_widget(formAddSpot.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div>
+                        <div class="">
+                            {{ form_label(formAddSpot.description, 'Description', {'label_attr': {'class': 'header-small'}}) }}
+                            {{ form_widget(formAddSpot.description, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div>
+                        <p class="header-small">Modules et Ressources</p>
+                        {# APRES LA PAUSE, VOIR POUR MODIFIER LA FONT FAMILLY DU LABEL MODULE PUIS FRONT SHOW SPOT #}
+                        {% for module in formAddSpot.modules %}
+                            <label class="flex items-center justify-between mx-4 body-small mb-0">
+                                {{ form_label(module, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
+                                {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
+                            </label>
+                        {% endfor %}
+                        <p class="header-small">Autres caracteristiques</p>
+                        <div class="flex items-baseline justify-between mx-4">
+                            {{ form_label(formAddSpot.covered, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
+                            {{ form_widget(formAddSpot.covered, {'attr': {'class': 'mr-2'}}) }}
+                        </div>
+                        <div class="flex items-baseline justify-between mx-4">
+                            {{ form_label(formAddSpot.official, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
+                            {{ form_widget(formAddSpot.official, {'attr': {'class': 'mr-2'}}) }}
+                        </div>
+
+                        {# <div class="">
+                            {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium '}}) }}
+                            {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div> #}
+                    </div>
+                    <div>
+                        <div class="">
+                            {{ form_label(formAddSpot.pictures, 'Photos', {'label_attr': {'class': 'header-small'}}) }}
+                            {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div>
+                        
+                    </div>
+                    
+                    <div>   
+                        <div class="">
+                        {{ form_label(formAddSpot.adress, 'Addresse', {'label_attr': {'class': 'header-small'}}) }}
+                        {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div>
+                        <div class="">
+                            {{ form_label(formAddSpot.cp, 'Code postal', {'label_attr': {'class': 'header-small '}}) }}
+                            {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div>
+                        <div class="">
+                            {{ form_label(formAddSpot.city, 'Ville', {'label_attr': {'class': 'header-small '}}) }}
+                            {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div>
+                        <div class="">
+                            {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'header-small '}}) }}
+                            {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div>
+                        <div class="">
+                            {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'header-small'}}) }}
+                            {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                        </div>
+
+                        <button class="header-small" id="add-user-pos">Utiliser ma position</button>
+                    </div> 
+                </div>
+            {# Le bouton submit est généré automatiquement  #}
+    {{ form_end(formAddSpot) }} 
+    </div>
+    {% else %}
+        <p id="please-connect">Veuillez vous connecter pour ajouter un spot.</p>
+    {% endif %}
+
+        <div id="list-spots-desktop-global" class="">
+            <div class="list-spots-desktop" id="list-spots-desktop-id">
+                <div id="list-spots-desktop-main">
+                    <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
+                    <ul class="list-spots" style="">
+                        {% if spotsFiltered  is not empty %}
+                            <div class="inline-flex">
+                                <p class="header-medium">{{ spotsFiltered|length }} resultats</p>
+                            </div>
+                            {% for spot in spotsFiltered %}
+                                {# Défini l'url de chaque spot pour pouvoir l'utiliser dans la liste #}
+                                {% set spot_url = path('show_spot', {'idSpot': spot.id}) %}
+                                {% include 'spot/_list_spots.html.twig' %}
+                            {% endfor %}
+                        {% else %}
+                        <p class="header-medium">{{ filtersEmptyMessage }}</p>
+                            {% for spot in spotsList %}
+                                {% set spot_url = path('show_spot', {'idSpot': spot.id}) %}
+                                {% include 'spot/_list_spots.html.twig' %}
+                            {% endfor %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <a id="toggleListSpots" href="#">
+                FERMER LA LISTE
+            </a>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -184,68 +177,50 @@ crossorigin=""/>
 {# Gestion des points issus de la BDD #}
 <script>
     /**AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES*****************************/
-    // Définition du markersCluster (fonction de Leaflet pour gérer des clusters de markers)
-    const markersCluster = L.markerClusterGroup();
-    // Convertir un tableau TWIG en tableau JS
-    const markersSpots = '{{ spots | raw }}';
-    const jsonTabForMarkersSpots = JSON.parse(markersSpots);
-    
-    // Définir une icone custom
-    const customIcon = L.icon({
+    // Initialisation des variables
+const markersSpots = '{{ spots | raw }}';
+const jsonTabForMarkersSpots = JSON.parse(markersSpots);
+const customIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
     iconSize: [25, 25],
     iconAnchor: [3, 22],
     popupAnchor: [10, -15]
-    })
+});
+const markersCluster = L.markerClusterGroup();
 
-    // Parcourir le tableau et créer des marqueurs pour chaque élément
-    jsonTabForMarkersSpots.forEach(obj => {
-        Object.entries(obj).forEach(([name, infos]) => { 
-            const lat = infos[0]
-            const lng = infos[1]
-            const desc = infos[2]
-            const isValidate = infos[3]
-            const spotId = infos[4] 
-            const avgNote = infos[5]
-            const pictures = infos[6]
+// Fonction pour limiter la longueur du texte
+function limitNameLength(str, limit) {
+    return str.length > limit ? str.slice(0, limit) + "..." : str;
+}
 
-            const marker = L.marker([lat, lng],{
-            icon: customIcon,
-            title: name
-            })
+// Fonction pour créer le contenu de la popup
+function createPopupContent(urlShowSpot, name, desc, avgNote, firstPictureUrl) {
+    let avgNoteStr = avgNote ? `<i class='fa-solid fa-star'></i>(${avgNote})` : "(Pas de note)";
+    let pictureStr = firstPictureUrl ? `<img src="./assets/uploads/photos-spot/${firstPictureUrl}" width="100" height="100">` : "";
+    return `<a href=${urlShowSpot}> <b>${name} ${avgNoteStr}</b><br>${desc}<br>${pictureStr}</a>`;
+}
 
-            // Ajout du marqueur au groupe de clusters
-            markersCluster.addLayer(marker);
-            
-            //pour créer l'URL de show_spot
-            var urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}';
-            urlShowSpot = urlShowSpot.replace("exemple_id", spotId);
-            
-            // Pour découper une chaine de caractères après un certain nombre de car. et ajouter "..." si découpée 
-            function limitNameLenght(chaine, limite) {
-            if (chaine.length > limite) {
-                return chaine.slice(0, limite) + "...";
-            } else {
-                return chaine;
-            }
-            }
-            // le nom final, découpé 
-            const nameCut = limitNameLenght(name, 10);
-                //si la avgNote n'est pas null (c-a-d le spot a déjà été noté)
-                if(avgNote){
-                const popupContent = `<a href=${urlShowSpot}> <b>${nameCut} <i class='fa-solid fa-star'></i>(${avgNote})</b><br>${desc}<br>
-                </a>`;
-                marker.bindPopup(popupContent);
-                }else{ //Sinon on écrit 'pas de avgNote' a la place du int
-                let avgNote = '(Pas de note)';
-                const popupContent = `<a href=${urlShowSpot}> <b>${nameCut}, <i class='fa-regular fa-star'></i>${avgNote}</b><br>${desc}</a>`;
-                marker.bindPopup(popupContent);
-            }
-        
-        })
-    })
-    // Ajout du groupe de clusters à la carte
-    map.addLayer(markersCluster);
+// Création des marqueurs
+jsonTabForMarkersSpots.forEach(obj => {
+    Object.entries(obj).forEach(([name, infos]) => {
+        const [lat, lng, desc, isValidate, spotId, avgNote, pictures] = infos;
+        const marker = L.marker([lat, lng], { icon: customIcon, title: name });
+
+        markersCluster.addLayer(marker);
+
+        const urlShowSpot = '{{ path("show_spot", {'idSpot': 'exemple_id'}) }}'.replace("exemple_id", spotId);
+        const shortenedName = limitNameLength(name, 10);
+        const firstPictureUrl = pictures;
+
+        const popupContent = createPopupContent(urlShowSpot, shortenedName, desc, avgNote, firstPictureUrl);
+        marker.bindPopup(popupContent);
+    });
+});
+
+// Ajout à la carte
+map.addLayer(markersCluster);
+
+
 
     /*FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
 </script>

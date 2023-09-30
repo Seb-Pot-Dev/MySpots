@@ -25,7 +25,7 @@ input[type="password"],
 input[type="text"],
 input[type="textarea"],
 input[type="select"],
-textarea {
+textarea{
   width: 100%; /* w-full */
   padding: 0.5rem 1rem; /* px-4 py-2 */
   border: 1px solid #cbd5e0; /* border */
@@ -33,6 +33,11 @@ textarea {
   outline: none; /* focus:outline-none */
   transition: border-color 0.2s, box-shadow 0.2s; /* focus:ring-2 focus:ring-blue-500 */
   /* color: var(--text-color-opposite) */
+  font-family: SkateFont3;
+}
+
+input#search{
+    font-family: inherit;
 }
 /* Pour avoir le texte du select toujours en noir */
 select#orderCreation{

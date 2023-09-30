@@ -17,6 +17,8 @@
             <link rel="stylesheet" type="text/css" href="{{ asset('css/forms.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/footer.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/texts.css') }}">
+            <link rel="stylesheet" media="screen and (max-width: 768px)" type="text/css" href="{{ asset('css/mobile.css') }}">
+
 
 
      
@@ -31,7 +33,7 @@
         
     </head>
 
-    <main class="">
+    <main class="" style="">
     <body class="">
     {% for label, messages in app.flashes %}
         {% for message in messages %}
@@ -112,12 +114,53 @@
                     {% endif %}
                 </div>
             </div>
+            <style>
+            /* Style de la flèche */
+.arrow-left {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.arrow-body {
+    width: 20px; /* Largeur du corps de la flèche */
+    height: 5px; /* Hauteur du corps de la flèche */
+    background-color: #000; /* Couleur du corps de la flèche */
+    margin-right: 10px; /* Espacement entre la tête et le corps de la flèche */
+    width: 100%;
+}
+
+.arrow-left::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #000; /* Couleur de la tête de la flèche */
+}
+/* Style du conteneur */
+.arrow-container {
+    padding-left: 80%;
+    width: 100%; /* Vous pouvez modifier la largeur ici */
+    background-color: var(--background-color); /* Couleur de fond de la div */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+            </style>
             <!-- NAV BAR MOBILE -->
             <div id="mySidenav" class="sidenav">
+                <div class="arrow-container">
+                    <div class="arrow-left">
+                        <div class="arrow-body"></div>
+                    </div>
+                </div>
                 <a id="nav-close-btn" href="#" class="close">×</a>
                 <ul>
+                        <li><a href="{{ path('app_home') }}">Acceuil</a></li>
                     {% if app.user %}
-                    <li
                         <li><a href="{{ path('my_profile') }}">Mon profil</a></li>
                         {% if is_granted("ROLE_ADMIN") %}
                             <li><a href="{{ path('app_admin') }}">Administration</a></li>
@@ -127,10 +170,12 @@
                         <li><a href="{{ path('app_login') }}">Se connecter</a></li>
                         <li><a href="{{ path('app_register') }}">S'inscrire</a></li>
                     {% endif %}
+                        <li><a href="{{ path('app_spot') }}">La carte</a></li>
+
                 </ul>
             </div>
         
-        <div class="mobile-nav m-4">
+        <div class="mobile-nav">
             <a href="#" id="nav-open-btn">
                 <span class="burger-icon">
                     <span></span>

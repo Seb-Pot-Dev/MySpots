@@ -1,5 +1,5 @@
-<div class="search-filters-container rounded">
-    {{ form_start(formSearch, {'attr': {'id': 'search-form'}}) }}
+<div class="search-filters-container rounded" id="searchFilterContainer">
+    {{ form_start(formSearch, {'attr': {'id': 'search-form', 'class': ''} }) }}
         {# Barre de recherche #}
         {{ form_row(formSearch.search) }}
         {# Choix des modules #}
@@ -37,6 +37,16 @@
     <a class="arrow-toggle-filters inline-flex">FERMER FILTRES</a>
     
 </button>
-
-
 </div>
+
+<script>
+    var mobileToggleFilters = document.getElementById('mobileToggleFilters');
+    var searchFilterContainer = document.getElementById('searchFilterContainer')
+    
+    function mobileToggleFiltersFn(){
+        searchFilterContainer.classList.toggle("mobile-active")
+        document.getElementById('search-form').classList.toggle("mobile-active")
+    }
+
+    mobileToggleFilters.addEventListener("click", mobileToggleFiltersFn);
+</script>

@@ -201,8 +201,11 @@ const containerForm = document.getElementById("form-spot-id");
                 // Note: De même, ajustez le texte du bouton si nécessaire
             }
         }
-        // écouteurs d'événement:
-        toggleForm.addEventListener("click", toggleContainer);
+		// Si l'utilisateur est connecté, on écoute l'event click sur le toggleContainer
+		if(IS_USER_LOGGED_IN){
+			// écouteurs d'événement:
+			toggleForm.addEventListener("click", toggleContainer);
+		}
         
 //fonction pour récupérer la pos à partir de l'adresse entrée dans le formulaire de Spot (SpotType)
 function getPosByAdress() {
