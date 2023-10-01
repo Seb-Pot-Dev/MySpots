@@ -152,12 +152,11 @@
             </style>
             <!-- NAV BAR MOBILE -->
             <div id="mySidenav" class="sidenav">
-                <div class="arrow-container">
+                <a id="nav-close-btn" href="#" class="arrow-container ">
                     <div class="arrow-left">
                         <div class="arrow-body"></div>
                     </div>
-                </div>
-                <a id="nav-close-btn" href="#" class="close">×</a>
+                </a>
                 <ul>
                         <li><a href="{{ path('app_home') }}">Acceuil</a></li>
                     {% if app.user %}

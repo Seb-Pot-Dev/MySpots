@@ -22,7 +22,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.Default.css" />
 </head>
-
+{% set filtersComponent %}
+    {% include 'component/_filters.html.twig' %}
+{% endset %}
 
     <div id="global-map" class="">
     <div id="mobile-duo">
@@ -42,7 +44,7 @@
         <button id="layer-3" class="choose-layer-item">Classic</button>
     </div>
     <!-- >Inclure les filtres -->
-    {% include 'component/_filters.html.twig' %}
+    {{ filtersComponent }}
     <!-- ////////////////////////////////////////////////////////////////// -->
 
     {% if app.user %}  
@@ -154,6 +156,14 @@
             </a>
         </div>
     </div>
+</div>
+{# A FINIR ICI 
+    Dans la div: 
+    - Afficher le formulaire de tri 
+    - Afficher le formulaire d'ajout
+ #}
+<div id="map-options-mobile">
+    {{ filtersComponent }}
 </div>
 {% endblock %}
 

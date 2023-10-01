@@ -81,9 +81,10 @@ img.logo-strasspot-homepage{
 .page-width{
     /* margin:0 1.5rem; */
 }
-
-@media (min-width: 1024px) {
-    .page-width{
-        margin: 0 7rem;
-    }
+.head-show-profile{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
+

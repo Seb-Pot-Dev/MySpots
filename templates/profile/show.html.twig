@@ -4,104 +4,109 @@
 
 {% block body %}
 <link rel="stylesheet" href="{{ asset('css/boxes-cards.css') }}">
+<div class="content-padding-top">
 
-<div class="flex justify-center">
-Détail du profil de {{ user.pseudo }}: 
-</div>
-<div class="my-profile-container flex justify-center gap-4">
-    <div class="my-box">
-        <div class="box-cut"></div>
-            <div class="flex-col justify-between">
-                {# Spots favoris #}
-                <h2 class="text-xl mb-6">Spots favoris</h2>
-                <ul class="list-container">
-                    {% for spot in user.favoriteSpots %}
-                        <li>
-                            <a style="color: var(--text-color);" href="{{ path('show_spot', {'idSpot': spot.id}) }}">
-                                {{spot.name}}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+    <div class="head-show-profile">
+        <h4 class="text-xl">Détail du profil</h4>
+        <p class="text-2xl"> {{ user.pseudo }}: </p>
     </div>
+
+
+    <div class="my-profile-container flex justify-center gap-4">
     <div class="my-box">
-        <div class="box-cut"></div>
-            <div class="flex-col justify-between">
-                {# Spots ajoutés #}
-                <h2 class="text-xl mb-6">Spots ajoutés</h2>
-                <ul class="list-container">
-                    {% for spot in user.addedSpots %}
-                        <li>
-                            <a style="color: var(--text-color);" href="{{ path('show_spot', {'idSpot': spot.id}) }}">
-                                {{spot.name}}
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-    </div>
-    <div class="my-box">
-        <div class="box-cut"></div>
-            <div class="flex-col justify-between">
-                {# Spots favoris #}
-                <h2 class="text-xl mb-6">Infos générales</h2>
-                
-                <div>
-                    <h3>Nombre de message : {{ user.comments | length }}</h3>
+            <div class="box-cut"></div>
+                <div class="flex-col justify-between">
+                    {# Spots favoris #}
+                    <h2 class="text-xl mb-6">Infos générales</h2>
                     
-                        {# Récupère le timestamp de la dernière activité de l'utilisateur #}
-                            {% set lastActivityTimestamp = user.registrationDate.timestamp %}
-                            {# Récupère le timestamp actuel #}
-                            {% set currentTimestamp = date().timestamp %}
-                            {# Calcule la différence en secondes entre le moment actuel et la dernière activité #}
-                            {% set intervalInSeconds = currentTimestamp - lastActivityTimestamp %}
-                            {# Définit le nombre de secondes dans une minute #}
-                            {% set secondsInMinute = 60 %}
-                            {# Définit le nombre de secondes dans une heure #}
-                            {% set secondsInHour = 60 * secondsInMinute %}
-                            {# Définit le nombre de secondes dans un jour #}
-                            {% set secondsInDay = 24 * secondsInHour %}
-                            {# Définit le nombre de secondes dans un mois (approximatif) #}
-                            {% set secondsInMonth = 30 * secondsInDay %}
-                            {# Définit le nombre de secondes dans une année (approximatif) #}
-                            {% set secondsInYear = 365 * secondsInDay %}
-                            {# Calcule le nombre de minutes restantes après avoir retiré les heures, jours, etc. #}
-                            {% set minutes = ((intervalInSeconds % secondsInHour) / secondsInMinute) | round(0, 'floor') %}
-                            {# Calcule le nombre d'heures restantes après avoir retiré les jours, mois, etc. #}
-                            {% set hours = ((intervalInSeconds % secondsInDay) / secondsInHour) | round(0, 'floor') %}
-                            {# Calcule le nombre de jours restants après avoir retiré les mois, années, etc. #}
-                            {% set days = ((intervalInSeconds % secondsInMonth) / secondsInDay) | round(0, 'floor') %}
-                            {# Calcule le nombre de mois restants après avoir retiré les années #}
-                            {% set months = ((intervalInSeconds % secondsInYear) / secondsInMonth) | round(0, 'floor') %}
-                            {# Calcule le nombre total d'années #}
-                            {% set years = (intervalInSeconds / secondsInYear) | round(0, 'floor') %}
+                    <div>
+                        <h3>Nombre de message : {{ user.comments | length }}</h3>
+                        
+                            {# Récupère le timestamp de la dernière activité de l'utilisateur #}
+                                {% set lastActivityTimestamp = user.registrationDate.timestamp %}
+                                {# Récupère le timestamp actuel #}
+                                {% set currentTimestamp = date().timestamp %}
+                                {# Calcule la différence en secondes entre le moment actuel et la dernière activité #}
+                                {% set intervalInSeconds = currentTimestamp - lastActivityTimestamp %}
+                                {# Définit le nombre de secondes dans une minute #}
+                                {% set secondsInMinute = 60 %}
+                                {# Définit le nombre de secondes dans une heure #}
+                                {% set secondsInHour = 60 * secondsInMinute %}
+                                {# Définit le nombre de secondes dans un jour #}
+                                {% set secondsInDay = 24 * secondsInHour %}
+                                {# Définit le nombre de secondes dans un mois (approximatif) #}
+                                {% set secondsInMonth = 30 * secondsInDay %}
+                                {# Définit le nombre de secondes dans une année (approximatif) #}
+                                {% set secondsInYear = 365 * secondsInDay %}
+                                {# Calcule le nombre de minutes restantes après avoir retiré les heures, jours, etc. #}
+                                {% set minutes = ((intervalInSeconds % secondsInHour) / secondsInMinute) | round(0, 'floor') %}
+                                {# Calcule le nombre d'heures restantes après avoir retiré les jours, mois, etc. #}
+                                {% set hours = ((intervalInSeconds % secondsInDay) / secondsInHour) | round(0, 'floor') %}
+                                {# Calcule le nombre de jours restants après avoir retiré les mois, années, etc. #}
+                                {% set days = ((intervalInSeconds % secondsInMonth) / secondsInDay) | round(0, 'floor') %}
+                                {# Calcule le nombre de mois restants après avoir retiré les années #}
+                                {% set months = ((intervalInSeconds % secondsInYear) / secondsInMonth) | round(0, 'floor') %}
+                                {# Calcule le nombre total d'années #}
+                                {% set years = (intervalInSeconds / secondsInYear) | round(0, 'floor') %}
 
-                            <p>
-                            Membre depuis
-                                {% if years > 0 %}
-                                    {{ years }} années, 
-                                {% endif %}
-                                {% if months > 0 %}
-                                    {{ months }} mois, 
-                                {% endif %}
-                                {% if days > 0 %}
-                                    {{ days }} jours
-                                {% endif %}
-                                {% if days < 0 %}
-                                    ,
-                                {% endif %}
-                                {% if days < 0 %}
-                                    {{ hours }} heures et 
-                                {% endif %}
-                                {% if days < 0 %}
-                                    {{ minutes }} minutes.
-                                {% endif %}
-                                </p>
+                                <p>
+                                Membre depuis
+                                    {% if years > 0 %}
+                                        {{ years }} années, 
+                                    {% endif %}
+                                    {% if months > 0 %}
+                                        {{ months }} mois, 
+                                    {% endif %}
+                                    {% if days > 0 %}
+                                        {{ days }} jours
+                                    {% endif %}
+                                    {% if days < 0 %}
+                                        ,
+                                    {% endif %}
+                                    {% if days < 0 %}
+                                        {{ hours }} heures et 
+                                    {% endif %}
+                                    {% if days < 0 %}
+                                        {{ minutes }} minutes.
+                                    {% endif %}
+                                    </p>
+                    </div>
                 </div>
-            </div>
+        </div>
+        <div class="my-box">
+            <div class="box-cut"></div>
+                <div class="flex-col justify-between">
+                    {# Spots favoris #}
+                    <h2 class="text-xl mb-6">Spots favoris</h2>
+                    <ul class="list-container">
+                        {% for spot in user.favoriteSpots %}
+                            <li>
+                                <a style="color: var(--text-color);" href="{{ path('show_spot', {'idSpot': spot.id}) }}">
+                                    {{spot.name}}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+        </div>
+        <div class="my-box">
+            <div class="box-cut"></div>
+                <div class="flex-col justify-between">
+                    {# Spots ajoutés #}
+                    <h2 class="text-xl mb-6">Spots ajoutés</h2>
+                    <ul class="list-container">
+                        {% for spot in user.addedSpots %}
+                            <li>
+                                <a style="color: var(--text-color);" href="{{ path('show_spot', {'idSpot': spot.id}) }}">
+                                    {{spot.name}}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+        </div>
+        
     </div>
 </div>
-
 
 {% endblock %}

@@ -8,8 +8,9 @@
 <link rel="stylesheet" href="{{ asset('css/carrousel.css') }}">
 <link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
 <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
+<link rel="stylesheet" href="{{ asset('css/showSpot_mobile.css') }}">
 
-<div class="mx-80">
+<div id="main-show">
     <!--nom du spot-->
     <h1 class="show-spot-title">
         {{ spot.name }} par 
@@ -59,7 +60,6 @@
                 {% endif %}
                 <!--affichage de la avgNote-->
                 ({{spot.avgNote|number_format(2, '.', '')}})
-                </div>
                 <div class="show-notation-count">
                 ({{spot.notations|length}} évaluations)
                 </div>
@@ -211,6 +211,8 @@
 
 
     <!--commentaires du spot-->
+    <div id="comment-section" class="mt-4">
+    
     <p>Commentaires:</p>
     {% if spot.comments|length >= 1 %}
         <!-- boucle sur les commentaires du spot, triés par date -->
@@ -243,6 +245,7 @@
     {% else %}
     <p>Veuillez vous connecter pour pouvoir commenter un spot.</p>
     {% endif %}
+</div>
 </div>
 <script>
 

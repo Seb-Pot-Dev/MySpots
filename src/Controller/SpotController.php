@@ -45,17 +45,17 @@ class SpotController extends AbstractController
         //récupère tout les spots de la BDD pour les marqueurs sur la carte
         $allSpots = $doctrine->getRepository(Spot::class)->findBy([], ['name' => 'ASC']);
 
-        // Requête pour la pagination des spots***********************************************************************************************************************
-        $spotsQuery = $doctrine->getRepository(Spot::class)
-            ->createQueryBuilder('s')
-            ->orderBy('s.name', 'ASC')
-            ->getQuery();
+        // // Requête pour la pagination des spots***********************************************************************************************************************
+        // $spotsQuery = $doctrine->getRepository(Spot::class)
+        //     ->createQueryBuilder('s')
+        //     ->orderBy('s.name', 'ASC')
+        //     ->getQuery();
 
-        $paginatedSpots = $paginator->paginate(
-            $spotsQuery, //requete a paginer
-            $request->query->getInt('page', 1), // 1= numéro de page pas défaut
-            5 // Nombre d'elements par page
-        );
+        // $paginatedSpots = $paginator->paginate(
+        //     $spotsQuery, //requete a paginer
+        //     $request->query->getInt('page', 1), // 1= numéro de page pas défaut
+        //     5 // Nombre d'elements par page
+        // );
 
         // Gestion des FILTRES ******************************************************************************************************
         // initialisation d'un variable string vide
@@ -122,75 +122,65 @@ class SpotController extends AbstractController
 
     /*AJOUT DE SPOT*********************************** */
     
-    //récupérer la liste de tout les modules
-    $modules = $doctrine->getRepository(Module::class)->findAll();
-    //créé un formulaire qui se repose sur le builder (qui se repose lui mm sur les propriétés de la classe) et assigner la liste de tout les modules pour les checkboxs
-    $form = $this->createForm(SpotType::class, $spot, [
-        'modules' => $modules
-    ]);
+    // Récupérer la liste de tous les modules
+$modules = $doctrine->getRepository(Module::class)->findAll();
 
-    // Vérifier si le client est connecté avec un compte
-    if($user){
-        //lorsqu'une requete est soumise, récupère les données
-        $form->handleRequest($request);
-        //assigne les donnée du formulaire soumis à une variable 
+// Créer un formulaire basé sur SpotType et passer les modules
+$form = $this->createForm(SpotType::class, $spot, [
+    'modules' => $modules
+]);
+
+// Initialiser la variable pour vérifier si le spot est nouveau
+$isNew = !$spot;
+
+// Vérifier si le client est connecté avec un compte
+if($user){
+    // Gérer la requête du formulaire
+    $form->handleRequest($request);
+
+    // Vérifier si le formulaire est soumis et valide
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Assigner les données du formulaire à une variable
         $newspot = $form->getData();
+        
+        // Traiter les images
+        // On récupère les images
+        $images = $form->get('pictures')->getData();
 
-        // Pour vérifier si le spot existe déjà (modification) ou si il est nouveau (création)
-        //défini isNew comme null
-        $isNew = null;
-        //si mon spot n'existe pas, créé un nouveau spot.
-        if (!$spot) {
-            $spot = new Spot();
-            //initialisation d'une variable $isNew qui permet plus tard de vérifier si le spot viens d'être créé
-            $isNew = true;
+        foreach ($images as $image) {
+            // On défini le dossier de destination
+            $folder = 'photos-spot';
+
+            // On appel le service d'ajout
+            $fichier = $pictureService->add($image, $folder, 300, 300);
+
+            // On instancie un nouvel objet image
+            $img = new Picture();
+            // On lui assigne un nom (renvoyé par le service)
+            $img->setName($fichier);
+            $img->setSpot($newspot);
+
+            // ajoute l'image au spot
+            $newspot->addPicture($img);
         }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // assigne les donnée du formulaire soumis à une variable 
-            $newspot = $form->getData();
 
-            // On récupère les images
-            $images = $form->get('pictures')->getData();
-
-            foreach ($images as $image) {
-                // On défini le dossier de destination
-                $folder = 'photos-spot';
-
-                // On appel le service d'ajout
-                $fichier = $pictureService->add($image, $folder, 300, 300);
-
-                // On instancie un nouvel objet image
-                $img = new Picture();
-                // On lui assigne un nom (renvoyé par le service)
-                $img->setName($fichier);
-                $img->setSpot($newspot);
-
-                // ajoute l'image au spot
-                $newspot->addPicture($img);
-            }
-
-            //Si le spot vient d'être créé, alors ->setIsValidated()+CreationDate()+Author()
-            if ($isNew) {
-                //Pour définir isValidated comme étant false
-                $newspot->setIsValidated(false);
-
-                // Pour définir la date/heure actuelle comme date d'inscription
-                $now = new \DateTime();
-                $newspot->setCreationDate($now);
-
-                //Pour définir l'author du spot comme étant le user qui soumet le formulaire
-                $newspot->setAuthor($user);
-            }
-
-            //prepare
-            $entityManager->persist($newspot);
-            //execute
-            $entityManager->flush();
-            //refresh la page
-            return $this->redirectToRoute('app_spot');
+        // Configurer les propriétés du nouveau spot si nécessaire
+        if ($isNew) {
+            $newspot->setIsValidated(false)
+                    ->setCreationDate(new \DateTime())
+                    ->setAuthor($user);
         }
+        
+        // Préparer et exécuter la persistance des données
+        $entityManager->persist($newspot);
+        $entityManager->flush();
+        
+        // Rediriger vers la liste des spots
+        return $this->redirectToRoute('app_spot');
     }
+}
+
         /********************** FIN AJOUT DE SPOT*********************************** */
 
         // Utilise la méthode render héritée de AbstractController pour retourner une réponse HTTP.

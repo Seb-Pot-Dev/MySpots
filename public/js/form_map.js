@@ -1,37 +1,11 @@
-// /*Gestion de l'ouverture/fermeture du formulaire d'ajout de spots*/
+// On sélectionne l'élément avec l'id "mobileToggleFilters"
+const toggleButton = document.getElementById('mobileToggleFilters');
 
-// // Déclarations des variables 
-// // toggle switch
-// var switchFormSpot = document.querySelector('.toggle-checkbox');
-// // click map
-// var addSpotByClickOnMap = document.getElementById("addSpotByClickOnMap");
-// // le formulaire 
-// var formSpot = document.getElementById("form-spot-id");
-// // Le bouton switch
-// var switchFormSpot = document.getElementById("toggle-wrapper-id");
-
-// // Déclaration des fonctions
-//   // Ouvrir le formulaire
-//   function openFormSpot() {
-//     formSpot.classList.toggle("active");
-//     switchFormSpot.classList.toggle("active");
-//   }
-//   // Fermer le formulaire
-//   function closeFormSpot() {
-//     formSpot.classList.toggle("active");
-//     switchFormSpot.classList.toggle("active");
-//   }
-
-// // Ecouteurs d'évenements
-//   //si click sur switchFormSpot, ouvrir le formulaire de spot
-//   switchFormSpot.addEventListener('click', openFormSpot);
-
+// Ajout d'un écouteur d'événements pour réagir au clic sur l'élément
+toggleButton.addEventListener('click', function() {
+  // On sélectionne l'élément avec l'id "map-options-mobile"
+  const mapOptions = document.getElementById('map-options-mobile');
   
-//   // Défini de l'élément "formAddSpotCloseButton"
-//   var formAddSpotCloseButton = document.getElementById("closeFormSpotCross");
-  
-//   //si click sur closeFormSpotCross, fermer le formulaire de spot
-//   formAddSpotCloseButton.addEventListener('click', closeFormSpot)
-  
-
-
+  // On bascule la classe "active" sur cet élément
+  mapOptions.classList.toggle('active');
+});

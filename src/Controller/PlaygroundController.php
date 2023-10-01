@@ -14,4 +14,10 @@ class PlaygroundController extends AbstractController
         return $this->render('playground/index.html.twig', [
         ]);
     }
+    #[Route('/playground_2', name: 'playground_2')]
+    public function playground_2(): Response
+    {
+        return $this->render('playground/playground_2.html.twig', [
+        ]);
+    }
 }

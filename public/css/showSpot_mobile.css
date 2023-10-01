@@ -1,0 +1,67 @@
+@media screen and (max-width: 768px) {
+    #main-show{
+        margin: unset;
+        padding-top: 50px;
+        margin: 0 5px;
+    }
+    .show-spot-title{
+        display: flex;
+        font-family: SkateFont2;
+        font-size: 1.5rem;
+        justify-content: center;
+    }
+    .show-spot-global{
+    flex-direction: column;
+    }
+    .show-description{
+        font-size: 0.75rem;
+    }
+    #carrousel{
+        width: 100%;
+    }
+    #carrouselContainer{
+        margin-left: -25%;
+    }
+    .delete-button{
+        margin-left: 25%;
+    }
+    .show-contribute{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap:10px;
+    }
+    .show-contribute-picture, .show-contribute-note{
+        width: 100%;
+    }
+    .show-contribute-note{
+        display: flex;
+        justify-content: center;
+    }
+    form{
+        margin: 0 0.25rem;
+        padding: 0.5rem;
+        }
+    #picture{
+        overflow: auto;
+    }
+    select#notation_note{
+        padding: 0.5rem;
+        background-color: var(--menu-background);
+        border: 1px solid black;
+        border-radius: 12px;
+        margin: 0 1.5rem;
+    }
+    button[type="submit"]{
+        padding: 0.5rem;
+    }
+    .show-spot-infos{
+        display: flex;
+        justify-content: center;
+    }
+    .show-description{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

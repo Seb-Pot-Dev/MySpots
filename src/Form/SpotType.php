@@ -23,9 +23,15 @@ class SpotType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('adress' , TextType::class)
-            ->add('cp', TextType::class)
-            ->add('city', TextType::class)
+            ->add('adress' , TextType::class, [
+                'required' => false
+            ])
+            ->add('cp', TextType::class, [
+                'required' => false
+            ])
+            ->add('city', TextType::class, [
+                'required' => false
+            ])
             ->add('lat', NumberType::class)
             ->add('lng', NumberType::class)
             //affiché des checkboxs non obligatoire avec plusieurs choix 

@@ -138,3 +138,9 @@ table td ul li {
     justify-content: center;
     flex-direction: column;
 }
+#main-show{
+    margin: 0 20rem;
+}
+.comment-box{
+    background-color: rgba(212, 212, 212, 0.273);
+}

@@ -54,13 +54,12 @@
         padding: 0 10px 100px 10px;
     }
     .mobile-active{
-        height: 100vh;
-        width: 100vw;
         display: inherit!important;
         z-index: 10000;
     }
     .search-filters-container.mobile-active{
         top: 80px;
+        left: unset;
     }
     #list-spots-desktop-global.mobile-active{
         display: none;
@@ -68,4 +67,18 @@
     #search-form{
         background-color: grey;
     }
+    .my-profile-container{
+        flex-direction: column;
+        align-items: center;
+    }
+    .content-padding-top{
+        padding-top: 50px;
+    }
+    form{
+        padding: 0.5rem;
+    }
+    form label{
+        margin-bottom: unset;
+    }
+
   }

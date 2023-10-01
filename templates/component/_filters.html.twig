@@ -1,52 +1,44 @@
-<div class="search-filters-container rounded" id="searchFilterContainer">
-    {{ form_start(formSearch, {'attr': {'id': 'search-form', 'class': ''} }) }}
-        {# Barre de recherche #}
-        {{ form_row(formSearch.search) }}
-        {# Choix des modules #}
-        <h4>Filtrer par module</h4>
-            {% for module in formSearch.moduleFilter %}
-                <label class="flex items-baseline mx-4">
-                    {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
-                    {{ form_label(module) }}
-                </label>
-            {% endfor %}
-        <h4>Autres criteres</h4>
-        <label class="flex items-baseline mx-4">
-            {{ form_widget(formSearch.official, {'attr': {'class': 'mr-2'}}) }}
-            {{ form_label(formSearch.official) }}
-        </label>
-        <label class="flex items-baseline mx-4">
-            {{ form_widget(formSearch.covered, {'attr': {'class': 'mr-2'}}) }}
-            {{ form_label(formSearch.covered) }}
-        </label>
-        <label class="flex items-baseline mx-4">
-            {{ form_widget(formSearch.onlyValidated, {'attr': {'class': 'mr-2'}}) }}
-            {{ form_label(formSearch.onlyValidated) }}
-        </label>
-        <label class="flex items-baseline  filter-button">
-            {{ form_label(formSearch.order) }}
-            {{ form_widget(formSearch.order, {'attr': {'class': 'mr-2'}}) }}
-        </label>
-        <div class="flex justify-between mt-4">
-            <button type="submit" class="filter-button-big">Rechercher</button>
-            <a href="{{ path('app_spot') }}" class="btn btn-secondary filter-button-big">Reinitialiser</a>
-        </div>
-    {{ form_end(formSearch) }}
-<button id="toggleFilters">
-    
-    <a class="arrow-toggle-filters inline-flex">FERMER FILTRES</a>
-    
-</button>
+
+<div class="filters-global">
+    <div class="search-filters-container rounded" id="searchFilterContainer">
+        {{ form_start(formSearch, {'attr': {'id': 'search-form', 'class': ''} }) }}
+            {# Barre de recherche #}
+            {{ form_row(formSearch.search) }}
+            {# Choix des modules #}
+            <h4>Filtrer par module</h4>
+                {% for module in formSearch.moduleFilter %}
+                    <label class="flex items-baseline mx-4">
+                        {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
+                        {{ form_label(module) }}
+                    </label>
+                {% endfor %}
+            <h4>Autres criteres</h4>
+            <label class="flex items-baseline mx-4">
+                {{ form_widget(formSearch.official, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(formSearch.official) }}
+            </label>
+            <label class="flex items-baseline mx-4">
+                {{ form_widget(formSearch.covered, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(formSearch.covered) }}
+            </label>
+            <label class="flex items-baseline mx-4">
+                {{ form_widget(formSearch.onlyValidated, {'attr': {'class': 'mr-2'}}) }}
+                {{ form_label(formSearch.onlyValidated) }}
+            </label>
+            <label class="flex items-baseline  filter-button">
+                {{ form_label(formSearch.order) }}
+                {{ form_widget(formSearch.order, {'attr': {'class': 'mr-2'}}) }}
+            </label>
+            <div class="flex justify-between mt-4">
+                <button type="submit" class="filter-button-big">Rechercher</button>
+                <a href="{{ path('app_spot') }}" class="btn btn-secondary filter-button-big">Reinitialiser</a>
+            </div>
+        {{ form_end(formSearch) }}
+        <button id="toggleFilters">
+        
+            <a class="arrow-toggle-filters inline-flex">FERMER FILTRES</a>
+        
+        </button>
+    </div>
 </div>
 
-<script>
-    var mobileToggleFilters = document.getElementById('mobileToggleFilters');
-    var searchFilterContainer = document.getElementById('searchFilterContainer')
-    
-    function mobileToggleFiltersFn(){
-        searchFilterContainer.classList.toggle("mobile-active")
-        document.getElementById('search-form').classList.toggle("mobile-active")
-    }
-
-    mobileToggleFilters.addEventListener("click", mobileToggleFiltersFn);
-</script>

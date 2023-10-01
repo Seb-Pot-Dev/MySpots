@@ -9,7 +9,7 @@ class PictureService
 {
     private $params;
 
-    public function add(UploadedFile $picture, ?string $folder = '', ?int $width = 250, ?int $height = 250)
+    public function add(UploadedFile $picture, ?string $folder = '', ?int $width = 800, ?int $height = 400)
     {
         // On donne un nouveau nom à l'image
         $fichier = md5(uniqid(rand(), true)) . '.webp';
@@ -84,7 +84,7 @@ class PictureService
 
         return $fichier;
     }
-    public function delete(UploadedFile $picture, ?string $folder = '', ?int $width = 250, ?int $height = 250)
+    public function delete(UploadedFile $picture, ?string $folder = '', ?int $width = 800, ?int $height = 400)
     {
         if($fichier !== 'default.webp')
         {
