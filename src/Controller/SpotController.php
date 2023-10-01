@@ -120,66 +120,66 @@ class SpotController extends AbstractController
         $arraySpotJson = json_encode($arraySpots);
 
 
-    /*AJOUT DE SPOT*********************************** */
-    
+/*AJOUT DE SPOT*********************************** */
+
     // Récupérer la liste de tous les modules
-$modules = $doctrine->getRepository(Module::class)->findAll();
+    $modules = $doctrine->getRepository(Module::class)->findAll();
 
-// Créer un formulaire basé sur SpotType et passer les modules
-$form = $this->createForm(SpotType::class, $spot, [
-    'modules' => $modules
-]);
+    // Créer un formulaire basé sur SpotType et passer les modules
+    $form = $this->createForm(SpotType::class, $spot, [
+        'modules' => $modules
+    ]);
 
-// Initialiser la variable pour vérifier si le spot est nouveau
-$isNew = !$spot;
+    // Initialiser la variable pour vérifier si le spot est nouveau
+    $isNew = !$spot;
 
-// Vérifier si le client est connecté avec un compte
-if($user){
-    // Gérer la requête du formulaire
-    $form->handleRequest($request);
+    // Vérifier si le client est connecté avec un compte
+    if($user){
+        // Gérer la requête du formulaire
+        $form->handleRequest($request);
 
-    // Vérifier si le formulaire est soumis et valide
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Assigner les données du formulaire à une variable
-        $newspot = $form->getData();
-        
-        // Traiter les images
-        // On récupère les images
-        $images = $form->get('pictures')->getData();
+        // Vérifier si le formulaire est soumis et valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Assigner les données du formulaire à une variable
+            $newspot = $form->getData();
+            
+            // Traiter les images
+            // On récupère les images
+            $images = $form->get('pictures')->getData();
 
-        foreach ($images as $image) {
-            // On défini le dossier de destination
-            $folder = 'photos-spot';
+            foreach ($images as $image) {
+                // On défini le dossier de destination
+                $folder = 'photos-spot';
 
-            // On appel le service d'ajout
-            $fichier = $pictureService->add($image, $folder, 300, 300);
+                // On appel le service d'ajout
+                $fichier = $pictureService->add($image, $folder, 300, 300);
 
-            // On instancie un nouvel objet image
-            $img = new Picture();
-            // On lui assigne un nom (renvoyé par le service)
-            $img->setName($fichier);
-            $img->setSpot($newspot);
+                // On instancie un nouvel objet image
+                $img = new Picture();
+                // On lui assigne un nom (renvoyé par le service)
+                $img->setName($fichier);
+                $img->setSpot($newspot);
 
-            // ajoute l'image au spot
-            $newspot->addPicture($img);
+                // ajoute l'image au spot
+                $newspot->addPicture($img);
+            }
+
+
+            // Configurer les propriétés du nouveau spot si nécessaire
+            if ($isNew) {
+                $newspot->setIsValidated(false)
+                        ->setCreationDate(new \DateTime())
+                        ->setAuthor($user);
+            }
+            
+            // Préparer et exécuter la persistance des données
+            $entityManager->persist($newspot);
+            $entityManager->flush();
+            
+            // Rediriger vers la liste des spots
+            return $this->redirectToRoute('app_spot');
         }
-
-
-        // Configurer les propriétés du nouveau spot si nécessaire
-        if ($isNew) {
-            $newspot->setIsValidated(false)
-                    ->setCreationDate(new \DateTime())
-                    ->setAuthor($user);
-        }
-        
-        // Préparer et exécuter la persistance des données
-        $entityManager->persist($newspot);
-        $entityManager->flush();
-        
-        // Rediriger vers la liste des spots
-        return $this->redirectToRoute('app_spot');
     }
-}
 
         /********************** FIN AJOUT DE SPOT*********************************** */
 
