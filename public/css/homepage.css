@@ -1,0 +1,7 @@
+
+.home-text-shadow{
+    text-shadow: 2px 2px 2px white; /* Ombre de texte */
+}
+@media screen and (max-width: 768px) {
+
+}

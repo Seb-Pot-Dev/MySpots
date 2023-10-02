@@ -25,13 +25,13 @@
 {% set filtersComponent %}
     {% include 'component/_filters.html.twig' %}
 {% endset %}
-
-    <div id="global-map" class="">
+<div id="global-map" class="">
     <div id="mobile-duo">
         <div id="mobile-choice-map"><p>Carte</p></div>
         <div id="mobile-choice-list"><p>Liste</p></div>
-        <a href="#" id="mobileToggleFilters">Voir filtres</a>
     </div>
+    
+    <a href="#" id="mobileToggleFilters">Voir filtres</a>
 
     <!-- AFFICHAGE DE LA MAP --> 
     <div id="map" class="">
@@ -49,79 +49,82 @@
 
     {% if app.user %}  
     <!-- formulaire ajout spot -->
-    <div id="form-add-spot-global">
-        <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
-        {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
-            <h1 class="mb-2 header-medium">Propose ton spot</h1>
-                <div class="flex gap-1">
-                    <div class="">
+    {% set formAddSpotComponent %}
+        <div id="form-add-spot-global">
+            <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
+            {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
+                <h1 class="mb-2 header-medium">Propose ton spot</h1>
+                    <div class="flex gap-1 i-want-inline-elem">
                         <div class="">
-                            {{ form_label(formAddSpot.name, 'Nom', {'label_attr': {'class': 'header-small'}}) }}
-                            {{ form_widget(formAddSpot.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                        </div>
-                        <div class="">
-                            {{ form_label(formAddSpot.description, 'Description', {'label_attr': {'class': 'header-small'}}) }}
-                            {{ form_widget(formAddSpot.description, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                        </div>
-                        <p class="header-small">Modules et Ressources</p>
-                        {# APRES LA PAUSE, VOIR POUR MODIFIER LA FONT FAMILLY DU LABEL MODULE PUIS FRONT SHOW SPOT #}
-                        {% for module in formAddSpot.modules %}
-                            <label class="flex items-center justify-between mx-4 body-small mb-0">
-                                {{ form_label(module, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
-                                {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
-                            </label>
-                        {% endfor %}
-                        <p class="header-small">Autres caracteristiques</p>
-                        <div class="flex items-baseline justify-between mx-4">
-                            {{ form_label(formAddSpot.covered, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
-                            {{ form_widget(formAddSpot.covered, {'attr': {'class': 'mr-2'}}) }}
-                        </div>
-                        <div class="flex items-baseline justify-between mx-4">
-                            {{ form_label(formAddSpot.official, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
-                            {{ form_widget(formAddSpot.official, {'attr': {'class': 'mr-2'}}) }}
-                        </div>
+                            <div class="">
+                                {{ form_label(formAddSpot.name, 'Nom', {'label_attr': {'class': 'header-small'}}) }}
+                                {{ form_widget(formAddSpot.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div>
+                            <div class="">
+                                {{ form_label(formAddSpot.description, 'Description', {'label_attr': {'class': 'header-small'}}) }}
+                                {{ form_widget(formAddSpot.description, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div>
+                            <p class="header-small">Modules et Ressources</p>
+                            {# APRES LA PAUSE, VOIR POUR MODIFIER LA FONT FAMILLY DU LABEL MODULE PUIS FRONT SHOW SPOT #}
+                            {% for module in formAddSpot.modules %}
+                                <label class="flex items-center justify-between mx-4 body-small mb-0">
+                                    {{ form_label(module, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
+                                    {{ form_widget(module, {'attr': {'class': 'mr-2'}}) }}
+                                </label>
+                            {% endfor %}
+                            <p class="header-small">Autres caracteristiques</p>
+                            <div class="flex items-baseline justify-between mx-4">
+                                {{ form_label(formAddSpot.covered, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
+                                {{ form_widget(formAddSpot.covered, {'attr': {'class': 'mr-2'}}) }}
+                            </div>
+                            <div class="flex items-baseline justify-between mx-4">
+                                {{ form_label(formAddSpot.official, null, {'label_attr' : {'class': 'body-large mb-0'}}) }}
+                                {{ form_widget(formAddSpot.official, {'attr': {'class': 'mr-2'}}) }}
+                            </div>
 
-                        {# <div class="">
-                            {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium '}}) }}
-                            {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                        </div> #}
-                    </div>
-                    <div>
-                        <div class="">
-                            {{ form_label(formAddSpot.pictures, 'Photos', {'label_attr': {'class': 'header-small'}}) }}
-                            {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            {# <div class="">
+                                {{ form_label(formAddSpot.modules, 'Modules', {'label_attr': {'class': 'block mb-2 font-medium '}}) }}
+                                {{ form_widget(formAddSpot.modules, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div> #}
+                        </div>
+                        <div>
+                            <div class="">
+                                {{ form_label(formAddSpot.pictures, 'Photos', {'label_attr': {'class': 'header-small'}}) }}
+                                {{ form_widget(formAddSpot.pictures, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div>
+                            
                         </div>
                         
-                    </div>
-                    
-                    <div>   
-                        <div class="">
-                        {{ form_label(formAddSpot.adress, 'Addresse', {'label_attr': {'class': 'header-small'}}) }}
-                        {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                        </div>
-                        <div class="">
-                            {{ form_label(formAddSpot.cp, 'Code postal', {'label_attr': {'class': 'header-small '}}) }}
-                            {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                        </div>
-                        <div class="">
-                            {{ form_label(formAddSpot.city, 'Ville', {'label_attr': {'class': 'header-small '}}) }}
-                            {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                        </div>
-                        <div class="">
-                            {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'header-small '}}) }}
-                            {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                        </div>
-                        <div class="">
-                            {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'header-small'}}) }}
-                            {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-                        </div>
+                        <div>   
+                            <div class="">
+                            {{ form_label(formAddSpot.adress, 'Addresse', {'label_attr': {'class': 'header-small'}}) }}
+                            {{ form_widget(formAddSpot.adress, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div>
+                            <div class="">
+                                {{ form_label(formAddSpot.cp, 'Code postal', {'label_attr': {'class': 'header-small '}}) }}
+                                {{ form_widget(formAddSpot.cp, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div>
+                            <div class="">
+                                {{ form_label(formAddSpot.city, 'Ville', {'label_attr': {'class': 'header-small '}}) }}
+                                {{ form_widget(formAddSpot.city, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div>
+                            <div class="">
+                                {{ form_label(formAddSpot.lat, 'Latitude', {'label_attr': {'class': 'header-small '}}) }}
+                                {{ form_widget(formAddSpot.lat, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div>
+                            <div class="">
+                                {{ form_label(formAddSpot.lng, 'Longitude', {'label_attr': {'class': 'header-small'}}) }}
+                                {{ form_widget(formAddSpot.lng, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+                            </div>
 
-                        <button class="header-small" id="add-user-pos">Utiliser ma position</button>
-                    </div> 
-                </div>
-            {# Le bouton submit est généré automatiquement  #}
-    {{ form_end(formAddSpot) }} 
-    </div>
+                            <button class="header-small" id="add-user-pos">Utiliser ma position</button>
+                        </div> 
+                    </div>
+                {# Le bouton submit est généré automatiquement  #}
+        {{ form_end(formAddSpot) }} 
+        </div>
+    {% endset %}
+{{ formAddSpotComponent }}
     {% else %}
         <p id="please-connect">Veuillez vous connecter pour ajouter un spot.</p>
     {% endif %}
@@ -164,6 +167,9 @@
  #}
 <div id="map-options-mobile">
     {{ filtersComponent }}
+    {{ formAddSpotComponent }}
+
+    
 </div>
 {% endblock %}
 
@@ -236,9 +242,7 @@ map.addLayer(markersCluster);
 </script>
 
 <!-- Si le User est connecté (sinon pas besoin d'importer ce JS) -->
-{% if app.user %}
 <script src="{{ asset('js/form_map.js') }}"></script>
-{% endif %}
 
 <!-- Lien vers le fichier JavaScript de Mapbox -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>

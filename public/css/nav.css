@@ -45,7 +45,7 @@
     height: 100%;
     width: 250px;
     position: fixed;
-    z-index: 10001;
+    z-index: 99999999999;
     top: 0;
     left: -250px;
     background-color: var(--menu-background);
