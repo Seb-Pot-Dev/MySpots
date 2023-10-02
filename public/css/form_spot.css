@@ -11,10 +11,9 @@
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
+    text-align: center;
     position: absolute;
-    top: 91px;
     z-index: 9999;
-    right: 520px;
     background-color: var(--transparent-background);
     border-radius: 0.25rem;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;

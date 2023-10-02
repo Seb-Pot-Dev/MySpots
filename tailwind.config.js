@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  
   content: [
     './templates/**/*.html.twig',
     './node_modules/tw-elements/dist/js/**/*.js'
@@ -9,6 +10,10 @@ module.exports = {
   },
   plugins: [
     require('tw-elements/dist/plugin')
+  ],
+  purge: [
+    './templates/**/*.html.twig',
+    './node_modules/tw-elements/dist/js/**/*.js'
   ],
 }
 
