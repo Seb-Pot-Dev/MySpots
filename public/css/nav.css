@@ -2,13 +2,19 @@
     max-width: 100px;
     height: 100%;
 }
-
+.desktop-nav{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: -webkit-fill-available;
+  z-index: 9999;
+  height: 80px;
+  }
 .desktop-nav{
     display: none;
     align-items: center;
     justify-content: space-between;
-    /* Couleur de la nav - Transparent si commenté */
-    /* background-color: var(--menu-background); */
+    background-color: var(--menu-background);
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -16,7 +22,9 @@
     -o-border-radius: 10px;
 }
 .main-nav{  
-    max-height: 50px;
+    margin: 1rem;
+    height: 100%;
+    background-color: var(--bg-color);
     display: flex;
     align-items: center;
     justify-content: space-between;

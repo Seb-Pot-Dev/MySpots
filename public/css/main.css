@@ -21,23 +21,26 @@
 
 /**********GESTION DES COULEURS ET MODE NUIT *************/
 :root {
-    --bg-color: white;          /* Couleur de fond */
     --text-color: #333;         /* Couleur du texte */
     --accent-color: #3b71ca;    /* Couleur d'accentuation */
-    --menu-background: #D4D4D4;
+    --menu-background: transparent;
     --transparent-background: rgba(255, 255, 255, 0.273);
+    --transparent-background-hover: rgba(255, 255, 255, 0.514);
     --text-color-opposite: white;
+    --button-hover: rgba(0, 0, 0, 0.096);
+    --element-background: rgba(0, 0, 0, 0.541);
 }
 
 /* Mode nuit */
 body.night-mode {
-    /* --bg-color: #1a1a1a; */
-    --bg-color: #222222;
     --text-color: white;
     --accent-color: #3b71ca;
-    --menu-background: #102A43;
+    --menu-background: transparent;
     --transparent-background: rgba(0, 0, 0, 0.273);
+    --transparent-background-hover: rgba(0, 0, 0, 0.514);
     --text-color-opposite: #333;
+    --button-hover: rgba(0, 0, 0, 0.096);
+
 
 }
 

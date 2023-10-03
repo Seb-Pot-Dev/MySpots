@@ -14,13 +14,8 @@
     width: 100vw;
     height: 100vh;
 }
-.desktop-nav{
-position: absolute;
-top: 0;
-left: 0;
-width: -webkit-fill-available;
-z-index: 9999;
-}
+
+
 
 /**********----BOUTTON---*************/
 /* Choix du tile layer */

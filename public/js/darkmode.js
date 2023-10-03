@@ -1,7 +1,9 @@
         // Définition des var
         const body = document.body;
 
-        const toggleButton = document.getElementById("toggle-night-mode");
+
+            const toggleButton = document.getElementById("toggle-night-mode");
+
 
         
 

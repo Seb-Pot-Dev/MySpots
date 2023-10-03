@@ -1,0 +1,27 @@
+.box-nav{
+    background: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    box-shadow: var(--text-color) -2px 4px 0px ;
+    
+    padding: 12px;
+    margin: 4px;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
+.box-nav:hover {
+
+    box-shadow: var(--text-color) -1px 2px 0px; /* ombre réduite */
+    transform: translateY(2px); /* déplacement vers le bas */
+    /* Optionnel : changer la couleur de fond */
+    background-color: var(--button-hover); 
+
+    }
+
+
+
+
+

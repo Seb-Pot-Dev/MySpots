@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* transform: rotate(90deg); */
+    perspective: 105px;
   }
   #skateboard .board {
     position: relative;
@@ -18,13 +18,17 @@
     width: 50px;
     height: 170px;
     border-radius: 25px;
-    background: var(--bg-color);
+    background-color: var(--transparent-background);
+    box-shadow: var(--text-color) 4px 3px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     border: 2px red solid;
   
+  }
+  .board:hover {
+    background-color: var(--text-color-oppsosite);
   }
   #skateboard .wheels {
     display: flex;
@@ -45,6 +49,7 @@
     border-radius: 2px;
   }
   .skateboard-wrapper {
+    perspective: 35px;
     width: 170px;
     margin-right: 6px;
     display: flex;
@@ -60,14 +65,11 @@
   
     /* Règle pour le hover */
     #skateboard:hover .skateboard-wrapper {
-        animation: simpleFlip 0.5s linear forwards;
-        -webkit-animation: simpleFlip 0.5s linear forwards;
+        animation: flip360 1.5s linear forwards;
+        -webkit-animation: flip360 1.5s linear forwards;
 }
     /* Règle pour le hover, uniquement lorsque la classe .no-animation n'est PAS présente */
-    #skateboard:not(.no-animation):hover .skateboard-wrapper {
-        animation: simpleFlip 2s ease ;
-        -webkit-animation: simpleFlip 2s ease ;
-}
+
   
     /* Animation pour le flip simple */
     @keyframes simpleFlip {
@@ -76,8 +78,11 @@
         }
         100% {
         transform: rotateY(360deg);
-        }
-
+        -webkit-transform: rotateY(360deg);
+        -moz-transform: rotateY(360deg);
+        -ms-transform: rotateY(360deg);
+        -o-transform: rotateY(360deg);
+}
     }
 
     /* Animation pour le 360 flip */
@@ -87,7 +92,11 @@
         }
         100% {
         transform: rotateX(360deg) rotateY(360deg);
-        }
+        -webkit-transform: rotateX(360deg) rotateY(360deg);
+        -moz-transform: rotateX(360deg) rotateY(360deg);
+        -ms-transform: rotateX(360deg) rotateY(360deg);
+        -o-transform: rotateX(360deg) rotateY(360deg);
+}
     }
     /* Classe pour appliquer le flip simple */
     .flip-simple {
@@ -106,10 +115,9 @@
     position: absolute;
     transform: translate(-50%, -50%); /* Pour centrer parfaitement le texte */
     font-size: 18px; /* Taille de la police du texte */
-    color: var(--text-color); /* Couleur du texte */
     text-align:center;
     transform: rotate(-90deg);
-    color: black;
+    color: var(--text-color);
   }
   .centered-container{
     display: flex;
