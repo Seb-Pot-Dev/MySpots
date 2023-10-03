@@ -16,9 +16,10 @@
     -o-border-radius: 10px;
 }
 .main-nav{  
+    max-height: 50px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .user-nav{
     display: flex;
@@ -33,6 +34,7 @@
 .mobile-nav{
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background-color: var(--menu-background);
     padding-left: 1rem;
     z-index: 1234567890;
@@ -47,12 +49,16 @@
     position: fixed;
     z-index: 99999999999;
     top: 0;
-    left: -250px;
+    right: -250px;
     background-color: var(--menu-background);
     padding-top: 1rem;
-    transition: left 0.5s ease;
+    transition: right 0.5s ease;
     color: var(--text-color-opposite);
-  }
+    -webkit-transition: right 0.5s ease;
+    -moz-transition: right 0.5s ease;
+    -ms-transition: right 0.5s ease;
+    -o-transition: right 0.5s ease;
+}
   
   /* Sidenav menu links */
   .sidenav a {
@@ -63,11 +69,48 @@
     transition: 0.3s;
     color: var(--text-color);
   }
-  .arrow-container{
-    display: flex!important;
-    height: 100px;
-  }
-  
+  /* Style de la flèche */
+.arrow-left {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.arrow-body {
+  width: 20px; /* Largeur du corps de la flèche */
+  height: 5px; /* Hauteur du corps de la flèche */
+  background-color: #000; /* Couleur du corps de la flèche */
+  margin-right: 10px; /* Espacement entre la tête et le corps de la flèche */
+  width: 100%;
+}
+
+.arrow-left::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid #000; /* Couleur de la tête de la flèche */
+}
+/* Style du conteneur */
+.arrow-container {
+  padding-left: 80%;
+  width: 100%; /* Vous pouvez modifier la largeur ici */
+  background-color: var(--background-color); /* Couleur de fond de la div */
+  transform: rotate(180deg);
+  display: flex!important;
+  height: 100px;
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#nav-open-btn{
+  margin-right: 6px;
+}
   .sidenav a:hover {
     color: #111;
   }
@@ -80,7 +123,7 @@
   
   /* Active class */
   .sidenav.active {
-    left: 0;
+    right: 0;
   }
   
   /* Close btn */

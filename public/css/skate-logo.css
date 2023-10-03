@@ -1,0 +1,132 @@
+#a-skateboard{
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 39px;
+    transform: rotate(90deg);
+}
+#skateboard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* transform: rotate(90deg); */
+  }
+  #skateboard .board {
+    position: relative;
+    right: -2px;
+    width: 50px;
+    height: 170px;
+    border-radius: 25px;
+    background: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border: 2px red solid;
+  
+  }
+  #skateboard .wheels {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: -8px;
+  }
+  
+  #skateboard .screw-holes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 8px;
+  }
+  #skateboard .screw-holes div {
+    background: var(--text-color);
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+  }
+  .skateboard-wrapper {
+    width: 170px;
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotateX(0deg) rotateY(0deg);
+    transition: transform 0.2s ease;
+    -webkit-transition: transform 0.2s ease;
+    -moz-transition: transform 0.2s ease;
+    -ms-transition: transform 0.2s ease;
+    -o-transition: transform 0.2s ease;
+}
+  
+    /* Règle pour le hover */
+    #skateboard:hover .skateboard-wrapper {
+        animation: simpleFlip 0.5s linear forwards;
+        -webkit-animation: simpleFlip 0.5s linear forwards;
+}
+    /* Règle pour le hover, uniquement lorsque la classe .no-animation n'est PAS présente */
+    #skateboard:not(.no-animation):hover .skateboard-wrapper {
+        animation: simpleFlip 2s ease ;
+        -webkit-animation: simpleFlip 2s ease ;
+}
+  
+    /* Animation pour le flip simple */
+    @keyframes simpleFlip {
+        0%{
+        transform: rotateY(0deg);
+        }
+        100% {
+        transform: rotateY(360deg);
+        }
+
+    }
+
+    /* Animation pour le 360 flip */
+    @keyframes flip360 {
+        0%{
+        transform: rotateX(0deg) rotateY(0deg);
+        }
+        100% {
+        transform: rotateX(360deg) rotateY(360deg);
+        }
+    }
+    /* Classe pour appliquer le flip simple */
+    .flip-simple {
+        animation: simpleFlip 1s ease ;
+        -webkit-animation: simpleFlip 1s ease ;
+  }
+    
+    /* Classe pour appliquer le 360 flip */
+    .flip-360 {
+        animation: flip360 1s ease forwards;
+        -webkit-animation: flip360 1s ease forwards;
+}
+  
+  /* Style pour le texte "MySpot" */
+  .myspot-text {
+    position: absolute;
+    transform: translate(-50%, -50%); /* Pour centrer parfaitement le texte */
+    font-size: 18px; /* Taille de la police du texte */
+    color: var(--text-color); /* Couleur du texte */
+    text-align:center;
+    transform: rotate(-90deg);
+    color: black;
+  }
+  .centered-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media screen and (max-width: 768px) {
+    .skateboard-wrapper {
+        width: unset;
+        margin: unset;
+    }
+    #skateboard .board {
+        right: 0px;
+    }
+}
+@media screen and (min-width: 768px) {
+  #a-skateboard{
+    padding-bottom: 0;
+  }
+}

@@ -3,7 +3,13 @@
     position: relative;
     background-color:var(--menu-background);
     padding: 20px;
+    max-width: 50%;
+    overflow: scroll;
 }
+.my-box {
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+}
+  
 .box-cut{
     border-left: 1.25rem solid var(--menu-background);
     border-top: 1.25rem solid var(--bg-color);
@@ -22,6 +28,9 @@
 .list-container{
     border: 2px solid black;
     border-radius: 4px;
+    max-height: 400px;
+    overflow: scroll;
+    
 }
 .list-container li{
     padding: 4px;
@@ -31,4 +40,19 @@
 }
 .list-container li:nth-child(odd){
     background-color: #FFF
+}
+.table-admin td, .table-admin th{
+    padding: 6px;
+}
+.table-admin tr:nth-child(odd){
+    border: 1px solid black;
+    background-color: rgba(211, 211, 211, 0.577);
+}
+.table-admin tr:nth-child(even){
+    border: 1px solid black;
+    background-color: rgb(146, 146, 146);
+}
+.table-admin-box{
+    max-height: 350px;
+    overflow: scroll;
 }
