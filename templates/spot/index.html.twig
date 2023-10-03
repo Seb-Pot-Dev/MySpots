@@ -123,8 +123,8 @@
                 {# Le bouton submit est généré automatiquement  #}
         {{ form_end(formAddSpot) }} 
         </div>
-    {% endset %}
 {{ formAddSpotComponent }}
+    {% endset %}
     {% else %}
         <p id="please-connect">Veuillez vous connecter pour ajouter un spot.</p>
     {% endif %}
@@ -167,7 +167,9 @@
  #}
 <div id="map-options-mobile">
     {{ filtersComponent }}
+    {% if app.user %}
     {{ formAddSpotComponent }}
+    {% endif %}
 
     
 </div>
