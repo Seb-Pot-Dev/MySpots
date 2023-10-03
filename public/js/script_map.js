@@ -1,6 +1,7 @@
 // défini une variable marqueur quelconque pour le click sur la carte
 let marqueur;
 
+
 // défini la manière dont la carte est centré et le zoom
 let map = L.map("map").setView([48.583328, 7.75], 14);
 
@@ -90,6 +91,9 @@ function success(userPosition) {
 		title: "Vous êtes ici",
 		alt: 'Marqueur "vous êtes ici"',
 	}).addTo(map);
+
+	map.setView([userLat, userLng], 14);
+
 
 	// Ajoute un cercle sur la carte représentant la précision de la position de l'utilisateur.
 	// L.circle([userLat, userLng], { radius: accuracy }).addTo(map);
