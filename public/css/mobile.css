@@ -7,24 +7,28 @@
         width: 100%;
         height: 30px;
         top: 50px;
+        background-color: rgba(128, 128, 128, 0.579);
     }
     #mobile-choice-map, #mobile-choice-list{
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 50%;
-        background-color: red;
-        color: white;
-        border-radius: 12px;
-        -webkit-border-radius: 12px;
-        -moz-border-radius: 12px;
-        -ms-border-radius: 12px;
-        -o-border-radius: 12px;
+        width: 50%;            
 }
-    #mobile-choice-list{
+    #mobile-choice-map.selectedLeft, #mobile-choice-list.selected{
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;        background-color: red;
 
-        background-color: blue;
+}
+    #mobile-choice-map.selectedLeft{
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+
     }
+    #mobile-choice-list.selected{
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+    
     #search-form, #toggleFormSpot, #toggleFilters, #list-spots-desktop-global {
         display: none;
     }
@@ -89,12 +93,14 @@
         flex-direction: column;
     }
     #map-options-mobile.active{
-        background-color: #ffffffb0;
-        display: flex ;
+        /*background-color: #ffffffb0;
+        */display: flex ;
         overflow: scroll;
         bottom: unset;
-        top: 100px
-    }
+        top: 80px;
+        padding-top: 25px;
+        
+}
     #map-options-mobile.active .filters-global{
         display: flex ;
     }
@@ -151,7 +157,22 @@
         color: black;
         background-color: #ffffff4f;
         border-radius: 16px;
-        padding: 4px;
-    }
+        padding: 4px 8px;    
+        border: 1px #ffffff4f solid;
 
+    }
+    #mobileToggleFilters.active{
+        background-color: var(--bg-color);
+        border: 1px rgba(128, 128, 128, 0.397) solid;
+
+    }
+    .search-filters-container{
+        box-shadow: none;
+    }
+    .mobile-margin-top{
+        padding-top: 60px;
+    }
+    .my-box{
+        width: 90%;
+    }
   }

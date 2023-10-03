@@ -211,29 +211,31 @@ span.current{
 
 /********OPTION MOBILE POUR LA MAP**********/
 @media screen and (max-width: 768px) {
-.footer{
-    display: none;
-}
-#map-options-mobile {
-    display: unset;
-    position: absolute;
-    z-index: 11000;
-    background-color: #0056b3;
-    width: 100%;
-    height: 80%;
-    right: 0;
-    bottom: -100%;
-    transition: bottom 0.2s;
-    -webkit-transition: bottom 0.2s;
-    -moz-transition: bottom 0.2s;
-    -ms-transition: bottom 0.2s;
-    -o-transition: bottom 0.2s;
-}
-#map-options-mobile.active{
-    bottom: 0;
-}
-#tarteaucitronIcon{
-    display: none!important;
-}
+    .footer{
+        display: none;
+    }
+    #map-options-mobile {
+        display: unset;
+        position: absolute;
+        z-index: 11000;
+        background-color: var(--bg-color);
+        background-image: url('../img/nnnoise.svg');
+        width: 100%;
+        height: 100%;
+        right: 0;
+        bottom: -100%;
+        transition: bottom 0.2s;
+        -webkit-transition: bottom 0.2s;
+        -moz-transition: bottom 0.2s;
+        -ms-transition: bottom 0.2s;
+        -o-transition: bottom 0.2s;
+    }
+    #map-options-mobile.active{
+        bottom: 0;
+    }
+    #tarteaucitronIcon{
+        display: none!important;
+    }
+    
 
 }

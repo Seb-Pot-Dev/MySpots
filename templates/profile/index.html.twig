@@ -3,45 +3,41 @@
 {% block title %}Hello ProfileController!{% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="{{ asset('css/boxes-cards.css') }}">
+<div class="mobile-margin-top">
 
-<div class="my-profile-container flex justify-center gap-4">
-    <div class="my-box">
-    <div class="box-cut"></div>
-        <div class="flex justify-between">
-            {# Mes infos #}
-            <h2 class="text-xl mb-6">Mes infos</h2>
-            {# Modifier mes infos #}
-            <a href="{{ path('edit_pseudo') }}"><i class="fa-regular fa-pen-to-square"></i></a>
+    <div class="my-profile-container flex justify-center gap-4">
+        <div class="my-box">
+            <div class="flex justify-between">
+                {# Mes infos #}
+                <h2 class="text-xl mb-6">Mes infos</h2>
+                {# Modifier mes infos #}
+                <a href="{{ path('edit_pseudo') }}"><i class="fa-regular fa-pen-to-square"></i></a>
+            </div>
+                <p class="mb-10" >Pseudo : {{ user.pseudo }}</p>
+                <p class="mb-10">Mail : {{ user.email }}</p>
+                <p class="mb-10">Role : {% if is_granted("ROLE_ADMIN") %} admin {% else %}normal {% endif %}</p>
+                <input type="submit" onclick="return confirm('Are you sure?')" />
+                <a href="{{ path('remove_account') }}" class="text-red-600" onclick="return confirm('Cette action est irréversible. Êtes-vous certain de vouloir supprimer votre compte?')">Supprimer le compte</a>
         </div>
-            <p class="mb-10" >Pseudo : {{ user.pseudo }}</p>
-            <p class="mb-10">Mail : {{ user.email }}</p>
-            <p class="mb-10">Role :{% if is_granted("ROLE_ADMIN") %} admin {% else %}normal {% endif %}</p>
-            <input type="submit" onclick="return confirm('Are you sure?')" />
-            <a href="{{ path('remove_account') }}" class="text-red-600" onclick="return confirm('Cette action est irréversible. Êtes-vous certain de vouloir supprimer votre compte?')">Supprimer le compte</a>
-    </div>
 
-    <div class="my-box">
-        <div class="box-cut"></div>
-        <h2 class="text-xl mb-6">Mes spots favoris</h2>
-        <ul class="list-container">
-            {% for spot in user.favoriteSpots %}
-            <li><a class="text-black" href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
-        
-    <div class="my-box">
-        <div class="box-cut"></div>
-
-        <h2 class="text-xl mb-6">Mes spots ajoutés</h2>
-        <ul class="list-container">
-            {% for spot in user.addedspots %}
+        <div class="my-box">
+            <h2 class="text-xl mb-6">Mes spots favoris</h2>
+            <ul class="list-container">
+                {% for spot in user.favoriteSpots %}
                 <li><a class="text-black" href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
-            {% endfor %}
-        </ul>
+                {% endfor %}
+            </ul>
+        </div>
+            
+        <div class="my-box">
+            <h2 class="text-xl mb-6">Mes spots ajoutés</h2>
+            <ul class="list-container">
+                {% for spot in user.addedspots %}
+                    <li><a class="text-black" href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </div>
-
     
 {% endblock %}

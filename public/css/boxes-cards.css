@@ -3,7 +3,12 @@
     position: relative;
     background-color:var(--menu-background);
     padding: 20px;
+    
 }
+.my-box {
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+}
+  
 .box-cut{
     border-left: 1.25rem solid var(--menu-background);
     border-top: 1.25rem solid var(--bg-color);
