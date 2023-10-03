@@ -18,6 +18,7 @@
             <link rel="stylesheet" type="text/css" href="{{ asset('css/footer.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/texts.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/boxes-cards.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ asset('css/skate-logo.css') }}">
             <link rel="stylesheet" media="screen and (max-width: 768px)" type="text/css" href="{{ asset('css/mobile.css') }}">
 
 
@@ -47,8 +48,28 @@
             <div class="desktop-nav m-4  ">
                 <div  class="main-nav">
                     <!-- LOGO - LIEN VERS HOME -->
-                    <a href="{{ path('app_home') }}">
-                    <img id="logo-strasspot" src="\img\SUJET_Cathedrale-pleine-scaled.png" alt="logo-StrasSpot">
+                    <a id="a-skateboard" href="{{ path('app_home') }}">
+                        <div  class="child" id="skateboard">
+                            <div class="skateboard-wrapper">
+                                <div class="board">
+                                    <div class="screw-holes">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                    <h5 class="centered-container">
+                                        <p class=" myspot-text">MySpot</p>
+                                    </h5>
+                                    <div class="screw-holes">
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </a>
                     <!-- LIEN VERS MAP -->
                     <a 
@@ -115,42 +136,7 @@
                     {% endif %}
                 </div>
             </div>
-            <style>
-            /* Style de la flèche */
-.arrow-left {
-    display: flex;
-    align-items: center;
-    width: 100%;
-}
 
-.arrow-body {
-    width: 20px; /* Largeur du corps de la flèche */
-    height: 5px; /* Hauteur du corps de la flèche */
-    background-color: #000; /* Couleur du corps de la flèche */
-    margin-right: 10px; /* Espacement entre la tête et le corps de la flèche */
-    width: 100%;
-}
-
-.arrow-left::before {
-    content: '';
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid #000; /* Couleur de la tête de la flèche */
-}
-/* Style du conteneur */
-.arrow-container {
-    padding-left: 80%;
-    width: 100%; /* Vous pouvez modifier la largeur ici */
-    background-color: var(--background-color); /* Couleur de fond de la div */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-            </style>
             <!-- NAV BAR MOBILE -->
             <div id="mySidenav" class="sidenav">
                 <a id="nav-close-btn" href="#" class="arrow-container ">
@@ -176,6 +162,29 @@
             </div>
         
         <div class="mobile-nav">
+            <a id="a-skateboard">
+                    <div  class="child" id="skateboard">
+                        <div class="skateboard-wrapper">
+                            <div class="board">
+                                <div class="screw-holes">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <h5 class="centered-container">
+                                    <p class=" myspot-text">MySpot</p>
+                                </h5>
+                                <div class="screw-holes">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </a>       
             <a href="#" id="nav-open-btn">
                 <span class="burger-icon">
                     <span></span>
@@ -183,9 +192,6 @@
                     <span></span>
                 </span>
             </a>
-            <a id="logo-container" href="{{ path('app_home') }}">
-                <img id="logo-strasspot" src="\img\SUJET_Cathedrale-pleine-scaled.png" alt="logo-StrasSpot">
-            </a>        
         </div>
 
         {% block body %}
@@ -206,6 +212,9 @@ crossorigin=""></script>
 <script src="{{ asset('js/menu_burger.js') }}"></script>
 {# Gestion du switch Dark/Night Mode #}
 <script src="{{ asset('js/darkmode.js') }}"></script>
+
+{# pour le click sur le logo skate #}
+<script src="{{ asset('js/skate-logo.js') }}"></script>
 
 
 

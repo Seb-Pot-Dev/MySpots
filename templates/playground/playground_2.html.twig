@@ -4,26 +4,27 @@
 
 {% block body %}
 <style>
-.skateboard-wrapper{
-}
+
 #skateboard {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
   transform: rotate(90deg);
-
-
+  scale: 0.75;
+  width: 50px;
+  height: 170px;
 }
 #skateboard .board {
   width: 50px;
   height: 170px;
   border-radius: 25px;
-  background: white;
+  background: var(--bg-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+  border: 2px red solid;
+
 }
 #skateboard .wheels {
   display: flex;
@@ -31,20 +32,14 @@
   justify-content: space-around;
   margin-right: -8px;
 }
-#skateboard .wheels div {
-  height: 20px;
-  width: 20px;
-  border-radius: 25px;
-  background: darkgray;
-  border: 5px solid grey;
-}
+
 #skateboard .screw-holes {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 8px;
 }
 #skateboard .screw-holes div {
-  background: black;
+  background: var(--text-color);
   width: 4px;
   height: 4px;
   border-radius: 2px;
@@ -60,11 +55,9 @@
 /* Style pour le texte "MySpot" */
 .myspot-text {
   position: absolute;
-  top: 50%; /* Positionnement au centre vertical */
-  left: 50%; /* Positionnement au centre horizontal */
   transform: translate(-50%, -50%); /* Pour centrer parfaitement le texte */
   font-size: 18px; /* Taille de la police du texte */
-  color: white; /* Couleur du texte */
+  color: var(--text-color); /* Couleur du texte */
   text-align:center;
   transform: rotate(-90deg);
   color: black;
@@ -73,13 +66,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%; 
 }
 </style>
-{# Ajouter ça au centre #}
-        {# <h5 class="centered-container">
-          <p class="hidden myspot-text">MySpot</p>
-        </h5> #}
+        
   <div class="child" id="skateboard">
     <div class="skateboard-wrapper">
       <div class="board">
@@ -89,7 +78,9 @@
           <div></div>
           <div></div>
         </div>
-
+        <h5 class="centered-container">
+          <p class=" myspot-text">MySpot</p>
+        </h5>
         <div class="screw-holes">
           <div></div>
           <div></div>
