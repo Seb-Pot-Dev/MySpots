@@ -1,7 +1,10 @@
 @media screen and (min-width: 768px){
     #mobile-duo{
         display: none;
-}
+    }
+    .my-profile-container{
+        margin-top: 100px;
+    }
 }
 @media screen and (max-width: 768px) {
     #mobile-duo{

@@ -32,10 +32,79 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SpotController extends AbstractController
 {
+    #[Route('/spot/add_spot/', name: 'add_spot')]
+    public function add_spot(ManagerRegistry $doctrine, Security $security, Request $request, Spot $spot = null): Response 
+    {
+        //on accède aux méthodes du manager de doctrine
+        $entityManager = $doctrine->getManager();
+        //Définition du User
+        $user = $security->getUser();
 
+        // Récupérer la liste de tous les modules
+        $modules = $doctrine->getRepository(Module::class)->findAll();
+
+        // Créer un formulaire basé sur SpotType et passer les modules
+        $form = $this->createForm(SpotType::class, $spot, [
+            'modules' => $modules
+        ]);
+
+        // Initialiser la variable pour vérifier si le spot est nouveau
+        $isNew = !$spot;
+
+        // Vérifier si le client est connecté avec un compte
+        if($user){
+            // Gérer la requête du formulaire
+            $form->handleRequest($request);
+
+            // Vérifier si le formulaire est soumis et valide
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Assigner les données du formulaire à une variable
+                $newspot = $form->getData();
+                
+                // Traiter les images
+                // On récupère les images
+                $images = $form->get('pictures')->getData();
+
+                foreach ($images as $image) {
+                    // On défini le dossier de destination
+                    $folder = 'photos-spot';
+
+                    // On appel le service d'ajout
+                    $fichier = $pictureService->add($image, $folder, 300, 300);
+
+                    // On instancie un nouvel objet image
+                    $img = new Picture();
+                    // On lui assigne un nom (renvoyé par le service)
+                    $img->setName($fichier);
+                    $img->setSpot($newspot);
+
+                    // ajoute l'image au spot
+                    $newspot->addPicture($img);
+                }
+
+
+                // Configurer les propriétés du nouveau spot si nécessaire
+                if ($isNew) {
+                    $newspot->setIsValidated(false)
+                            ->setCreationDate(new \DateTime())
+                            ->setAuthor($user);
+                }
+                
+                // Préparer et exécuter la persistance des données
+                $entityManager->persist($newspot);
+                $entityManager->flush();
+                
+            }
+        }
+        return $this->render('spot/add_spot.html.twig', [
+            'user' => $user,
+            'formAddSpot' => $form->createView(),
+            'modules' => $modules,
+        ]);
+    }
     #[Route("/spot/{id}/edit", name: "edit_spot")]
     #[Route("/spot", name: "app_spot")]
-    public function index(Security $security, ManagerRegistry $doctrine, SpotRepository $spotRepository, Spot $spot = null, Request $request, PictureService $pictureService, PaginatorInterface $paginator): Response
+    public function index(Security $security, ManagerRegistry $doctrine, SpotRepository $spotRepository, Spot $spot = null, Request $request, PictureService $pictureService): Response
     {
         // Définition des variables de base****************************************************************************************************************
         //on accède aux méthodes du manager de doctrine
@@ -367,4 +436,6 @@ class SpotController extends AbstractController
             return $this->redirectToRoute('app_spot');
         }
     }
+
+    
 }

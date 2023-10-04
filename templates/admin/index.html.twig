@@ -9,6 +9,8 @@
 
 <!-- Si l'utilisateur est connecté et qu'il a le ROLE_ADMIN-->
 {% if app.user and is_granted('ROLE_ADMIN') %}
+<div class="my-profile-container">
+
 <div class="flex justify-center">
     <h1>Hello {{ app.user.pseudo }}! ✅</h1>
 </div>
@@ -92,6 +94,6 @@
 {% endif %}
 </div>
 </div>
-
+</div>
 <script src="{{ asset('js/buttons.js') }}"></script>
 {% endblock %}
