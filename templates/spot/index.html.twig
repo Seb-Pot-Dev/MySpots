@@ -196,7 +196,7 @@
 <script>
     /**AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES*****************************/
     // Initialisation des variables
-const markersSpots = '{{ spots | raw }}';
+const markersSpots = '{{ spots | raw }}'.replace(/[\r\n]+/g, ' ');
 const jsonTabForMarkersSpots = JSON.parse(markersSpots);
 const customIcon = L.icon({
     iconUrl: 'https://cdn-icons-png.flaticon.com/512/5022/5022295.png',
