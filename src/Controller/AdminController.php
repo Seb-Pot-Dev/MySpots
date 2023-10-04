@@ -31,7 +31,7 @@ class AdminController extends AbstractController
                     $entityManager->flush();
     
                 }
-                return $this->redirectToRoute('app_admin');
+                return $this->redirectToRoute('app_spot');
         }else{
             return $this->redirectToRoute('app_home');
         }
