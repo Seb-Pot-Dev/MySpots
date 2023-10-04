@@ -1,8 +1,8 @@
-// défini une variable marqueur quelconque pour le click sur la carte
+// défini une variable marqueur quelconque pour le click sur la carte	
 let marqueur;
 
 
-// défini la manière dont la carte est centré et le zoom
+// défini la manière dont la carte est centrée et le zoom
 let map = L.map("map").setView([46.227638, 2.213749], 6);
 
 // Tile layer de base CLASSIC (white)
