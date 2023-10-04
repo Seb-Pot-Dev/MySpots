@@ -114,6 +114,11 @@ label#dark-mode-label {
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
 }
+label#dark-mode-label:hover{
+  box-shadow: var(--text-color) -1px 2px 0px;
+    transform: translateY(2px);
+    background-color: var(--button-hover);
+}
 label#dark-mode-label:after {
   content: "";
   width:18px;

@@ -27,12 +27,12 @@
 
 
        
-<div class="flex item-center justify-center">
+<div class="home-msg-global">
   <div
-    class="mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center absolute "
+    class="home-msg-first"
   >
-    <div class="mx-auto max-w-4xl text-center home-text-shadow">
-      <h1 class="text-3xl font-extrabold sm:text-5xl" style="1px 1px 0px #ffffff75">
+    <div class="home-msg-second home-text-shadow">
+      <h1 class="home-first-h1" style="1px 1px 0px #ffffff75">
         {% if app.user %}
           Content de te retrouver
         <strong class="font-extrabold text-red-700 sm:block">
@@ -40,7 +40,7 @@
         </strong>
           Alors on spotte quoi aujourd'hui ? 😎
         {% else %}
-        <p class=" text-red-700 drop-shadow-2xl">
+        <p class=" welcome-skate-spot">
           Bienvenu sur SkateSpots.
         </p>
         <strong class="font-extrabold sm:block">
@@ -56,25 +56,20 @@
       </p> #}
           
 
-      <div class="mt-8 flex flex-wrap justify-center gap-4">
+      <div class="mt-8 flex flex-wrap justify-center gap-4 home-box-no-shadow ">
       {% if app.user %}
         <a
         id="test-button"
-          class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700  hover:text-white focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
+          class=" block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700  hover:text-white focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
          href="{{ path('app_spot') }}"
         >
           Voir la carte
         </a>
-        <a
-          class="block w-full rounded bg-black/50 px-12 py-3 text-sm font-medium text-white/50 shadow hover:text-white hover:bg-black/75 focus:outline-none focus:ring active:bg-black sm:w-auto"
-          href="/about"
-        >
-          Learn More (🚧)</a>
-        </a>
+
       {% else %}
       
         <a
-          class="block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700  hover:text-white focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
+          class=" home-box-no-shadow block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700  hover:text-white focus:outline-none focus:ring active:bg-red-500 sm:w-auto"
          href="{{ path('app_spot') }}"
         >
           Voir la carte
@@ -86,12 +81,7 @@
         >
           Devenir membre (gratuit!)
         </a>
-        <a
-          class="block w-full rounded bg-black/50 px-12 py-3 text-sm font-medium text-white/50 shadow hover:text-white hover:bg-black/75 focus:outline-none focus:ring active:bg-black sm:w-auto"
-          href="/about"
-        >
-          Learn More (🚧)
-        </a>
+
       {% endif %}
       </div>
     </div>

@@ -1,13 +1,6 @@
 
 /* STYLE DE LA NAVBAR UNIQUEMENT SUR LA HOMEPAGE */
-.desktop-nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 98.5%;
-  /* background-color: rgba(255, 255, 255, 0.273); */
-  z-index: 9999;
-}
+
 
 .homepage-pseudo{
   color: white;
@@ -120,4 +113,52 @@ header{
       .content {
         padding-top: 100vh;
       }
-    
+      .home-text-shadow{
+        text-shadow: 2px 2px 2px white; /* Ombre de texte */
+    }
+
+  /********* STYLE DU MESSAGE HOME ***********/
+  .home-msg-global{
+    display: flex; 
+    justify-content: center; 
+  }
+
+  .home-msg-first{
+    position: absolute; 
+padding-left: 1rem;
+padding-right: 1rem; 
+padding-top: 8rem;
+padding-bottom: 8rem; 
+max-width: 1280px; 
+}
+
+.home-msg-second{
+  max-width: 56rem; 
+  text-align: center; 
+  margin: 0 auto;
+}
+h1.home-first-h1{
+  font-size: 1.875rem;
+  line-height: 2.25rem; 
+  font-weight: 800; 
+}
+p.welcome-skate-spot{
+  color: var(--accent-color); 
+}
+.home-box-no-shadow a{
+  text-shadow: none;
+}
+@media (min-width: 1024px) { 
+    .home-msg-first{
+      display: flex; 
+      align-items: center; 
+      height: 100vh; 
+    }
+ }
+
+@media (min-width: 640px) { 
+  .home-msg-first{
+    font-size: 3rem;
+    line-height: 1; 
+  }
+}

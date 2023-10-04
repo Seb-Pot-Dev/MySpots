@@ -22,7 +22,7 @@
 /**********GESTION DES COULEURS ET MODE NUIT *************/
 :root {
     --text-color: #333;         /* Couleur du texte */
-    --accent-color: #3b71ca;    /* Couleur d'accentuation */
+    --accent-color: #B91C1C;    /* Couleur d'accentuation */
     --background-color: white;
     --menu-background: lightgray;
     --transparent-background: rgba(255, 255, 255, 0.273);
@@ -35,7 +35,7 @@
 /* Mode nuit */
 body.night-mode {
     --text-color: white;
-    --accent-color: #3b71ca;
+    --accent-color: #B91C1C;
     --background-color: black;
     --menu-background: rgb(33, 33, 55);
     --transparent-background: rgba(0, 0, 0, 0.273);
