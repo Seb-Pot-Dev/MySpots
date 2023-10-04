@@ -14,7 +14,7 @@
     display: none;
     align-items: center;
     justify-content: space-between;
-    background-color: var(--menu-background);
+    /* background-color: var(--menu-background); */
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;

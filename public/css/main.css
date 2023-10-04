@@ -28,7 +28,7 @@
     --transparent-background: rgba(255, 255, 255, 0.273);
     --transparent-background-hover: rgba(255, 255, 255, 0.514);
     --text-color-opposite: white;
-    --button-hover: rgba(0, 0, 0, 0.096);
+    --button-hover: lightgray;
     --element-background: rgba(0, 0, 0, 0.541);
 }
 
@@ -41,7 +41,7 @@ body.night-mode {
     --transparent-background: rgba(0, 0, 0, 0.273);
     --transparent-background-hover: rgba(0, 0, 0, 0.514);
     --text-color-opposite: #333;
-    --button-hover: rgba(0, 0, 0, 0.096);
+    --button-hover: lightgray;
 
 
 }

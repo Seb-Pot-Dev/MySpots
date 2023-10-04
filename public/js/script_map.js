@@ -3,7 +3,7 @@ let marqueur;
 
 
 // défini la manière dont la carte est centré et le zoom
-let map = L.map("map").setView([48.583328, 7.75], 14);
+let map = L.map("map").setView([46.227638, 2.213749], 6);
 
 // Tile layer de base CLASSIC (white)
 var default_layer = L.tileLayer(
