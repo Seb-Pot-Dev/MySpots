@@ -1,9 +1,9 @@
 /*************POUR LES FILTRES ********** */
 const toggleFilters = document.getElementById("toggleFilters");
+const container = document.getElementById("search-form");
+const arrows = document.querySelectorAll(".arrow-toggle-filters");
 
 toggleFilters.addEventListener("click", function () {
-	const container = document.getElementById("search-form");
-	const arrows = document.querySelectorAll(".arrow-toggle-filters");
 	// SI #search-form n'est pas en display none
 	if (container.style.display !== "none") {
 		// le faire passer en display none
@@ -42,3 +42,23 @@ toggleList.addEventListener("click", function () {
 	}
 });
 
+// Pour le formulaire d'ajotu des spots sur la map
+toggleFormSpot = document.getElementById("toggleFormSpot");
+
+toggleFormSpot.addEventListener("click", function () {
+	if (containerList.style.display !== "none") {
+		containerList.style.display = "none";
+		toggleList.style.top = "92px";
+		toggleList.innerHTML = "OUVRIR LISTE";
+	}
+
+	if (container.style.display !== "none") {
+		// le faire passer en display none
+		container.style.display = "none";
+		toggleFilters.style.top = "100px";
+		arrows.forEach(function (arrow) {
+			arrow.innerHTML = "OUVRIR FILTRES";
+			// Do something with each arrow element
+		});
+	}
+})

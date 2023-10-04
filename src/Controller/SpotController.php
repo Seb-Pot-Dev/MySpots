@@ -93,7 +93,8 @@ class SpotController extends AbstractController
                 // Préparer et exécuter la persistance des données
                 $entityManager->persist($newspot);
                 $entityManager->flush();
-                
+                return $this->redirectToRoute('add_spot');
+
             }
         }
         return $this->render('spot/add_spot.html.twig', [

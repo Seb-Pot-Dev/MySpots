@@ -23,6 +23,7 @@
 :root {
     --text-color: #333;         /* Couleur du texte */
     --accent-color: #3b71ca;    /* Couleur d'accentuation */
+    --background-color: white;
     --menu-background: lightgray;
     --transparent-background: rgba(255, 255, 255, 0.273);
     --transparent-background-hover: rgba(255, 255, 255, 0.514);
@@ -35,7 +36,8 @@
 body.night-mode {
     --text-color: white;
     --accent-color: #3b71ca;
-    --menu-background: rgb(77, 77, 170);
+    --background-color: black;
+    --menu-background: rgb(33, 33, 55);
     --transparent-background: rgba(0, 0, 0, 0.273);
     --transparent-background-hover: rgba(0, 0, 0, 0.514);
     --text-color-opposite: #333;
@@ -46,7 +48,7 @@ body.night-mode {
 
 /* Appliquer les couleurs */
 body {
-    background-color: var(--bg-color);
+    background-color: var(--background-color);
     color: var(--text-color);
     overflow-x: hidden;
     background-image: url('../img/nnnoise.svg');

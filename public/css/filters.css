@@ -1,10 +1,11 @@
 .search-filters-container{
     position: absolute;
-    z-index: 999;
+    z-index: 9999;
     top: 91px;
     left: 16px;
     max-width: none;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    max-width: 30%;
 }
 #search-form{
     margin: unset;
@@ -26,11 +27,11 @@
 #toggleFilters{
     z-index: 9999;
     background: var(--transparent-background);
-    width: 28rem;
     display: flex;
     justify-content: center;
 }
 .arrow-toggle-filters{
+    padding: 0 30px;
     fill: var(--text-color);
     font-size: 20px;
     font-family: 'SkateFont2', sans-serif;    /* width: 45px; */

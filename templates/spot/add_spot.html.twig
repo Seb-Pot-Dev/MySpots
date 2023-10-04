@@ -5,9 +5,10 @@
 {% block body %}
     <link rel="stylesheet" href="{{ asset('css/add-spot.css') }}">
 
+<div class="my-profile-container flex justify-center">
+
     {% if app.user %}
     <div id="form-add-spot-global">
-            <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
             {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
                 <h1 class="mb-2 header-medium">Propose ton spot</h1>
                     <div class="flex gap-1 i-want-inline-elem">
@@ -83,5 +84,5 @@
     {% else %}
         <p id="please-connect">Veuillez vous connecter pour ajouter un spot.</p>
     {% endif %}
-
+</div>
 {% endblock %}

@@ -8,6 +8,8 @@
 }
 
 #form-add-spot-global{
+    margin-bottom: 10px;
+    bottom: 0;
     padding: 0 1rem;
     display: flex;
     flex-direction: column;

@@ -156,7 +156,7 @@
     }
     #mobileToggleFilters{
         position: absolute;
-        z-index: 999999999999999;
+        z-index: 9999;
         top: 105px;
         left: 50%;
         transform: translate(-50%, -50%);
