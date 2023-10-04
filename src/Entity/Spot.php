@@ -56,7 +56,7 @@ class Spot
     #[ORM\Column(options:["default"])]
     private ?bool $isValidated = null;
 
-    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Notation::class)]
+    #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Notation::class, orphanRemoval: true, cascade:['persist'])]
     private Collection $notations;
 
     #[ORM\OneToMany(mappedBy: 'spot', targetEntity: Picture::class, orphanRemoval: true, cascade:['persist'])]

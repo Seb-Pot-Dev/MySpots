@@ -32,10 +32,15 @@ textarea{
   border-radius: 0.25rem; /* rounded-lg */
   outline: none; /* focus:outline-none */
   transition: border-color 0.2s, box-shadow 0.2s; /* focus:ring-2 focus:ring-blue-500 */
-  /* color: var(--text-color-opposite) */
+  color: black;
   font-family: SkateFont3;
 }
-
+select#order{
+    color: black;
+}
+textarea#spot_description{
+    color: black;
+}
 input#search{
     font-family: inherit;
 }

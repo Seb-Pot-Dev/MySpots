@@ -88,9 +88,9 @@ function success(userPosition) {
 		title: "Vous êtes ici",
 		alt: 'Marqueur "vous êtes ici"',
 	}).addTo(map);
-	
+
 	// défini comment la map est centrée/zoomée
-	map.setView([userLat, userLng], 14);
+	// map.setView([userLat, userLng], 14);
 }
 
 // en cas d'erreur

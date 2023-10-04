@@ -70,10 +70,11 @@ class SpotController extends AbstractController
                     $folder = 'photos-spot';
 
                     // On appel le service d'ajout
-                    $fichier = $pictureService->add($image, $folder, 300, 300);
+                    $fichier = $pictureService->add($image, $folder, 800, 400);
 
                     // On instancie un nouvel objet image
                     $img = new Picture();
+
                     // On lui assigne un nom (renvoyé par le service)
                     $img->setName($fichier);
                     $img->setSpot($newspot);
@@ -222,7 +223,7 @@ class SpotController extends AbstractController
                 $folder = 'photos-spot';
 
                 // On appel le service d'ajout
-                $fichier = $pictureService->add($image, $folder, 300, 300);
+                $fichier = $pictureService->add($image, $folder, 800, 400);
 
                 // On instancie un nouvel objet image
                 $img = new Picture();
@@ -405,7 +406,7 @@ class SpotController extends AbstractController
                         // On défini le dossier de destination
                         $folder = 'photos-spot';
                         // On appel le service d'ajout
-                        $fichier = $pictureService->add($image, $folder, 300, 300);
+                        $fichier = $pictureService->add($image, $folder, 800, 400);
                         // On instancie un nouvel objet image
                         $img = new Picture();
                         // On lui assigne un nom (renvoyé par le service) et un spot (défini via l'ID dans l'url ?)

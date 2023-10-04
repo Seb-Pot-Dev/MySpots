@@ -14,7 +14,7 @@ class Notation
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'notations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?Spot $spot = null;
 
     #[ORM\ManyToOne(inversedBy: 'notations')]
