@@ -1,6 +1,14 @@
 // défini une variable marqueur quelconque pour le click sur la carte	
 let marqueur;
 
+//icon custom pour l'emplacement de l'utilisateur
+var youAreHereIcon = L.icon({
+	iconUrl:"https://png.pngtree.com/png-vector/20230320/ourmid/pngtree-you-are-here-location-pointer-vector-png-image_6656543.png",
+	iconSize: [60, 60],
+	iconAnchor: [30, 60],
+	popupAnchor: [-3, -76],
+	shadowAnchor: [22, 94],
+	});
 
 // défini la manière dont la carte est centrée et le zoom
 let map = L.map("map").setView([46.227638, 2.213749], 6);
@@ -71,32 +79,18 @@ function success(userPosition) {
 	// Lorsque la géolocalisation est obtenue avec succès, stocke la latitude et la longitude dans des variables globales.
 	window.userLat = userPosition.coords.latitude;
 	window.userLng = userPosition.coords.longitude;
+
 	window.isUserLocationKnown = true;
 
-	// // Obtient la précision des données de géolocalisation.
-	// var accuracy = userPosition.coords.accuracy;
-
-	//icon custom pour l'emplacement de l'utilisateur
-	var youAreHereIcon = L.icon({
-		iconUrl:
-			"https://png.pngtree.com/png-vector/20230320/ourmid/pngtree-you-are-here-location-pointer-vector-png-image_6656543.png",
-		iconSize: [60, 60],
-		iconAnchor: [22, 94],
-		popupAnchor: [-3, -76],
-		shadowAnchor: [22, 94],
-	});
 	// Ajoute un marqueur sur la carte à l'emplacement de l'utilisateur.
 	L.marker([userLat, userLng], {
 		icon: youAreHereIcon,
 		title: "Vous êtes ici",
 		alt: 'Marqueur "vous êtes ici"',
 	}).addTo(map);
-
+	
+	// défini comment la map est centrée/zoomée
 	map.setView([userLat, userLng], 14);
-
-
-	// Ajoute un cercle sur la carte représentant la précision de la position de l'utilisateur.
-	// L.circle([userLat, userLng], { radius: accuracy }).addTo(map);
 }
 
 // en cas d'erreur
