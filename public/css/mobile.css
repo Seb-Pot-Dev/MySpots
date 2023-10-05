@@ -100,7 +100,7 @@
         flex-direction: column;
     }
     #map-options-mobile.active{
-        background-color: black;
+        background-color: var(--transparent-background);
         display: flex ;
         overflow: scroll;
         bottom: unset;
@@ -192,6 +192,7 @@
     }
     .my-box{
         width: 90%;
+        max-width: unset;
     }
   }
   #add-spot-mobile{
