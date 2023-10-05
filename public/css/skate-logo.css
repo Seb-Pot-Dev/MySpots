@@ -65,10 +65,9 @@
   
     /* Règle pour le hover */
     #skateboard:hover .skateboard-wrapper {
-        animation: flip360 1.5s linear forwards;
-        -webkit-animation: flip360 1.5s linear forwards;
+      animation: simpleFlip 0.6s  ease;
+      -webkit-animation: simpleFlip 0.6s  ease;
 }
-    /* Règle pour le hover, uniquement lorsque la classe .no-animation n'est PAS présente */
 
   
     /* Animation pour le flip simple */
@@ -137,4 +136,12 @@
   #a-skateboard{
     padding-bottom: 0;
   }
+
+}
+@media screen and (max-width: 768px) {
+  #skateboard:hover .skateboard-wrapper {
+    animation: simpleFlip 0.3s linear forwards;
+    -webkit-animation: simpleFlip 0.3s linear forwards;
+}
+
 }

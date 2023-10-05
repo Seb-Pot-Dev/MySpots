@@ -2,11 +2,20 @@ const mobileChoiceMap = document.getElementById('mobile-choice-map');
 const mobileChoiceList = document.getElementById('mobile-choice-list');
 const mobileListSpotDesktopGlobal = document.getElementById('list-spots-desktop-global');
 const mobileToggleFilters = document.getElementById('mobileToggleFilters');
+const mobileCloseFormSpot = document.getElementById('mobile-close-form-spot');
+const mobileAddSpotForm = document.getElementById('add-spot-mobile');
+// au click sur #mobile-close-form-spot
+mobileCloseFormSpot.addEventListener("click", closeMobileAddSpot);
+
 
 mobileChoiceList.addEventListener("click", showList)
 mobileChoiceMap.addEventListener("click", showMap)
-
 mobileToggleFilters.addEventListener('click', changeMobileToggleFiltersStyle)
+
+
+function closeMobileAddSpot(){
+    mobileAddSpotForm.classList.toggle('active');
+}
 
 function changeMobileToggleFiltersStyle(){
     mobileToggleFilters.classList.toggle('active')

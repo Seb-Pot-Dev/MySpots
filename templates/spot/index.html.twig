@@ -22,36 +22,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.Default.css" />
 </head>
-{% set filtersComponent %}
-    {% include 'component/_filters.html.twig' %}
-{% endset %}
-<div id="global-map" class="">
-    <div id="mobile-duo">
-        <div id="mobile-choice-map" class="selectedLeft"><p>Carte</p></div>
-        <div id="mobile-choice-list"><p>Liste</p></div>
-    </div>
-    
-    <a href="#" id="mobileToggleFilters" class="">Voir filtres</a>
-
-    <!-- AFFICHAGE DE LA MAP --> 
-    <div id="map" class="">
-    </div>
-
-    <!-- Choix du layer -->
-    <div class="choose-layer-container">
-        <button id="layer-1" class="choose-layer-item">Hell</button>
-        <button id="layer-2" class="choose-layer-item">Dark</button>
-        <button id="layer-3" class="choose-layer-item">Classic</button>
-    </div>
-    <!-- >Inclure les filtres -->
-    {{ filtersComponent }}
-    <!-- ////////////////////////////////////////////////////////////////// -->
-
-    {% if app.user %}  
-    <!-- formulaire ajout spot -->
-    {% set formAddSpotComponent %}
-        <div id="form-add-spot-global">
-            <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
+{% set formAddSpotComponent %}
             {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
                 <h1 class="mb-2 header-medium">Propose ton spot</h1>
                     <div class="flex gap-1 i-want-inline-elem">
@@ -122,9 +93,39 @@
                     </div>
                 {# Le bouton submit est généré automatiquement  #}
         {{ form_end(formAddSpot) }} 
-        </div>
     {% endset %}
-{{ formAddSpotComponent }}
+{% set filtersComponent %}
+    {% include 'component/_filters.html.twig' %}
+{% endset %}
+<div id="global-map" class="">
+    <div id="mobile-duo">
+        <div id="mobile-choice-map" class="selectedLeft"><p>Carte</p></div>
+        <div id="mobile-choice-list"><p>Liste</p></div>
+    </div>
+    
+    <a href="#" id="mobileToggleFilters" class="">Voir filtres</a>
+
+    <!-- AFFICHAGE DE LA MAP --> 
+    <div id="map" class="">
+    </div>
+
+    <!-- Choix du layer -->
+    <div class="choose-layer-container">
+        <button id="layer-1" class="choose-layer-item">Hell</button>
+        <button id="layer-2" class="choose-layer-item">Dark</button>
+        <button id="layer-3" class="choose-layer-item">Classic</button>
+    </div>
+    <!-- >Inclure les filtres -->
+    {{ filtersComponent }}
+    <!-- ////////////////////////////////////////////////////////////////// -->
+
+    {% if app.user %}  
+    <!-- formulaire ajout spot DESKTOP-->
+        <div id="form-add-spot-global">
+            <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
+            {{ formAddSpotComponent }}
+    
+        </div>
     {% else %}
         <p id="please-connect">Veuillez vous connecter pour ajouter un spot.</p>
     {% endif %}
@@ -167,12 +168,13 @@
  #}
 <div id="map-options-mobile">
     {{ filtersComponent }}
-    {% if app.user %}
-    {{ formAddSpotComponent }}
-    {% endif %}
-
-    
 </div>
+{% if app.user %}
+    <div id="add-spot-mobile" class="">
+        <a id="mobile-close-form-spot">X</a>
+        {{ formAddSpotComponent }}
+    </div>
+{% endif %} 
 {% endblock %}
 
 {% block javascripts %}
@@ -187,7 +189,6 @@
 <script src="{{ asset('js/script_map.js') }}"></script>
 <script src="{{ asset('js/filters-listing.js') }}"></script>
 {# Vue mobile #}
-<script src="{{ asset('js/mobile.js') }}"></script>
 
 <!-- JS de Leaflet pour les clusters de markers -->
 <script src="https://unpkg.com/leaflet.markercluster@latest/dist/leaflet.markercluster-src.js"></script>
@@ -251,6 +252,8 @@ map.addLayer(markersCluster);
 <!-- Lien vers le fichier JavaScript de Mapbox -->
 <script src='https://api.mapbox.com/mapbox-gl-js/v2.4.1/mapbox-gl.js'></script>
 
+{# Vue mobile #}
+<script src="{{ asset('js/mobile.js') }}"></script>
 
 
 {% endblock %}
