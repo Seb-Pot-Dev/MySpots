@@ -1,7 +1,7 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SpotController!{% endblock %}
+{% block title %}Détail du spot {{spot.name}}{% endblock %}
 
 {% block body %}
 <link rel="stylesheet" href="{{ asset('css/showSpot.css') }}">
@@ -21,6 +21,14 @@
         {% endif %}
     </h1>
     <div id="validate-and-note-container">
+        <div id="show-spot-author">
+        Par                       
+        {% if spot.author == null %}
+            <p>Inconnu</p> 
+        {% else %}
+            {{ spot.author.pseudo }}
+        {% endif %}
+        </div>
         <div id="show-spot-validate">
             {% if spot.isValidated %}
                 Spot validé ✅

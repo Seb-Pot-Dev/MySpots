@@ -2,6 +2,9 @@
     #mobile-duo{
         display: none;
     }
+    .simple-margin-top{
+        margin-top: 100px;
+    }
     .my-profile-container{
         margin-top: 100px;
     }
