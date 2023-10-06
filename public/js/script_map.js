@@ -176,8 +176,17 @@ if (IS_USER_LOGGED_IN) {
     // Pour ouvrir le formulaire en cliquant sur le lien dans popup
     const openFormAddSpotInPopup = document.getElementById("openFormAddSpotInPopup");
     openFormAddSpotInPopup.addEventListener("click", toggleContainer);
+
+	// Pour ouvrir le formulaire d'ajout de spot SUR MOBILE
+	if (window.innerWidth < 768) {
+	const mobileAddSpotForm = document.getElementById('add-spot-mobile');
+	function toggleMobileAddSpot(){
+		mobileAddSpotForm.classList.toggle('active');
 	}
-}
+	openFormAddSpotInPopup.addEventListener('click', toggleMobileAddSpot);
+		}
+	}
+	}
 /**************** Ouvrir le form add spot par click sur popup *********************** */
 
 // vars

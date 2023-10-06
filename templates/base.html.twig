@@ -47,7 +47,7 @@
         {% endfor %}
     {% endfor %}
             <!-- NAV BAR -->
-            <div class="desktop-nav ">
+            <nav class="desktop-nav ">
                 <div  class="main-nav">
                     <!-- LOGO - LIEN VERS HOME -->
                     <a id="a-skateboard" href="{{ path('app_home') }}">
@@ -60,9 +60,9 @@
                                         <div></div>
                                         <div></div>
                                     </div>
-                                    <h5 class="centered-container">
+                                    <div class="centered-container">
                                         <p class=" myspot-text">MySpot</p>
-                                    </h5>
+                                    </div>
                                     <div class="screw-holes">
                                         <div></div>
                                         <div></div>
@@ -111,7 +111,7 @@
                         </a>
                     {% endif %}
                 </div>
-            </div>
+            </nav>
 
             <!-- NAV BAR MOBILE -->
             <div id="mySidenav" class="sidenav">
@@ -138,7 +138,7 @@
             </div>
         
         <div class="mobile-nav">
-            <a id="a-skateboard">
+            <a id="a-skateboard" href="{{path('app_home')}}">
                     <div  class="child" id="skateboard">
                         <div class="skateboard-wrapper">
                             <div class="board">

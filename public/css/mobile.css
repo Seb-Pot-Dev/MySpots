@@ -2,6 +2,9 @@
     #mobile-duo{
         display: none;
     }
+    .simple-margin-top{
+        margin-top: 100px;
+    }
     .my-profile-container{
         margin-top: 100px;
     }
@@ -41,8 +44,8 @@
     }
     #list-spots-desktop-global{
         width: 100%;
-        height: 100%;
-        overflow: scroll;
+        /* height: 100%; */
+        /* overflow: scroll; */
     }
     #list-spots-desktop-id{
         max-width: unset;
@@ -62,7 +65,7 @@
         position: fixed;
     } */
     ul.list-spots{
-        padding: 0 10px 100px 10px;
+        padding: 0 10px 0 10px;
     }
     .mobile-active{
         display: inherit!important;
@@ -100,8 +103,17 @@
         flex-direction: column;
     }
     #map-options-mobile.active{
-        /*background-color: #ffffffb0;
-        */display: flex ;
+        background-color: var(--transparent-background);
+        display: flex ;
+        overflow: scroll;
+        bottom: unset;
+        top: 80px;
+        padding-top: 25px;
+        
+}
+    #add-spot-mobile.active{
+        /*background-color: #ffffffb0;*/
+        display: flex ;
         overflow: scroll;
         bottom: unset;
         top: 80px;
@@ -109,7 +121,8 @@
         
 }
     #map-options-mobile.active .filters-global{
-        display: flex ;
+        display: flex;
+        overflow: scroll;
     }
     #map-options-mobile.active #form-add-spot-global{
         display: unset;
@@ -156,7 +169,7 @@
     }
     #mobileToggleFilters{
         position: absolute;
-        z-index: 9999;
+        z-index: 999999999999999;
         top: 105px;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -175,11 +188,31 @@
     }
     .search-filters-container{
         box-shadow: none;
+        max-width: none;
     }
     .mobile-margin-top{
         padding-top: 60px;
     }
     .my-box{
         width: 90%;
+        max-width: unset;
     }
+  }
+  #add-spot-mobile{
+    position: absolute;
+    display: none;
+    top: -8000px;
+    transition: top 0.2s;
+  }
+  #add-spot-mobile.active{
+    position: absolute;
+    display: unset;
+    top: 80px;
+    transition: top 0.2s;
+    /* bottom: 0; */
+    z-index: 9999999;
+    background-color: #7d7dd2;
+    width: 100%;
+    height: 180%;
+    padding: 0 10px;
   }
