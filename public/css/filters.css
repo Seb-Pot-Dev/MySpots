@@ -1,41 +1,56 @@
-.search-filters-container{
-    position: absolute;
-    z-index: 9999;
-    top: 91px;
-    left: 16px;
-    max-width: none;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    max-width: 30%;
+.search-filters-container {
+	position: absolute;
+	z-index: 9999;
+	top: 91px;
+	left: 16px;
+	max-width: none;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+		rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+	max-width: 30%;
 }
-#search-form{
-    margin: unset;
-    box-shadow: unset;
-    padding-bottom: unset;
+#search-form {
+	margin: unset;
+	box-shadow: unset;
+	padding-bottom: unset;
 }
-#search-form h4, .filter-button, .filter-button-big, .filter-button-big label{
-    font-family: 'SkateFont2';
+#search-form h4,
+.filter-button,
+.filter-button-big,
+.filter-button-big label {
+	font-family: "SkateFont2";
 }
-#search-form label label, .filter-button{
-    font-family: 'SkateFont3';
-    font-size: 1.25rem;
-    margin-bottom: unset;
+#search-form label label,
+.filter-button {
+	font-family: "Annie Use Your Telescope";
+	font-size: 1.25rem;
+	margin-bottom: unset;
 }
-.filter-button{
-    display: flex;
-    align-items: end;
+.filter-button {
+	display: flex;
+	align-items: end;
 }
-#toggleFilters{
+#toggleFilters {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+.arrow-toggle-filters {
+	font-size: 1.25rem;
+	width: 20rem;
+    color: var(--text-color);
     background: var(--transparent-background);
+    /* font-family: 'SkateFont2', sans-serif; */
+    font-size: 1.25rem;
+	border-radius: 6px;
+	font-size: 1.25rem;
     display: flex;
     justify-content: center;
-    width: 100%;
-}
-.arrow-toggle-filters{
-    padding: 0 30px;    
-    fill: var(--text-color);
-    font-size: 20px;
-    font-family: 'SkateFont2', sans-serif;    /* width: 45px; */
-    /* transform: rotate(-90deg);
+    align-items: center;
+	/*  */
+	padding: 0 30px;
+	fill: var(--text-color);
+	font-family: "SkateFont2", sans-serif; /* width: 45px; */
+	/* transform: rotate(-90deg);
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);

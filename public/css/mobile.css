@@ -20,6 +20,9 @@
         top: 50px;
         background-color: rgba(128, 128, 128, 0.579);
     }
+    #form-add-spot-global{
+    margin-bottom: 0;
+    }
     #mobile-choice-map, #mobile-choice-list{
         display: flex;
         align-items: center;
@@ -109,9 +112,8 @@
         overflow: scroll;
         bottom: unset;
         top: 80px;
-        padding-top: 25px;
-        
-}
+        padding-top: 25px;   
+    }
     #add-spot-mobile.active{
         /*background-color: #ffffffb0;*/
         display: flex ;
@@ -120,7 +122,8 @@
         top: 80px;
         padding-top: 25px;
         
-}
+    }
+    
     #map-options-mobile.active .filters-global{
         display: flex;
         overflow: scroll;
