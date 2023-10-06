@@ -3,6 +3,14 @@
 
 {% block title %}Hello SpotController!{% endblock %}
 
+{% block meta_tags %}
+    <meta name="description" content="
+    Rends toi vite sur MySpot pour découvrir les meilleurs spots de skate!
+    Détail du spot {{ spot.name }},
+    Description : {{ spot.description }},
+    ">
+{% endblock %}
+
 {% block body %}
 <link rel="stylesheet" href="{{ asset('css/showSpot.css') }}">
 <link rel="stylesheet" href="{{ asset('css/carrousel.css') }}">
