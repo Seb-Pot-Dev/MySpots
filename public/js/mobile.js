@@ -2,6 +2,7 @@ const mobileChoiceMap = document.getElementById('mobile-choice-map');
 const mobileChoiceList = document.getElementById('mobile-choice-list');
 const mobileListSpotDesktopGlobal = document.getElementById('list-spots-desktop-global');
 const mobileToggleFilters = document.getElementById('mobileToggleFilters');
+
 const mobileCloseFormSpot = document.getElementById('mobile-close-form-spot');
 const mobileAddSpotForm = document.getElementById('add-spot-mobile');
 // au click sur #mobile-close-form-spot

@@ -50,6 +50,9 @@ ul.list-spots{
     /* overflow-x: scroll; */
     color: white;
     cursor: pointer;
+    height: 100px; 
+    background-position: center center; 
+    background-size: cover; 
 }
 div.left p{
     transition: transform 0.3s ease-out;

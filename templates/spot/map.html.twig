@@ -4,6 +4,12 @@
 
 {% block body %}
 <head>
+{% block meta_tags %}
+    <meta name="description" content="
+    Rends-toi vite sur MySpot pour découvrir les meilleurs spots de skate!
+    Tu trouveras ici la carte qui référence tout les lieux partagés par la communauté.
+    Ne perds plus de temps et rejoins nous.">
+{% endblock %}
  <!-- LEAFLET CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
@@ -24,7 +30,7 @@
 </head>
 {% set formAddSpotComponent %}
             {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
-                <h1 class="mb-2 header-medium">Propose ton spot</h1>
+                <h3 class="mb-2 header-medium">Propose ton spot</h3>
                     <div class="flex gap-1 i-want-inline-elem">
                         <div class="">
                             <div class="">
@@ -120,17 +126,17 @@
     <!-- ////////////////////////////////////////////////////////////////// -->
 
     {% if app.user %}  
-    <!-- formulaire ajout spot DESKTOP-->
+        <!-- formulaire ajout spot-->
         <div id="form-add-spot-global">
-            <a id="toggleFormSpot" href="#">NOUVEAU SPOT</a>
+            <button id="toggleFormSpot" href="#" aria-label="Ouvrir le formulaire d'ajout de spots">NOUVEAU SPOT</button>
+            <button id="toggle-form-spot-mobile-id" aria-label="Fermer le formulaire d'ajout de spots">X</button>
             {{ formAddSpotComponent }}
-    
         </div>
     {% else %}
         <p id="please-connect">Veuillez vous connecter pour ajouter un spot.</p>
     {% endif %}
 
-        <div id="list-spots-desktop-global" class="">
+        <section id="list-spots-desktop-global" class="">
             <div class="list-spots-desktop" id="list-spots-desktop-id">
                 <div id="list-spots-desktop-main">
                     <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
@@ -158,7 +164,7 @@
             <a id="toggleListSpots" href="#">
                 FERMER LA LISTE
             </a>
-        </div>
+        </section>
     </div>
 </div>
 {# A FINIR ICI 

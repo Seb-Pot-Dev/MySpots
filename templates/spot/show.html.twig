@@ -5,9 +5,9 @@
 
 {% block meta_tags %}
     <meta name="description" content="
-    Rends toi vite sur MySpot pour découvrir les meilleurs spots de skate!
-    Détail du spot {{ spot.name }},
-    Description : {{ spot.description }},
+    Rends-toi vite sur MySpot pour découvrir les meilleurs spots de skate!
+    Tu trouveras ici le détail du spot {{ spot.name }},
+    {{ spot.description }}.
     ">
 {% endblock %}
 
@@ -18,15 +18,10 @@
 <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
 <link rel="stylesheet" href="{{ asset('css/showSpot_mobile.css') }}">
 
-<div id="main-show">
+<main id="main-show">
     <!--nom du spot-->
     <h1 class="show-spot-title">
-        {{ spot.name }} par 
-        {% if spot.author == null %}
-            <p>Inconnu</p> 
-        {% else %}
-            <a href="{{ path('show_profile', {'id': spot.author.id} )}}">{{ spot.author.pseudo }}</a>
-        {% endif %}
+        {{ spot.name }} 
     </h1>
     <div id="validate-and-note-container">
         <div id="show-spot-author">
@@ -34,7 +29,7 @@
         {% if spot.author == null %}
             <p>Inconnu</p> 
         {% else %}
-            {{ spot.author.pseudo }}
+            <a href="{{ path('show_profile', {'id': spot.author.id} )}}">{{ spot.author.pseudo }}</a>
         {% endif %}
         </div>
         <div id="show-spot-validate">
@@ -262,7 +257,7 @@
     <p>Veuillez vous connecter pour pouvoir commenter un spot.</p>
     {% endif %}
 </div>
-</div>
+</main>
 <script>
 
     

@@ -11,6 +11,7 @@
 }
 @media screen and (max-width: 768px) {
     #mobile-duo{
+        cursor: pointer;
         position: absolute;
         display: flex;
         z-index: 10000;
@@ -146,17 +147,30 @@
         flex-direction: column;
         position: relative;
     }
+    #a-skateboard{
+        width: 0;
+    height: 0;
+    margin: 0;
+    position: absolute;
+    left: 46%;
+    }
     #form-add-spot-global{
-        position: unset;
-        width: 100%;
-        height: 100%;
-        padding: unset;
-        /* changer ça au click toggle */
-        display: none;
-        top: unset;
-        z-index: unset;
-        background-color: unset;
-        box-shadow: unset;
+    background-color: grey;
+    padding-top: 150px;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    display:none;
+    }
+    #toggle-form-spot-mobile-id{
+        top: 100px;
+        font-size: 2rem;
+        position: absolute;
+        right: 10px;
+        z-index: 99999999999;
+        width: 15px;
+        color: red;
+        height: 15px;
     }
     #form-spot-id  div{
         flex-direction: column;

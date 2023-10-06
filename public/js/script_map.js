@@ -178,13 +178,7 @@ if (IS_USER_LOGGED_IN) {
     openFormAddSpotInPopup.addEventListener("click", toggleContainer);
 
 	// Pour ouvrir le formulaire d'ajout de spot SUR MOBILE
-	if (window.innerWidth < 768) {
-	const mobileAddSpotForm = document.getElementById('add-spot-mobile');
-	function toggleMobileAddSpot(){
-		mobileAddSpotForm.classList.toggle('active');
-	}
-	openFormAddSpotInPopup.addEventListener('click', toggleMobileAddSpot);
-		}
+
 	}
 	}
 /**************** Ouvrir le form add spot par click sur popup *********************** */
@@ -192,7 +186,9 @@ if (IS_USER_LOGGED_IN) {
 // vars
 const toggleForm = document.getElementById("toggleFormSpot");
 const containerForm = document.getElementById("form-spot-id");
+const closeFormSpotMobile = document.getElementById("toggle-form-spot-mobile-id")
 
+closeFormSpotMobile.addEventListener("click", toggleContainer)
         // fn pour toggle
         function toggleContainer() {
             let computedStyle = window.getComputedStyle(containerForm);
@@ -201,10 +197,17 @@ const containerForm = document.getElementById("form-spot-id");
                 containerForm.style.maxHeight = "0px";
                 containerForm.style.overflow = "hidden";
                 toggleForm.innerHTML = "OUVRIR";
+				if (window.innerWidth < 768) {
+					document.getElementById("form-add-spot-global").style.display ="none"
+				}	
+
             } else {
                 containerForm.style.maxHeight = "unset";
                 containerForm.style.overflow = "unset";
                 toggleForm.innerHTML = "FERMER";
+				if (window.innerWidth < 768) {
+					document.getElementById("form-add-spot-global").style.display ="flex"
+				}	
                 // Note: De même, ajustez le texte du bouton si nécessaire
             }
         }

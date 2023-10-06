@@ -34,8 +34,11 @@ class RegistrationController extends AbstractController
 
         // Initialisation d'un nouvel utilisateur
         $user = new User();
+        // Initialisation d'un formulaire d'inscription
         $form = $this->createForm(RegistrationFormType::class, $user);
+        // Récupération du formulaire soumis
         $form->handleRequest($request);
+        // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             // Sécurité : Hachage du mot de passe avant stockage
             $user->setPassword(
@@ -44,12 +47,11 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
             // Pour définir la date/heure actuelle comme date d'inscription + date de dernière activité
             $now = new \DateTime();
             $user->setRegistrationDate($now);
             $user->setLastActivityAt($now);
-
+            
             // Tente d'enregistrer l'utilisateur
             try{
             $entityManager->persist($user);
