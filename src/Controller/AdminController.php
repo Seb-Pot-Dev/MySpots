@@ -99,24 +99,24 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
     }
-    #[Route('/admin/modify/{id}', name: 'modifySpot_admin')]
-    public function modifySpot(Security $security, EntityManagerInterface $entityManager, Spot $spot)
-    {
-        // définition du $user actif
-        $userActive=$this->getUser();
-        $userRole = $userActive->getRoles();
-        // Si le $user possède le role admin
-        if ($userActive && in_array('ROLE_ADMIN', $userRole)) {
-            //Selectionne le spot a modifier en pointant l'id
-            $myspot = $entityManager->getRepository(Spot::class)->findOneBy(['id'=>$spot]);
+    // #[Route('/admin/modify/{id}', name: 'modifySpot_admin')]
+    // public function modifySpot(Security $security, EntityManagerInterface $entityManager, Spot $spot)
+    // {
+    //     // définition du $user actif
+    //     $userActive=$this->getUser();
+    //     $userRole = $userActive->getRoles();
+    //     // Si le $user possède le role admin
+    //     if ($userActive && in_array('ROLE_ADMIN', $userRole)) {
+    //         //Selectionne le spot a modifier en pointant l'id
+    //         $myspot = $entityManager->getRepository(Spot::class)->findOneBy(['id'=>$spot]);
 
                 
-            return $this->redirectToRoute('app_admin');
-        }
-        else{
-            return $this->redirectToRoute('app_home');
-        }
-    }
+    //         return $this->redirectToRoute('app_admin');
+    //     }
+    //     else{
+    //         return $this->redirectToRoute('app_home');
+    //     }
+    // }
     
 
     //*************************************CRUD UTILISATEUR******************************************* */

@@ -3,14 +3,14 @@
 {% block title %}Ajouter un spot{% endblock %}
 
 {% block body %}
-    <link rel="stylesheet" href="{{ asset('css/add-spot.css') }}">
+<link rel="stylesheet" href="{{ asset('css/add-spot.css') }}">
 
 <div class="my-profile-container flex justify-center">
 
     {% if app.user %}
     <div id="form-add-spot-global">
             {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
-                <h1 class="mb-2 header-medium">Propose ton spot</h1>
+                <h1 class="mb-2 header-medium">Modifier un spot</h1>
                     <div class="flex gap-1 i-want-inline-elem">
                         <div class="">
                             <div class="">
@@ -78,7 +78,9 @@
                         </div> 
                     </div>
                 {# Le bouton submit est généré automatiquement  #}
+                <div class="flex justify-end">
         {{ form_end(formAddSpot) }} 
+                </div>
         </div>
 
     {% else %}

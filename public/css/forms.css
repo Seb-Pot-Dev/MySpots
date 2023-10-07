@@ -34,12 +34,15 @@ textarea {
 	transition: border-color 0.2s, box-shadow 0.2s; /* focus:ring-2 focus:ring-blue-500 */
 	color: black;
 	font-family: Annie Use Your Telescope;
+	font-size: 1.25rem;
 }
 select#order {
 	color: black;
 }
 textarea#spot_description {
 	color: black;
+	font-family: 'Annie Use Your Telescope';
+	font-size: 1.25rem;
 }
 input#search {
 	font-family: inherit;

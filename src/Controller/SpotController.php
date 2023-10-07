@@ -104,7 +104,6 @@ class SpotController extends AbstractController
             'modules' => $modules,
         ]);
     }
-    #[Route("/spot/{id}/edit", name: "edit_spot")]
     #[Route("/map", name: "app_spot")]
     public function index(Security $security, ManagerRegistry $doctrine, SpotRepository $spotRepository, Spot $spot = null, Request $request, PictureService $pictureService): Response
     {
@@ -261,6 +260,83 @@ class SpotController extends AbstractController
         ]);
     }
 
+    // Pour modifier un spot
+    #[Route("/spot/{id}/edit", name: "edit_spot")]
+    public function editSpot(Security $security, ManagerRegistry $doctrine, Spot $spot, User $user = null, Request $request){
+
+            $entityManager = $doctrine->getManager();
+            $user = $security->getUser();
+            $userRole = $user->getRoles();
+
+        
+            // Récupérer la liste de tous les modules
+            $modules = $doctrine->getRepository(Module::class)->findAll();
+
+            // Créer un formulaire basé sur SpotType et passer les modules
+            $form = $this->createForm(SpotType::class, $spot, [
+                'modules' => $modules
+            ]);
+
+            // Initialiser la variable pour vérifier si le spot est nouveau
+            $isNew = !$spot;
+
+            // Vérifier si le client est connecté avec un compte
+            if($user && in_array('ROLE_ADMIN', $userRole)){
+                // Gérer la requête du formulaire
+                $form->handleRequest($request);
+
+                // Vérifier si le formulaire est soumis et valide
+                if ($form->isSubmitted() && $form->isValid()) {
+                    // Assigner les données du formulaire à une variable
+                    $newspot = $form->getData();
+                    
+                    // Traiter les images
+                    // On récupère les images
+                    $images = $form->get('pictures')->getData();
+
+                    foreach ($images as $image) {
+                        // On défini le dossier de destination
+                        $folder = 'photos-spot';
+
+                        // On appel le service d'ajout
+                        $fichier = $pictureService->add($image, $folder, 800, 400);
+
+                        // On instancie un nouvel objet image
+                        $img = new Picture();
+                        // On lui assigne un nom (renvoyé par le service)
+                        $img->setName($fichier);
+                        $img->setSpot($newspot);
+
+                        // ajoute l'image au spot
+                        $newspot->addPicture($img);
+                    }
+
+
+                    // Configurer les propriétés du nouveau spot si nécessaire
+                    if ($isNew) {
+                        $newspot->setIsValidated(false)
+                                ->setCreationDate(new \DateTime())
+                                ->setAuthor($user);
+                    }
+                    
+                    // Préparer et exécuter la persistance des données
+                    $entityManager->persist($newspot);
+                    $entityManager->flush();
+                    
+                    // Rediriger vers la liste des spots
+                    return $this->redirectToRoute('app_spot');
+                }
+            }
+            return $this->render('spot/add_spot.html.twig', [
+                'formAddSpot' => $form->createView()
+            
+            ]);
+    }
+
+
+
+    
+    
     //Pour liker un post (ajouter une spot à user.favoriteSpot / un user a spot.favoritedByUser)
     #[Route('/spot/like/{idSpot}/{idUser}', name: 'like_spot')]
     #[ParamConverter("spot", options: ["mapping" => ["idSpot" => "id"]])]
