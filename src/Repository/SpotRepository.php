@@ -72,13 +72,19 @@ class SpotRepository extends ServiceEntityRepository
 //    }
 
 //La fonction findByCriteria  renvoie un tableau d'objets Spot qui correspondent aux critères spécifiés
-public function findByCriteria(?string $searchFilter, array $moduleFilter, bool $official, bool $covered, bool $onlyValidated, ?string $order): array
+public function findByCriteria(
+    ?string $searchFilter, 
+    array $moduleFilter, 
+    bool $official, 
+    bool $covered, 
+    bool $onlyValidated, 
+    ?string $order): array
 {
     // Crée un nouvel objet QueryBuilder pour construire la requête.
     $qb = $this->createQueryBuilder('s')
         // left join de la collection de notations pour permettre la sous requete de tri sur la note moyenne d'un spot
         ->leftJoin('s.notations', 'n'); 
-
+        
     // Si choix d'afficher uniquement les spots validés
     if($onlyValidated){
         // dd($onlyValidated);

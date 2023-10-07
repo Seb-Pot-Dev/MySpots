@@ -122,9 +122,10 @@ class SpotController extends AbstractController
         $filtersEmptyMessage = '';
         // instancie un nouvel object SearchData
         $searchData = new SearchData();
+
         // création du formulaire SpotSearchType pour les filtres
         $formSearch = $this->createForm(SpotSearchType::class, $searchData);
-        // interception du formulaire SpotSearchType lorsqu'une requete est fournie 
+        // interception du formulaire soumis
         $formSearch->handleRequest($request);
 
         // instancie une variable $sportFiltered 
@@ -135,8 +136,8 @@ class SpotController extends AbstractController
             $moduleFilter = $searchData->moduleFilter;
             $officialFilter = $searchData->official;
             $coveredFilter = $searchData->covered;
-            $order = $searchData->order;
             $onlyValidated = $searchData->onlyValidated;
+            $order = $searchData->order;
             //On associe le résultat de findByCriteria à $spotsFiltered
             $spotsFiltered = $spotRepository->findByCriteria($searchFilter, $moduleFilter, $officialFilter, $coveredFilter, $onlyValidated, $order);
             // Si $spotFiltered est vide, c'est qu'aucun spot ne correspond aux critères selectionnées.
@@ -250,12 +251,12 @@ class SpotController extends AbstractController
         // 'spotsList' est le tableau contenant toutes les spots et toutes les infos des spots, pour la liste des spots
         // 'spotsFiltered' est le tableau des sports filtrés et ordonnés si des critères sont renseignés et que des occurences correspondent à ces derniers
         return $this->render('spot/map.html.twig', [
+            'spotsFiltered' => $spotsFiltered,
             'spots' => $arraySpotJson,
             'spotsList' => $allSpots,
             'formAddSpot' => $form->createView(),
             'modules' => $modules,
             'formSearch' => $formSearch->createView(),
-            'spotsFiltered' => $spotsFiltered,
             'filtersEmptyMessage' => $filtersEmptyMessage
         ]);
     }
