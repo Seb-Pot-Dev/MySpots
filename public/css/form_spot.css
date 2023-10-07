@@ -52,3 +52,8 @@
     -o-border-radius: 0.25rem;
     margin-bottom: 1rem;
 }
+@media screen and (min-width: 768px) {
+    #toggle-form-spot-mobile-id{
+        display: none;
+    }
+}

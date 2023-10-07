@@ -105,7 +105,7 @@ class SpotController extends AbstractController
         ]);
     }
     #[Route("/spot/{id}/edit", name: "edit_spot")]
-    #[Route("/spot", name: "app_spot")]
+    #[Route("/map", name: "app_spot")]
     public function index(Security $security, ManagerRegistry $doctrine, SpotRepository $spotRepository, Spot $spot = null, Request $request, PictureService $pictureService): Response
     {
         // Définition des variables de base****************************************************************************************************************
@@ -116,17 +116,6 @@ class SpotController extends AbstractController
         //récupère tout les spots de la BDD pour les marqueurs sur la carte
         $allSpots = $doctrine->getRepository(Spot::class)->findBy([], ['name' => 'ASC']);
 
-        // // Requête pour la pagination des spots***********************************************************************************************************************
-        // $spotsQuery = $doctrine->getRepository(Spot::class)
-        //     ->createQueryBuilder('s')
-        //     ->orderBy('s.name', 'ASC')
-        //     ->getQuery();
-
-        // $paginatedSpots = $paginator->paginate(
-        //     $spotsQuery, //requete a paginer
-        //     $request->query->getInt('page', 1), // 1= numéro de page pas défaut
-        //     5 // Nombre d'elements par page
-        // );
 
         // Gestion des FILTRES ******************************************************************************************************
         // initialisation d'un variable string vide
@@ -260,7 +249,7 @@ class SpotController extends AbstractController
         // 'spots' est le tableau des spots encodé en JSON.
         // 'spotsList' est le tableau contenant toutes les spots et toutes les infos des spots, pour la liste des spots
         // 'spotsFiltered' est le tableau des sports filtrés et ordonnés si des critères sont renseignés et que des occurences correspondent à ces derniers
-        return $this->render('spot/index.html.twig', [
+        return $this->render('spot/map.html.twig', [
             'spots' => $arraySpotJson,
             'spotsList' => $allSpots,
             'formAddSpot' => $form->createView(),

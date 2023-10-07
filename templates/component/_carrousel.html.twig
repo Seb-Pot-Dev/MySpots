@@ -20,6 +20,7 @@ if(document.getElementById("carrouselContainer")){
                 var div = document.createElement("div");
                 div.className = "photo-spot";
                 div.style.backgroundImage = "url('{{asset('assets/uploads/photos-spot/' ~ image.name)}}')";
+                div.setAttribute('aria-label', 'Photo du spot');
                 carrouselContainer.appendChild(div);
     
                 {% if is_granted('ROLE_ADMIN')%}

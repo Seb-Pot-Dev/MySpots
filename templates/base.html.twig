@@ -4,12 +4,12 @@
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-
-            <!-- Google Font -->
-
-           
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        {# Google Font Api #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        {# Google font Grandstander & Annie Use Your Telescope #}
+        <link href="https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Grandstander&display=swap" rel="stylesheet">        {% block stylesheets %}
             <!-- CSS PERSO -->
             <link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/nav.css') }}">
@@ -21,19 +21,13 @@
             <link rel="stylesheet" type="text/css" href="{{ asset('css/skate-logo.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/menu.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ asset('css/mobile.css') }}">
-
-
-
-     
             <!-- FONT AWESOME KIT -->
-            <link rel="stylesheet" 
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
             {{ encore_entry_link_tags('app') }}
-
-
         {% endblock %}
 
-        
+    {% block meta_tags %}
+    {% endblock %}
     </head>
 
     <main class="" style="">
@@ -46,7 +40,7 @@
         {% endfor %}
     {% endfor %}
             <!-- NAV BAR -->
-            <div class="desktop-nav ">
+            <nav class="desktop-nav ">
                 <div  class="main-nav">
                     <!-- LOGO - LIEN VERS HOME -->
                     <a id="a-skateboard" href="{{ path('app_home') }}">
@@ -59,9 +53,9 @@
                                         <div></div>
                                         <div></div>
                                     </div>
-                                    <h5 class="centered-container">
+                                    <div class="centered-container">
                                         <p class=" myspot-text">MySpot</p>
-                                    </h5>
+                                    </div>
                                     <div class="screw-holes">
                                         <div></div>
                                         <div></div>
@@ -110,7 +104,7 @@
                         </a>
                     {% endif %}
                 </div>
-            </div>
+            </nav>
 
             <!-- NAV BAR MOBILE -->
             <div id="mySidenav" class="sidenav">
@@ -198,7 +192,7 @@ crossorigin=""></script>
         <div class="sm:flex sm:items-center sm:justify-between">
             <a href="https://https://github.com/Seb-Pot-Dev/" class="flex items-center mb-4 sm:mb-0">
                 <img id="logo-strasspot" class="h-8 mr-3" src="\img\SUJET_Cathedrale-pleine-scaled.png" alt="logo-StrasSpot">
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SkateSpots</span>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MySpots</span>
             </a>
             <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                 <li>

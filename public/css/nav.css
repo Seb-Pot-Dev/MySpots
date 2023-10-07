@@ -14,7 +14,6 @@
     display: none;
     align-items: center;
     justify-content: space-between;
-    /* background-color: var(--menu-background); */
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -119,6 +118,8 @@
 }
 #nav-open-btn{
   margin-right: 6px;
+  position: absolute;
+    right: 0;
 }
   .sidenav a:hover {
     color: #111;

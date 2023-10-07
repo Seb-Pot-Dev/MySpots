@@ -32,20 +32,18 @@ class RegistrationFormType extends AbstractType
                 'label' => 'pseudo*'
             ])
             ->add('plainPassword', RepeatedType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
                 'mapped' => false,
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
+                'invalid_message' => 'Les mot de passes doivent correspondres',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Vérifiez le mot de passe'],
                 'label' => 'Mot de passe*',
                 'constraints' => [
                     new Regex([
-                        'pattern' => "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&\-])[A-Za-z\d@$!%*?&\-]{8,}$/",
-                        'message' => "Le mot de passe doit avoir au moins 8 caractères, contenir au moins une lettre, un chiffre et un caractère spécial."
+                        'pattern' => "/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&\-])[A-Za-z\d@$!%*?&\-]{12,}$/",
+                        'message' => "Le mot de passe doit avoir au moins 12 caractères, contenir au moins une lettre, un chiffre et un caractère spécial."
                     ])
             ]])
             ->add('agreeTerms', CheckboxType::class, [

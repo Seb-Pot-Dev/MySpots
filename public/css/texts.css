@@ -1,31 +1,31 @@
-.header-medium{
-    font-family: 'SkateFont2', sans-serif;
+.header-medium {
+	font-family: "SkateFont2", sans-serif;
 }
-.header-small{
-    font-size: 0.75rem;
-    font-family: 'SkateFont2', sans-serif;
-    color: var(--text-color)
+.header-small {
+	font-size: 0.75rem;
+	font-family: "SkateFont2", sans-serif;
+	color: var(--text-color);
 }
-.body-small{
-    font-size: 0.75rem;
-    font-family: 'SkateFont3', sans-serif;
-    color: var(--text-color)
+.body-small {
+	font-size: 0.75rem;
+	font-family: "Annie Use Your Telescope", sans-serif;
+	color: var(--text-color);
 }
-.body-medium{
-    font-size: 1rem;
-    font-family: 'SkateFont3', sans-serif;
-    color: var(--text-color)
+.body-medium {
+	font-size: 1rem;
+	font-family: "Annie Use Your Telescope", sans-serif;
+	color: var(--text-color);
 }
-.body-large{
-    font-size: 1.25rem;
-    font-family: 'SkateFont3', sans-serif;
-    color: var(--text-color)
+.body-large {
+	font-size: 1.25rem;
+	font-family: "Annie Use Your Telescope", sans-serif;
+	color: var(--text-color);
 }
-.body-xlarge{
-    font-size: 1.5rem;
-    font-family: 'SkateFont3', sans-serif;
-    color: var(--text-color)
+.body-xlarge {
+	font-size: 1.5rem;
+	font-family: "Annie Use Your Telescope", sans-serif;
+	color: var(--text-color);
 }
-.text-shadow-1{
-    text-shadow: 1px 1.5px 1px var(--text-color-opposite);
+.text-shadow-1 {
+	text-shadow: 1px 1.5px 1px var(--text-color-opposite);
 }
