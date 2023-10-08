@@ -4,11 +4,11 @@
 
 {% block body %}
 <link rel="stylesheet" href="{{ asset('css/boxes-cards.css') }}">
-<div class="content-padding-top">
+<section style="padding-top:100px">
 
     <div class="head-show-profile">
-        <h4 class="text-xl">Détail du profil</h4>
-        <p class="text-2xl"> {{ user.pseudo }}: </p>
+        <h1 class="text-xl" style="margin-bottom: 10px; text-decoration:underline;">Détail du profil</h1>
+        <p class="text-3xl"> {{ user.pseudo }} </p>
     </div>
 
 
@@ -16,10 +16,13 @@
     <div class="my-box">
                 <div class="flex-col justify-between">
                     {# Spots favoris #}
-                    <h2 class="text-xl mb-6">Infos générales</h2>
+                    <div style="display:flex; align-items:center; justify-content: center; margin-bottom: 10px; gap: 10px; text-decoration:underline;">
+                        <h2 class="text-xl">Infos générales</h2>
+                        <i class="fa-regular fa-id-card"></i>
+                    </div>
                     
                     <div>
-                        <h3>Nombre de message : {{ user.comments | length }}</h3>
+                        <h3>Nombre de message : {{ user.comments | length }} <i class="fa-regular fa-comment"></i></h3>
                         
                             {# Récupère le timestamp de la dernière activité de l'utilisateur #}
                                 {% set lastActivityTimestamp = user.registrationDate.timestamp %}
@@ -49,7 +52,7 @@
                                 {% set years = (intervalInSeconds / secondsInYear) | round(0, 'floor') %}
 
                                 <p>
-                                Membre depuis
+                                    Membre depuis: 
                                     {% if years > 0 %}
                                         {{ years }} années, 
                                     {% endif %}
@@ -68,14 +71,15 @@
                                     {% if days < 0 %}
                                         {{ minutes }} minutes.
                                     {% endif %}
-                                    </p>
+                                <i class="fa-regular fa-clock"></i>
+                                </p>
                     </div>
                 </div>
         </div>
         <div class="my-box">
                 <div class="flex-col justify-between">
                     {# Spots favoris #}
-                    <h2 class="text-xl mb-6">Spots favoris</h2>
+                    <h2 class="text-xl mb-6" style="margin-bottom: 10px; gap: 10px; text-decoration:underline;">Spots favoris</h2>
                     <ul class="list-container">
                         {% for spot in user.favoriteSpots %}
                             <li>
@@ -90,7 +94,7 @@
         <div class="my-box">
                 <div class="flex-col justify-between">
                     {# Spots ajoutés #}
-                    <h2 class="text-xl mb-6">Spots ajoutés</h2>
+                    <h2 class="text-xl mb-6" style="margin-bottom: 10px; gap: 10px; text-decoration:underline;">Spots ajoutés</h2>
                     <ul class="list-container">
                         {% for spot in user.addedSpots %}
                             <li>
@@ -104,6 +108,6 @@
         </div>
         
     </div>
-</div>
+</section>
 
 {% endblock %}

@@ -33,7 +33,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SpotController extends AbstractController
 {
     #[Route('/spot/add_spot/', name: 'add_spot')]
-    public function add_spot(ManagerRegistry $doctrine, Security $security, Request $request, Spot $spot = null): Response 
+    public function add_spot(Security $security, ManagerRegistry $doctrine, SpotRepository $spotRepository, Spot $spot = null, Request $request, PictureService $pictureService): Response 
     {
         //on accède aux méthodes du manager de doctrine
         $entityManager = $doctrine->getManager();

@@ -9,87 +9,86 @@
 
 <!-- Si l'utilisateur est connecté et qu'il a le ROLE_ADMIN-->
 {% if app.user and is_granted('ROLE_ADMIN') %}
+<section style="display:flex; flex-direction:column;align-items:center; justify-content:center;">
+    <div style="padding-top: 100px; max-width: 50%;">
         <!-- Liste des utilisateurs -->
-        <h4 class="flex justify-center text-xl">Liste des utilisateurs</h4>
-        <ul class="list-container ">
-            {% for user in users %}
-                {% if user.isBanned == false and not(user.roles == "ROLE_ADMIN") %}
-                    <li>
-                        {{user.pseudo}}
-                        <a href="{{ path('banUser_admin', {'id':user.id}) }}"><i class="fa-solid fa-user-slash"></i></a>
-                        <a href="{{ path('deleteUser_admin', {'id':user.id}) }}">sup</a>
+        <h4 class="flex justify-center text-xl" style="text-decoration:underline; padding-bottom:1rem;">Liste des utilisateurs</h4>
+        <table class="table-admin">
+            <thead>
+                <tr>
+                    <th>Nom d'utilisateur</th>
+                    <th>Actions</th>
+                    <th>Dernière activité</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    {% if user.isBanned == false and not(user.roles == "ROLE_ADMIN") %}
+                        <tr>
+                            <td><a href="{{ path('show_profile', {'id': user.id})}}">{{ user.pseudo }}</a></td>
+                            <td>
+                                <a class="text-red-500" href="{{ path('banUser_admin', {'id': user.id}) }}"><i class="fa-solid fa-user-slash"></i></a>
+                                <a class="text-red-500" href="{{ path('deleteUser_admin', {'id': user.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
+                            </td>
+                            <td>
+                                {% if user.lastActivityAt %}
+                                    {% set lastActivityTimestamp = user.lastActivityAt.timestamp %}
+                                    {% set currentTimestamp = date().timestamp %}
+                                    {% set intervalInSeconds = currentTimestamp - lastActivityTimestamp %}
+                                    {% set secondsInMinute = 60 %}
+                                    {% set secondsInHour = 60 * secondsInMinute %}
+                                    {% set secondsInDay = 24 * secondsInHour %}
+                                    {% set secondsInMonth = 30 * secondsInDay %}
+                                    {% set secondsInYear = 365 * secondsInDay %}
+                                    {% set minutes = ((intervalInSeconds % secondsInHour) / secondsInMinute) | round(0, 'floor') %}
+                                    {% set hours = ((intervalInSeconds % secondsInDay) / secondsInHour) | round(0, 'floor') %}
+                                    {% set days = ((intervalInSeconds % secondsInMonth) / secondsInDay) | round(0, 'floor') %}
+                                    {% set months = ((intervalInSeconds % secondsInYear) / secondsInMonth) | round(0, 'floor') %}
+                                    {% set years = (intervalInSeconds / secondsInYear) | round(0, 'floor') %}
+                                    {% if years >= 5 %}
+                                        <p style="color: red;">Attention : Cet utilisateur n'a pas été actif depuis {{ years }} années, {{ months }} mois, {{ days }} jours, {{ hours }} heures et {{ minutes }} minutes!</p>
+                                    {% else %}
+                                        <p style="color: green;">
+                                            Actif il y a
+                                            {% if years > 0 %} {{ years }} années, {% endif %}
+                                            {% if months > 0 %} {{ months }} mois, {% endif %}
+                                            {% if days > 0 %} {{ days }} jours, {% endif %}
+                                            {% if hours > 0 %} {{ hours }} heures et {% endif %}
+                                            {% if minutes > 0 %} {{ minutes }} minutes. {% endif %}
+                                        </p>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
 
-                        {# Vérifie si l'utilisateur a une valeur pour lastActivityAt #}
-                        {% if user.lastActivityAt %}
-                            {# Récupère le timestamp de la dernière activité de l'utilisateur #}
-                            {% set lastActivityTimestamp = user.lastActivityAt.timestamp %}
-                            {# Récupère le timestamp actuel #}
-                            {% set currentTimestamp = date().timestamp %}
-                            {# Calcule la différence en secondes entre le moment actuel et la dernière activité #}
-                            {% set intervalInSeconds = currentTimestamp - lastActivityTimestamp %}
-                            {# Définit le nombre de secondes dans une minute #}
-                            {% set secondsInMinute = 60 %}
-                            {# Définit le nombre de secondes dans une heure #}
-                            {% set secondsInHour = 60 * secondsInMinute %}
-                            {# Définit le nombre de secondes dans un jour #}
-                            {% set secondsInDay = 24 * secondsInHour %}
-                            {# Définit le nombre de secondes dans un mois (approximatif) #}
-                            {% set secondsInMonth = 30 * secondsInDay %}
-                            {# Définit le nombre de secondes dans une année (approximatif) #}
-                            {% set secondsInYear = 365 * secondsInDay %}
-                            {# Calcule le nombre de minutes restantes après avoir retiré les heures, jours, etc. #}
-                            {% set minutes = ((intervalInSeconds % secondsInHour) / secondsInMinute) | round(0, 'floor') %}
-                            {# Calcule le nombre d'heures restantes après avoir retiré les jours, mois, etc. #}
-                            {% set hours = ((intervalInSeconds % secondsInDay) / secondsInHour) | round(0, 'floor') %}
-                            {# Calcule le nombre de jours restants après avoir retiré les mois, années, etc. #}
-                            {% set days = ((intervalInSeconds % secondsInMonth) / secondsInDay) | round(0, 'floor') %}
-                            {# Calcule le nombre de mois restants après avoir retiré les années #}
-                            {% set months = ((intervalInSeconds % secondsInYear) / secondsInMonth) | round(0, 'floor') %}
-                            {# Calcule le nombre total d'années #}
-                            {% set years = (intervalInSeconds / secondsInYear) | round(0, 'floor') %}
-
-                            {# Affichage de l'intervalle #}
-                            {% if years >= 5 %}
-                                <p style="color: red;">Attention : Cet utilisateur n'a pas été actif depuis {{ years }} années, {{ months }} mois, {{ days }} jours, {{ hours }} heures et {{ minutes }} minutes!</p>
-                            {% else %}
-                                <p style="color: green;">
-                                Actif il y a 
-                                {% if years > 0 %}
-                                    {{ years }} années, 
-                                {% endif %}
-                                {% if months > 0 %}
-                                    {{ months }} mois, 
-                                {% endif %}
-                                {% if days > 0 %}
-                                    {{ days }} jours, 
-                                {% endif %}
-                                {% if hours > 0 %}
-                                    {{ hours }} heures et 
-                                {% endif %}
-                                {% if minutes > 0 %}
-                                    {{ minutes }} minutes.
-                                {% endif %}
-                                </p>
-                            {% endif %}
-                        {% endif %}    
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
-
-        <h4 class="flex justify-center text-xl">Utilisateurs bannis</h4>
-        <ul class="list-container">
-            {% for user in users %}
-                {% if user.isBanned == 1 %}
-                    <li>
-                        {{user.pseudo}}
-                        <a href="{{ path('banUser_admin', {'id':user.id}) }}"><i class="fa-solid fa-user"></i></a>
-                        <a href="{{ path('deleteUser_admin', {'id':user.id}) }}">sup</a>
-
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </ul>
+        <h4 class="flex justify-center text-xl" style="text-decoration:underline; padding:1rem 0;">Utilisateurs bannis</h4>
+        <table class="table-admin">
+            <thead>
+                <tr>
+                    <th>Nom d'utilisateur</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    {% if user.isBanned == 1 %}
+                        <tr>
+                            <td><a href="{{ path('show_profile', {'id': user.id})}}">{{ user.pseudo }}</a></td>
+                            <td>
+                                <a class="text-red-500" href="{{ path('banUser_admin', {'id': user.id}) }}"><i class="fa-solid fa-user"></i></a>
+                                <a class="text-red-500" href="{{ path('deleteUser_admin', {'id': user.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
 {% endif %}
-    
+
 {% endblock %}

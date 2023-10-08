@@ -17,8 +17,15 @@ class PictureService
         // On récupère les infos de l'image
         $picture_infos = getImageSize($picture);
 
+        // Limitation du type de fichier
         if($picture_infos === false){
             throw new Exception(' Format d\'image incorrect');
+        }
+
+        // Limitation de la taille maximale
+        $MAX_SIZE = 5 * 1024 * 1024;
+        if ($picture->getSize() > $MAX_SIZE) {
+            throw new Exception('Fichier trop volumineux');
         }
 
         // On vérifie le format de l'image
