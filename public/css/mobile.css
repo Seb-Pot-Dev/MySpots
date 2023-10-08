@@ -8,6 +8,9 @@
     .my-profile-container{
         margin-top: 100px;
     }
+    #mobile-open-form-spot{
+        display: none;
+    }
 }
 @media screen and (max-width: 768px) {
     #mobile-duo{
@@ -215,7 +218,7 @@
         width: 90%;
         max-width: unset;
     }
-  }
+
   #add-spot-mobile{
     position: absolute;
     display: none;
@@ -250,5 +253,14 @@
     border-radius: 12px;
     padding: 4px;
     border: 1px solid #ffffff4f;
-
   }
+  form{
+    margin-top: unset;
+  }
+  form[name="comment"]{
+    margin-bottom: 1rem;
+  }
+  .description-box h4{
+    text-decoration: underline;
+  }
+}

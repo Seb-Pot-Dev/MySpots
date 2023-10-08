@@ -91,6 +91,10 @@ ul.list-spots-desktop{
     color: var(--text-color);
     text-shadow: 1px 1.5px 1px var(--text-color-opposite);
     height: fit-content;
+    
+    text-shadow: 3px 3px 6px var(--text-color-opposite);
+      
+      
 }
 /****OPTION MOBILE POUR LA CARTE*****/
 @media screen and (max-width: 768px) {

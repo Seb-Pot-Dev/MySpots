@@ -45,8 +45,15 @@
                                     {% set days = ((intervalInSeconds % secondsInMonth) / secondsInDay) | round(0, 'floor') %}
                                     {% set months = ((intervalInSeconds % secondsInYear) / secondsInMonth) | round(0, 'floor') %}
                                     {% set years = (intervalInSeconds / secondsInYear) | round(0, 'floor') %}
-                                    {% if years >= 5 %}
-                                        <p style="color: red;">Attention : Cet utilisateur n'a pas été actif depuis {{ years }} années, {{ months }} mois, {{ days }} jours, {{ hours }} heures et {{ minutes }} minutes!</p>
+                                    {% if years >= 3 %}
+                                        <p style="color: red;">Attention : Cet utilisateur n'a pas été actif depuis 
+                                        {% if years > 0 %}
+                                        {{ years }} années, 
+                                        {% endif %}
+                                        {% if months > 0 %}
+                                        {{ months }} mois,
+                                        {% endif %}
+                                         {{ days }} jours!</p>
                                     {% else %}
                                         <p style="color: green;">
                                             Actif il y a

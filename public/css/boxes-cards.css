@@ -10,6 +10,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    color: var(--text-color);
 }
   
 .box-cut{
@@ -53,9 +54,13 @@
 }
 .table-admin tr:nth-child(odd){
     border: 1px solid black;
-    background-color: #f2f2f2;
+    background-color: var(--text-color);
+    color: var(--text-color-opposite);
+    
 }
 .table-admin tr:nth-child(even){
+    color: var(--text-color);
+    background-color: var(--text-color-opposite);
     border: 1px solid black;
 }
 .table-admin th{
@@ -89,4 +94,7 @@
 }
 #my-admin-title h2{
     font-size: 1.25rem;
+}
+.section-col{
+    flex-direction: column;
 }

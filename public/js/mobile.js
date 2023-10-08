@@ -4,9 +4,9 @@ const mobileListSpotDesktopGlobal = document.getElementById('list-spots-desktop-
 const mobileToggleFilters = document.getElementById('mobileToggleFilters');
 
 const mobileCloseFormSpot = document.getElementById('mobile-close-form-spot');
-const mobileAddSpotForm = document.getElementById('add-spot-mobile');
+const mobileAddSpotForm = document.getElementById('mobile-open-form-spot');
 // au click sur #mobile-close-form-spot
-mobileCloseFormSpot.addEventListener("click", closeMobileAddSpot);
+mobileAddSpotForm.addEventListener("click", closeMobileAddSpot);
 
 
 mobileChoiceList.addEventListener("click", showList)

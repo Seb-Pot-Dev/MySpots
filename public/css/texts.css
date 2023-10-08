@@ -2,7 +2,7 @@
 	font-family: "SkateFont2", sans-serif;
 }
 .header-small {
-	font-size: 0.75rem;
+	font-size: 1rem;
 	font-family: "SkateFont2", sans-serif;
 	color: var(--text-color);
 }
@@ -27,5 +27,5 @@
 	color: var(--text-color);
 }
 .text-shadow-1 {
-	text-shadow: 1px 1.5px 1px var(--text-color-opposite);
+	text-shadow: 3px 3px 6px var(--text-color-opposite);
 }

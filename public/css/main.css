@@ -21,15 +21,13 @@
 
 /**********GESTION DES COULEURS ET MODE NUIT *************/
 :root {
-    --text-color: #333;         /* Couleur du texte */
-    --accent-color: #B91C1C;    /* Couleur d'accentuation */
+    --text-color: #333;        
+    --accent-color: #B91C1C;    
     --background-color: white;
     --menu-background: lightgray;
-    --transparent-background: rgba(255, 255, 255, 0.519);
-    --transparent-background-hover: rgba(255, 255, 255, 0.514);
+    --transparent-background: rgba(255, 255, 255, 0.747);
     --text-color-opposite: white;
     --button-hover: lightgray;
-    --element-background: rgba(0, 0, 0, 0.541);
 }
 
 /* Mode nuit */
@@ -39,11 +37,8 @@ body.night-mode {
     --background-color: black;
     --menu-background: rgb(33, 33, 55);
     --transparent-background: rgba(0, 0, 0, 0.273);
-    --transparent-background-hover: rgba(0, 0, 0, 0.514);
     --text-color-opposite: #333;
     --button-hover: rgb(114, 114, 114);
-
-
 }
 
 /* Appliquer les couleurs */

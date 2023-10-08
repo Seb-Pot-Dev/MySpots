@@ -3,70 +3,37 @@
 {% block title %}Hello ModuleController!{% endblock %}
 
 {% block body %}
-<style>
-    .module-flex-col{
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        padding-top: 100px;
-    }
-    h4{
-        font-size:1.5rem;
-        text-decoration: underline;
-    }
+<link rel="stylesheet" href="{{ asset('css/boxes-cards.css') }}">
 
-    .table {
-        border-collapse: collapse;
-        width: 30%;
-    }
-
-    .table th,
-    .table td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-
-    .table th {
-        background-color: #f2f2f2;
-    }
-    .table tbody tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-
-    .table a:hover {
-        text-decoration: underline;
-    }
-</style>
-
-<div class="module-flex-col">
-    <h4>Liste des modules disponibles</h4>
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Nom du module</th>
-            <th>Édition</th>
-            <th>Suppression</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for module in modules %}
+<section class="  section-col flex items-center justify-center gap-4 mt-14">
+    <div class="my-box table-admin-box">
+        <h4>Liste des modules disponibles</h4>
+        <table class="list-container table-admin table-admin-box">
+        <thead>
             <tr>
-                <td>{{ module.name }}</td>
-                <td><a class="text-blue-500" href="{{ path('app_module_edit', {'id': module.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
-                <td><a class="text-red-500" href="{{ path('deleteModule_admin', {'id': module.id}) }}"><i class="fa-regular fa-trash-can"></i></a></td>
+                <th>Nom du module</th>
+                <th>Édition</th>
+                <th>Suppression</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for module in modules %}
+                <tr>
+                    <td>{{ module.name }}</td>
+                    <td><a class="text-blue-500" href="{{ path('app_module_edit', {'id': module.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+                    <td><a class="text-red-500" href="{{ path('deleteModule_admin', {'id': module.id}) }}"><i class="fa-regular fa-trash-can"></i></a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-</div>
-<div class="flex justify-center text-xl">
-    
-</div>
-    {{form_start(formNewModule, {'attr': {'class': 'mx-auto p-4 bg-white shadow-md rounded-lg'}})}}
-        {{ form_label(formNewModule.name, 'Nom du module', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
-        {{ form_widget(formNewModule.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
-    {{form_end(formNewModule)}}
+    </div>
+    <div class="flex justify-center text-xl">
+        
+    </div>
+        {{form_start(formNewModule, {'attr': {'class': 'mx-auto p-4 bg-white shadow-md rounded-lg'}})}}
+            {{ form_label(formNewModule.name, 'Nom du module', {'label_attr': {'class': 'block font-medium text-gray-700'}}) }}
+            {{ form_widget(formNewModule.name, {'attr': {'class': 'w-full px-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        {{form_end(formNewModule)}}
+</section>
 {% endblock %}

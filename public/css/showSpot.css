@@ -143,3 +143,10 @@ img#skatepark-icon {
 .comment-box {
 	background-color: rgba(212, 212, 212, 0.273);
 }
+.description-box{
+	background-color: rgba(212, 212, 212, 0.273);
+}
+#comment-section {
+	max-height: 100vh;
+	overflow-y: scroll;
+}
