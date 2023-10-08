@@ -145,7 +145,6 @@
         <!-- formulaire ajout spot-->
         <div id="form-add-spot-global">
             <button id="toggleFormSpot" href="#" aria-label="Ouvrir le formulaire d'ajout de spots">NOUVEAU SPOT</button>
-            <button id="toggle-form-spot-mobile-id" aria-label="Fermer le formulaire d'ajout de spots">X</button>
             {{ formAddSpotComponent }}
         </div>
     {% else %}
@@ -191,15 +190,12 @@
 <div id="map-options-mobile">
     {{ filtersComponent }}
 </div>
+
 {% if app.user %}
-    <div id="add-spot-mobile" class="">
-        <a id="mobile-close-form-spot">X</a>
-    </div>
+        <a aria-label="Alterner entre formulaire d'ajout de spots et carte"id="mobile-open-form-spot">+</a>
 {% endif %} 
 {% endblock %}
-
 {% block javascripts %}
-
 
 <!-- Pour déterminer dans les fichiers JS joints si un User est connecté, je créé une variable -->
 <script>
