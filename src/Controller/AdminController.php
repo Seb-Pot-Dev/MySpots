@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Spot;
 use App\Entity\User;
 use App\Entity\Module;
+use App\Entity\Comment;
 use App\Entity\Picture;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -189,6 +190,24 @@ class AdminController extends AbstractController
         }else{
             return $this->redirectToRoute('app_home');
         }
+    }
+    #[Route('/admin/deleteComment/{id}', name: 'deleteComment_admin')]
+    public function deleteComment(EntityManagerInterface $entityManager, Comment $comment): Response
+    {
+        // Récupération de l'utilisateur actuel
+        $user = $this->getUser();
+        $userRole = $user->getRoles();
+
+        // Vérification du rôle de l'utilisateur
+        if ($user && in_array('ROLE_ADMIN', $userRole)) {
+            if ($comment) {
+                $commentSpotId = $comment->getSpotConcerned()->getId();
+                $entityManager->remove($comment);
+                $entityManager->flush();
+                return $this->redirectToRoute('show_spot', ["idSpot" => $commentSpotId]);
+            }
+        }
+        return $this->redirectToRoute('app_home');
     }
 
 

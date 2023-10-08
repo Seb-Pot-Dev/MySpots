@@ -87,7 +87,7 @@
 
             <table>
                 <tr>
-                    <td id="show-is-covered">
+                    <td class="show-td-detail">
                             {% if spot.isCovered == 0 %}
                                 <img src="\icons\outdoor.png" alt="icon of outdoor" id="outdoor-icon">
                                 Non-couvert
@@ -98,15 +98,16 @@
                     </td>
                 
                     <td>
-                        {% if spot.isOfficial == 1 %}
-                            <div class="flex items-center justify-center">
-                                <img src="\icons\skatepark.png" alt="icon skatepark" id="skatepark-icon">
+                            <div class="show-td-detail">
+                                {% if spot.isOfficial == 1 %}
+                                        <img src="\icons\skatepark.png" alt="icon skatepark" id="skatepark-icon">
+                                    
+                                    SKATEPARK
+                                {% else %}
+                                    <img src="\icons\street.png" alt="icon street" id="street-icon">
+                                    SPOT STREET
+                                {% endif %}
                             </div>
-                            SKATEPARK
-                        {% else %}
-                            <img src="\icons\street.png" alt="icon street" id="street-icon">
-                            SPOT STREET
-                        {% endif %}
                     </td>
                 </tr>
                 <tr>
@@ -229,7 +230,9 @@
         <!-- boucle sur les commentaires du spot, triés par date -->
         {% for comment in spot.comments|sort((a, b)=>a.date<=>b.date) %}
         <div class="comment-box">
+            
             <div class="comment-author-and-date">
+                
                 <div class="comment-author">
                 {# Si l'auteur du commentaire n'as pas supprimé son compte #}
                 {% if comment.author is not same as null %}
@@ -237,9 +240,11 @@
                 {% else %}
                     <p>Inconnu</p>
                 {% endif %}
+                
                 </div>
                 <div class="comment-date">
                 {{comment.date|date('d/m/y H:i:s')}}
+                <a class=" text-red-500" href="{{ path('deleteComment_admin', {'id': comment.id} )}}"><i class="fa-regular fa-trash-can"></i></a>
                 </div>
             </div>
             <div class="comment-content">
@@ -248,7 +253,11 @@
         </div>
         {% endfor %}
     {% else %}
-    <p>Pas encore de commentaire sur ce spot</p>
+    <div class="comment-box">
+        <div class="comment-author-and-date">
+            <p>Pas encore de commentaire sur ce spot</p>
+        </div>
+    </div>
     {% endif %}
 
     {% if app.user %}
