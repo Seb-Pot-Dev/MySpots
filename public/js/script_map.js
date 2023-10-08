@@ -107,7 +107,6 @@ function error(err) {
 }
 
 const btnAddUserLoc = document.querySelector("#add-user-pos");
-
 function fillWithUserPosition(event) {
 	event.preventDefault();
 	// Si la position de l'utilisateur est connue, affiche les coordonnées dans le formulaire.
@@ -136,9 +135,9 @@ function promptGeolocationAccess() {
 		// L'utilisateur a cliqué sur 'Annuler' ou a fermé la fenêtre, vous pouvez faire quelque chose d'autre ou ne rien faire.
 	}
 }
-// Si l'utilisateur est
+// Si l'utilisateur est co
 if (IS_USER_LOGGED_IN) {
-	/*********************************GESTION DU CLICK SUR LA MAP****************************************************************/
+	/*GESTION DU CLICK SUR LA MAP*/
 	//Appel la fonction onMapClick pour créer un Event lorsque l'on clique sur un endroit non marked de la map et indique les coordonnées
 	map.on("click", onMapClick);
 
@@ -186,9 +185,12 @@ if (IS_USER_LOGGED_IN) {
 // vars
 const toggleForm = document.getElementById("toggleFormSpot");
 const containerForm = document.getElementById("form-spot-id");
-const closeFormSpotMobile = document.getElementById("toggle-form-spot-mobile-id")
+// const closeFormSpotMobile = document.getElementById("toggle-form-spot-mobile-id")
+const toggleFormSpotMobile = document.getElementById("mobile-open-form-spot");
 
-closeFormSpotMobile.addEventListener("click", toggleContainer)
+// closeFormSpotMobile.addEventListener("click", toggleContainer)
+toggleFormSpotMobile.addEventListener("click", toggleContainer)
+
         // fn pour toggle
         function toggleContainer() {
             let computedStyle = window.getComputedStyle(containerForm);
@@ -199,6 +201,9 @@ closeFormSpotMobile.addEventListener("click", toggleContainer)
                 toggleForm.innerHTML = "OUVRIR";
 				if (window.innerWidth < 768) {
 					document.getElementById("form-add-spot-global").style.display ="none"
+					toggleFormSpotMobile.innerHTML = "+"
+					toggleFormSpotMobile.style.fontSize = "2.25rem";
+					toggleFormSpotMobile.style.color = "black";
 				}	
 
             } else {
@@ -206,9 +211,11 @@ closeFormSpotMobile.addEventListener("click", toggleContainer)
                 containerForm.style.overflow = "unset";
                 toggleForm.innerHTML = "FERMER";
 				if (window.innerWidth < 768) {
+					toggleFormSpotMobile.innerHTML = "X"
 					document.getElementById("form-add-spot-global").style.display ="flex"
+					toggleFormSpotMobile.style.color = "red";
+					toggleFormSpotMobile.style.fontSize = "1.25rem";
 				}	
-                // Note: De même, ajustez le texte du bouton si nécessaire
             }
         }
 		// Si l'utilisateur est connecté, on écoute l'event click sur le toggleContainer
@@ -226,7 +233,6 @@ function getPosByAdress() {
 		document.querySelector("#spot_cp").value +
 		" " +
 		document.querySelector("#spot_city").value;
-
 	// On initialise une requête AJAX
 	const xmlhttp = new XMLHttpRequest();
 
@@ -243,7 +249,6 @@ function getPosByAdress() {
 
 				document.querySelector("#spot_lat").value = lat;
 				document.querySelector("#spot_lng").value = lng;
-
 				let pos = [lat, lng];
 				popup
 					.setLatLng(pos)
@@ -256,7 +261,6 @@ function getPosByAdress() {
 			}
 		}
 	};
-
 	// On ouvre la requête HTTP
 	xmlhttp.open(
 		"get",
