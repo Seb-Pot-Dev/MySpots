@@ -37,6 +37,12 @@
     -ms-border-radius: unset;
     -o-border-radius: unset;
 }
+.form-title-underline{
+    text-decoration: underline;
+}
+.form-spot-inline-element{
+    max-height: 24px;
+}
 
 .submit-form-spot{
     padding-top: 0.5rem;

@@ -166,6 +166,7 @@
     display:none;
     }
     #toggle-form-spot-mobile-id{
+        margin-right: 20px;
         top: 100px;
         font-size: 2rem;
         position: absolute;
@@ -186,7 +187,7 @@
     }
     #mobileToggleFilters{
         position: absolute;
-        z-index: 999999999999999;
+        z-index: 999999999;
         top: 105px;
         left: 50%;
         transform: translate(-50%, -50%);

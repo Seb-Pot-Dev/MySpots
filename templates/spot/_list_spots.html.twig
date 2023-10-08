@@ -20,7 +20,7 @@
                     <div class="right">
                         <!-- nb likes du spot -->
                         {% if app.user %} <!-- si le user est co, il peut liker-->
-                        <button href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}">    
+                        <a href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}">    
                         
                                 
                             {% if spot in app.user.favoriteSpots %}
@@ -29,7 +29,7 @@
                                 <i class="fa-regular fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur vide + Nb likes-->
                             {% endif %}
                                                        
-                        </button>
+                        </a>
                         {% else %}
                             <i class="fa-regular fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur vide + Nb likes -->
                         {% endif %}

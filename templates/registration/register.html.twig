@@ -17,27 +17,44 @@
     </div>
     <div class="mb-4">
         <div class="inline-flex">{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-        <div class="text-red-500 text-4xl">*</div></div>
+        <div class="text-red-500 text-4xl">*</div>
+    </div>
+    {# Affichage des erreurs pour le champ email #}
+    <div class="text-red-500">
+        {{ form_errors(registrationForm.email) }}
+    </div>
         {{ form_widget(registrationForm.email, {'attr': {'text-black class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
     <div class="mb-4">
         <div class="inline-flex">{{ form_label(registrationForm.pseudo, 'Pseudo', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
-        <div class="text-red-500 text-4xl">*</div></div> 
+            <div class="text-red-500 text-4xl">*</div>
+        </div> 
+        <div class="text-red-500">
+            {{ form_errors(registrationForm.pseudo) }}
+        </div>
         {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
     <div class="mb-4">
         <div class="inline-flex">{{ form_label(registrationForm.plainPassword.first, 'Mot de passe', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
         <div class="text-red-500 text-4xl">*</div></div> 
+        <div class="text-red-500">
+            {{ form_errors(registrationForm.plainPassword.first) }}
+        </div>
         {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
     <div class="mb-4">
         <div class="inline-flex">{{ form_label(registrationForm.plainPassword.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
         <div class="text-red-500 text-4xl">*</div></div> 
+        <div class="text-red-500">
+            {{ form_errors(registrationForm.plainPassword.second) }}
+        </div>
         {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
 
     <div class="inline-flex  justify-center mb-4">
-        {{ form_errors(registrationForm) }}
+        <div class="text-red-500">
+            {{ form_errors(registrationForm.agreeTerms.vars.id) }}
+        </div>
         <label for="{{ registrationForm.agreeTerms.vars.id }}">
         <!-- Le lien pointant vers la page des conditions générales d'utilsiation -->
         J'accepte les 
@@ -55,6 +72,9 @@
         {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'text-black mr-2 leading-tight'}}) }}
     </div>
     <div class="inline-flex  justify-center mb-4">
+        <div class="text-red-500">
+            {{ form_errors(registrationForm.agreeConfidentiality.vars.id) }}
+        </div>
         <label for="{{ registrationForm.agreeConfidentiality.vars.id }}">
         <!-- Le lien pointant vers la page de politique de confidentialité -->
         J'accepte la

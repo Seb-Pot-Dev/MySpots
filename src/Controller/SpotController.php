@@ -98,6 +98,12 @@ class SpotController extends AbstractController
 
             }
         }
+        else{
+            $this->addFlash(
+                'notice',  // Le type de message
+                'Tu dois être connecté pour ajouter un spot'  // Le contenu du message
+            );
+        }
         return $this->render('spot/add_spot.html.twig', [
             'user' => $user,
             'formAddSpot' => $form->createView(),
@@ -240,6 +246,11 @@ class SpotController extends AbstractController
             // Rediriger vers la liste des spots
             return $this->redirectToRoute('app_spot');
         }
+    }else{
+        $this->addFlash(
+            'notice',  // Le type de message
+            'Tu dois être connecté pour ajouter un spot.'  // Le contenu du message
+        );
     }
 
         /********************** FIN AJOUT DE SPOT*********************************** */
