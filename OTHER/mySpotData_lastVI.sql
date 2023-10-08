@@ -31,11 +31,13 @@ CREATE TABLE IF NOT EXISTS `comment` (
   KEY `IDX_9474526C719C5F2F` (`spot_concerned_id`),
   CONSTRAINT `FK_9474526C719C5F2F` FOREIGN KEY (`spot_concerned_id`) REFERENCES `spot` (`id`),
   CONSTRAINT `FK_9474526CF675F31B` FOREIGN KEY (`author_id`) REFERENCES `user` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table skatespot.comment : ~1 rows (environ)
+-- Listage des données de la table skatespot.comment : ~3 rows (environ)
 INSERT INTO `comment` (`id`, `author_id`, `spot_concerned_id`, `date`, `content`) VALUES
-	(1, 22, 51, '2023-10-07 16:05:37', 'C\'est le QG des skaters à Strasbourg !!');
+	(1, 22, 51, '2023-10-07 16:05:37', 'C\'est le QG des skaters à Strasbourg !!'),
+	(10, NULL, 42, '2023-10-08 22:53:21', 'Je poste ce commentaire avant de supprimer mon compte. Adios !'),
+	(11, NULL, 50, '2023-10-08 22:57:04', 'Je poste ce commentaire avant de supprimer mon compte. Adios !');
 
 -- Listage de la structure de table skatespot. doctrine_migration_versions
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
@@ -64,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
   KEY `IDX_75EA56E016BA31DB` (`delivered_at`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table skatespot.messenger_messages : ~18 rows (environ)
+-- Listage des données de la table skatespot.messenger_messages : ~20 rows (environ)
 INSERT INTO `messenger_messages` (`id`, `body`, `headers`, `queue_name`, `created_at`, `available_at`, `delivered_at`) VALUES
 	(1, 'O:36:\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\":2:{s:44:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\";a:1:{s:46:\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\";a:1:{i:0;O:46:\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\":1:{s:55:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\";s:21:\\"messenger.bus.default\\";}}}s:45:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\";O:51:\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\":2:{s:60:\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\";O:39:\\"Symfony\\\\Bridge\\\\Twig\\\\Mime\\\\TemplatedEmail\\":4:{i:0;s:41:\\"registration/confirmation_email.html.twig\\";i:1;N;i:2;a:3:{s:9:\\"signedUrl\\";s:166:\\"https://127.0.0.1:8000/verify/email?expires=1683877651&signature=gvoGrh8gcaC2faZb%2BDXFUmlSLLXJo0oKeKpK5afGDS4%3D&token=WX90jwdgEKsR1FAIDo4Z5fVY9Jn50d030vlkBtjKvU4%3D\\";s:19:\\"expiresAtMessageKey\\";s:26:\\"%count% hour|%count% hours\\";s:20:\\"expiresAtMessageData\\";a:1:{s:7:\\"%count%\\";i:1;}}i:3;a:6:{i:0;N;i:1;N;i:2;N;i:3;N;i:4;a:0:{}i:5;a:2:{i:0;O:37:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\":2:{s:46:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\0headers\\";a:3:{s:4:\\"from\\";a:1:{i:0;O:47:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:4:\\"From\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:58:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\0addresses\\";a:1:{i:0;O:30:\\"Symfony\\\\Component\\\\Mime\\\\Address\\":2:{s:39:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0address\\";s:19:\\"skatespot@admin.com\\";s:36:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0name\\";s:25:\\"Seb (admin de Skate Spot)\\";}}}}s:2:\\"to\\";a:1:{i:0;O:47:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:2:\\"To\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:58:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\0addresses\\";a:1:{i:0;O:30:\\"Symfony\\\\Component\\\\Mime\\\\Address\\":2:{s:39:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0address\\";s:15:\\"admin@admin.com\\";s:36:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0name\\";s:0:\\"\\";}}}}s:7:\\"subject\\";a:1:{i:0;O:48:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\UnstructuredHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:7:\\"Subject\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:55:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\UnstructuredHeader\\0value\\";s:25:\\"Please Confirm your Email\\";}}}s:49:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\0lineLength\\";i:76;}i:1;N;}}}s:61:\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0envelope\\";N;}}', '[]', 'default', '2023-05-12 06:47:32', '2023-05-12 06:47:32', NULL),
 	(2, 'O:36:\\"Symfony\\\\Component\\\\Messenger\\\\Envelope\\":2:{s:44:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0stamps\\";a:1:{s:46:\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\";a:1:{i:0;O:46:\\"Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\":1:{s:55:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Stamp\\\\BusNameStamp\\0busName\\";s:21:\\"messenger.bus.default\\";}}}s:45:\\"\\0Symfony\\\\Component\\\\Messenger\\\\Envelope\\0message\\";O:51:\\"Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\":2:{s:60:\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0message\\";O:39:\\"Symfony\\\\Bridge\\\\Twig\\\\Mime\\\\TemplatedEmail\\":4:{i:0;s:41:\\"registration/confirmation_email.html.twig\\";i:1;N;i:2;a:3:{s:9:\\"signedUrl\\";s:169:\\"http://127.0.0.1:8000/verify/email?expires=1684150041&signature=MVW0Fru%2BNCse4jjVJwNHKg73jrbDYBS2Hw0iRecextU%3D&token=FfX%2ByqzoNfdWCCFAUAQxtho5tpGctA1QV%2FoN83lJT5I%3D\\";s:19:\\"expiresAtMessageKey\\";s:26:\\"%count% hour|%count% hours\\";s:20:\\"expiresAtMessageData\\";a:1:{s:7:\\"%count%\\";i:1;}}i:3;a:6:{i:0;N;i:1;N;i:2;N;i:3;N;i:4;a:0:{}i:5;a:2:{i:0;O:37:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\":2:{s:46:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\0headers\\";a:3:{s:4:\\"from\\";a:1:{i:0;O:47:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:4:\\"From\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:58:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\0addresses\\";a:1:{i:0;O:30:\\"Symfony\\\\Component\\\\Mime\\\\Address\\":2:{s:39:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0address\\";s:19:\\"skatespot@admin.com\\";s:36:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0name\\";s:25:\\"Seb (admin de Skate Spot)\\";}}}}s:2:\\"to\\";a:1:{i:0;O:47:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:2:\\"To\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:58:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\MailboxListHeader\\0addresses\\";a:1:{i:0;O:30:\\"Symfony\\\\Component\\\\Mime\\\\Address\\":2:{s:39:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0address\\";s:23:\\"exemplemail@exemple.com\\";s:36:\\"\\0Symfony\\\\Component\\\\Mime\\\\Address\\0name\\";s:0:\\"\\";}}}}s:7:\\"subject\\";a:1:{i:0;O:48:\\"Symfony\\\\Component\\\\Mime\\\\Header\\\\UnstructuredHeader\\":5:{s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0name\\";s:7:\\"Subject\\";s:56:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lineLength\\";i:76;s:50:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0lang\\";N;s:53:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\AbstractHeader\\0charset\\";s:5:\\"utf-8\\";s:55:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\UnstructuredHeader\\0value\\";s:25:\\"Please Confirm your Email\\";}}}s:49:\\"\\0Symfony\\\\Component\\\\Mime\\\\Header\\\\Headers\\0lineLength\\";i:76;}i:1;N;}}}s:61:\\"\\0Symfony\\\\Component\\\\Mailer\\\\Messenger\\\\SendEmailMessage\\0envelope\\";N;}}', '[]', 'default', '2023-05-15 12:27:21', '2023-05-15 12:27:21', NULL),
@@ -127,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `picture` (
   CONSTRAINT `FK_16DB4F892DF1D37C` FOREIGN KEY (`spot_id`) REFERENCES `spot` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table skatespot.picture : ~9 rows (environ)
+-- Listage des données de la table skatespot.picture : ~35 rows (environ)
 INSERT INTO `picture` (`id`, `spot_id`, `name`) VALUES
 	(22, 41, '9d73431d19d317dadd3df4a23e69900c.webp'),
 	(24, 43, '63a9103d978efd6bc52540e7323775f2.webp'),
@@ -194,7 +196,7 @@ INSERT INTO `spot` (`id`, `author_id`, `name`, `description`, `adress`, `cp`, `c
 	(45, 22, 'Le bowl', '6 mètres de diamètre', '1 boulevard Kellermann', '75013', 'Paris', 48.819754, 2.3462919, '2023-10-04 20:35:58', 1, 0, 0),
 	(46, 22, 'Parc Martin Luther King', 'Vague en béton, rampe, rail, \r\n tables et sol bien lisse', '147, rue Cardinet', '75017', 'Paris', 48.8883096, 2.3152295, '2023-10-04 20:42:29', 1, 0, 1),
 	(47, 29, 'Tribunal', 'Place pavés lisses', 'tribunal', '67000', 'strasbourg', 48.58819275, 7.7476011019081, '2023-10-06 20:14:18', 1, 0, 0),
-	(49, 29, 'Rivétoiole', 'Place passante, marches, bancs', 'rivétoile', NULL, 'strasbourg', 48.5731114, 7.762224, '2023-10-06 20:15:45', 1, 0, 0),
+	(49, 29, 'Rivétoile', 'Place passante, marches, bancs', 'rivétoile', NULL, 'strasbourg', 48.573, 7.762, '2023-10-06 20:15:45', 1, 0, 0),
 	(50, 29, 'Citadelle', 'Skatepark extérieur', NULL, NULL, NULL, 48.574821774075, 7.7739503960109, '2023-10-06 20:21:47', 1, 0, 1),
 	(51, 29, 'Le musée', 'Grand espace, place du musée,', 'Le musée (MAMCS)', '67000', 'STRASBOURG', 48.578, 7.735, '2023-10-06 20:25:00', 1, 0, 0),
 	(53, 29, 'Rotonde', 'Skatepark, hôte du Nl Contest', 'Rue Pierre Nuss', '67000', 'STRASBOURG', 48.5895602, 7.7252135, '2023-10-06 20:30:55', 1, 0, 1),
@@ -215,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `spot_module` (
   CONSTRAINT `FK_39B5CF4CAFC2B591` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table skatespot.spot_module : ~0 rows (environ)
+-- Listage des données de la table skatespot.spot_module : ~30 rows (environ)
 INSERT INTO `spot_module` (`spot_id`, `module_id`) VALUES
 	(41, 5),
 	(42, 3),
@@ -262,7 +264,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`),
   UNIQUE KEY `UNIQ_8D93D64986CC499D` (`pseudo`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table skatespot.user : ~11 rows (environ)
 INSERT INTO `user` (`id`, `email`, `roles`, `password`, `is_verified`, `pseudo`, `registration_date`, `is_banned`, `last_activity_at`) VALUES
@@ -272,10 +274,10 @@ INSERT INTO `user` (`id`, `email`, `roles`, `password`, `is_verified`, `pseudo`,
 	(6, 'essai3@gmail.com', '[]', '$2y$13$V0542yhyfNc0AItIdAjQbOKM//SWiE0bN9adfvRedaBKI/SMXTTfO', 0, 'essaiform3', '2023-07-25 17:21:07', 0, NULL),
 	(7, 'supprimer@supprimer.com', '[]', '$2y$13$evsVtkzrw/ZUx7pBo6yhg.eTauIkwCRcDApLqyBV2MsJVlBWHJuEG', 0, 'pseudoSupprimer', '2023-08-02 09:53:17', 0, NULL),
 	(8, 'admin_seb@admin.com', '["ROLE_ADMIN"]', '$2y$13$I7xs1eliPR29vAKaMdYwiuGE0ySSduS7Y0f2m2FTIhLxDdR9eEWUq', 0, 'admin_seb', '2023-08-02 13:15:17', 0, NULL),
-	(19, 'TestLastActivity@exemple.fr', '[]', '$2y$13$0RKr9BaoZoWD3Yga1F2RaO.9ZmuUWmszblGcQvonykg/9hasyS/dW', 0, 'TestLastActivity', '2023-09-21 14:51:34', 0, '2023-09-22 07:18:02'),
+	(19, 'TestLastActivity@exemple.fr', '[]', '$2y$13$0RKr9BaoZoWD3Yga1F2RaO.9ZmuUWmszblGcQvonykg/9hasyS/dW', 0, 'TestLastActivity', '2023-09-21 14:51:34', 0, '2019-09-22 07:18:02'),
 	(20, 'admin@admin.com', '["ROLE_ADMIN"]', '$2y$13$WknvuelCD7fNfRVA8D8iRuqC1cpZoy7F3BszkfKS3e7//jJQFgNuS', 0, 'main_admin', '2023-09-22 07:19:24', 0, '2023-09-28 09:47:48'),
 	(21, 'sebastien.pothee@gmail.com', '[]', '$2y$13$uFnn1XJAqzR7uYNweQjPTeHHAJszzDhkRgejBemQjJpECiGpV5sBK', 0, 'Seb', '2023-09-22 09:17:44', 0, '2023-09-24 00:31:39'),
-	(22, 'administrateur@myspot.com', '["ROLE_ADMIN"]', '$2y$13$wgnLAh/J5vmZcFw72VmXx.t1O5TZG1ruqH8A6GxjmHnDLSBNoDogC', 0, 'myadmin', '2023-10-02 06:30:06', 0, '2023-10-08 00:03:43'),
+	(22, 'administrateur@myspot.com', '["ROLE_ADMIN"]', '$2y$13$wgnLAh/J5vmZcFw72VmXx.t1O5TZG1ruqH8A6GxjmHnDLSBNoDogC', 0, 'myadmin', '2023-10-02 06:30:06', 0, '2023-10-08 22:34:42'),
 	(29, 'Loan.wassmer@live.com', '[]', '$2y$13$zCzbwuG7X1LVVPvhJddLe.sJVP9tygQGjRxDWg8ztQeJJQMVxhTgy', 0, 'Lil\'Lo', '2023-10-05 20:47:08', 0, '2023-10-06 19:51:25');
 
 -- Listage de la structure de table skatespot. user_spot
@@ -289,7 +291,10 @@ CREATE TABLE IF NOT EXISTS `user_spot` (
   CONSTRAINT `FK_C3B336BAA76ED395` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table skatespot.user_spot : ~0 rows (environ)
+-- Listage des données de la table skatespot.user_spot : ~1 rows (environ)
+INSERT INTO `user_spot` (`user_id`, `spot_id`) VALUES
+	(22, 42),
+	(22, 58);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
