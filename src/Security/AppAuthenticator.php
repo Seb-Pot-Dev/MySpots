@@ -48,8 +48,8 @@ class AppAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        // pour mettre a jour la dernière date d'activité lors de la conenxion d'un User
         $user = $token->getUser();
+        // pour mettre a jour la dernière date d'activité lors de la connexion d'un User
         $user->setLastActivityAt(new \DateTime());
 
         $this->entityManager->persist($user);
