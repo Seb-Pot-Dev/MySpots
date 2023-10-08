@@ -4,53 +4,42 @@
 
 {% block body %}
 <style>
-.module-flex-col{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    padding-top: 100px;
-}
-h4{
-    font-size:1.5rem;
-    text-decoration: underline;
-}
-/* Style pour les bordures du tableau */
-.table {
-    border-collapse: collapse;
-    width: 30%;
-}
+    .module-flex-col{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        padding-top: 100px;
+    }
+    h4{
+        font-size:1.5rem;
+        text-decoration: underline;
+    }
 
-/* Style pour les bordures des cellules du tableau */
-.table th,
-.table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
+    .table {
+        border-collapse: collapse;
+        width: 30%;
+    }
 
-/* Style pour la couleur de fond des en-têtes de colonnes */
-.table th {
-    background-color: #f2f2f2;
-}
+    .table th,
+    .table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
 
-/* Style pour une couleur de fond différente pour les lignes paires */
-.table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
+    .table th {
+        background-color: #f2f2f2;
+    }
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
-/* Style pour les liens d'édition et de suppression */
-.table a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-/* Style pour les liens au survol de la souris */
-.table a:hover {
-    text-decoration: underline;
-}
-
+    .table a:hover {
+        text-decoration: underline;
+    }
 </style>
+
 <div class="module-flex-col">
     <h4>Liste des modules disponibles</h4>
     <table class="table">
@@ -65,8 +54,8 @@ h4{
         {% for module in modules %}
             <tr>
                 <td>{{ module.name }}</td>
-                <td><a href="{{ path('app_module_edit', {'id': module.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
-                <td><a href="{{ path('deleteModule_admin', {'id': module.id}) }}"><i class="fa-solid fa-trash"></i></a></td>
+                <td><a class="text-blue-500" href="{{ path('app_module_edit', {'id': module.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a></td>
+                <td><a class="text-red-500" href="{{ path('deleteModule_admin', {'id': module.id}) }}"><i class="fa-regular fa-trash-can"></i></a></td>
             </tr>
         {% endfor %}
     </tbody>
