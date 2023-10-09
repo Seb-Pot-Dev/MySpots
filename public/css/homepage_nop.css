@@ -113,8 +113,8 @@ header{
         padding-top: 100vh;
       }
       .home-text-shadow{
-        text-shadow: 2px 2px 2px white; /* Ombre de texte */
-    }
+        text-shadow: 3px 3px 2px var(--text-color-opposite);
+      }
 
   /********* STYLE DU MESSAGE HOME ***********/
   .home-msg-global{
