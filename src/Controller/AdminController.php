@@ -129,7 +129,7 @@ class AdminController extends AbstractController
         $userRole = $userActive->getRoles();
         // Si le $user possède le role admin
         if ($userActive && in_array('ROLE_ADMIN', $userRole)) {
-            $listUsers = $doctrine->getRepository(User::class)->findBy([], ['registrationDate'=>'DESC']);
+            $listUsers = $doctrine->getRepository(User::class)->findBy([], ['lastActivityAt'=>'ASC']);
 
             return $this->render('admin/listUsers.html.twig', [
                 'controller_name' => 'AdminController',

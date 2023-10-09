@@ -11,6 +11,17 @@
     #mobile-open-form-spot{
         display: none;
     }
+    .footer-myspot-mark{
+        display: none;
+    }
+    .footer-skateboard-logo{
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 39px;
+        transform: rotate(90deg);
+    }
 }
 @media screen and (max-width: 768px) {
     #mobile-duo{
@@ -262,5 +273,11 @@
   }
   .description-box h4{
     text-decoration: underline;
+  }
+  #a-skateboard-footer{
+    display: none;
+  }
+  .footer-myspot-mark{
+    display: unset;
   }
 }
