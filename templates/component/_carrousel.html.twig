@@ -4,6 +4,11 @@
 // définition var du caroussel
 const nbr={{ spot.pictures|length }};
 var p=0;
+// Variable pour garder une trace de l'image actuelle dans le modale
+var currentImageIndex = 0;
+var images;
+var modalImg;
+
 if(document.getElementById("carrouselContainer")){
 
     const carrousselContainer = document.getElementById("carrouselContainer");
@@ -17,6 +22,8 @@ if(document.getElementById("carrouselContainer")){
     
         // Pour chaques images de spot
         {% for image in spot.pictures %}
+
+
             (function() {
                 // instancie une div
                 var div = document.createElement("div");
@@ -33,12 +40,15 @@ if(document.getElementById("carrouselContainer")){
                 carrouselContainer.appendChild(div);
 
                 // MODALE 
-                // onclick sur la div du carrousel
-                div.onclick = function() {
+
+                
+
                     // ref à modal html 
                     var modal = document.getElementById("imageModal");
                     //ref a image du modal
                     var modalImg = document.getElementById("modalImage");
+                // onclick sur la div du carrousel
+                div.onclick = function() {
                     // ajout du display block sur le modal
                     modal.style.display = "flex";
                     // ajoute la source
@@ -49,9 +59,39 @@ if(document.getElementById("carrouselContainer")){
                     modalImg.style.maxHeight = "100%";
                     modalImg.style.minHeight= "100%";
 
-                    // Ajout du gestionnaire d'événement pour fermer le modale en cliquant sur l'image
+                    
+
+                    // Mettre à jour l'index de l'image actuelle
+                    currentImageIndex = Array.from(images).indexOf(this);
+                    
+                    // Ajout du gestionnaire d'événement pour passer à l'image suivante en cliquant sur l'image actuelle
                     modalImg.onclick = function() {
-                        modal.style.display = "none";
+                        currentImageIndex = (currentImageIndex + 1) % images.length;
+                        //change le bg image
+                        modalImg.src = images[currentImageIndex].style.backgroundImage.slice(5, -2); // Enlever 'url(' et ')'
+
+                        // Récupérer le style box-shadow actuel
+                        var boxShadow = modalImg.style.boxShadow;
+
+                        // Diviser la chaîne en segments
+                        var segments = boxShadow.split(", ");
+
+                        // Déplacer le dernier segment vers le début
+                        var lastSegment = segments.pop();
+                        segments.unshift(lastSegment);
+
+                        // Recombiner les segments en une nouvelle chaîne
+                        var newBoxShadow = segments.join(", ");
+
+                        // Appliquer la nouvelle chaîne au style box-shadow de l'élément
+                        modalImg.style.boxShadow = newBoxShadow;
+                    };
+
+                    // Ajout du gestionnaire d'événement pour fermer le modale en cliquant en dehors de l'image
+                    modal.onclick = function(event) {
+                        if (event.target !== modalImg) {
+                            modal.style.display = "none";
+                        }
                     };
                 };
     
@@ -76,20 +116,37 @@ if(document.getElementById("carrouselContainer")){
                 {% endif %}
             })();
         {% endfor %}
+    images = document.querySelectorAll('.photo-spot');
+
+
+
+        
     }
 
-    // Pour fermer le modale
-    // reference a .close 
-    var span = document.getElementsByClassName("close")[0];
+            console.log("hi");
 
-    // onlick sur .close 
-    span.onclick = function() {
-        // ref a #imageModal
-        var modal = document.getElementById("imageModal");
-        // ajoute display:none;
-        modal.style.display = "none";
-    };
+// Ajout du gestionnaire d'événement pour passer à l'image suivante en cliquant sur l'image actuelle
+                    modalImg.onclick = function() {
+                        currentImageIndex = (currentImageIndex + 1) % images.length;
+                        //change le bg image
+                        modalImg.src = images[currentImageIndex].style.backgroundImage.slice(5, -2); // Enlever 'url(' et ')'
 
+                        // Récupérer le style box-shadow actuel
+                        var boxShadow = modalImg.style.boxShadow;
+
+                        // Diviser la chaîne en segments
+                        var segments = boxShadow.split(", ");
+
+                        // Déplacer le dernier segment vers le début
+                        var lastSegment = segments.pop();
+                        segments.unshift(lastSegment);
+
+                        // Recombiner les segments en une nouvelle chaîne
+                        var newBoxShadow = segments.join(", ");
+
+                        // Appliquer la nouvelle chaîne au style box-shadow de l'élément
+                        modalImg.style.boxShadow = newBoxShadow;
+                    };
     
     boutonCarrouselDroite.onclick=function(){
         if(p > -nbr +1){
@@ -124,4 +181,6 @@ if(document.getElementById("carrouselContainer")){
         }
 }
 }
+
+        
 </script>
