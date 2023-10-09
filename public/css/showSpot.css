@@ -150,3 +150,31 @@ img#skatepark-icon {
 	max-height: 100vh;
 	overflow-y: scroll;
 }
+
+/*********************** MODAL ***************/
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.9);
+	
+  }
+  #imageModal{
+	padding: 100px;
+  }
+  .modal-content {
+	margin: auto;
+	max-width: 100%; /* Pour que l'image s'adapte à la largeur de l'écran */
+	max-height: 100%; /* Pour que l'image s'adapte à la hauteur de l'écran */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	box-shadow: blue 0px 0px 0px 2px inset, rgb(255, 255, 255) 10px -10px 0px -3px, rgb(31, 193, 27) 10px -10px, rgb(255, 255, 255) 20px -20px 0px -3px, rgb(255, 217, 19) 20px -20px, rgb(255, 255, 255) 30px -30px 0px -3px, rgb(255, 156, 85) 30px -30px, rgb(255, 255, 255) 40px -40px 0px -3px, rgb(255, 85, 85) 40px -40px;}
+  .modal-container {
+	position: relative;
+  }
+	

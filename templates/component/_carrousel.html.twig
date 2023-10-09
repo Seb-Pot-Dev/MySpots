@@ -15,13 +15,45 @@ if(document.getElementById("carrouselContainer")){
     document.body.onload = function() {
         carrouselContainer.style.width = (800 * nbr) + "px";
     
+        // Pour chaques images de spot
         {% for image in spot.pictures %}
             (function() {
+                // instancie une div
                 var div = document.createElement("div");
+                // lui ajouter une classe
                 div.className = "photo-spot";
+                
+                // lui ajouter un background image
                 div.style.backgroundImage = "url('{{asset('assets/uploads/photos-spot/' ~ image.name)}}')";
+
+                // lui attribuer un aria-label
                 div.setAttribute('aria-label', 'Photo du spot');
+
+                // ajouter la div #carrouselContainer 
                 carrouselContainer.appendChild(div);
+
+                // MODALE 
+                // onclick sur la div du carrousel
+                div.onclick = function() {
+                    // ref à modal html 
+                    var modal = document.getElementById("imageModal");
+                    //ref a image du modal
+                    var modalImg = document.getElementById("modalImage");
+                    // ajout du display block sur le modal
+                    modal.style.display = "flex";
+                    // ajoute la source
+                    modalImg.src = this.style.backgroundImage.slice(5, -2); // Enlever 'url(' et ')'
+
+                    // redimensionenr image
+                    modalImg.style.maxWidth = "100%";
+                    modalImg.style.maxHeight = "100%";
+                    modalImg.style.minHeight= "100%";
+
+                    // Ajout du gestionnaire d'événement pour fermer le modale en cliquant sur l'image
+                    modalImg.onclick = function() {
+                        modal.style.display = "none";
+                    };
+                };
     
                 {% if is_granted('ROLE_ADMIN')%}
                     
@@ -45,6 +77,19 @@ if(document.getElementById("carrouselContainer")){
             })();
         {% endfor %}
     }
+
+    // Pour fermer le modale
+    // reference a .close 
+    var span = document.getElementsByClassName("close")[0];
+
+    // onlick sur .close 
+    span.onclick = function() {
+        // ref a #imageModal
+        var modal = document.getElementById("imageModal");
+        // ajoute display:none;
+        modal.style.display = "none";
+    };
+
     
     boutonCarrouselDroite.onclick=function(){
         if(p > -nbr +1){
