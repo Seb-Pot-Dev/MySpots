@@ -3,9 +3,13 @@
 {% block title %}Hello AdminController!{% endblock %}
 
 {% block body %}
-
 <link rel="stylesheet" href="{{ asset('css/boxes-cards.css') }}">
 <link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
+<style>
+.admin-top{
+    flex-direction:column;
+}
+</style>
 
 <!-- Si l'utilisateur est connecté et qu'il a le ROLE_ADMIN-->
 {% if app.user and is_granted('ROLE_ADMIN') %}
