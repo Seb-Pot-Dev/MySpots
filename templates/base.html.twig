@@ -185,56 +185,68 @@ crossorigin=""></script>
 {# pour le click sur le logo skate #}
 <script src="{{ asset('js/skate-logo.js') }}"></script>
 
-
-
-<footer class="footer rounded-lg shadow m-4">
-    <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
-        <div class="sm:flex sm:items-center sm:justify-between">
-            <a href="https://https://github.com/Seb-Pot-Dev/" class="flex items-center mb-4 sm:mb-0">
-                    <a id="a-skateboard-footer" class="footer-skateboard-logo" href="{{ path('app_home') }}">
-                        <div  class="child" id="skateboard">
-                            <div class="skateboard-wrapper">
-                                <div class="board">
-                                    <div class="screw-holes">
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                    </div>
-                                    <div class="centered-container">
-                                        <p class=" myspot-text">MySpot</p>
-                                    </div>
-                                    <div class="screw-holes">
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                        <div></div>
-                                    </div>
+                                    
+{# Footer #}
+<footer class="footer-class">
+    <div class="footer-container-class">
+        <div class="footer-flex-container">
+            <div class="footer-left-container">
+                
+                {# logo MYSPOT #}
+                <a id="a-skateboard-footer" class="footer-skateboard-logo" href="{{ path('app_home') }}">
+                    <div  class="child" id="skateboard">
+                        <div class="skateboard-wrapper">
+                            <div class="board">
+                                <div class="screw-holes">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                                <div class="centered-container">
+                                    <p class=" myspot-text">MySpot</p>
+                                </div>
+                                <div class="screw-holes">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
                                 </div>
                             </div>
                         </div>
-                    </a>                
-                    <span class="footer-myspot-mark self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MySpot</span>
-            </a>
-            <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+                    </div>
+                </a>
+                <div class="first-socials-footer">
+                    <a class="social-item" href="https://www.facebook.com"><i class="fa-brands fa-facebook"></i></a>
+                    <a class="social-item" href="https://www.instagram.com"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+                <p>Retrouve MySpot sur les réseaux</p>
+                <div class="second-socials-footer">
+                    <a class="social-item" href="https://www.x.com"><i class="fa-brands fa-twitter"></i></a>
+                    <a class="social-item" href="https://www.tiktok.com"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <ul class="footer-list">
                 <li>
-                    <a href="#" class="mr-4 hover:underline md:mr-6 ">À propos</a>
+                    <a href="#" class="footer-item">À propos</a>
                 </li>
                 <li>
-                    <a href="{{ path('conditions') }}" class="mr-4 hover:underline md:mr-6">Conditions d'utilisation</a>
+                    <a href="#" class="footer-item">Contact</a>
                 </li>
                 <li>
-                    <a href="{{ path('confidentiality') }}" class="mr-4 hover:underline md:mr-6 ">Politique de confidentialité</a>
+                    <a href="{{ path('confidentiality') }}" class="footer-item">Politique de confidentialité</a>
                 </li>
                 <li>
-                    <a href="#" class="hover:underline">Contact</a>
+                    <a href="{{ path('conditions') }}" class="footer-item">Conditions d'utilisation</a>
                 </li>
             </ul>
         </div>
-        <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
-        <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://https://github.com/Seb-Pot-Dev/" class="hover:underline">Seb-Pot-Dev</a>. All Rights Reserved.</span>
+        <hr class="divider" />
+        <span class="copyright">© 2023 <a href="https://https://github.com/Seb-Pot-Dev/" class="copyright-link">Seb-Pot-Dev</a>. All Rights Reserved.</span>
     </div>
 </footer>
+
 
 {% include 'cookies/tarteAuCitron.html.twig' %}
 

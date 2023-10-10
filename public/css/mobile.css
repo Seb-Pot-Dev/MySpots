@@ -15,11 +15,9 @@
         display: none;
     }
     .footer-skateboard-logo{
-        margin: 0 auto;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding-bottom: 39px;
         transform: rotate(90deg);
     }
 }
@@ -275,7 +273,7 @@
     text-decoration: underline;
   }
   #a-skateboard-footer{
-    display: none;
+    transform: rotate(90deg);
   }
   .footer-myspot-mark{
     display: unset;
