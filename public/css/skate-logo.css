@@ -130,6 +130,7 @@
         margin: unset;
     }
     #skateboard .board {
+      scale: 0.7;
         right: 0px;
     }
 }

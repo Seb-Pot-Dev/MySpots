@@ -31,6 +31,8 @@
         height: 30px;
         top: 50px;
         background-color: rgba(128, 128, 128, 0.579);
+        background-image: url('../img/nnnoise_5.svg');
+        background-repeat: repeat;
     }
     #form-add-spot-global{
     margin-bottom: 0;
@@ -170,12 +172,14 @@
     left: 46%;
     }
     #form-add-spot-global{
-    background-color: grey;
+    background-color: var(--menu-background);
     padding-top: 150px;
     width: 100%;
     height: 100%;
     overflow: scroll;
     display:none;
+    background-image: url('../img/nnnoise_5.svg');
+    background-repeat: repeat;
     }
     #toggle-form-spot-mobile-id{
         margin-right: 20px;
@@ -285,4 +289,16 @@
   #modalImage{
     min-height: unset!important;
   }
+  .footer-flex-container{
+  flex-direction: column;
+}
+ul.footer-list{
+    padding: 28px 0 0 0;
+}
+ul.footer-list li{
+    margin: 6px 0;
+}
+.footer-flex-container {
+    margin-left: unset;
+    } 
 }

@@ -40,9 +40,8 @@ ul.list-spots{
 .list-spots li{
     display: flex;
     justify-content: space-between;
-    padding: 4px 12px 4px 12px;
     margin: 0.5rem 0;
-    border-radius: 4px;;
+    border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
@@ -94,6 +93,22 @@ ul.list-spots-desktop{
     text-shadow: 3px 3px 6px var(--text-color-opposite);
       
       
+}
+.list-spots .left{
+    height: fit-content;
+
+}
+.list-spots .right{
+    height: fit-content;
+}
+.title-li-spot{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 24px 0 6px;
+    backdrop-filter: blur(2px);
+    height: fit-content;
+    background-color: rgb(255 255 255 / 24%);
 }
 /****OPTION MOBILE POUR LA CARTE*****/
 @media screen and (max-width: 768px) {
