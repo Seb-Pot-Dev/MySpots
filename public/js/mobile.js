@@ -3,10 +3,13 @@ const mobileChoiceList = document.getElementById('mobile-choice-list');
 const mobileListSpotDesktopGlobal = document.getElementById('list-spots-desktop-global');
 const mobileToggleFilters = document.getElementById('mobileToggleFilters');
 
-const mobileCloseFormSpot = document.getElementById('mobile-close-form-spot');
-const mobileAddSpotForm = document.getElementById('mobile-open-form-spot');
-// au click sur #mobile-close-form-spot
-mobileAddSpotForm.addEventListener("click", closeMobileAddSpot);
+if(IS_USER_LOGGED_IN){
+    const mobileCloseFormSpot = document.getElementById('mobile-close-form-spot');
+    const mobileAddSpotForm = document.getElementById('mobile-open-form-spot');
+    mobileAddSpotForm.addEventListener("click", closeMobileAddSpot);
+    // au click sur #mobile-close-form-spot
+
+}
 
 
 mobileChoiceList.addEventListener("click", showList)

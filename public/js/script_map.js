@@ -186,9 +186,15 @@ if (IS_USER_LOGGED_IN) {
 const toggleForm = document.getElementById("toggleFormSpot");
 const containerForm = document.getElementById("form-spot-id");
 // const closeFormSpotMobile = document.getElementById("toggle-form-spot-mobile-id")
-const toggleFormSpotMobile = document.getElementById("mobile-open-form-spot");
+if(IS_USER_LOGGED_IN){
+	
+}
 
 // closeFormSpotMobile.addEventListener("click", toggleContainer)
+if(IS_USER_LOGGED_IN){
+	const toggleFormSpotMobile = document.getElementById("mobile-open-form-spot");
+
+
 toggleFormSpotMobile.addEventListener("click", toggleContainer)
 
         // fn pour toggle
@@ -218,11 +224,9 @@ toggleFormSpotMobile.addEventListener("click", toggleContainer)
 				}	
             }
         }
-		// Si l'utilisateur est connecté, on écoute l'event click sur le toggleContainer
-		if(IS_USER_LOGGED_IN){
-			// écouteurs d'événement:
-			toggleForm.addEventListener("click", toggleContainer);
-		}
+		// écouteurs d'événement:
+		toggleForm.addEventListener("click", toggleContainer);
+	}
         
 //fonction pour récupérer la pos à partir de l'adresse entrée dans le formulaire de Spot (SpotType)
 function getPosByAdress() {

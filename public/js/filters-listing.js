@@ -42,23 +42,25 @@ toggleList.addEventListener("click", function () {
 	}
 });
 
-// Pour le formulaire d'ajotu des spots sur la map
-toggleFormSpot = document.getElementById("toggleFormSpot");
+// SI l'utilisateur est co, il peut toggle le form d'ajotu spot
+if(IS_USER_LOGGED_IN){
+	// Pour le formulaire d'ajotu des spots sur la map
+	toggleFormSpot = document.getElementById("toggleFormSpot");
+	toggleFormSpot.addEventListener("click", function () {
+		if (containerList.style.display !== "none") {
+			containerList.style.display = "none";
+			toggleList.style.top = "92px";
+			toggleList.innerHTML = "OUVRIR LISTE";
+		}
 
-toggleFormSpot.addEventListener("click", function () {
-	if (containerList.style.display !== "none") {
-		containerList.style.display = "none";
-		toggleList.style.top = "92px";
-		toggleList.innerHTML = "OUVRIR LISTE";
-	}
-
-	if (container.style.display !== "none") {
-		// le faire passer en display none
-		container.style.display = "none";
-		toggleFilters.style.top = "100px";
-		arrows.forEach(function (arrow) {
-			arrow.innerHTML = "OUVRIR FILTRES";
-			// Do something with each arrow element
-		});
-	}
-})
+		if (container.style.display !== "none") {
+			// le faire passer en display none
+			container.style.display = "none";
+			toggleFilters.style.top = "100px";
+			arrows.forEach(function (arrow) {
+				arrow.innerHTML = "OUVRIR FILTRES";
+				// Do something with each arrow element
+			});
+		}
+	})
+}
