@@ -4,43 +4,29 @@
 
 {% block body %}
 <link rel="stylesheet" type="text/css" href="{{ asset('css/playground/first.css') }}">
-<div class="relative playground-first-background">
 
-        <div class='linewrap'>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='line'></div>
-            <div class='line'></div>
-            </div>
-            <input class='manual' type='checkbox'>
-            <input class='kickflip' type='checkbox'>
-            <input class='hardflip' type='checkbox'>
-            <input class='ollie' type='checkbox'>
-            <input class='threesix' type='checkbox'>
-            <input class='shovit' type='checkbox'>
-            <div class='outer'>
-            <div class='wrap'>
-                <div class='board'>
-                <div class='nose'></div>
-                <div class='tail'></div>
-                <div class='trucks'>
-                    <div class='inner'></div>
-                    <div class='wheel'></div>
-                </div>
-                <div class='trucks rear'>
-                    <div class='inner'></div>
-                    <div class='wheel'></div>
-                </div>
-                </div>
-            </div>
+
+<div id="my-container">
+  <a href="">
+    <div id="board">
+        <div id="holes-container">
+            <div class="hole topLeft"></div>
+            <div class="hole topRight"></div>
+            <div class="hole botLeft"></div>
+            <div class="hole botRight"></div>
+        </div>
+        <div id="skate-text">
+          <p>MYSPOT</p>
+        </div>
+        <div id="holes-container">
+            <div class="hole topLeft "></div>
+            <div class="hole topRight"></div>
+            <div class="hole botLeft"></div>
+            <div class="hole botRight"></div>
         </div>
     </div>
+  </a>
+</div>
 
 <script src="{{ asset('js/playground/first.js') }}"></script>
 {% endblock %}
