@@ -278,4 +278,11 @@
   .footer-myspot-mark{
     display: unset;
   }
+
+  #imageModal{
+    padding: unset!important;
+  }
+  #modalImage{
+    min-height: unset!important;
+  }
 }
