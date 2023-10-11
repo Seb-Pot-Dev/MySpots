@@ -49,7 +49,7 @@ class SpotSearchType extends AbstractType
                 'required' => false,
             ])
             ->add('order', ChoiceType::class, [
-                'label' => 'Trier par : ',
+                'label' => 'Trier par:',
                 'choices' => [
                     'Ajout: Nouveau en premier' => 'DateNew',
                     'Ajout: Nouveau en dernier' => 'DateLast',
