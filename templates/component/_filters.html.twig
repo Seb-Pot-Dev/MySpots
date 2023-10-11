@@ -30,8 +30,8 @@
                 {{ form_widget(formSearch.order, {'attr': {'class': 'order-select-add-spot mr-2'}}) }}
             </label>
             <div class="flex justify-between mt-4">
-                <button type="submit" class="filter-button-big">Rechercher</button>
-                <a href="{{ path('app_spot') }}" class="btn btn-secondary filter-button-big">Reinitialiser</a>
+                <button href="{{ path('app_spot') }}" class="btn btn-secondary filter-button-big">Reinitialiser</button>
+                <button class="submit-filters-form-btn" type="submit" class="filter-button-big">Rechercher</button>
             </div>
         {{ form_end(formSearch) }}
         <button id="toggleFilters">

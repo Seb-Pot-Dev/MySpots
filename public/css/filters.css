@@ -19,12 +19,19 @@
 .filter-button-big label {
 	font-family: "SkateFont2";
 }
+.filter-button-big:hover{
+	text-decoration: underline;
+}
 #search-form label label,
 .filter-button {
 	font-weight: 600;
 	font-family: "Annie Use Your Telescope";
 	font-size: 1.25rem;
 	margin-bottom: unset;
+}
+#search-form label label:not(.required):hover{
+	text-decoration: underline	;
+	cursor: pointer;
 }
 .filter-button {
 	display: flex;
@@ -38,22 +45,34 @@
 .arrow-toggle-filters {
 	font-size: 1.25rem;
 	width: 20rem;
-    color: var(--text-color);
-    background: var(--transparent-background);
-    /* font-family: 'SkateFont2', sans-serif; */
-    font-size: 1.25rem;
-	border-radius: 6px;
+	color: var(--text-color);
 	font-size: 1.25rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-	/*  */
+	font-size: 1.25rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	padding: 0 30px;
 	fill: var(--text-color);
-	font-family: "SkateFont2", sans-serif; /* width: 45px; */
-	/* transform: rotate(-90deg);
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg); */
+	font-family: "SkateFont2", sans-serif;
+}
+form#search-form{
+	background-color: unset;
+}
+#searchFilterContainer{
+	background-color: var(--transparent-background);
+}
+.submit-filters-form-btn{
+	border: 1px solid red;
+    border-radius: 12px;
+    padding: 4px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+	box-shadow: var(--text-color) -2px 4px 0px;
+    -webkit-border-radius: 12px;
+	margin-bottom: 4px;
+}
+.submit-filters-form-btn:hover{
+	box-shadow: var(--text-color) -1px 2px 0px;
+    transform: translateY(2px);
+    background-color: var(--button-hover);
 }
