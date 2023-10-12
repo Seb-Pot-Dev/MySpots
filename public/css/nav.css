@@ -93,7 +93,7 @@
 .arrow-body {
   width: 20px; /* Largeur du corps de la flèche */
   height: 5px; /* Hauteur du corps de la flèche */
-  background-color: #000; /* Couleur du corps de la flèche */
+  background-color: var(--text-color); /* Couleur du corps de la flèche */
   margin-right: 10px; /* Espacement entre la tête et le corps de la flèche */
   width: 100%;
 }
@@ -104,7 +104,7 @@
   height: 0;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
-  border-right: 10px solid #000; /* Couleur de la tête de la flèche */
+  border-right: 10px solid var(--text-color); /* Couleur de la tête de la flèche */
 }
 /* Style du conteneur */
 .arrow-container {
@@ -127,7 +127,7 @@
     right: 0;
 }
   .sidenav a:hover {
-    color: #111;
+    color: var(--text-color-opposite  );
   }
   
   .sidenav ul {
@@ -139,6 +139,7 @@
   /* Active class */
   .sidenav.active {
     right: 0;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   }
   
   /* Close btn */
@@ -154,7 +155,7 @@
     display: block;
     width: 35px;
     height: 5px;
-    background-color: black;
+    background-color: var(--text-color);
     margin: 6px 0;
   }
     .mobile-nav a#logo-container{

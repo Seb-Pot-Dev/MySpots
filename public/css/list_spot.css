@@ -28,7 +28,7 @@
     align-items: center;
 }
 .list-spots-desktop{
-    max-height: 350px;
+    max-height: 500px;
     overflow-y: scroll;
     max-width: 28rem;
 }

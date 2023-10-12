@@ -37,7 +37,7 @@ toggleList.addEventListener("click", function () {
 		containerList.style.display = "block";
 
 		toggleList.style.top = "474px";
-		containerList.style.maxHeight = "350px"; // Rétablissez ceci à votre max-width initial*
+		containerList.style.maxHeight = "500px"; // Rétablissez ceci à votre max-width initial*
 		toggleList.innerHTML = "FERMER LISTE";
 	}
 });
