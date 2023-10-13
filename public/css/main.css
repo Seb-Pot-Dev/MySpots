@@ -46,13 +46,47 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     overflow-x: hidden;
-    background-image: url('../img/nnnoise   .svg');
+    background-image: url('../img/nnnoise.svg');
     background-repeat: repeat;
+}
+/* SYMFONY TOOLBAR */
+.sf-toolbar{
+    display: none!important;
 }
 a {
     color: var(--accent-color);
 }
+/* Cache la scrollbar par défaut */
+::-webkit-scrollbar {
+    width: 16px;
+}
 
+/* Style du conteneur de la barre de défilement */
+::-webkit-scrollbar-track {
+    background: var(--transparent-background);
+    border: 1px solid var(--text-color);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+/* Style de la barre de défilement elle-même */
+::-webkit-scrollbar-thumb {
+    background: var(--text-color);
+    border: 1px solid var(--text-color);
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+
+/* Au survol de la barre de défilement */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-color);
+}
 
 
 

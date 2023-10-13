@@ -1,174 +1,178 @@
-.desktop-nav img, .mobile-nav img{
-    max-width: 100px;
-    height: 100%;
+.desktop-nav img,
+.mobile-nav img {
+	max-width: 100px;
+	height: 100%;
 }
-.desktop-nav{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: -webkit-fill-available;
-  z-index: 9999;
-  height: 80px;
-  }
-.desktop-nav{
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    -ms-border-radius: 10px;
-    -o-border-radius: 10px;
+.desktop-nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: -webkit-fill-available;
+	z-index: 9999;
+	height: 80px;
 }
-.main-nav{  
-    margin: 1rem;
-    height: 100%;
-    background-color: var(--bg-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.desktop-nav {
+	display: none;
+	align-items: center;
+	justify-content: space-between;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-o-border-radius: 10px;
 }
-.user-nav{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+.main-nav {
+	margin: 1rem;
+	height: 100%;
+	background-color: var(--bg-color);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }
-.user-nav a{
-    margin: 1rem;
+.user-nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.user-nav a {
+	margin: 1rem;
 }
 
 /* NAV MOBILE */
-.mobile-nav{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--menu-background);
-    padding-left: 1rem;
-    z-index: 1234567890;
-    position: absolute;
-    width: 100%;
-    height: 50px;
-    overflow: hidden;
-    background-image: url('../img/nnnoise_5.svg');
-    background-repeat: repeat;
-    
+.mobile-nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: var(--menu-background);
+	padding-left: 1rem;
+	z-index: 1234567890;
+	position: absolute;
+	width: 100%;
+	height: 50px;
+	overflow: hidden;
+	background-image: url("../img/nnnoise.svg");
+	background-repeat: repeat;
 }
 /* Sidenav menu */
 .sidenav {
-    height: 100%;
-    width: 250px;
-    position: fixed;
-    z-index: 99999999999;
-    top: 0;
-    right: -250px;
-    background-color: var(--menu-background);
-    padding-top: 1rem;
-    transition: right 0.5s ease;
-    color: var(--text-color-opposite);
-    -webkit-transition: right 0.5s ease;
-    -moz-transition: right 0.5s ease;
-    -ms-transition: right 0.5s ease;
-    -o-transition: right 0.5s ease;
+	height: 100%;
+	width: 250px;
+	position: fixed;
+	z-index: 99999999999;
+	top: 0;
+	right: -250px;
+	background-color: var(--menu-background);
+	padding-top: 1rem;
+	transition: right 0.5s ease;
+	color: var(--text-color-opposite);
+	-webkit-transition: right 0.5s ease;
+	-moz-transition: right 0.5s ease;
+	-ms-transition: right 0.5s ease;
+	-o-transition: right 0.5s ease;
 
-    background-image: url('../img/nnnoise_5.svg');
-    background-repeat: repeat;
+	background-image: url("../img/nnnoise.svg");
+	background-repeat: repeat;
 }
-  
-  /* Sidenav menu links */
-  .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    display: block;
-    transition: 0.3s;
-    color: var(--text-color);
-  }
-  /* Style de la flèche */
+
+/* Sidenav menu links */
+.sidenav a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	display: block;
+	transition: 0.3s;
+	color: var(--text-color);
+}
+/* Style de la flèche */
 .arrow-left {
-  display: flex;
-  align-items: center;
-  width: 100%;
+	display: flex;
+	align-items: center;
+	width: 100%;
 }
 
 .arrow-body {
-  width: 20px; /* Largeur du corps de la flèche */
-  height: 5px; /* Hauteur du corps de la flèche */
-  background-color: var(--text-color); /* Couleur du corps de la flèche */
-  margin-right: 10px; /* Espacement entre la tête et le corps de la flèche */
-  width: 100%;
+	width: 20px; /* Largeur du corps de la flèche */
+	height: 5px; /* Hauteur du corps de la flèche */
+	background-color: var(--text-color); /* Couleur du corps de la flèche */
+	margin-right: 10px; /* Espacement entre la tête et le corps de la flèche */
+	width: 100%;
 }
 
 .arrow-left::before {
-  content: '';
-  width: 0;
-  height: 0;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 10px solid var(--text-color); /* Couleur de la tête de la flèche */
+	content: "";
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right: 10px solid var(--text-color); /* Couleur de la tête de la flèche */
 }
 /* Style du conteneur */
 .arrow-container {
-  padding-left: 80%;
-  width: 100%; /* Vous pouvez modifier la largeur ici */
-  transform: rotate(180deg);
-  display: flex!important;
-  height: 100px;
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	padding-left: 80%;
+	width: 100%; /* Vous pouvez modifier la largeur ici */
+	transform: rotate(180deg);
+	display: flex !important;
+	height: 100px;
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
-#nav-open-btn{
-  margin-right: 6px;
-  position: absolute;
-    right: 0;
+#nav-open-btn {
+	margin-right: 6px;
+	position: absolute;
+	right: 0;
 }
-  .sidenav a:hover {
-    color: var(--text-color-opposite  );
-  }
-  
-  .sidenav ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  /* Active class */
-  .sidenav.active {
-    right: 0;
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-  }
-  
-  /* Close btn */
-  .sidenav .close {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-  }
-  
-  /* Icône burger */
-  .burger-icon span {
-    display: block;
-    width: 35px;
-    height: 5px;
-    background-color: var(--text-color);
-    margin: 6px 0;
-  }
-    .mobile-nav a#logo-container{
-        margin: auto;
-        height: 100%;
-    }
+.sidenav a:hover {
+	color: var(--text-color-opposite);
+}
+
+.sidenav ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* Active class */
+.sidenav.active {
+	right: 0;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+		rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+		rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+/* Close btn */
+.sidenav .close {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+}
+
+/* Icône burger */
+.burger-icon span {
+	display: block;
+	width: 35px;
+	height: 5px;
+	background-color: var(--text-color);
+	margin: 6px 0;
+}
+.mobile-nav a#logo-container {
+	margin: auto;
+	height: 100%;
+}
 
 /* Responsive */
 @media (min-width: 768px) {
-    .desktop-nav{
-        display: flex ;
-    }
-    #mySideNav, #nav-close-btn, .mobile-nav{
-        display: none;
-    }
+	.desktop-nav {
+		display: flex;
+	}
+	#mySideNav,
+	#nav-close-btn,
+	.mobile-nav {
+		display: none;
+	}
 }

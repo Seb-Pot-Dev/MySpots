@@ -28,6 +28,7 @@ function showList(){
     hideMap();
     addSelectedDuoList();
     mobileToggleFilters.style.display = "none"
+    mapOptions.classList.toggle('active');
 }
 function showMap(){
     hideList();
