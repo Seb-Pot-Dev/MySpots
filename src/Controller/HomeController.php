@@ -18,7 +18,7 @@ class HomeController extends AbstractController
         // récupérer la liste de tous les users
         $users = $doctrine->getRepository(User::class)->findAll();
         //récupérer la liste de tout les spots
-        $spots = $doctrine->getRepository(Spot::class)->findAll();
+        $spots = $doctrine->getRepository(Spot::class)->findValidatedSpots();
         //récupérer la liste de tout les modules
         $modules = $doctrine->getRepository(Module::class)->findAll();
 

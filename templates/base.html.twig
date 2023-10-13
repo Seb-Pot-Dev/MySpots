@@ -30,8 +30,8 @@
     {% endblock %}
     </head>
 
-    <main class="" style="">
-    <body class="">
+<body class="" style="display:flex; flex-direction:column; justify-content:space-between; min-height: 100vh">
+<main class="" style="">
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="alert alert-{{ label }}">

@@ -119,7 +119,7 @@ class SpotController extends AbstractController
         //Définition du User
         $user = $security->getUser();
         //récupère tout les spots de la BDD pour les marqueurs sur la carte
-        $allSpots = $doctrine->getRepository(Spot::class)->findBy([], ['name' => 'ASC']);
+        $allSpots = $doctrine->getRepository(Spot::class)->findValidatedSpots();
 
 
         // Gestion des FILTRES ******************************************************************************************************
