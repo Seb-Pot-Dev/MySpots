@@ -54,5 +54,30 @@
                             {% endif %}
                         </div>
                     </div>
-                </a> 
+                </a>
+                <div class="li-hover-container">
+                    <div class="li-hover-content">
+                        <div class="li-hover-left">
+                            <p class="li-hover-title">{{spot.name}}</p>
+                            <p class="li-hover-description">{{spot.description|capitalize|slice(0, 50)}}{% if spot.description | length > 50 %}...{% endif %}
+</p>
+                        </div>
+                        <div class="li-hover-right">
+                            {# COEUR #}
+                            {% if app.user %} <!-- si le user est co, il peut liker-->
+                                <a class="li-hover-icon" aria-label="Liker le spot" href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}">    
+                                
+                                        
+                                {% if spot in app.user.favoriteSpots %}
+                                    <img src="\img\heart-checked.png" alt="hearth icon">
+                                {% else %}
+                                    <img src="\img\heart-unchecked.png" alt="hearth icon">
+                                {% endif %}                     
+                            {% endif %}                     
+                                </a>
+                            {# YEUX #}
+                            <a class="li-hover-icon" href=""><img src="\img\eyes.png" alt="eyes icon"></a>
+                        </div>
+                    </div>
+                </div>
                 </li>

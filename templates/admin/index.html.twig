@@ -39,7 +39,12 @@
 </div>
 <section class="admin-bottom flex justify-center gap-4">
     <div class="my-box table-admin-box">
-        <h4 class="text-xl">Liste des spots en attente de validation</h4>
+    {% set nombreDeSpotsNonValides = spots|filter(spot => not spot.isValidated)|length %}
+    {% set nombreDeSpotsValides = spots|filter(spot => spot.isValidated)|length %}
+
+        <h4 class="text-xl">Liste des spots en attente de validation ({{nombreDeSpotsNonValides}})
+            
+        </h4>
         <div class="scrollable-box">
             <table class="list-container table-admin table-admin-box">
                 <thead>
@@ -71,7 +76,7 @@
     </div>
 
     <div class="my-box ">
-        <h4 class="text-xl">Liste des spots validés</h4>
+        <h4 class="text-xl">Liste des spots validés ({{nombreDeSpotsValides}})</h4>
         <div class="scrollable-box">
             <table class="list-container table-admin table-admin-box">
                 <thead>

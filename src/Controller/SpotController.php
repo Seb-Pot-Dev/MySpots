@@ -141,14 +141,14 @@ class SpotController extends AbstractController
             $moduleFilter = $searchData->moduleFilter;
             $officialFilter = $searchData->official;
             $coveredFilter = $searchData->covered;
-            $onlyValidated = $searchData->onlyValidated;
+            $onlyValidated = !$searchData->onlyValidated;
             $order = $searchData->order;
             //On associe le résultat de findByCriteria à $spotsFiltered
             $spotsFiltered = $spotRepository->findByCriteria($searchFilter, $moduleFilter, $officialFilter, $coveredFilter, $onlyValidated, $order);
             // Si $spotFiltered est vide, c'est qu'aucun spot ne correspond aux critères selectionnées.
             if (empty($spotsFiltered)) {
                 // On affecte un message pour en informer l'utilisateur
-                $filtersEmptyMessage = "Aucun spots ne corresponds à ces critères.";
+                $filtersEmptyMessage = "Aucun spot ne correspond à ces critères.";
             }
         }
         /* Gestion des MARKER ********************************************/

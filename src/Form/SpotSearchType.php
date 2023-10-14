@@ -45,7 +45,7 @@ class SpotSearchType extends AbstractType
                 'required' => false,
             ])
             ->add('onlyValidated', CheckboxType::class, [
-                'label' => 'Spots valides',
+                'label' => 'Inclure les spots non-vérifiés',
                 'required' => false,
             ])
             ->add('order', ChoiceType::class, [

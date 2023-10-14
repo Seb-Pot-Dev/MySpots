@@ -100,3 +100,16 @@
 .section-col{
     flex-direction: column;
 }
+@media screen and (max-width: 768px){
+    .admin-bottom{
+        flex-direction: column;
+        width: 100%;
+    }
+    .table-admin-box{
+        width: 100%;
+    }
+    .my-box{
+        max-width: unset;
+        width: 100%;
+    }
+}
