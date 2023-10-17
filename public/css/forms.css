@@ -50,6 +50,7 @@ textarea#spot_description {
 }
 input[type="text"]#search {
 	font-family: Annie Use Your Telescope;
+	width: unset;
 	font-size:1.5rem;
 	padding: 6px 12px;
 	border-radius:12px;
@@ -57,6 +58,7 @@ input[type="text"]#search {
 	-ms-border-radius:12px;
 	-o-border-radius:12px;
 	-webkit-border-radius:12px;
+
 }
 /* Pour avoir le texte du select toujours en noir */
 select#orderCreation {

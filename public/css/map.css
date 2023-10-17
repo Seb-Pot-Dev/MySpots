@@ -69,6 +69,28 @@ footer{
     background-color: #5aa7ff ;
     scale: 1.01;
 }
+#randomSpotButton{
+    border: 1px solid red;
+    border-radius: 12px;
+    padding: 4px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    box-shadow: var(--text-color) -2px 4px 0px;
+    -webkit-border-radius: 12px;
+    margin-bottom: 4px;
+    max-height: 59px;
+    max-width: 55px;
+}
+#randomSpotButton:hover{
+    box-shadow: var(--text-color) -1px 2px 0px;
+    transform: translateY(2px);
+    background-color: var(--button-hover);
+}
+#randomSpotImg{
+    max-height: 100%;
+    max-width: 100%;
+}
+
 /*
 #closeFormSpotCross{
     width: 100%;
@@ -238,6 +260,29 @@ span.current{
     #tarteaucitronIcon{
         display: none!important;
     }
-    
-
 }
+/*********** fin map mobile***********/
+
+/* Modification du style des popup Leaflet */
+/* Style pour le conteneur de popup */
+.leaflet-popup-tip {
+    background-color: var(--background-color);
+    box-shadow: var(--text-color) 0px 3px 0px;
+    border: 1px solid var(--text-color);
+}
+.leaflet-popup-tip-container {
+    bottom: -15px;}
+.leaflet-popup-content-wrapper{
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    box-shadow: var(--text-color) -2px 4px 0px;
+    padding: 12px;
+    margin: 4px;
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+}
+.leaflet-container a{
+    color: var(--text-color);
+}
+

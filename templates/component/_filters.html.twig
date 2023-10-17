@@ -2,8 +2,14 @@
 <div class="filters-global">
     <div class="search-filters-container rounded" id="searchFilterContainer">
         {{ form_start(formSearch, {'attr': {'id': 'search-form', 'class': ''} }) }}
+        <div class="flex justify-between">
             {# Barre de recherche #}
             {{ form_row(formSearch.search) }}
+                {# Random Spot Button #}
+                <button type="button" id="randomSpotButton">
+                    <img id="randomSpotImg" src="/img/dices.png" alt="icone avec 2 dés">
+                </button>
+            </div>
             {# Choix des modules #}
             <h4>Filtrer par module</h4>
                 {% for module in formSearch.moduleFilter %}

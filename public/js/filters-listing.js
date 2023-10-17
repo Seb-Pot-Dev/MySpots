@@ -64,3 +64,4 @@ if(IS_USER_LOGGED_IN){
 		}
 	})
 }
+

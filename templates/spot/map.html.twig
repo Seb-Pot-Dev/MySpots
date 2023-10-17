@@ -28,6 +28,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@latest/dist/MarkerCluster.Default.css" />
 </head>
+
+{# Définir une var formAddSpotComponent qui contient le formulaire d'ajout de spot #}
 {% set formAddSpotComponent %}
             {{ form_start(formAddSpot, {'attr': { 'id' : 'form-spot-id'    }}) }}
                 <h3 class="mb-2 header-medium form-title-underline">Propose ton spot</h3>
@@ -137,9 +139,12 @@
         <button id="layer-2" class="choose-layer-item">Dark</button>
         <button id="layer-3" class="choose-layer-item">Classic</button>
     </div>
-    <!-- >Inclure les filtres -->
+
+    <!-- >AFFICHAGE DES FILTRES -->
     {{ filtersComponent }}
-    <!-- ////////////////////////////////////////////////////////////////// -->
+
+
+
 
     {% if app.user %}  
         <!-- formulaire ajout spot-->
@@ -257,10 +262,6 @@ jsonTabForMarkersSpots.forEach(obj => {
 
 // Ajout à la carte
 map.addLayer(markersCluster);
-
-
-
-    /*FIN AFFICHER DES POINTS ISSUS DE LA BASE DE DONNEES******************************/
 </script>
 
 
@@ -269,8 +270,52 @@ map.addLayer(markersCluster);
 
 <!-- Si le User est connecté (sinon pas besoin d'importer ce JS) -->
 <script src="{{ asset('js/form_map.js') }}"></script>
+
 {# Vue mobile #}
 <script src="{{ asset('js/mobile.js') }}"></script>
+
+{# Random Spot Button #}
+<script>
+    // Récupérez une référence au bouton
+    const randomSpotButton = document.getElementById('randomSpotButton');
+
+    // Ajoutez un gestionnaire d'événements au clic sur le bouton
+    randomSpotButton.addEventListener('click', function () {
+        // Générez un indice aléatoire pour choisir un marqueur au hasard
+        const randomIndex = Math.floor(Math.random() * jsonTabForMarkersSpots.length);
+
+        // Obtenez le marqueur correspondant à l'indice aléatoire
+        const randomMarker = markersCluster.getLayers()[randomIndex];
+
+        // Obtenez les coordonnées du marqueur
+        const markerLatlng = randomMarker.getLatLng();
+
+    // Obtenez la position actuelle de la carte
+    const currentCenter = map.getCenter();
+    const currentZoom = map.getZoom();
+
+    // Calculez le zoom cible pour le spot aléatoire (par exemple, 14)
+    const targetZoom = 14;
+
+    // Définissez la durée de l'animation en secondes
+    const animationDuration = 2; // 2 secondes
+
+    // Utilisez la méthode flyTo pour animer la carte
+    map.flyTo(markerLatlng, targetZoom, {
+        duration: animationDuration,
+        easeLinearity: 0.25,
+        animate: true,
+    });
+
+     // Ouvrez le popup du marqueur sélectionné après l'animation
+    const moveEndHandler = function () {
+        randomMarker.openPopup();
+        map.off('moveend', moveEndHandler); // Supprimez l'écouteur d'événement pour éviter les répétitions
+    };
+
+    map.on('moveend', moveEndHandler);
+    })
+</script>
 
 
 {% endblock %}
