@@ -48,7 +48,6 @@ ul.list-spots{
     -o-border-radius: 4px;
     /* overflow-x: scroll; */
     color: white;
-    cursor: pointer;
     height: 100px; 
     background-position: center center; 
     background-size: cover; 

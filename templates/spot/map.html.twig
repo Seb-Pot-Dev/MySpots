@@ -168,6 +168,7 @@
                             {% for spot in spotsFiltered %}
                                 {# Défini l'url de chaque spot pour pouvoir l'utiliser dans la liste #}
                                 {% set spot_url = path('show_spot', {'idSpot': spot.id}) %}
+
                                 {% include 'spot/_list_spots.html.twig' %}
                             {% endfor %}
                         {% else %}

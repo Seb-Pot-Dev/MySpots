@@ -1,10 +1,11 @@
+    
             <!-- lien -->
                 {% if spot.pictures|length > 0 %}
-                <li onclick="location.href = this.getAttribute('data-url');" title="{{ spot.name }}"
+                <li 
                 style="background-image: url('{{ asset('assets/uploads/photos-spot/' ~ spot.pictures[0].name) }}');"
-                data-url="{{ spot_url }}">
+                >
                 {% else %}
-                <li onclick="location.href = this.getAttribute('data-url');" style="height: 100px;" data-url="{{ spot_url }}" title="{{ spot.name }}">
+                <li style="height: 100px;"title="{{ spot.name }}">
                 {% endif %}
                     <div class="title-li-spot">
                         <div class="left">
@@ -54,7 +55,6 @@
                             {% endif %}
                         </div>
                     </div>
-                </a>
                 <div class="li-hover-container">
                     <div class="li-hover-content">
                         <div class="li-hover-left">
@@ -62,10 +62,14 @@
                             <p class="li-hover-description">{{spot.description|capitalize|slice(0, 50)}}{% if spot.description | length > 50 %}...{% endif %}
 </p>
                         </div>
+                        <a class="focus-on-spot-marker li-hover-icon" aria-label="Voler jusqu'au spot  " class="li-hover-icon focus-on-spot-marker" data-lat="{{ spot.lat }}" data-lng="{{ spot.lng }}" style="cursor:pointer; margin-top: 8px"
+                        title="Voler jusqu'au spot">
+                                <img src="\img\finder.png" alt="eyes icon">
+                            </a>
                         <div class="li-hover-right">
                             {# COEUR #}
                             {% if app.user %} <!-- si le user est co, il peut liker-->
-                                <a class="li-hover-icon" aria-label="Liker le spot" href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}">    
+                                <a class="li-hover-icon" aria-label="Liker le spot" href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}"  title="Ajouter {{spot.name}} aux favoris">    
                                 
                                         
                                 {% if spot in app.user.favoriteSpots %}
@@ -76,8 +80,37 @@
                             {% endif %}                     
                                 </a>
                             {# YEUX #}
-                            <a class="li-hover-icon" id="eyes-on-spot" href=""><img src="\img\eyes.png" alt="eyes icon"></a>
+                            
+                            <a class="li-hover-icon" aria-label="Voir le détail de {{ spot.name }}" onclick="location.href = this.getAttribute('data-url');" data-url="{{ spot_url }}" style="cursor:pointer;"  title="Voir le détail de {{ spot.name }}">
+                                <img src="\img\eyes.png" alt="eyes icon">
+
+                            </a>
+
                         </div>
                     </div>
                 </div>
                 </li>
+
+<script>
+// Use event delegation to handle the click event for all .focus-on-spot-marker elements
+document.body.addEventListener("click", function(event) {
+    if (event.target.closest(".focus-on-spot-marker")) {
+        event.stopPropagation()
+        const spotElement = event.target.closest(".focus-on-spot-marker");
+        const lat = parseFloat(spotElement.getAttribute("data-lat"));
+        const lng = parseFloat(spotElement.getAttribute("data-lng"));
+
+        // Use the flyTo method to animate the map view to the spot's coordinates
+        map.flyTo([lat, lng], 13); // 13 is the zoom level, you can adjust as needed
+
+        // Create a new popup for the spot and open it on the map
+        // Note: You'll need to adjust the content of the popup to match your requirements
+        L.popup()
+            .setLatLng([lat, lng])
+            .setContent("Spot Details Here")
+            .openOn(map);
+    }
+});
+
+
+</script>
