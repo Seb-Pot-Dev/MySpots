@@ -43,6 +43,7 @@
 	width: 100%;
 }
 .arrow-toggle-filters {
+	box-shadow: var(--text-color) 0px -12px 15px -18px inset;
 	font-size: 1.25rem;
 	width: 20rem;
 	color: var(--text-color);

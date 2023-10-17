@@ -18,7 +18,7 @@
     z-index: 9999;
     background-color: var(--transparent-background);
     border-radius: 0.25rem;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    box-shadow: var(--text-color) 0px 12px 15px -18px inset, rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     -webkit-border-radius: 0.25rem;
     -moz-border-radius: 0.25rem;
     -ms-border-radius: 0.25rem;

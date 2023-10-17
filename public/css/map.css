@@ -285,4 +285,18 @@ span.current{
 .leaflet-container a{
     color: var(--text-color);
 }
-
+.leaflet-container a h3{
+    line-height: 1.75rem;
+    font-size: 1rem;
+}
+.leaflet-container a .popup-spot-description{
+    font-family: Annie Use Your Telescope;
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+}
+.leaflet-popup-content{
+    margin: unset;
+}
+.leaflet-popup-content p{
+    margin: unset;
+}

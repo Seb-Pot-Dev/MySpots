@@ -239,9 +239,9 @@ function limitNameLength(str, limit) {
 
 // Fonction pour créer le contenu de la popup
 function createPopupContent(urlShowSpot, name, desc, avgNote, firstPictureUrl) {
-    let avgNoteStr = avgNote ? `<i class='fa-solid fa-star'></i>(${avgNote})` : "(Pas de note)";
-    let pictureStr = firstPictureUrl ? `<img src="./assets/uploads/photos-spot/${firstPictureUrl}" width="100" height="100">` : "";
-    return `<a href=${urlShowSpot}> <b>${name} ${avgNoteStr}</b><br>${desc}<br>${pictureStr}</a>`;
+    let avgNoteStr = avgNote ? `<i class='fa-solid fa-star'></i>(${avgNote})` : "";
+    let pictureStr = firstPictureUrl ? `<img alt ="Photo du spot ${name}" class="pop-up-picture" src="./assets/uploads/photos-spot/${firstPictureUrl}" width="100%" height="auto">` : "";
+    return `<a href=${urlShowSpot}> <h3 class="flex justify-between"><p>${name}</p><p> ${avgNoteStr}</p></h3><p class="popup-spot-description">${desc}</p>${pictureStr}</a>`;
 }
 
 // Création des marqueurs
@@ -279,6 +279,7 @@ map.addLayer(markersCluster);
 <script>
     // Récupérez une référence au bouton
     const randomSpotButton = document.getElementById('randomSpotButton');
+        console.log(markersCluster.getLayers())
 
     // Ajoutez un gestionnaire d'événements au clic sur le bouton
     randomSpotButton.addEventListener('click', function () {
@@ -287,7 +288,6 @@ map.addLayer(markersCluster);
 
         // Obtenez le marqueur correspondant à l'indice aléatoire
         const randomMarker = markersCluster.getLayers()[randomIndex];
-
         // Obtenez les coordonnées du marqueur
         const markerLatlng = randomMarker.getLatLng();
 
