@@ -123,9 +123,8 @@ if(document.getElementById("carrouselContainer")){
         
     }
 
-            console.log("hi");
-
 // Ajout du gestionnaire d'événement pour passer à l'image suivante en cliquant sur l'image actuelle
+                if(modalImg){
                     modalImg.onclick = function() {
                         currentImageIndex = (currentImageIndex + 1) % images.length;
                         //change le bg image
@@ -147,13 +146,15 @@ if(document.getElementById("carrouselContainer")){
                         // Appliquer la nouvelle chaîne au style box-shadow de l'élément
                         modalImg.style.boxShadow = newBoxShadow;
                     };
+
+                }
     
     boutonCarrouselDroite.onclick=function(){
         if(p > -nbr +1){
             p--;
             carrousselContainer.style.transform="translate("+p*800+"px)";
             carrousselContainer.style.transition="all 0.5s ease";
-            
+            console.log('yy');
             afficherMasquerChevronCarrousel();
         }
     }

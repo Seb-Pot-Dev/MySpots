@@ -18,6 +18,10 @@
     height: 50px;
     width: 50px;
 }
+#carrousel svg path{
+    fill: white!important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
 #boutonCarrouselDroite{
     right: 0;
     opacity: 0.4;
