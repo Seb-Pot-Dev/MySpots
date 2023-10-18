@@ -92,23 +92,33 @@
                 </li>
 
 <script>
-// Use event delegation to handle the click event for all .focus-on-spot-marker elements
-document.body.addEventListener("click", function(event) {
+document.body.addEventListener("click", function(event){
     if (event.target.closest(".focus-on-spot-marker")) {
-        event.stopPropagation()
+        event.stopPropagation();
         const spotElement = event.target.closest(".focus-on-spot-marker");
-        const lat = parseFloat(spotElement.getAttribute("data-lat"));
-        const lng = parseFloat(spotElement.getAttribute("data-lng"));
+        var lat = spotElement.getAttribute("data-lat");
+        var lng = spotElement.getAttribute("data-lng");
 
-        // Use the flyTo method to animate the map view to the spot's coordinates
-        map.flyTo([lat, lng], 13); // 13 is the zoom level, you can adjust as needed
+        // Utiliser la méthode flyTo pour animer la vue de la carte vers les coordonnées du spot
+        map.flyTo([lat, lng], 13, {
+            duration: 2.5,
+            easeLinearity: 0.25,
+            animate: true,
+        }); 
 
-        // Create a new popup for the spot and open it on the map
-        // Note: You'll need to adjust the content of the popup to match your requirements
-        L.popup()
-            .setLatLng([lat, lng])
-            .setContent("Spot Details Here")
-            .openOn(map);
+        // Écouter l'événement moveend sur la carte
+        map.once("moveend", function() {
+            // Parcourir tous les marqueurs sur la carte
+            map.eachLayer(function(layer) {
+                if (layer instanceof L.Marker) {
+                    const markerLatLng = layer.getLatLng();
+                    if (markerLatLng.lat === parseFloat(lat) && markerLatLng.lng === parseFloat(lng)) {
+                        // Ouvrir le popup pour le marqueur qui correspond aux coordonnées spécifiées
+                        layer.openPopup();
+                    }
+                }
+            });
+        });
     }
 });
 

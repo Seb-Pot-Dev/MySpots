@@ -160,11 +160,13 @@
             <div class="list-spots-desktop" id="list-spots-desktop-id">
                 <div id="list-spots-desktop-main">
                     <!-- LISTE DES SPOTS SUR LA MAP EN ABSOLUTE -->
+
                     <ul class="list-spots" style="">
                         {% if spotsFiltered  is not empty %}
                             <div class="inline-flex">
                                 <p class="header-medium">{{ spotsFiltered|length }} resultats</p>
                             </div>
+
                             {% for spot in spotsFiltered %}
                                 {# Défini l'url de chaque spot pour pouvoir l'utiliser dans la liste #}
                                 {% set spot_url = path('show_spot', {'idSpot': spot.id}) %}
@@ -279,7 +281,6 @@ map.addLayer(markersCluster);
 <script>
     // Récupérez une référence au bouton
     const randomSpotButton = document.getElementById('randomSpotButton');
-        console.log(markersCluster.getLayers())
 
     // Ajoutez un gestionnaire d'événements au clic sur le bouton
     randomSpotButton.addEventListener('click', function () {
@@ -308,7 +309,6 @@ map.addLayer(markersCluster);
         animate: true,
     });
 
-     // Ouvrez le popup du marqueur sélectionné après l'animation
     const moveEndHandler = function () {
         randomMarker.openPopup();
         map.off('moveend', moveEndHandler); // Supprimez l'écouteur d'événement pour éviter les répétitions

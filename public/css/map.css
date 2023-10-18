@@ -300,3 +300,9 @@ span.current{
 .leaflet-popup-content p{
     margin: unset;
 }
+.leaflet-container a.leaflet-popup-close-button {
+    top: 6px;
+    right: 6px;
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
