@@ -28,7 +28,7 @@
         }
 
         /* Style pour les paragraphes */
-        p, ul, li {
+        p:not(.myspot-text), ul, li {
             line-height: 1.5;
             font-family: Annie Use Your Telescope;
         }
@@ -50,6 +50,8 @@
             color: #999;
         }
     </style>
+    <div class="mt-16">
+    
 {# info : &#x1F6F9 = 🛹 #}
 <h1>&#x1F6F9 Conditions d'utilisation du site SkateSpot &#x1F6F9</h1>
 <div id="privacy-policy">
@@ -117,5 +119,6 @@
     d. Sécurité : Nous nous engageons à mettre en œuvre toutes les mesures techniques et organisationnelles nécessaires pour garantir la sécurité et la confidentialité des données stockées.
     </li>
     </ul>
+</div>
 </div>
 {% endblock %}
