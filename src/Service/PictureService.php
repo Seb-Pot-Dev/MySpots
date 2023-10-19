@@ -27,6 +27,11 @@ class PictureService
         if ($picture->getSize() > $MAX_SIZE) {
             throw new Exception('Fichier trop volumineux');
         }
+        // Ajout de la vérification du type MIME
+        $mime_type = $picture->getMimeType();
+        if (!in_array($mime_type, ['image/jpeg', 'image/png', 'image/webp'])) {
+            throw new Exception('Type de fichier non supporté');
+        }
 
         // On vérifie le format de l'image
         switch($picture_infos['mime'])
