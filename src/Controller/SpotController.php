@@ -445,19 +445,18 @@ class SpotController extends AbstractController
                 // Si une notation existante est trouvée pour l'utilisateur et le spot, utilisez-la, sinon créez une nouvelle instance de Notation
                 $notationToSave = $existingNotation ? $existingNotation : new Notation();
 
-                //Si le formulaire de NOTATION est soumis et valide
+                // Si le formulaire de NOTATION est soumis et valide
                 if ($formNotation->isSubmitted() && $formNotation->isValid()) {
 
                     if ($existingNotation) {
-                        // L'utilisateur a déjà noté ce spot: mise à jour de la notation
-                        $this->addFlash('info', 'Votre notation a été mise à jour.');
+                        // L'utilisateur a déjà noté ce spot : mise à jour de la notation de l'utilisateur actuel
+                        $existingNotation->setNote($formNotation->get('note')->getData()); // Met à jour la note de l'utilisateur actuel
                     } else {
-                        // Ajout d'une nouvelle notation
+                        // Ajout d'une nouvelle notation pour l'utilisateur actuel
                         $notationToSave->setSpot($spot);
                         $notationToSave->setUser($user);
+                        $notationToSave->setNote($formNotation->get('note')->getData()); // Ajoutez ceci si 'note' est un champ de votre formulaire. Ajustez en fonction des champs réels.
                     }
-
-                    $notationToSave->setNote($formNotation->get('note')->getData()); // Ajoutez ceci si 'note' est un champ de votre formulaire. Ajustez en fonction des champs réels.
 
                     // Prépare la requête
                     $entityManager->persist($notationToSave);
@@ -467,6 +466,7 @@ class SpotController extends AbstractController
 
                     return $this->redirectToRoute('show_spot', ["idSpot" => $spot->getId()]);
                 }
+
 
                 /*********** GESTION DES IMAGES ******/
                 // On intercepte le formulaire d'image soumis

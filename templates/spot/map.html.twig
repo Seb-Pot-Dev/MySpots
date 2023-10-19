@@ -279,30 +279,26 @@ map.addLayer(markersCluster);
 
 {# Random Spot Button #}
 <script>
-    // Récupérez une référence au bouton
+    // Récupérer une référence au bouton
     const randomSpotButton = document.getElementById('randomSpotButton');
 
-    // Ajoutez un gestionnaire d'événements au clic sur le bouton
+    // Ajouter un écouteur d'événements au clic sur le bouton
     randomSpotButton.addEventListener('click', function () {
-        // Générez un indice aléatoire pour choisir un marqueur au hasard
+        // Générer un indice aléatoire pour choisir un marqueur au hasard
         const randomIndex = Math.floor(Math.random() * jsonTabForMarkersSpots.length);
 
-        // Obtenez le marqueur correspondant à l'indice aléatoire
+        // Obtenir le marqueur correspondant à l'indice aléatoire
         const randomMarker = markersCluster.getLayers()[randomIndex];
-        // Obtenez les coordonnées du marqueur
+        // Obtenir les coordonnées du marqueur
         const markerLatlng = randomMarker.getLatLng();
 
-    // Obtenez la position actuelle de la carte
-    const currentCenter = map.getCenter();
-    const currentZoom = map.getZoom();
-
-    // Calculez le zoom cible pour le spot aléatoire (par exemple, 14)
+    // Zoom cible pour le spot aléatoire 
     const targetZoom = 14;
 
-    // Définissez la durée de l'animation en secondes
+    // Définir la durée de l'animation en secondes
     const animationDuration = 2; // 2 secondes
 
-    // Utilisez la méthode flyTo pour animer la carte
+    // Utiliser la méthode flyTo pour animer la carte
     map.flyTo(markerLatlng, targetZoom, {
         duration: animationDuration,
         easeLinearity: 0.25,
@@ -311,7 +307,7 @@ map.addLayer(markersCluster);
 
     const moveEndHandler = function () {
         randomMarker.openPopup();
-        map.off('moveend', moveEndHandler); // Supprimez l'écouteur d'événement pour éviter les répétitions
+        map.off('moveend', moveEndHandler); // Supprimer l'écouteur d'événement pour éviter les répétitions
     };
 
     map.on('moveend', moveEndHandler);

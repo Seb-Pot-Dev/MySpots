@@ -90,10 +90,7 @@ ul.list-spots-desktop{
 .right{
     color: var(--text-color);
     height: fit-content;
-    
     text-shadow: 3px 3px 6px var(--text-color-opposite);
-      
-      
 }
 .list-spots .left{
     height: fit-content;
@@ -106,7 +103,7 @@ ul.list-spots-desktop{
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 0 24px 0 6px;
+    padding: 0 6px;
     backdrop-filter: blur(2px);
     height: fit-content;
     background-color: rgb(255 255 255 / 24%);
@@ -125,6 +122,7 @@ ul.list-spots-desktop{
     background-color: rgb(255 255 255 / 24%);
     backdrop-filter: blur(2px);
     box-shadow: var(--text-color) 0px 5px 15px;
+    
 }
 
 /* Cachez la div par défaut */
@@ -136,7 +134,6 @@ ul.list-spots-desktop{
     max-width: 100%;
     max-height: 100%;
     overflow: hidden;
-
 }
 
 /* Affichez la div lors du survol de l'élément <li> */
@@ -171,10 +168,10 @@ li:hover .li-hover-container {
     width: 20%;
     height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-end;
-    justify-content: space-evenly;
-
+    justify-content: space-between;
+    gap: 8px;
 }
 .li-hover-left{
     width: 80%;
@@ -184,6 +181,58 @@ li:hover .li-hover-container {
     height: 40px;
     width: 40px;
 }
-.li-hover-icon:hover{
+.li-tools-left{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.li-tools-right{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.tools-note {
+    position: relative;
 
 }
+
+.tools-note img {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.tools-note p {
+    position: absolute;
+    top: 50%; /* Placer le haut du paragraphe au milieu de l'élément parent */
+    left: 50%; /* Placer la gauche du paragraphe au milieu de l'élément parent */
+    transform: translate(-50%, -50%); /* Déplacer le paragraphe de moitié de sa taille vers le haut et la gauche pour le centrer */
+    font-size: 0.75rem;
+    text-shadow: 0px 3px 3px black;
+}
+.not-connected-icon{
+    width: 40px;
+    height: 40px;
+}
+.title-li-note{
+    font-size: 0.55rem;
+    color: white;
+}
+.title-li-star{
+    width: 30px;
+    height: 30px;
+}
+
+.admin-tools-delete{
+    color:rgb(255, 82, 82);
+    text-shadow: 1px 1px 0px white;
+}
+.admin-tools-modify{
+    color: rgb(91, 91, 255);
+    text-shadow: 1px 1px 0px white;}

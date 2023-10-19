@@ -21,61 +21,82 @@
                         </div>
                         <div class="right">
                             <!-- nb likes du spot -->
-                                {% if spot in app.user.favoriteSpots %}
-                                    <i class="fa-solid fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur plein + Nb likes-->
-                                {% else %}
-                                    <i class="fa-regular fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur vide + Nb likes-->
-                                {% endif %}
-                            <!-- note -->
-                            {% if spot.avgNote is not null %}
-                                <i class="fa-regular fa-star"></i>&nbsp{{spot.avgNote|number_format(2, '.', '')}}
+                            {# {% if app.user and spot in app.user.favoriteSpots %}
+                                <i class="fa-solid fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur plein + Nb likes-->
                             {% else %}
-                                <i class="fa-regular fa-star"></i>&nbsp0
-                            {% endif %}
+                                <i class="fa-regular fa-heart" alt='nb-likes'></i>&nbsp{{ spot.favoritedByUsers | length }} <!-- Coeur vide + Nb likes-->
+                            {% endif %} #}
+                            <!-- note -->
+
+                            {# ETOILE #}
+                                <div class="tools-note li-hover-icon title-li-star">
+                                    <img src="\img\star.png" alt="note icon">
+                                    {% if spot.avgNote is not null %}
+                                        <p class="title-li-note">{{spot.avgNote|number_format(2, '.', '')}}</p>
+                                    {% else %}
+                                        <p class="title-li-note">?</p>
+                                    {% endif %}         
+                                </div>
 
                             <!-- nb comments spot -->
-                                <i class="fa-regular fa-message"></i>&nbsp{{ spot.comments | length }}
+                                {# <i class="fa-regular fa-message"></i>&nbsp{{ spot.comments | length }} #}
 
-                            {% if  is_granted('ROLE_ADMIN') %}
-                            <!-- supprimer le spot -->
-                                <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can"></i></a>
-                            <!-- modifier le spot -->
-                                <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square"></i></a>
-
-                            {% endif %}
+                            
                         </div>
                     </div>
                 <div class="li-hover-container">
                     <div class="li-hover-content">
-                        <div class="li-hover-left">
-                            <p class="li-hover-title">{{spot.name}}</p>
-                            <p class="li-hover-description">{{spot.description|capitalize|slice(0, 50)}}{% if spot.description | length > 50 %}...{% endif %}
-</p>
-                        </div>
-                        <a class="focus-on-spot-marker li-hover-icon" aria-label="Voler jusqu'au spot  " class="li-hover-icon focus-on-spot-marker" data-lat="{{ spot.lat }}" data-lng="{{ spot.lng }}" style="cursor:pointer; margin-top: 8px"
-                        title="Voler jusqu'au spot">
-                                <img src="\img\finder.png" alt="eyes icon">
+
+                            <a class="li-hover-left" aria-label="Voir le détail de {{ spot.name }}" onclick="location.href = this.getAttribute('data-url');" data-url="{{ spot_url }}" style="cursor:pointer;"  title="Voir le détail de {{ spot.name }}" >
+                                <p class="li-hover-title">{{spot.name}}</p>
+                                <p class="li-hover-description">{{spot.description|capitalize|slice(0, 50)}}{% if spot.description | length > 50 %}...{% endif %}</p>
                             </a>
+                            {% if  is_granted('ROLE_ADMIN') %}
+                            <div class="flex gap-1 mr-1">
+                                <!-- supprimer le spot -->
+                                <a href="{{ path('deleteSpot_admin', {'id':spot.id}) }}"><i class="fa-regular fa-trash-can admin-tools-delete"></i></a>
+                                <!-- modifier le spot -->
+                                <a href="{{ path('edit_spot', {'id':spot.id}) }}"><i class="fa-regular fa-pen-to-square admin-tools-modify"></i></a>
+                            </div>
+                            {% endif %}
+
                         <div class="li-hover-right">
-                            {# COEUR #}
-                            {% if app.user %} <!-- si le user est co, il peut liker-->
-                                <a class="li-hover-icon" aria-label="Liker le spot" href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}"  title="Ajouter {{spot.name}} aux favoris">    
-                                
-                                        
-                                {% if spot in app.user.favoriteSpots %}
-                                    <img src="\img\heart-checked.png" alt="hearth icon">
+                            <div class="li-tools-left">
+                                {# ETOILE #}
+                                <div class="tools-note li-hover-icon">
+                                    <img src="\img\star.png" alt="note icon">
+                                    {% if spot.avgNote is not null %}
+                                        <p>{{spot.avgNote|number_format(2, '.', '')}}</p>
+                                    {% else %}
+                                        <p>?</p>
+                                    {% endif %}         
+                                </div>
+                                {# COEUR #}
+                                {% if app.user %} <!-- si le user est co, il peut liker-->
+                                    <a class="li-hover-icon" aria-label="Liker le spot" href="{{ path('like_spot', {'idSpot': spot.id, 'idUser': app.user.id}) }}"  title="Ajouter {{spot.name}} aux favoris">    
+                                    {% if spot in app.user.favoriteSpots %}
+                                        <img src="\img\heart-checked.png" alt="hearth icon">
+                                    {% else %}
+                                        <img src="\img\heart-unchecked.png" alt="hearth icon">
+                                    {% endif %}                     
+                                    </a>
                                 {% else %}
-                                    <img src="\img\heart-unchecked.png" alt="hearth icon">
-                                {% endif %}                     
-                            {% endif %}                     
+                                    <div class="not-connected-icon"></div>
+                                {% endif %}
+                            </div>
+
+                            <div class="li-tools-right">
+                                
+                                {# YEUX #}
+                                <a class="li-hover-icon" aria-label="Voir le détail de {{ spot.name }}" onclick="location.href = this.getAttribute('data-url');" data-url="{{ spot_url }}" style="cursor:pointer;"  title="Voir le détail de {{ spot.name }}">
+                                    <img src="\img\eyes.png" alt="eyes icon">
                                 </a>
-                            {# YEUX #}
-                            
-                            <a class="li-hover-icon" aria-label="Voir le détail de {{ spot.name }}" onclick="location.href = this.getAttribute('data-url');" data-url="{{ spot_url }}" style="cursor:pointer;"  title="Voir le détail de {{ spot.name }}">
-                                <img src="\img\eyes.png" alt="eyes icon">
-
-                            </a>
-
+                                {# LOUPE #}
+                                <a class="focus-on-spot-marker li-hover-icon" aria-label="Voler jusqu'au spot  " class="li-hover-icon focus-on-spot-marker" data-lat="{{ spot.lat }}" data-lng="{{ spot.lng }}" style="cursor:pointer; margin-top: 8px"
+                                title="Voler jusqu'au spot">
+                                        <img src="\img\finder.png" alt="eyes icon">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,7 +111,7 @@ document.body.addEventListener("click", function(event){
         var lng = spotElement.getAttribute("data-lng");
 
         // Utiliser la méthode flyTo pour animer la vue de la carte vers les coordonnées du spot
-        map.flyTo([lat, lng], 13, {
+        map.flyTo([lat, lng], 15, {
             duration: 2.5,
             easeLinearity: 0.25,
             animate: true,
