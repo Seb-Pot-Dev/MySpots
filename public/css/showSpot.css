@@ -193,7 +193,9 @@ select#notation_note{
 #main-show {
 	margin:0 20%;
 	margin-top: 100px;
-}
+	border-radius: 12px;
+    padding: 40px;
+	box-shadow: var(--text-color) 0px 0px 20px -12px inset, var(--text-color) 0px 18px 36px -18px inset, var(--text-color) 0px 20px 20px 0px;}
 .comment-box {
 	background-color: rgba(212, 212, 212, 0.273);
 }
@@ -234,3 +236,24 @@ select#notation_note{
   #modalImage{
 	box-shadow: rgb(255 255 255 / 25%) 0px 54px 55px, rgb(255 255 255 / 12%) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgb(255 255 255 / 17%) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   }	
+  #returnButton{
+	width: 60px;
+	height: auto;
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
+}
+  #returnButton:hover{
+	scale: 1.2;
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
+}
+  .night-mode #returnButton{
+	filter: invert(1);
+	-webkit-filter: invert(1);
+}

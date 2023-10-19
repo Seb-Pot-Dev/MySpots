@@ -1,14 +1,10 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Détail du spot {{spot.name}}{% endblock %}
+{% block title %}Détail du spot "{{spot.name}}"{% endblock %}
 
 {% block meta_tags %}
-    <meta name="description" content="
-    Rends-toi vite sur MySpot pour découvrir les meilleurs spots de skate!
-    Tu trouveras ici le détail du spot {{ spot.name }},
-    {{ spot.description }}.
-    ">
+    
 {% endblock %}
 
 {% block body %}
@@ -17,8 +13,13 @@
 <link rel="stylesheet" href="{{ asset('css/buttons.css') }}">
 <link rel="stylesheet" href="{{ asset('css/forms.css') }}">
 <link rel="stylesheet" href="{{ asset('css/showSpot_mobile.css') }}">
-
+<meta name="description" content="
+    Rends-toi vite sur MySpot pour découvrir les meilleurs spots de skate!
+    Tu trouveras ici le détail du spot {{ spot.name }},
+    {{ spot.description }}."
+>
 <main id="main-show">
+<button id="returnButton"><img src="\img\back.png" alt="back icon" aria-label="retour à la page précédente"></button>
     <!--nom du spot-->
     <h1 class="show-spot-title">
         {{ spot.name }} 
@@ -78,6 +79,7 @@
                 Pas encore de note
             {% endif %}
         </div>
+        
     </div>
 
     
@@ -207,12 +209,6 @@
                 <!--form note du spot -->
                 {{ form_start(formNotation) }}
                 {{ form_end(formNotation) }}
-                {# Si l'utilisateur a déjà noté ce spot: message d'erreur #}
-                {% for message in app.flashes('info') %}
-                    <div class="alert alert-info">
-                        {{ message }}
-                    </div>
-                {% endfor %}
             {% endif %}
         </div>
     </div>
@@ -275,5 +271,18 @@
 
 </main>
 
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Sélectionnez le bouton par son ID
+    const returnButton = document.getElementById("returnButton");
 
+    // Ajoutez un gestionnaire d'événements "click" au bouton
+    returnButton.addEventListener("click", function() {
+        // Utilisez window.history.back() pour revenir à la page précédente
+        window.history.back();
+    });
+});
+
+</script>
 {% endblock %}
+

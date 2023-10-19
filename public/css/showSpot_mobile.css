@@ -1,6 +1,7 @@
 @media screen and (max-width: 768px) {
     #main-show{
         margin: unset;
+        padding: unset;
         padding-top: 50px;
         margin: 0 5px;
     }

@@ -104,11 +104,13 @@ if(document.getElementById("carrouselContainer")){
     
                 deleteLink.addEventListener("click", function(event) {
                     event.preventDefault();
-                    
+                    event.stopPropagation()
                     if (deleteLink.textContent === "Supprimer") {
+                        event.stopPropagation()
                         deleteLink.textContent = "Sûr?";
                         deleteLink.classList.add("delete-button-confirm");
                     } else if (deleteLink.textContent === "Sûr?") {
+                        event.stopPropagation()
                         window.location.href = "{{ path('deletePicture_admin', {'idSpot': spot.id, 'idPic': image.id}) }}";
                     }
                 });
