@@ -30,11 +30,10 @@
 
                             {# ETOILE #}
                                 <div class="tools-note li-hover-icon title-li-star">
-                                    <img src="\img\star.png" alt="note icon">
                                     {% if spot.avgNote is not null %}
+                                    <img src="\img\star.png" alt="note icon">
                                         <p class="title-li-note">{{spot.avgNote|number_format(2, '.', '')}}</p>
-                                    {% else %}
-                                        <p class="title-li-note">?</p>
+                                
                                     {% endif %}         
                                 </div>
 

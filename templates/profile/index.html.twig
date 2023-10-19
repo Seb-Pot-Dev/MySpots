@@ -14,7 +14,7 @@
         <div class="my-box">
             <div class="flex justify-between">
                 {# Mes infos #}
-                <h1 class="text-xl mb-6">Mes infos</h1>
+                <h1 class="text-2xl mb-6">Mes infos</h1>
                 {# Modifier mes infos #}
                 <a href="{{ path('edit_pseudo') }}"><i class="fa-regular fa-pen-to-square"></i></a>
             </div>
@@ -25,7 +25,7 @@
         </div>
 
         <div class="my-box">
-            <h2 class="text-xl mb-6">Mes spots favoris</h2>
+            <h2 class="text-2xl mb-6">Mes spots favoris</h2>
             <ul class="list-container" style="overflow:unset; overflow-y:scroll;">
             {% if user.favoriteSpots|length > 0 %}
                 
@@ -39,7 +39,7 @@
         </div>
             
         <div class="my-box">
-            <h2 class="text-xl mb-6">Mes spots ajoutés</h2>
+            <h2 class="text-2xl mb-6">Mes spots ajoutés</h2>
             <ul class="list-container">
                 {% for spot in user.addedspots %}
                     <li><a class="text-black" href="{{ path('show_spot', {'idSpot': spot.id}) }}">{{spot.name}}</a></li>
