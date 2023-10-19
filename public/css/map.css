@@ -70,6 +70,8 @@ footer{
     scale: 1.01;
 }
 #randomSpotButton{
+    max-height: 47px;
+    max-width: 47px;
     border: 1px solid red;
     border-radius: 12px;
     padding: 4px;
@@ -78,8 +80,6 @@ footer{
     box-shadow: var(--text-color) -2px 4px 0px;
     -webkit-border-radius: 12px;
     margin-bottom: 4px;
-    max-height: 59px;
-    max-width: 55px;
 }
 #randomSpotButton:hover{
     box-shadow: var(--text-color) -1px 2px 0px;
