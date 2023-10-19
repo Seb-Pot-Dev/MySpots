@@ -290,21 +290,19 @@ class Spot
 
     public function getAvgNote(): ?float
     {
-        $avg=null;
-        $note=0;
-        $nbNotation=count($this->notations);
+        $avg = null;
+$note = 0;
+$nbNotation = count($this->notations);
 
-        foreach($this->notations as $notation){
-            $note+=$notation->getNote();
-        }
-        if($nbNotation > 0){
+if ($nbNotation > 0) {
+    foreach ($this->notations as $notation) {
+        $note += $notation->getNote();
+    }
+    $avg = $note / $nbNotation;
+}
 
-            $avg = $note/$nbNotation;
-        }else{
-            $avg = null;
-        }
+return $avg;
 
-        return $avg;
     }
 
 
