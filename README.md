@@ -5,14 +5,14 @@ Réalisation d’une application web complète permettant la consultation de lie
 
 ## Développement de la partie Front-End
 - **Maquettage de l’application** 
-- **Interface statique en HTML/CSS** *(voir Annexe n°3)*
-- **Interface adaptable aux différents écrans** grâce à l’utilisation de media queries et de breakpoints *(voir Annexe n°4)*
-- **Menu burger adapté à la vue mobile** *(voir Annexe n°4)*
-- **Mode clair / mode sombre** permettant une personnalisation de l’interface visuelle par l’utilisateur *(voir Annexes n°3 et 4)*
-- **Utilisation de Twig pour un système de templating** et création de composants pour la réutilisation de code
+- **Interface statique en HTML/CSS**
+- **Interface adaptable aux différents écrans**
+- **Menu burger adapté à la vue mobile**
+- **Mode clair / mode sombre**
+- **Utilisation de Twig pour un système de templating**
 - **Interface utilisateur dynamique** avec l’utilisation de Javascript
-- **Éléments graphiques particuliers en CSS** (effets de hover, animations du logo, intégration de vidéos)
-- **Éléments interactifs en JavaScript** (modales pour afficher les photos en grands, carrousel de photos)
+- **Éléments graphiques particuliers en CSS**
+- **Éléments interactifs en JavaScript (modales pour afficher les photos en grands, carrousel de photos)** 
 - **Consommation d’API** pour une expérience utilisateur optimale (carte Leaflet, API Geolocation pour exploiter la position, etc.)
 - **AJAX pour la fonction de renseignement de champs automatique** avec l’API Nominatim
 - **Règle REGEX recommandée par la CNIL** pour la complexité du mot de passe
