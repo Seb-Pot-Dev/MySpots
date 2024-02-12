@@ -4,7 +4,7 @@
 Réalisation d’une application web complète permettant la consultation de lieux d’intérêt pour l’univers du skateboard.
 
 ## Développement de la partie Front-End
-- **Maquettage de l’application** *(voir Annexe n°1 et 2)*
+- **Maquettage de l’application** 
 - **Interface statique en HTML/CSS** *(voir Annexe n°3)*
 - **Interface adaptable aux différents écrans** grâce à l’utilisation de media queries et de breakpoints *(voir Annexe n°4)*
 - **Menu burger adapté à la vue mobile** *(voir Annexe n°4)*
