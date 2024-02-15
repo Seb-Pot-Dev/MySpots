@@ -48,7 +48,7 @@
 
                             <a class="li-hover-left" aria-label="Voir le détail de {{ spot.name }}" onclick="location.href = this.getAttribute('data-url');" data-url="{{ spot_url }}" style="cursor:pointer;"  title="Voir le détail de {{ spot.name }}" >
                                 <p class="li-hover-title">{{spot.name}}</p>
-                                <p class="li-hover-description">{{spot.description|capitalize|slice(0, 50)}}{% if spot.description | length > 50 %}...{% endif %}</p>
+                                <p class="li-hover-description">{{spot.description|capitalize|slice(0, 40)}}{% if spot.description | length > 50 %}...{% endif %}</p>
                             </a>
                             {% if  is_granted('ROLE_ADMIN') %}
                             <div class="flex gap-1 mr-1">
