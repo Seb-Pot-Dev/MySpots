@@ -69,7 +69,7 @@ class RegistrationController extends AbstractController
             // Gestion des erreurs
         }catch(\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e){
             $this->addFlash('error', 'The provided pseudo or email is already in use.');
-        return $this->render('registration/register.html.twig', [
+            return $this->render('registration/register.html.twig', [
             'registrationFormType' => $form->createView(),
         ]);
         }
@@ -82,7 +82,7 @@ class RegistrationController extends AbstractController
         );
         }
         return $this->render('registration/register.html.twig', [
-            'registrationForm' => $form->createView(),
+            'registrationFormType' => $form->createView(),
         ]);
     }
 
@@ -97,7 +97,7 @@ class RegistrationController extends AbstractController
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
         // Gérer les erreurs de manière sécurisée sans divulguer de détails spécifiques
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
+            $this->addFlash('error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
             return $this->redirectToRoute('app_register');
         }

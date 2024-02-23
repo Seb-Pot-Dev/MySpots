@@ -11,36 +11,47 @@
 <div class="flex justify-center underline">
     <h1>S'inscrire à MySpots</h1>
 </div>
-{{ form_start(registrationForm, {'attr': {'class': 'text-black max-w-md mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
+{{ form_start(registrationFormType, {'attr': {'class': 'text-black max-w-md mx-auto p-4 bg-white shadow-md rounded-lg'}}) }}
     {# Affichage de messages d'erreurs #}
     <div class="text-red-500">
     
-    {{ form_errors(registrationForm) }}
+    {{ form_errors(registrationFormType) }}
     </div>
     <div class="mb-4">
-        <div class="inline-flex">{{ form_label(registrationForm.email, 'Email', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+        <div class="inline-flex">{{ form_label(registrationFormType.email, 'Email', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
         <div class="text-red-500 text-4xl">*</div></div>
-        {{ form_widget(registrationForm.email, {'attr': {'text-black class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        {{ form_widget(registrationFormType.email, {'attr': {'text-black class': 'w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        <div class="text-red-500 text-xs">
+            {{ form_errors(registrationFormType.email) }}
+        </div>
     </div>
     <div class="mb-4">
-        <div class="inline-flex">{{ form_label(registrationForm.pseudo, 'Pseudo', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+        <div class="inline-flex">{{ form_label(registrationFormType.pseudo, 'Pseudo', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
         <div class="text-red-500 text-4xl">*</div></div> 
-        {{ form_widget(registrationForm.pseudo, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        {{ form_widget(registrationFormType.pseudo, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        {# msg erreur #}
+        <div class="text-red-500 text-xs">
+            {{ form_errors(registrationFormType.pseudo) }}
+        </div>
     </div>
     <div class="mb-4">
-        <div class="inline-flex">{{ form_label(registrationForm.plainPassword.first, 'Mot de passe', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+        <div class="inline-flex">{{ form_label(registrationFormType.plainPassword.first, 'Mot de passe', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
         <div class="text-red-500 text-4xl">*</div></div> 
-        {{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        {{ form_widget(registrationFormType.plainPassword.first, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
     </div>
     <div class="mb-4">
-        <div class="inline-flex">{{ form_label(registrationForm.plainPassword.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
+        <div class="inline-flex">{{ form_label(registrationFormType.plainPassword.second, 'Confirmer le mot de passe', {'label_attr': {'class': 'block mb-2 font-medium text-gray-700'}}) }}
         <div class="text-red-500 text-4xl">*</div></div> 
-        {{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        {{ form_widget(registrationFormType.plainPassword.second, {'attr': {'class': 'text-black w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'}}) }}
+        {# msg erreur #}
+        <div class="text-red-500 text-xs">
+            {{ form_errors(registrationFormType.plainPassword.first) }}
+        </div>            
     </div>
 
     <div class="inline-flex  justify-center mb-4">
-        {{ form_errors(registrationForm) }}
-        <label style="color:black;" for="{{ registrationForm.agreeTerms.vars.id }}">
+        {{ form_errors(registrationFormType) }}
+        <label style="color:black;" for="{{ registrationFormType.agreeTerms.vars.id }}">
         
         <!-- Le lien pointant vers la page des conditions générales d'utilsiation -->
         J'accepte les 
@@ -56,10 +67,10 @@
         -->
         </label>
         <div class="text-red-500 text-4xl">*</div>
-        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'text-black mr-2 leading-tight'}}) }}
+        {{ form_widget(registrationFormType.agreeTerms, {'attr': {'class': 'text-black mr-2 leading-tight'}}) }}
     </div>
     <div class="inline-flex  justify-center mb-4">
-        <label style="color:black;" for="{{ registrationForm.agreeConfidentiality.vars.id }}">
+        <label style="color:black;" for="{{ registrationFormType.agreeConfidentiality.vars.id }}">
         
         <!-- Le lien pointant vers la page de politique de confidentialité -->
         J'accepte la
@@ -75,12 +86,16 @@
         -->
         </label>
         <div class="text-red-500 text-4xl">*</div>
-        {{ form_widget(registrationForm.agreeConfidentiality, {'attr': {'class': 'text-black mr-2 leading-tight'}}) }}
+        {{ form_widget(registrationFormType.agreeConfidentiality, {'attr': {'class': 'text-black mr-2 leading-tight'}}) }}
     </div>
     
     <div class="inline-flex"><p class="text-red-500 text-4xl">* </p><p> : Champs obligatoires</p></div>
+
+
     <button type="submit" class="w-full px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">S'inscrire</button>
-{{ form_end(registrationForm) }}
+{{ form_end(registrationFormType) }}
+
+
 </section>
 
 {% endblock %}
